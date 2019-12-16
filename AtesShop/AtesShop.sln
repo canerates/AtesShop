@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Web", "AtesShop.Web\AtesShop.Web.csproj", "{A13C4012-2074-4CE7-A90D-02ACA90F21A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Entities", "AtesShop.Entities\AtesShop.Entities.csproj", "{ECE1128E-A159-4DF4-9846-9B06C0071730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Database", "AtesShop.Database\AtesShop.Database.csproj", "{BE716FD8-7CDF-4327-8660-6D86527D4E60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A13C4012-2074-4CE7-A90D-02ACA90F21A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A13C4012-2074-4CE7-A90D-02ACA90F21A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A13C4012-2074-4CE7-A90D-02ACA90F21A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE1128E-A159-4DF4-9846-9B06C0071730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE1128E-A159-4DF4-9846-9B06C0071730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE1128E-A159-4DF4-9846-9B06C0071730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE1128E-A159-4DF4-9846-9B06C0071730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE716FD8-7CDF-4327-8660-6D86527D4E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE716FD8-7CDF-4327-8660-6D86527D4E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE716FD8-7CDF-4327-8660-6D86527D4E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE716FD8-7CDF-4327-8660-6D86527D4E60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
