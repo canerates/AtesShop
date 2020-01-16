@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Upload";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>Upload Image File</h2>
+    </div>
+</div>
+
+<div class="container">
+    <form id="productForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label class="file-upload btn btn-primary"><input id="imageUpload" name="ImageFile" type="file" accept=".png, .jpg" />
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button id="saveBtn" class="btn btn-success" type="button">Upload</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    $("#saveBtn").click(function () {
+        var formData = new FormData($("#productForm").get(0));
+        
+        $.ajax({
+            type: 'POST',
+            url: '/Image/Upload',
+            data: formData,
+            processData: false,
+            contentType: false
+           })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+</script>

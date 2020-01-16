@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AtesShop.Database
 {
-    public class ASContext : DbContext
+    public class ASContext : DbContext, IDisposable
     {
         public ASContext() : base("AtesShopConnection")
         {
@@ -16,7 +16,8 @@ namespace AtesShop.Database
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Properties { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Image> Images { get; set; }
 
     }
 }

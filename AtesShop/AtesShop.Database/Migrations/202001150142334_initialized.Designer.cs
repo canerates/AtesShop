@@ -13,7 +13,7 @@ namespace AtesShop.Database.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201912160516458_initialized"; }
+            get { return "202001150142334_initialized"; }
         }
         
         string IMigrationMetadata.Source
