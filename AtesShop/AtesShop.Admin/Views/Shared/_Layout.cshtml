@@ -18,13 +18,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Power Active Admin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Index", "Home")" >
+                    <img src="@Url.Content("~/Content/img/logo/logo.png")" height="50" width="200" />
+                </a>
+                @*@Html.ActionLink("Power Active Admin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Category", "Index", "Category")</li>
                     <li>@Html.ActionLink("Product", "Index", "Product")</li>
                     <li>@Html.ActionLink("Image", "Index", "Image")</li>
+                    <li>@Html.ActionLink("User", "Index", "User")</li>
+                    <li>@Html.ActionLink("Role", "Index", "Role")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

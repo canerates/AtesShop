@@ -1,17 +1,56 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="container ptb-30">
+    <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.1528651316894!2d121.44725041484239!3d25.062807483958796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a8833db6c085%3A0xdb2637de842bbb72!2z5Yuk576O5L-h!5e0!3m2!1str!2stw!4v1579491598790!5m2!1str!2stw" height=400 frameborder="0" style="border:0; width:100%" allowfullscreen=""></iframe></div>
+</div>
+<div class="contact-email-area ptb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Contact Us</h3>
+                <p class="text-capitalize mb-40">Power Active Smart Surveillance</p>
+                <form id="contact-form" class="contact-form" action="" method="post">
+                    <div class="address-wrapper">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="address-fname">
+                                    <input type="text" name="name" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="address-email">
+                                    <input type="email" name="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="address-web">
+                                    <input type="text" name="website" placeholder="Website">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="address-subject">
+                                    <input type="text" name="subject" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="address-textarea">
+                                    <textarea name="message" placeholder="Write your message"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="form-message ml-15"></p>
+                    <div class="col-xs-12 footer-content mail-content">
+                        <div class="send-email">
+                            <input type="submit" value="Submit" class="submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>

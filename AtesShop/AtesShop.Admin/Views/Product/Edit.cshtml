@@ -1,6 +1,9 @@
 ﻿@model EditProductViewModel
 @{
     ViewBag.Title = "Edit Product";
+
+    var trueChecked = Model.isFeatured ? "checked" : string.Empty;
+    var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
 }
 
 <div class="container">
@@ -41,9 +44,22 @@
                 <select class="form-control" name="CategoryId">
                     @foreach (var category in Model.AvailableCategories)
                     {
-                        <option value="@category.Id">@category.Name</option>
+                        var selected = category.Id == Model.CategoryId ? "selected" : string.Empty;
+                        <option value="@category.Id" @selected>@category.Name</option>
                     }
                 </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Featured</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label><input name="isFeatured" type="radio" value="True" @trueChecked /><span class="glyphicon glyphicon-ok" style="color:darkseagreen"></span></label>
+                </div>
+                <div class="radio">
+                    <label><input name="isFeatured" type="radio" value="False" @falseChecked /><span class="glyphicon glyphicon-remove" style="color:red"></span></label>
+                </div>
             </div>
         </div>
 
@@ -108,6 +124,7 @@
             //alert("Success");
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            focusAction("tableContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");

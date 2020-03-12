@@ -3,38 +3,115 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="register.html">Register</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<!-- Register Account Start -->
+<div class="register-account pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="register-title">
+                    <h3 class="mb-10">REGISTER ACCOUNT</h3>
+                    <p class="mb-10">If you already have an account with us, please login at the login page.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Row End -->
+        <div class="row">
+            <div class="col-sm-12">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <fieldset>
+                        <legend>Your Personal Details</legend>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        <div class="form-group">
+                            <label class="control-label" for="fname"><span class="require">*</span>First Name</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "fname", @placeholder = "First Name" })
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="lname"><span class="require">*</span>Last Name</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "lname", @placeholder = "Last Name" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="uname"><span class="require">*</span>Username</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @id = "uname", @placeholder = "Username" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="email"><span class="require">*</span>Enter your email address here...</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @placeholder = "Enter your email address here..." })
+                            </div>
+                        </div>
+                        
+                    </fieldset>
+                    <fieldset>
+                        <legend>Your Password</legend>
+                        <div class="form-group">
+                            <label class="control-label" for="pwd"><span class="require">*</span>Password</label>
+                            <div class="col-sm-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "pwd", @placeholder = "Password" })
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="pwd-confirm"><span class="require">*</span>Confirm Password</label>
+                            <div class="col-sm-10">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "pwd-confirm", @placeholder = "Confirm password" })
+                                
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="newsletter-input">
+                        <legend>Newsletter</legend>
+                        <div class="form-group">
+                            <label class="control-label">Subscribe</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="newsletter" value="1"> Yes
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="newsletter" value="0" checked="checked"> No
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="buttons newsletter-input">
+                        <div class="pull-right">
+                            I have read and agree to the <a href="#" class="agree"><b>Privacy Policy</b></a>
+                            <input type="checkbox" name="agree" value="1"> &nbsp;
+                            <input type="submit" value="Continue" class="newsletter-btn">
+                        </div>
+                    </div>
+                }
+                
+            </div>
         </div>
+        <!-- Row End -->
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+    <!-- Container End -->
+</div>
+<!-- Register Account End -->
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

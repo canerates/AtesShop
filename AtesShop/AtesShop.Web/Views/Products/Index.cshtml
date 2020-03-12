@@ -1,0 +1,366 @@
+﻿@model ProductViewModel
+@using AtesShop.Web.Helpers
+
+@{
+    ViewBag.Title = "Index";
+
+    var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
+    var searchKey = Model.SearchKey == null ? "null" : Model.SearchKey.ToString();
+}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class="active"><a href="@Url.Action( "Index", "Products")">Products</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<!-- Shop Page Start -->
+<div class="main-shop-page pb-60">
+    <div class="container">
+        <!-- Row End -->
+        <div class="row">
+            <!-- Sidebar Shopping Option Start -->
+            <div class="col-lg-3  order-2">
+                <div class="sidebar white-bg">
+                    <div class="single-sidebar">
+                        <div class="group-title">
+                            <h2>categories</h2>
+                        </div>
+                        <ul>
+                            <li><a href="@Url.Action("Index", "Products", new { categoryId = string.Empty })">All (@Model.ProductCount)</a></li>
+
+                            @foreach (var category in Model.Categories)
+                            {
+
+                                <li><a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">@category.Name (@category.Products.Count)</a></li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="single-sidebar">
+                        <div class="group-title">
+                            <h2>price</h2>
+                        </div>
+                        <form action="#">
+                            <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                            </div>
+                            <input id="amount" class="amount" readonly="" type="text">
+                        </form>
+                    </div>
+
+                    <div class="single-sidebar">
+                        <div class="group-title">
+                            <h2>Compare Products</h2>
+                        </div>
+                        <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/1.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$38.00</span><del class="prev-price">$40.00</del></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/2.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$32.00</span></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/3.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$35.00</span><del class="prev-price">39.00</del></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                        </div>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="group-title">
+                            <h2>My Wish List</h2>
+                        </div>
+                        <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/4.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$86.00</span><del class="prev-price">90.00</del></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/1.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$32.00</span></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                            <!-- Best Seller Multi Product Start -->
+                            <div class="best-seller-multi-product">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="product.html">
+                                            <img class="primary-img" src="~/Content/img/products/2.jpg" alt="single-product">
+                                        </a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <h4><a href="product.html">Products Name Here</a></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <p><span class="price">$38.00</span><del class="prev-price">45.00</del></p>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                                <!-- Single Product End -->
+                            </div>
+                            <!-- Best Seller Multi Product End -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Sidebar Shopping Option End -->
+            <!-- Product Categorie List Start -->
+            <div class="col-lg-9 order-lg-2">
+                <div class="grid-list-top border-default universal-padding fix mb-30">
+                    <div class="grid-list-view f-left">
+                        <ul class="list-inline nav">
+                            <li><a class="active" data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
+                            <li><a data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
+                            @*<li><span id="item-list-description" class="grid-item-list"></span></li>*@
+                        </ul>
+                    </div>
+                    <!-- Toolbar Short Area Start -->
+                    <div class="main-toolbar-sorter f-right">
+                        <div class="toolbar-sorter">
+                            <label>sort by</label>
+                            <select id="ddlSort" class="sorter" name="sorter">
+                                <option id="1" value="Default" selected="selected">Select</option>
+                                <option id="2" value="Name">Name</option>
+                                <option id="3" value="Price">Price</option>
+                            </select>
+                            <span><a data-toggle="tab" href="#" onclick="switchSort();"><i id="sortTypeSymbol" class="fa fa-arrow-up"></i></a></span>
+                        </div>
+                    </div>
+                    <!-- Toolbar Short Area End -->
+                </div>
+                <div id="tableContainer">
+                    @{
+                        Html.RenderAction("ProductList");
+                    }
+                </div>
+            </div>
+            <!-- product Categorie List End -->
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Shop Page End -->
+
+<script>
+
+    var isListView = false;
+    var sortId = 1;
+    var sortType = 1;
+    var callTimeout;
+    var minimumPrice = @Model.MinimumPrice;
+    var maximumPrice = @Model.MaximumPrice;
+
+    var priceSlider = $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: @Model.MaximumPrice +20,
+        values: [@Model.MinimumPrice, @Model.MaximumPrice],
+        slide: function (event, ui) {
+            minimumPrice = ui.values[0];
+            maximumPrice = ui.values[1];
+
+            $("#amount").val("$" + minimumPrice + "  $" + maximumPrice);
+
+            clearTimeout(callTimeout);
+            callTimeout = setTimeout(getData, 500);
+        }
+    });
+
+    $("#amount").val("$" + minimumPrice + "  $" + maximumPrice);
+
+    var focusAction = function () {
+        $('html, body').animate({
+            scrollTop: $('#tableContainer').offset().top - 100
+        }, 1000);
+    }
+
+    var switchView = function (isList) {
+        isListView = isList ? true : false;
+        getData();
+    }
+
+    var switchSort = function () {
+        $('#sortTypeSymbol').removeClass();
+        if (sortType == 1) {
+            sortType = 2;
+            $('#sortTypeSymbol').addClass("fa fa-arrow-down");
+        } else {
+            sortType = 1;
+            $('#sortTypeSymbol').addClass("fa fa-arrow-up");
+        }
+        getData();
+    }
+
+    var resetSort = function () {
+        $('#sortTypeSymbol').removeClass();
+        sortType = 1;
+        $('#sortTypeSymbol').addClass("fa fa-arrow-up");
+    }
+
+    $("#ddlSort").change(function () {
+        sortId = $("#ddlSort option:selected").attr("id");
+        resetSort();
+        getData();
+    })
+
+    var getData = function () {
+        $.ajax({
+            url: '@Url.Action("ProductList", "Products")',
+            data: {
+                searchKey: "@searchKey",
+                categoryId: @categoryId,
+                minimumPrice: minimumPrice,
+                maximumPrice: maximumPrice,
+                isList: isListView,
+                sortId: sortId,
+                sortType: sortType
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    }
+
+</script>

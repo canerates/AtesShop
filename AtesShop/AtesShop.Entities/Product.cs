@@ -24,6 +24,8 @@ namespace AtesShop.Entities
 
         public string ImageIdList { get; set; }
 
+        public bool isFeatured { get; set; }
+
         [NotMapped]
         public List<Image> Images { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using AtesShop.Entities;
+﻿using AtesShop.Admin.ViewModels;
+using AtesShop.Entities;
 using AtesShop.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ImageController : Controller
     {
         ImageService imageService = new ImageService();
@@ -40,20 +42,21 @@ namespace AtesShop.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase imageFile)
+        public ActionResult Upload(ImageFileViewModel model)
         {
-            if(imageFile.ContentLength > 0)
+
+            if (model.File.ContentLength > 0)
             {
                 byte[] imageData = null;
 
-                using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                using (var binaryReader = new BinaryReader(model.File.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(imageFile.ContentLength);
+                    imageData = binaryReader.ReadBytes(model.File.ContentLength);
                 }
                 var image = new Image();
-                image.Name = imageFile.FileName;
+                image.Name = model.Name;
                 image.Data = imageData;
-                image.ContentType = imageFile.ContentType;
+                image.ContentType = model.File.ContentType;
 
                 imageService.SaveImage(image);
             }
@@ -64,13 +67,40 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var image = imageService.GetImage(id);
-            return PartialView(image);
+            EditImageViewModel model = new EditImageViewModel();
+
+            model.Id = image.Id;
+            model.Name = image.Name;
+            model.ContentType = image.ContentType;
+            model.Data = image.Data;
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(HttpPostedFileBase imageFile)
+        public ActionResult Edit(ImageFileViewModel model)
         {
-            imageService.UpdateImage(image);
+            if (ModelState.IsValid)
+            {
+                var currentImage = imageService.GetImage(model.Id);
+
+
+                if (model.File != null && model.File.ContentLength > 0 )
+                {
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(model.File.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(model.File.ContentLength);
+                    }
+                    
+                    currentImage.Data = imageData;
+                    currentImage.ContentType = model.File.ContentType;
+                }
+                currentImage.Name = model.Name;
+
+                imageService.UpdateImage(currentImage);
+            }
+            
             return RedirectToAction("ImageTable");
         }
 

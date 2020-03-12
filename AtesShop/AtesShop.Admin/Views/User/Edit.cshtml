@@ -1,0 +1,102 @@
+﻿@model EditUserViewModel
+@{
+    ViewBag.Title = "Edit User";
+}
+<div class="container">
+    <div class="page-header">
+        <h2>Edit User</h2>
+    </div>
+</div>
+
+
+<div class="container">
+    <form id="editUser" class="form-horizontal">
+
+        <input type="hidden" name="UserName" value="@Model.UserName" />
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">First Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="FirstName" value="@Model.FirstName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Last Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="LastName" value="@Model.LastName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Email</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Email" value="@Model.Email" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Select Role</label>
+            <div class="col-sm-10">
+                @foreach (var role in Model.AvailableRoles)
+                {
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="SelectedRoles" value="@role"
+                                   @if (Model.SelectedRoles.Contains(@role)) { <text> checked</text>} />
+                            @role
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="updateBtn" class="btn btn-success" type="button">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    $("#updateBtn").click(function () {
+        if (validateSubmission()) {
+            editRequest();
+        }
+    });
+
+    function validateSubmission() {
+        var checkboxes = document.getElementsByName("SelectedRoles");
+        var flag = false;
+        for (var i = 0, l = checkboxes.length; i < l; i++) {
+            if (checkboxes[i].checked) {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            alert("Please check at least one role.");
+        }
+        return flag;
+    }
+
+    function editRequest() {
+        $.ajax({
+            type: 'POST',
+            url: '/User/Edit',
+            data: $("#editUser").serialize()
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    }
+
+</script>

@@ -1,7 +1,117 @@
-﻿
+﻿@model EditImageViewModel
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Update";
+
+    var imageURL = "data:image/jpg;base64, " + @Convert.ToBase64String(Model.Data);
 }
 
-<h2>Edit</h2>
+<div class="container">
+    <div class="page-header">
+        <h2>Update Image</h2>
+    </div>
+</div>
 
+<div class="container">
+    <div class="col-sm-6">
+        <form id="productForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+
+            <input id="imageId" type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Name</label>
+                <div class="col-sm-8">
+                    <input id="imageName" class="form-control" name="Name" value="@Model.Name" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <label class="file-upload btn btn-primary">
+                        <input id="imageUpload" name="ImageFile" type="file" accept=".png, .jpg" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                    <button id="updateBtn" class="btn btn-success" type="button">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-sm-6">
+        <output><img class="img-thumbnail img-fluid" id="imageThumb" style="height:300px; width:auto;" src="@imageURL" /></output>
+    </div>
+
+</div>
+
+
+<script>
+
+    document.getElementById('imageUpload').addEventListener('change', handleFileSelect, false);
+
+    $("#updateBtn").click(function () {
+        var formData = new FormData();
+        var imageFile = document.getElementById("imageUpload").files[0];
+        var imageId = $('#imageId').val();
+        var imageName = $('#imageName').val();
+        debugger;
+        formData.append("File", imageFile);
+        formData.append("Id", imageId);
+        formData.append("Name", imageName);
+
+        //var formData = new FormData($("#productForm").get(0));
+        //formData.append("imageName", $('#imageName').val());
+
+        $.ajax({
+            type: 'POST',
+            url: '/Image/Edit',
+            data: formData,
+            processData: false,
+            contentType: false
+           })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    $("#imageThumb").attr("src", e.target.result);
+                    //var span = document.createElement('span');
+                    //span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                    //  '" title="', escape(theFile.name), '"/>'
+                    //].join('');
+                    //document.getElementById('imageThumb').insertBefore(span, null);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    }
+
+</script>

@@ -3,11 +3,6 @@
     ViewBag.Title = "Product Table";
 }
 
-<div class="container">
-    <div class="page-header">
-        <h1>Product Table</h1>
-    </div>
-</div>
 
 <div class="container ">
     <form class="form-inline" method="post">
@@ -31,6 +26,7 @@
                 <th>Product Description</th>
                 <th>Product Price</th>
                 <th>Category</th>
+                <th>Featured</th>
                 <th>Product Image</th>
                 <th>Actions</th>
             </tr>
@@ -43,6 +39,18 @@
                     <td>@elem.Product.Description</td>
                     <td>@elem.Product.Price</td>
                     <td>@elem.Product.Category.Name</td>
+                    <td>
+                        @{if (elem.Product.isFeatured)
+                            {
+                                <span class="glyphicon glyphicon-ok" style="color:darkseagreen"></span>
+                            }
+                            else
+                            {
+                                <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                            }
+
+                        }
+                    </td>
                     <td>
                         @foreach (var image in elem.Images)
                         {
@@ -83,13 +91,13 @@
     });
 
     $("#newBtn").click(function () {
-
         $.ajax({
             url: '/Product/Create'
         })
         .done(function (response) {
             //alert("Success");
             $("#actionContainer").html(response);
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
@@ -105,6 +113,7 @@
         .done(function (response) {
             //alert("Success");
             $("#actionContainer").html(response);
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");

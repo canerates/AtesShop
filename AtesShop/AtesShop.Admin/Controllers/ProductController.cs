@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         ProductService productService = new ProductService();
@@ -70,7 +71,9 @@ namespace AtesShop.Admin.Controllers
             newProduct.Name = model.Name;
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
-            newProduct.CategoryId = model.CategoryId;
+            //newProduct.CategoryId = model.CategoryId;
+            newProduct.Category = categoryService.GetCategory(model.CategoryId);
+            newProduct.isFeatured = model.isFeatured;
 
             if (ModelState.IsValid)
             {
@@ -98,6 +101,7 @@ namespace AtesShop.Admin.Controllers
             model.Price = currentProduct.Price;
             model.ImageIdList = currentProduct.ImageIdList;
             model.CategoryId = currentProduct.CategoryId;
+            model.isFeatured = currentProduct.isFeatured;
             model.AvailableCategories = availableCategories;
             model.AvailableImages = availableImages;
             model.SelectedImages = selectedImageIdList;
@@ -113,6 +117,7 @@ namespace AtesShop.Admin.Controllers
             currentProduct.Price = model.Price;
             currentProduct.ImageIdList = model.ImageIdList;
             currentProduct.CategoryId = model.CategoryId;
+            currentProduct.isFeatured = model.isFeatured;
 
             if (ModelState.IsValid)
             {

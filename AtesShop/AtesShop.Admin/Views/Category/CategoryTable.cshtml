@@ -3,11 +3,6 @@
     ViewBag.Title = "CategoryTable";
 }
 
-<div class="container">
-    <div class="page-header">
-        <h1>Category Table</h1>
-    </div>
-</div>
 
 <div class="container">
     <form class="form-inline" method="post">
@@ -86,6 +81,7 @@
         .done(function (response) {
             //alert("Success");
             $("#actionContainer").html(response);
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
@@ -101,6 +97,7 @@
         .done(function (response) {
             //alert("Success");
             $("#actionContainer").html(response);
+            focusAction("actionContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");

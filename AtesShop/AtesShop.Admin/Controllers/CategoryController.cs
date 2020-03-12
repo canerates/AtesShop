@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         CategoryService categoryService = new CategoryService();

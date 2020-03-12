@@ -46,6 +46,18 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-sm-2">Featured</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label><input name="isFeatured" type="radio" value="True" checked/><span class="glyphicon glyphicon-ok" style="color:darkseagreen"></span></label>
+                </div>
+                <div class="radio">
+                    <label><input name="isFeatured" type="radio" value="False"/><span class="glyphicon glyphicon-remove" style="color:red"></span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-sm-2">Select Image</label>
             <div class="col-sm-10">
 
@@ -109,6 +121,7 @@
             //alert("Success");
             $("#tableContainer").html(response);
             $("#actionContainer").html("");
+            focusAction("tableContainer");
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             alert("Fail");

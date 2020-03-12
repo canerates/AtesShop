@@ -28,6 +28,8 @@ namespace AtesShop.Admin.ViewModels
 
         public int CategoryId { get; set; }
 
+        public bool isFeatured { get; set; }
+
         public List<Category> AvailableCategories { get; set; }
 
         public List<Image> AvailableImages { get; set; }
@@ -49,6 +51,8 @@ namespace AtesShop.Admin.ViewModels
         public string ImageIdList { get; set; }
 
         public int CategoryId { get; set; }
+
+        public bool isFeatured { get; set; }
 
         public List<Category> AvailableCategories { get; set; }
 

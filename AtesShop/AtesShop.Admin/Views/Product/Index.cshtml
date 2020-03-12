@@ -2,9 +2,10 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<div class="container" id="actionContainer">
-
+<div class="container">
+    <div class="page-header text-center">
+        <h1>Products</h1>
+    </div>
 </div>
 
 <div class="container" id="tableContainer" >
@@ -13,6 +14,17 @@
     }
 </div>
 
+<div class="container" id="actionContainer">
+
+</div>
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>
 
 
 

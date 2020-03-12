@@ -1,0 +1,208 @@
+﻿@model ProductListViewModel
+@using AtesShop.Web.Helpers
+
+@{
+    var categoryParameter = Model.CategoryId == 0 ? string.Empty : Model.CategoryId.ToString();
+    var current = ((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + 1;
+    var size = (((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + (Model.Products.Count < Model.Pager.PageSize ? Model.Products.Count : Model.Pager.PageSize));
+    var total = Model.Pager.TotalItems;
+
+    var itemListDesc = "Showing " + current + " - " + size + " of " + total;
+
+
+    this.ViewContext.HttpContext.Items["Stuff"] = itemListDesc;
+
+}
+
+<!-- Grid & List View End -->
+<div class="main-categorie">
+    <!-- Grid & List Main Area End -->
+    <div class="tab-content fix">
+        @if (!Model.IsListView)
+            {
+            <div id="grid-view" class="tab-pane active ">
+                <div class="row">
+                    <!-- Single Product Start -->
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="single-product">
+                                <!-- Product Image Start -->
+                                <div class="pro-img">
+                                    <a href="@Url.Action("Detail", "Products", new { id = product.Id})">
+                                        @{
+                                            int counter = 1;
+                                        }
+                                        @foreach (var image in product.Images)
+                                        {
+                                            <img class="@(counter==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="single-product">
+                                            counter++;
+                                        }
+                                        @*<img class="primary-img" src="~/Content/img/products/ip1_dome.png" alt="single-product">
+                                            <img class="secondary-img" src="~/Content/img/products/ip1_bullet.png" alt="single-product">*@
+                                    </a>
+                                </div>
+                                <!-- Product Image End -->
+                                <!-- Product Content Start -->
+                                <div class="pro-content">
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                    <p><span class="price">$@product.Price</span><del class="prev-price">$100.00</del></p>
+                                    <div class="pro-actions">
+                                        <div class="actions-secondary">
+                                            <a href="wishlist.html" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                            <a class="add-cart" href="cart.html" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
+                                            <a href="compare.html" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product Content End -->
+                            </div>
+                        </div>
+                                            }
+                    <!-- Single Product End -->
+
+
+                </div>
+            </div>
+                                            }
+                                            else
+                                            {
+                                                <div id="list-view" class="tab-pane active">
+                                                    <!-- Single Product Start -->
+
+                                                    @foreach (var product in Model.Products)
+                                                    {
+                                                        <div class="single-product">
+                                                            <!-- Product Image Start -->
+                                                            <div class="pro-img">
+                                                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
+                                                                    @{
+                                                                        int counter = 1;
+                                                                    }
+                                                                    @foreach (var image in product.Images)
+                                                                    {
+                                                                        <img class="@(counter==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="single-product">
+                                                                        counter++;
+                                                                    }
+
+                                                                </a>
+                                                            </div>
+                                                            <!-- Product Image End -->
+                                                            <!-- Product Content Start -->
+                                                            <div class="pro-content">
+                                                                <div class="product-rating">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                                <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                                                <p><span class="price">$@product.Price</span><del class="prev-price">$100.00</del></p>
+                                                                <p>@product.Description</p>
+                                                                <div class="pro-actions">
+                                                                    <div class="actions-secondary">
+                                                                        <a href="wishlist.html" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                                                        <a class="add-cart" href="cart.html" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
+                                                                        <a href="compare.html" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Product Content End -->
+                                                        </div>
+
+                                                                        }
+                                                    <!-- Single Product End -->
+                                                </div>
+                                                                        }
+
+        <!-- #grid view End -->
+        <!-- #list view End -->
+    </div>
+    <!-- Grid & List Main Area End -->
+</div>
+<!--Breadcrumb and Page Show Start -->
+<div class="pagination-box fix">
+    <ul class="blog-pagination ">
+        @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+        {
+
+            for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                string activeClass = Model.Pager.CurrentPage == page ? "active" : string.Empty;
+
+
+                <li class="@activeClass">
+                    @Ajax.RawActionLink(page.ToString(),
+                                             "ProductList",
+                                             "Products",
+                                             new
+                                             {
+                                                 isList = Model.IsListView,
+                                                 categoryId = categoryParameter,
+                                                 pageNo = page,
+                                                 sortId = Model.SortId,
+                                                 sortType = Model.SortType
+                                             },
+                                             new AjaxOptions
+                                             {
+                                                 HttpMethod = "GET",
+                                                 UpdateTargetId = "tableContainer",
+                                                 InsertionMode = InsertionMode.Replace,
+                                                 OnComplete = "focusAction()"
+                                             },
+                                             "")
+                </li>
+            }
+            if (Model.Pager.CurrentPage < Model.Pager.EndPage)
+            {
+                <li class="pagination_list">
+                    @Ajax.RawActionLink("<i class='fa fa-angle-right'></i>",
+                          "ProductList",
+                          "Products",
+                          new
+                          {
+                              isList = Model.IsListView,
+                              categoryId = categoryParameter,
+                              pageNo = Model.Pager.CurrentPage + 1,
+                              sortId = Model.SortId,
+                              sortType = Model.SortType
+                          },
+                          new AjaxOptions
+                          {
+                              HttpMethod = "GET",
+                              UpdateTargetId = "tableContainer",
+                              InsertionMode = InsertionMode.Replace,
+                              OnComplete = "focusAction()"
+                          },
+                          "")
+                </li>
+            }
+            else
+            {
+                <li style="display: inline-block; font-size:16px; color:808080; border:1px solid #e7e7e7; width: 40px; text-align:center; height:40px; line-height: 40px; background: #fff;"><i class='fa fa-angle-right'></i></li>
+            }
+
+        }
+
+    </ul>
+    <div id="dataFromPartial">@itemListDesc</div>
+    <div class="toolbar-sorter-footer">
+        <label>show</label>
+        <select class="sorter" name="sorter">
+            <option value="Position" selected="selected">12</option>
+            <option value="Product Name">15</option>
+            <option value="Price">30</option>
+        </select>
+        <span>per page</span>
+    </div>
+
+</div>
+<!--Breadcrumb and Page Show End -->
