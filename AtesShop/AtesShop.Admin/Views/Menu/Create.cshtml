@@ -1,0 +1,99 @@
+﻿@model NewMenuViewModel
+@{
+    if (Model.Type == 1)
+    {
+        ViewBag.Title = "Add Main Menu";
+    }
+    else
+    {
+        ViewBag.Title = "Add Sub Menu";
+    }
+
+}
+
+
+<div class="container">
+    <div class="page-header">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+<div class="container">
+    <form id="createMenu" class="form-horizontal">
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Type" value="@Model.Type" />
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Controller Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="ControllerName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Action Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="ActionName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Order Id</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="OrderId" />
+            </div>
+        </div>
+        @if (Model.Type != 1)
+        {
+            <div class="form-group">
+                <label class="control-label col-sm-2">Main Menu</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="MainMenuId">
+                        @foreach (var menu in Model.AvailableMainMenus)
+                        {
+                            <option value="@menu.Id">@menu.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="saveBtn" class="btn btn-success" type="button">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+
+    $("#saveBtn").click(function () {
+        
+        $.ajax({
+            type: 'POST',
+            url: '/Menu/Create',
+            data: $("#createMenu").serialize()
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            alert("Fail");
+        });
+
+    });
+
+
+</script>

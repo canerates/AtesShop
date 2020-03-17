@@ -1,0 +1,34 @@
+﻿@{
+    if (ViewBag.type == 1)
+    {
+        ViewBag.Title = "Main Menus";
+    }
+    else
+    {
+        ViewBag.Title = "Sub Menus";
+    }
+}
+
+<div class="container">
+    <div class="page-header text-center">
+        <h1>@ViewBag.Title</h1>
+    </div>
+</div>
+
+<div class="container" id="tableContainer">
+    @{
+        Html.RenderAction("MenuTable", new { type = ViewBag.type });
+    }
+</div>
+
+<div class="container" id="actionContainer">
+
+</div>
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

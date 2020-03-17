@@ -30,6 +30,12 @@
                     <li>@Html.ActionLink("Image", "Index", "Image")</li>
                     <li>@Html.ActionLink("User", "Index", "User")</li>
                     <li>@Html.ActionLink("Role", "Index", "Role")</li>
+                    <li><a class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("Index", "Menu", new { type = 1 })">Menu <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index", "Menu", new { type = 1 })">Main Menu</a></li>
+                            <li><a href="@Url.Action("Index", "Menu", new { type = 2 })">Sub Menu</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

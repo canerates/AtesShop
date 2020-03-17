@@ -56,7 +56,6 @@ namespace AtesShop.Services
                 context.SaveChanges();
             }
         }
-
-
+        
     }
 }

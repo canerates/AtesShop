@@ -1,0 +1,97 @@
+﻿@model EditMenuViewModel
+@{
+    if (Model.Type == 1)
+    {
+        ViewBag.Title = "Edit Main Menu";
+    }
+    else
+    {
+        ViewBag.Title = "Edit Sub Menu";
+    }
+    
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+<div class="container">
+    <form id="editMenu" class="form-horizontal">
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Type" value="@Model.Type" />
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Name" value="@Model.Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Controller Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="ControllerName" value="@Model.ControllerName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Action Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="ActionName" value="@Model.ActionName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Menu Order Id</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="OrderId" value="@Model.OrderId" />
+            </div>
+        </div>
+
+        @if (Model.Type != 1)
+        {
+            <div class="form-group">
+                <label class="control-label col-sm-2">Product Category</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="MainMenuId">
+                        @foreach (var menu in Model.AvailableMainMenus)
+                        {
+                            var selected = menu.Id == Model.MainMenuId ? "selected" : string.Empty;
+                            <option value="@menu.Id" @selected>@menu.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="updateBtn" class="btn btn-success" type="button">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+    $("#updateBtn").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Menu/Edit',
+            data: $("#editMenu").serialize()
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+</script>

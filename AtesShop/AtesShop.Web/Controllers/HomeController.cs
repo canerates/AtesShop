@@ -58,7 +58,7 @@ namespace AtesShop.Web.Controllers
             model.MainMenuList = menuService.GetMainMenus();
             foreach (var main in model.MainMenuList)
             {
-                main.SubMenus = menuService.GetSubMenus(main.Id);
+                main.SubMenus = menuService.GetSubMenuByParent(main.Id);
             }
             
             return PartialView("_Menu", model);

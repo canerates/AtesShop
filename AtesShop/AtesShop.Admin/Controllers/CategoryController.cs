@@ -113,9 +113,9 @@ namespace AtesShop.Admin.Controllers
         }
         
         [HttpPost]
-        public ActionResult Delete(Category category)
+        public ActionResult Delete(int id)
         {
-            categoryService.DeleteCategory(category.Id);
+            categoryService.DeleteCategory(id);
             return RedirectToAction("CategoryTable");
         }
     }
