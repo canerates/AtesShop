@@ -26,5 +26,6 @@ namespace AtesShop.Entities
 
         public virtual MainMenu MainMenu { get; set; }
 
+        public string ResourceKey { get; set; }
     }
 }

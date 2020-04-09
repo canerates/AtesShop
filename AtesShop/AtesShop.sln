@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Services", "AtesSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Admin", "AtesShop.Admin\AtesShop.Admin.csproj", "{A7CB5863-0073-4AED-A6C2-B5E4906E8351}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtesShop.Resources", "AtesShop.Resources\AtesShop.Resources.csproj", "{8F83A1F9-E35F-4A88-BA84-A21816CB5062}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceBuilder", "ResourceBuilder\ResourceBuilder.csproj", "{43163634-3734-4DDD-832C-A29DDD1762CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{A7CB5863-0073-4AED-A6C2-B5E4906E8351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7CB5863-0073-4AED-A6C2-B5E4906E8351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7CB5863-0073-4AED-A6C2-B5E4906E8351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F83A1F9-E35F-4A88-BA84-A21816CB5062}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F83A1F9-E35F-4A88-BA84-A21816CB5062}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F83A1F9-E35F-4A88-BA84-A21816CB5062}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F83A1F9-E35F-4A88-BA84-A21816CB5062}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43163634-3734-4DDD-832C-A29DDD1762CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43163634-3734-4DDD-832C-A29DDD1762CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43163634-3734-4DDD-832C-A29DDD1762CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43163634-3734-4DDD-832C-A29DDD1762CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

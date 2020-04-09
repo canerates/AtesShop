@@ -9,7 +9,7 @@ using static AtesShop.Web.Helpers.SharedHelper;
 
 namespace AtesShop.Web.Controllers
 {
-    public class ShopController : Controller
+    public class ShopController : BaseController
     {
         ProductService productService = new ProductService();
         CategoryService categoryService = new CategoryService();

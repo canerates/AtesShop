@@ -53,29 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASContext.cs" />
-    <Compile Include="Migrations\202003100551417_initialized.cs" />
-    <Compile Include="Migrations\202003100551417_initialized.designer.cs">
-      <DependentUpon>202003100551417_initialized.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003120309252_addedMenuItems.cs" />
-    <Compile Include="Migrations\202003120309252_addedMenuItems.designer.cs">
-      <DependentUpon>202003120309252_addedMenuItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003120312365_updateMenuColumn.cs" />
-    <Compile Include="Migrations\202003120312365_updateMenuColumn.designer.cs">
-      <DependentUpon>202003120312365_updateMenuColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003120320461_addOrderId.cs" />
-    <Compile Include="Migrations\202003120320461_addOrderId.designer.cs">
-      <DependentUpon>202003120320461_addOrderId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003120509444_updateMenuModels.cs" />
-    <Compile Include="Migrations\202003120509444_updateMenuModels.designer.cs">
-      <DependentUpon>202003120509444_updateMenuModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003120511064_updateMenuModels2.cs" />
-    <Compile Include="Migrations\202003120511064_updateMenuModels2.designer.cs">
-      <DependentUpon>202003120511064_updateMenuModels2.cs</DependentUpon>
+    <Compile Include="Migrations\202004090253427_initialized.cs" />
+    <Compile Include="Migrations\202004090253427_initialized.designer.cs">
+      <DependentUpon>202004090253427_initialized.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,23 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003100551417_initialized.resx">
-      <DependentUpon>202003100551417_initialized.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003120309252_addedMenuItems.resx">
-      <DependentUpon>202003120309252_addedMenuItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003120312365_updateMenuColumn.resx">
-      <DependentUpon>202003120312365_updateMenuColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003120320461_addOrderId.resx">
-      <DependentUpon>202003120320461_addOrderId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003120509444_updateMenuModels.resx">
-      <DependentUpon>202003120509444_updateMenuModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003120511064_updateMenuModels2.resx">
-      <DependentUpon>202003120511064_updateMenuModels2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004090253427_initialized.resx">
+      <DependentUpon>202004090253427_initialized.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,8 @@ namespace AtesShop.Admin.ViewModels
         public int OrderId { get; set; }
         public List<SubMenu> SubMenus { get; set; }
         public MainMenu MainMenu { get; set; }
+        public List<Resource> NameResources { get; set; }
+        public int ResourceCount { get; set; }
 
     }
 
@@ -43,7 +45,28 @@ namespace AtesShop.Admin.ViewModels
 
         public List<MainMenu> AvailableMainMenus { get; set; }
 
+        public string ResourceKey { get; set; }
+        
     }
+
+    public class MenuResourcesViewModel
+    {
+        public int MenuId { get; set; }
+        public int MenuType { get; set; }
+        public List<Resource> Resources { get; set; }
+        public int ResourceCount { get; set; }
+    }
+
+    public class MenuResourceViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Culture { get; set; }
+        public int Type { get; set; }
+
+    }
+
+
     
     
 

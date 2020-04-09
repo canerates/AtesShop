@@ -1,0 +1,87 @@
+﻿@model CategoryTranslationResources
+
+@{
+    ViewBag.Title = "AddTranslation";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>Add Category Translation</h2>
+    </div>
+</div>
+
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Culture (Lang.)</th>
+                <th>Category Name</th>
+                <th>Category Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ResourceCount; i++)
+            {
+                <tr>
+                    <td>@Model.NameResources[i].Culture</td>
+                    <td>@Model.NameResources[i].Value</td>
+                    <td>@Model.DescriptionResources[i].Value</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <form id="createCategoryTranslation" class="form-horizontal">
+        <input type="hidden" name="Id" value="@Model.TranslationId" />
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Culture Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Culture" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Category Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Category Description</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Description" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="saveBtn" class="btn btn-success" type="button">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    $("#saveBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Category/AddTranslation',
+            data: $("#createCategoryTranslation").serialize()
+        })
+         .done(function (response) {
+             //alert("Success");
+             $("#tableContainer").html(response);
+             $("#actionContainer").html("");
+             focusAction("tableContainer");
+         })
+         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+             alert("Fail");
+         });
+
+    });
+
+</script>

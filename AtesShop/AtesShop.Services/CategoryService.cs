@@ -50,7 +50,6 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
                 var category = context.Categories.Find(id);
                 context.Categories.Remove(category);
                 context.SaveChanges();

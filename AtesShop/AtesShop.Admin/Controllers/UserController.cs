@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private ApplicationUserManager _userManager;

@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -225,6 +226,7 @@
     <Compile Include="ViewModels\ImageViewModels.cs" />
     <Compile Include="ViewModels\MenuViewModels.cs" />
     <Compile Include="ViewModels\ProductViewModels.cs" />
+    <Compile Include="ViewModels\ResourceViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4249,6 +4251,17 @@
     <Content Include="Views\Menu\MenuTable.cshtml" />
     <Content Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Edit.cshtml" />
+    <Content Include="Views\Product\AddTranslation.cshtml" />
+    <Content Include="Views\Product\EditTranslation.cshtml" />
+    <Content Include="Views\Category\AddTranslation.cshtml" />
+    <Content Include="Views\Category\EditTranslation.cshtml" />
+    <Content Include="Views\Menu\AddTranslation.cshtml" />
+    <Content Include="Views\Menu\EditTranslation.cshtml" />
+    <Content Include="Views\Resource\Index.cshtml" />
+    <Content Include="Views\Resource\ResourceTable.cshtml" />
+    <Content Include="Views\Resource\Create.cshtml" />
+    <Content Include="Views\Resource\Edit.cshtml" />
+    <Content Include="Views\Resource\AddTranslation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

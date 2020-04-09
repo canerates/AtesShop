@@ -12,6 +12,7 @@ namespace AtesShop.Admin.Controllers
     public class MenuController : Controller
     {
         MenuService menuService = new MenuService();
+        ResourceService resourceService = new ResourceService();
 
         [HttpGet]
         public ActionResult Index(int type)
@@ -44,6 +45,11 @@ namespace AtesShop.Admin.Controllers
                     elem.OrderId = menu.OrderId;
                     elem.SubMenus = menu.SubMenus;
 
+
+                    //Resources
+                    elem.NameResources = resourceService.GetResourcesByKey(menu.ResourceKey);
+                    elem.ResourceCount = resourceService.GetResourcesCountByKey(menu.ResourceKey);
+
                     model.Add(elem);
                 }
 
@@ -66,6 +72,10 @@ namespace AtesShop.Admin.Controllers
                     elem.ControllerName = menu.ControllerName;
                     elem.OrderId = menu.OrderId;
                     elem.MainMenu = menu.MainMenu;
+
+                    //Resources
+                    elem.NameResources = resourceService.GetResourcesByKey(menu.ResourceKey);
+                    elem.ResourceCount = resourceService.GetResourcesCountByKey(menu.ResourceKey);
 
                     model.Add(elem);
                 }
@@ -94,8 +104,18 @@ namespace AtesShop.Admin.Controllers
                 newMainMenu.OrderId = model.OrderId;
                 newMainMenu.ActionName = model.ActionName;
                 newMainMenu.ControllerName = model.ControllerName;
+                newMainMenu.ResourceKey = model.Name.Replace(" ", "") + "T" + model.Type + "O" + model.OrderId;
 
                 menuService.SaveMainMenu(newMainMenu);
+
+                //Resource
+                var menuNameResource = new Resource();
+                menuNameResource.Key = newMainMenu.ResourceKey;
+                menuNameResource.Value = model.Name;
+                menuNameResource.Culture = "en-us";
+
+                resourceService.SaveResource(menuNameResource);
+                
             }
             else
             {
@@ -105,9 +125,17 @@ namespace AtesShop.Admin.Controllers
                 newSubMenu.ActionName = model.ActionName;
                 newSubMenu.ControllerName = model.ControllerName;
                 newSubMenu.MainMenu = menuService.GetMainMenu(model.MainMenuId);
+                newSubMenu.ResourceKey = model.Name.Replace(" ", "") + "T" + model.Type + "O" + model.OrderId;
 
                 menuService.SaveSubMenu(newSubMenu);
 
+                //Resource
+                var menuNameResource = new Resource();
+                menuNameResource.Key = newSubMenu.ResourceKey;
+                menuNameResource.Value = model.Name;
+                menuNameResource.Culture = "en-us";
+
+                resourceService.SaveResource(menuNameResource);
             }
 
             return RedirectToAction("MenuTable", new { type = model.Type });
@@ -127,6 +155,7 @@ namespace AtesShop.Admin.Controllers
                 model.OrderId = currentMenu.OrderId;
                 model.ActionName = currentMenu.ActionName;
                 model.ControllerName = currentMenu.ControllerName;
+                model.ResourceKey = currentMenu.ResourceKey;
                 
             }
             else
@@ -139,7 +168,7 @@ namespace AtesShop.Admin.Controllers
                 model.ControllerName = currentMenu.ControllerName;
                 model.MainMenuId = currentMenu.MainMenuId;
                 model.AvailableMainMenus = menuService.GetMainMenus();
-
+                model.ResourceKey = currentMenu.ResourceKey;
             }
             
             return PartialView(model);
@@ -157,6 +186,15 @@ namespace AtesShop.Admin.Controllers
                 currentMenu.ControllerName = model.ControllerName;
 
                 menuService.UpdateMainMenu(currentMenu);
+
+                //Resource
+
+                var menuNameResource = new Resource();
+                menuNameResource = resourceService.GetResource(model.ResourceKey, "en-us");
+                menuNameResource.Value = model.Name;
+
+                resourceService.UpdateResource(menuNameResource);
+
             }
             else
             {
@@ -168,6 +206,14 @@ namespace AtesShop.Admin.Controllers
                 currentMenu.MainMenuId = model.MainMenuId;
 
                 menuService.UpdateSubMenu(currentMenu);
+
+                //Resource
+
+                var menuNameResource = new Resource();
+                menuNameResource = resourceService.GetResource(model.ResourceKey, "en-us");
+                menuNameResource.Value = model.Name;
+
+                resourceService.UpdateResource(menuNameResource);
             }
 
             return RedirectToAction("MenuTable", new { type = model.Type });
@@ -178,14 +224,135 @@ namespace AtesShop.Admin.Controllers
         {
             if (type == 1)
             {
+                var currentMenu = menuService.GetMainMenu(id);
+                resourceService.DeleteResources(currentMenu.ResourceKey);
+
                 menuService.DeleteMainMenu(id);
 
             }
             else
             {
+                var currentMenu = menuService.GetSubMenu(id);
+                resourceService.DeleteResources(currentMenu.ResourceKey);
                 menuService.DeleteSubMenu(id);
             }
             return RedirectToAction("MenuTable", new { type = type });
+        }
+
+        [HttpGet]
+        public ActionResult AddTranslation(int id, int type)
+        {
+            MenuResourcesViewModel model = new MenuResourcesViewModel();
+            model.MenuId = id;
+            model.MenuType = type;
+
+            if (type == 1)
+            {
+                var currentMenu = menuService.GetMainMenu(id);
+                model.Resources = resourceService.GetResourcesByKey(currentMenu.ResourceKey);
+                model.ResourceCount = resourceService.GetResourcesCountByKey(currentMenu.ResourceKey);
+            }
+            else
+            {
+                var currentMenu = menuService.GetSubMenu(id);
+                model.Resources = resourceService.GetResourcesByKey(currentMenu.ResourceKey);
+                model.ResourceCount = resourceService.GetResourcesCountByKey(currentMenu.ResourceKey);
+            }
+            
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddTranslation(MenuResourceViewModel model)
+        {
+            if (model.Type == 1)
+            {
+                var currentMenu = menuService.GetMainMenu(model.Id);
+                var menuResource = new Resource();
+                menuResource.Key = currentMenu.ResourceKey;
+                menuResource.Culture = model.Culture;
+                menuResource.Value = model.Name;
+
+                resourceService.SaveResource(menuResource);
+            }
+            else
+            {
+                var currentMenu = menuService.GetSubMenu(model.Id);
+                var menuResource = new Resource();
+                menuResource.Key = currentMenu.ResourceKey;
+                menuResource.Culture = model.Culture;
+                menuResource.Value = model.Name;
+
+                resourceService.SaveResource(menuResource);
+            }
+            
+            return RedirectToAction("MenuTable" , new { type = model.Type });
+        }
+
+        [HttpGet]
+        public ActionResult EditTranslation(int id, int type, string culture)
+        {
+            MenuResourceViewModel model = new MenuResourceViewModel();
+            model.Id = id;
+            model.Type = type;
+            model.Culture = culture;
+
+            if (type == 1)
+            {
+                var currentMenu = menuService.GetMainMenu(id);
+                model.Name = resourceService.GetResource(currentMenu.ResourceKey, culture).Value;
+
+            }
+            else
+            {
+                var currentMenu = menuService.GetSubMenu(id);
+                model.Name = resourceService.GetResource(currentMenu.ResourceKey, culture).Value;
+            }
+            
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditTranslation(MenuResourceViewModel model)
+        {
+            var menuResource = new Resource();
+
+            if (model.Type == 1)
+            {
+                var currentMenu = menuService.GetMainMenu(model.Id);
+                menuResource = resourceService.GetResource(currentMenu.ResourceKey, model.Culture);
+                
+            }
+            else
+            {
+                var currentMenu = menuService.GetSubMenu(model.Id);
+                menuResource = resourceService.GetResource(currentMenu.ResourceKey, model.Culture);
+
+            }
+
+            menuResource.Value = model.Name;
+            resourceService.UpdateResource(menuResource);
+            
+            return RedirectToAction("MenuTable", new { type = model.Type });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTranslation(int id, int type, string culture)
+        {
+            if (type == 1)
+            {
+                var currentMenu = menuService.GetMainMenu(id);
+                var menuResourceId = resourceService.GetResource(currentMenu.ResourceKey, culture).Id;
+                resourceService.DeleteResource(menuResourceId);
+            }
+            else
+            {
+                var currentMenu = menuService.GetSubMenu(id);
+                var menuResourceId = resourceService.GetResource(currentMenu.ResourceKey, culture).Id;
+                resourceService.DeleteResource(menuResourceId);
+            }
+
+            return RedirectToAction("MenuTable");
         }
     }
 }

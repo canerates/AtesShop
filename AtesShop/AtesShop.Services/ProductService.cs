@@ -34,7 +34,8 @@ namespace AtesShop.Services
                 return context.Products
                     .OrderBy(x => x.Id)
                     .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize).Include(x => x.Category)
+                    .Take(pageSize)
+                    .Include(x => x.Category)
                     .ToList();
             }
         }
@@ -86,6 +87,36 @@ namespace AtesShop.Services
             {
                 return context.Products
                     .Where(x => x.isFeatured)
+                    .ToList();
+            }
+        }
+
+        public List<Product> GetNewProducts()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Products
+                    .Where(x => x.isNew)
+                    .ToList();
+            }
+        }
+
+        public List<Product> GetTopRatedProducts()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Products
+                    .Where(x => x.isTopRated)
+                    .ToList();
+            }
+        }
+
+        public List<Product> GetBestSellerProducts()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Products
+                    .Where(x => x.isBestSeller)
                     .ToList();
             }
         }
@@ -203,9 +234,7 @@ namespace AtesShop.Services
 
             }
         }
-
-
-
+        
         public void SaveProduct(Product product)
         {
             using (var context = new ASContext())

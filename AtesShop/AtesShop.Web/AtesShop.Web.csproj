@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\SharedHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -245,7 +247,13 @@
     <Content Include="Content\img\banner\8.jpg" />
     <Content Include="Content\img\banner\9.jpg" />
     <Content Include="Content\img\banner\about.jpg" />
+    <Content Include="Content\img\banner\ipc.jpg" />
+    <Content Include="Content\img\banner\ipc2.jpg" />
+    <Content Include="Content\img\banner\nvr.jpg" />
+    <Content Include="Content\img\banner\nvr2.jpg" />
     <Content Include="Content\img\banner\pattern.png" />
+    <Content Include="Content\img\banner\sp.jpg" />
+    <Content Include="Content\img\banner\sp2.jpg" />
     <Content Include="Content\img\banner\tab-banner.jpg" />
     <Content Include="Content\img\blog\1.jpg" />
     <Content Include="Content\img\blog\2.jpg" />
@@ -257,6 +265,11 @@
     <Content Include="Content\img\blog\8.jpg" />
     <Content Include="Content\img\blog\9.jpg" />
     <Content Include="Content\img\blog\details.jpg" />
+    <Content Include="Content\img\blog\fd2.png" />
+    <Content Include="Content\img\blog\is1-1.png" />
+    <Content Include="Content\img\blog\ri.jpg" />
+    <Content Include="Content\img\blog\sc1.png" />
+    <Content Include="Content\img\blog\tw.jpg" />
     <Content Include="Content\img\blog\user.jpg" />
     <Content Include="Content\img\brand\1.png" />
     <Content Include="Content\img\brand\2.png" />
@@ -389,6 +402,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\upload\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Support\" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +417,10 @@
     <ProjectReference Include="..\AtesShop.Entities\AtesShop.Entities.csproj">
       <Project>{ECE1128E-A159-4DF4-9846-9B06C0071730}</Project>
       <Name>AtesShop.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AtesShop.Resources\AtesShop.Resources.csproj">
+      <Project>{8f83a1f9-e35f-4a88-ba84-a21816cb5062}</Project>
+      <Name>AtesShop.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\AtesShop.Services\AtesShop.Services.csproj">
       <Project>{967999A5-9E3A-44B4-B6DA-02AB55E4F25A}</Project>

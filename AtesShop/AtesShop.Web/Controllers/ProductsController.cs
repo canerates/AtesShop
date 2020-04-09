@@ -1,8 +1,10 @@
 ﻿using AtesShop.Entities;
+using AtesShop.Resources;
 using AtesShop.Services;
 using AtesShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,11 +13,13 @@ using static AtesShop.Web.Helpers.SharedHelper;
 namespace AtesShop.Web.Controllers
 {
     
-    public class ProductsController : Controller
+    public class ProductsController : BaseController
     {
         ProductService productService = new ProductService();
         CategoryService categoryService = new CategoryService();
         ImageService imageService = new ImageService();
+        private static IResourceProvider resourceProvider = new DbResourceProvider();
+        TranslationService translationService = new TranslationService();
 
         [HttpGet]
         public ActionResult Index(int? categoryId, string search)
@@ -46,6 +50,9 @@ namespace AtesShop.Web.Controllers
             int pageSize = isList ? 5 : 9;
             pageNo = pageNo.HasValue ? pageNo.Value : 1;
             var totalProducts = productService.SearchProductsCount(search, categoryId, maximumPrice, minimumPrice, sortId);
+            
+            //translation
+            
 
             model.Products = productService.SearchProducts(search, categoryId, maximumPrice, minimumPrice, sortId, sortType, pageNo.Value, pageSize);
 
@@ -55,6 +62,12 @@ namespace AtesShop.Web.Controllers
             foreach (var product in model.Products)
             {
                 product.Images = imageService.GetImagesByList(product.ImageIdList);
+                var translation = translationService.GetProductTranslationByProduct(product.Id);
+
+                //Localization
+                product.Name = resourceProvider.GetResource(translation.ProductNameResourceKey, CultureInfo.CurrentUICulture.Name) as string;
+                product.Description = resourceProvider.GetResource(translation.ProductDescriptionResourceKey, CultureInfo.CurrentUICulture.Name) as string;
+                //product.Price = resourceProvider.GetResource(product.Translation.ProductPriceResourceKey, CultureInfo.CurrentUICulture.Name) as string;
             }
 
             model.Pager = new Pager(totalProducts, pageNo, pageSize);

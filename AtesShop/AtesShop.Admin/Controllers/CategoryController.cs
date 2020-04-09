@@ -14,6 +14,8 @@ namespace AtesShop.Admin.Controllers
     {
         CategoryService categoryService = new CategoryService();
         ImageService imageService = new ImageService();
+        TranslationService translationService = new TranslationService();
+        ResourceService resourceService = new ResourceService();
 
         [HttpGet]
         public ActionResult Index()
@@ -37,6 +39,9 @@ namespace AtesShop.Admin.Controllers
             {
                 CategoryViewModel elem = new CategoryViewModel();
                 elem.Category = category;
+
+                //Category Images
+
                 List<Image> images = new List<Image>();
 
                 List<int> imageIdList = category.ImageIdList.Split(',').Select(int.Parse).ToList();
@@ -47,6 +52,16 @@ namespace AtesShop.Admin.Controllers
                     images.Add(image);
                 }
                 elem.Images = images;
+
+                //Translations
+
+                var translation = translationService.GetCategoryTranslationByCategory(category.Id);
+
+                elem.CategoryNameResources = resourceService.GetResourcesByKey(translation.CategoryNameResourceKey);
+                elem.CategoryDescriptionResources = resourceService.GetResourcesByKey(translation.CategoryDescriptionResourceKey);
+
+                elem.ResourceCount = resourceService.GetResourcesCountByKey(translation.CategoryNameResourceKey);
+                
                 model.Add(elem);
             }
             
@@ -65,6 +80,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Create(NewCategoryViewModel model)
         {
+            //Category
             var newCategory = new Category();
             newCategory.Name = model.Name;
             newCategory.Description = model.Description;
@@ -75,6 +91,32 @@ namespace AtesShop.Admin.Controllers
             }
 
             categoryService.SaveCategory(newCategory);
+
+            //CategoryTranslation
+
+            var newTranslation = new CategoryTranslation();
+            newTranslation.Category = newCategory;
+            newTranslation.CategoryNameResourceKey = "CategoryName" + newCategory.Id;
+            newTranslation.CategoryDescriptionResourceKey = "CategoryDesc" + newCategory.Id;
+
+            translationService.SaveCategoryTranslation(newTranslation);
+
+            //Resource
+
+            var categoryNameResource = new Resource();
+            categoryNameResource.Key = newTranslation.CategoryNameResourceKey;
+            categoryNameResource.Value = model.Name;
+            categoryNameResource.Culture = "en-us";
+
+            resourceService.SaveResource(categoryNameResource);
+
+            var categoryDescriptionResource = new Resource();
+            categoryDescriptionResource.Key = newTranslation.CategoryDescriptionResourceKey;
+            categoryDescriptionResource.Value = model.Description;
+            categoryDescriptionResource.Culture = "en-us";
+
+            resourceService.SaveResource(categoryDescriptionResource);
+            
             return RedirectToAction("CategoryTable");
         }
 
@@ -98,6 +140,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {
+            //Categories Table
             var currentCategory = categoryService.GetCategory(model.Id);
             currentCategory.Name = model.Name;
             currentCategory.Description = model.Description;
@@ -109,13 +152,119 @@ namespace AtesShop.Admin.Controllers
             
             categoryService.UpdateCategory(currentCategory);
 
+            //Resource Table
+            var currentTranslation = translationService.GetCategoryTranslationByCategory(model.Id);
+
+            var categoryNameResource = new Resource();
+            categoryNameResource = resourceService.GetResource(currentTranslation.CategoryNameResourceKey, "en-us");
+            categoryNameResource.Value = model.Name;
+
+            resourceService.UpdateResource(categoryNameResource);
+
+            var categoryDescriptionResource = new Resource();
+            categoryDescriptionResource = resourceService.GetResource(currentTranslation.CategoryDescriptionResourceKey, "en-us");
+            categoryDescriptionResource.Value = model.Description;
+
+            resourceService.UpdateResource(categoryDescriptionResource);
+
             return RedirectToAction("CategoryTable");
         }
         
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            var currentTranslation = translationService.GetCategoryTranslationByCategory(id);
+
+            resourceService.DeleteResources(currentTranslation.CategoryNameResourceKey);
+            resourceService.DeleteResources(currentTranslation.CategoryDescriptionResourceKey);
+
             categoryService.DeleteCategory(id);
+            return RedirectToAction("CategoryTable");
+        }
+
+        [HttpGet]
+        public ActionResult AddTranslation(int id)
+        {
+            CategoryTranslationResources model = new CategoryTranslationResources();
+
+            var currentTranslation = translationService.GetCategoryTranslationByCategory(id);
+
+            model.NameResources = resourceService.GetResourcesByKey(currentTranslation.CategoryNameResourceKey);
+            model.DescriptionResources = resourceService.GetResourcesByKey(currentTranslation.CategoryDescriptionResourceKey);
+            model.ResourceCount = resourceService.GetResourcesCountByKey(currentTranslation.CategoryNameResourceKey);
+
+            model.TranslationId = currentTranslation.Id;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddTranslation(NewCategoryTranslationModel model)
+        {
+            var translation = translationService.GetCategoryTranslation(model.Id);
+
+            //Resource
+            var categoryNameResource = new Resource();
+            categoryNameResource.Key = translation.CategoryNameResourceKey;
+            categoryNameResource.Value = model.Name;
+            categoryNameResource.Culture = model.Culture;
+
+            resourceService.SaveResource(categoryNameResource);
+
+            var categoryDescriptionResource = new Resource();
+            categoryDescriptionResource.Key = translation.CategoryDescriptionResourceKey;
+            categoryDescriptionResource.Value = model.Description;
+            categoryDescriptionResource.Culture = model.Culture;
+
+            resourceService.SaveResource(categoryDescriptionResource);
+            
+            return RedirectToAction("CategoryTable");
+        }
+
+        [HttpGet]
+        public ActionResult EditTranslation(int id, string culture)
+        {
+            EditCategoryTranslationViewModel model = new EditCategoryTranslationViewModel();
+            var translation = translationService.GetCategoryTranslationByCategory(id);
+
+            model.Id = translation.Id;
+            model.Name = resourceService.GetResource(translation.CategoryNameResourceKey, culture).Value;
+            model.Description = resourceService.GetResource(translation.CategoryDescriptionResourceKey, culture).Value;
+            model.Culture = culture;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditTranslation(EditCategoryTranslationViewModel model)
+        {
+            var translation = translationService.GetCategoryTranslation(model.Id);
+
+            var categoryNameResource = new Resource();
+            categoryNameResource = resourceService.GetResource(translation.CategoryNameResourceKey, model.Culture);
+            categoryNameResource.Value = model.Name;
+
+            var categoryDescriptionResource = new Resource();
+            categoryDescriptionResource = resourceService.GetResource(translation.CategoryDescriptionResourceKey, model.Culture);
+            categoryDescriptionResource.Value = model.Description;
+
+            resourceService.UpdateResource(categoryNameResource);
+            resourceService.UpdateResource(categoryDescriptionResource);
+
+            return RedirectToAction("CategoryTable");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTranslation(int id, string culture)
+        {
+            var translation = translationService.GetCategoryTranslationByCategory(id);
+
+            var categoryNameResourceId = resourceService.GetResource(translation.CategoryNameResourceKey, culture).Id;
+            var categoryDescriptionId = resourceService.GetResource(translation.CategoryDescriptionResourceKey, culture).Id;
+
+            resourceService.DeleteResource(categoryNameResourceId);
+            resourceService.DeleteResource(categoryDescriptionId);
+
             return RedirectToAction("CategoryTable");
         }
     }

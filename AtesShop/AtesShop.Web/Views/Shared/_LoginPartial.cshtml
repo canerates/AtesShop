@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    <a href="compare.html"><i class="fa fa-user-o"></i></a>
+    <a href="#"><i class="fa fa-user-o"></i></a>
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -9,7 +9,8 @@
         
     <ul class="ht-dropdown">
         <li>
-            @Html.ActionLink("My Account", "Index", "Manage")
+            @*@Html.ActionLink("My Account", "Index", "Manage")*@
+            <a href="#">My Account</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
     </ul>

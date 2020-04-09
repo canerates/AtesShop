@@ -39,7 +39,7 @@ namespace AtesShop.Admin.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("AtesShop", throwIfV1Schema: false)
+            : base("AtesShop-DB", throwIfV1Schema: false)
         {
         }
 

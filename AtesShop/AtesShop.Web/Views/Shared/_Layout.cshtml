@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="no-js" lang="en-US">
+<html class="no-js">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -50,6 +50,7 @@
 
     <script src="~/Content/js/jquery-ui.min.js"></script>
 </head>
+
 <body>
 
     <!-- Wrapper Start -->
@@ -70,7 +71,7 @@
                         <!-- Search Box Start -->
                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                             <div class="search-box-view">
-                                <form id="searchForm" action="@Url.Action("Index", "Shop")">
+                                <form id="searchForm" action="@Url.Action("Index", "Products")">
                                     <input id="searchKey" type="text" class="email" placeholder="Search Your Product" name="search">
                                     <button type="submit" class="submit"></button>
                                 </form>
@@ -83,17 +84,17 @@
                                 <ul class="header-list-menu f-right">
                                     <!-- Language Start -->
                                     <li>
-                                        <a href="#">Language: English <i class="fa fa-angle-down"></i></a>
+                                        <a href="#">Language <i class="fa fa-angle-down"></i></a>
                                         <ul class="ht-dropdown">
-                                            <li><a href="#">Spanish</a></li>
-                                            <li><a href="#">Bengali</a></li>
-                                            <li><a href="#">Russian</a></li>
+                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "en-US" })">English</a></li>
+                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "tr-TR" })">Türkçe</a></li>
+                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "zh-TW" })">中文</a></li>
                                         </ul>
                                     </li>
                                     <!-- Language End -->
                                     <!-- Currency Start -->
                                     <li>
-                                        <a href="#">Currency:  USD <i class="fa fa-angle-down"></i></a>
+                                        <a href="#">Currency <i class="fa fa-angle-down"></i></a>
                                         <ul class="ht-dropdown">
                                             <li><a href="#">USD</a></li>
                                             <li><a href="#">GBP</a></li>
@@ -138,7 +139,7 @@
                                             <li><a href="account.html">Account</a></li>
                                         </ul>*@
                                     </li>
-                                    <li><a href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
                                     <li>
                                         <a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
                                         <ul class="ht-dropdown main-cart-box">
@@ -146,11 +147,11 @@
                                                 <!-- Cart Box Start -->
                                                 <div class="single-cart-box">
                                                     <div class="cart-img">
-                                                        <a href="#"><img src="~/Content/img/menu/1.jpg" alt="cart-image"></a>
+                                                        <a href="#"><img src="~/Content/img/products/nvr1.png" alt="cart-image"></a>
                                                     </div>
                                                     <div class="cart-content">
-                                                        <h6><a href="product.html">Products Name</a></h6>
-                                                        <span>1 × $399.00</span>
+                                                        <h6><a href="#">PA-SR-N1600000</a></h6>
+                                                        <span>1 × $108.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
                                                 </div>
@@ -158,20 +159,20 @@
                                                 <!-- Cart Box Start -->
                                                 <div class="single-cart-box">
                                                     <div class="cart-img">
-                                                        <a href="#"><img src="~/Content/img/menu/2.jpg" alt="cart-image"></a>
+                                                        <a href="#"><img src="~/Content/img/products/nvr1.png" alt="cart-image"></a>
                                                     </div>
                                                     <div class="cart-content">
-                                                        <h6><a href="product.html">Products Name</a></h6>
-                                                        <span>2 × $299.00</span>
+                                                        <h6><a href="#">PA-SR-N0800000</a></h6>
+                                                        <span>2 × $99.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
                                                 </div>
                                                 <!-- Cart Box End -->
                                                 <!-- Cart Footer Inner Start -->
                                                 <div class="cart-footer fix">
-                                                    <h5>total :<span class="f-right">$698.00</span></h5>
+                                                    <h5>total :<span class="f-right">$306.00</span></h5>
                                                     <div class="cart-actions">
-                                                        <a class="checkout" href="checkout.html">Checkout</a>
+                                                        <a class="checkout" href="#">Checkout</a>
                                                     </div>
                                                 </div>
                                                 <!-- Cart Footer Inner End -->
@@ -183,7 +184,7 @@
                         </div>
                         <!-- Cartt Box End -->
                         <div class="col-sm-12 d-lg-none">
-                            <div class="mobile-menu">
+                            @*<div class="mobile-menu">
                                 <nav>
                                     <ul>
                                         <li>
@@ -246,7 +247,7 @@
                                         <li><a href="contact.html">contact us</a></li>
                                     </ul>
                                 </nav>
-                            </div>
+                            </div>*@
                         </div>
                         <!-- Mobile Menu  End -->
                     </div>
@@ -321,7 +322,7 @@
                                 <h3 class="footer-title">My Account</h3>
                                 <div class="footer-content">
                                     <ul class="footer-list">
-                                        <li><a href="account.html">My account</a></li>
+                                        <li><a href="#">My account</a></li>
                                         <li><a href="#">Checkout</a></li>
                                         <li><a href="#">Login</a></li>
                                         <li><a href="#">address</a></li>
@@ -338,7 +339,7 @@
                                 <h3 class="footer-title">customer service</h3>
                                 <div class="footer-content">
                                     <ul class="footer-list">
-                                        <li><a href="account.html">My account</a></li>
+                                        <li><a href="#">My account</a></li>
                                         <li><a href="#">New</a></li>
                                         <li><a href="#">Gift Cards</a></li>
                                         <li><a href="#">Return Policy</a></li>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,14 @@ namespace AtesShop.Entities
 
         public bool isFeatured { get; set; }
 
+        public bool isNew { get; set; }
+
+        //temp
+        public bool isTopRated { get; set; }
+
+        //temp
+        public bool isBestSeller { get; set; }
+        
         [NotMapped]
         public List<Image> Images { get; set; }
 

@@ -10,7 +10,7 @@ namespace AtesShop.Database
 {
     public class ASContext : DbContext, IDisposable
     {
-        public ASContext() : base("AtesShop")
+        public ASContext() : base("AtesShop-DB")
         {
 
         }
@@ -20,7 +20,9 @@ namespace AtesShop.Database
         public DbSet<Image> Images { get; set; }
         public DbSet<MainMenu> MainMenus { get; set; }
         public DbSet<SubMenu> SubMenus { get; set; }
+        public DbSet<Resource> Resources { get; set; }
+        public DbSet<ProductTranslation> ProductTranslations { get; set; }
+        public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         
-
     }
 }
