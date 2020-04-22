@@ -1,0 +1,22 @@
+﻿@model LangMenuViewModel
+<!-- Language Start -->
+<li>
+    <a href="#">@Model.SelectedLanguage <i class="fa fa-angle-down"></i></a>
+    <ul class="ht-dropdown">
+        @foreach (var lang in Model.Languages)
+        {
+            <li><a href="@Url.Action("SetCulture", "Home", new { culture = @lang.Key })">@lang.Value</a></li>
+        }
+    </ul>
+</li>
+<!-- Language End -->
+<!-- Currency Start -->
+<li>
+    <a href="#">@Model.SelectedCurrency @*<i class="fa fa-angle-down"></i>*@</a>
+    @*<ul class="ht-dropdown">
+        <li><a href="#">USD</a></li>
+        <li><a href="#">GBP</a></li>
+        <li><a href="#">EUR</a></li>
+    </ul>*@
+</li>
+<!-- Currency End -->

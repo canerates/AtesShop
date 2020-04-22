@@ -82,26 +82,7 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="header-top-right">
                                 <ul class="header-list-menu f-right">
-                                    <!-- Language Start -->
-                                    <li>
-                                        <a href="#">Language <i class="fa fa-angle-down"></i></a>
-                                        <ul class="ht-dropdown">
-                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "en-US" })">English</a></li>
-                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "tr-TR" })">Türkçe</a></li>
-                                            <li><a href="@Url.Action("SetCulture", "Home", new { culture = "zh-TW" })">中文</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Language End -->
-                                    <!-- Currency Start -->
-                                    <li>
-                                        <a href="#">Currency <i class="fa fa-angle-down"></i></a>
-                                        <ul class="ht-dropdown">
-                                            <li><a href="#">USD</a></li>
-                                            <li><a href="#">GBP</a></li>
-                                            <li><a href="#">EUR</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Currency End -->
+                                   @{ Html.RenderAction("ShowLangMenu", "Home");}
                                 </ul>
                                 <!-- Header-list-menu End -->
                             </div>
@@ -183,72 +164,7 @@
                             </div>
                         </div>
                         <!-- Cartt Box End -->
-                        <div class="col-sm-12 d-lg-none">
-                            @*<div class="mobile-menu">
-                                <nav>
-                                    <ul>
-                                        <li>
-                                            <a href="index.html">home</a>
-                                            <!-- Home Version Dropdown Start -->
-                                            <ul>
-                                                <li><a href="index.html">Home Version One</a></li>
-                                                <li><a href="index-2.html">Home Version Two</a></li>
-                                                <li><a href="index-3.html">Home Box Layout</a></li>
-                                            </ul>
-                                            <!-- Home Version Dropdown End -->
-                                        </li>
-                                        <li>
-                                            <a href="shop.html">shop</a>
-                                            <!-- Mobile Menu Dropdown Start -->
-                                            <ul>
-                                                <li>
-                                                    <a href="product.html">Shop</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="shop.html">Product Category Name</a>
-                                                            <!-- Start Three Step -->
-                                                            <ul>
-                                                                <li><a href="shop.html">Product Category Name</a></li>
-                                                                <li><a href="shop.html">Product Category Name</a></li>
-                                                                <li><a href="shop.html">Product Category Name</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li><a href="shop.html">Product Category Name</a></li>
-                                                        <li><a href="shop.html">Product Category Name</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="product.html">product details Page</a></li>
-                                                <li><a href="compare.html">Compare Page</a></li>
-                                                <li><a href="cart.html">Cart Page</a></li>
-                                                <li><a href="checkout.html">Checkout Page</a></li>
-                                                <li><a href="wishlist.html">Wishlist Page</a></li>
-                                            </ul>
-                                            <!-- Mobile Menu Dropdown End -->
-                                        </li>
-                                        <li>
-                                            <a href="blog.html">Blog</a>
-                                            <!-- Mobile Menu Dropdown Start -->
-                                            <ul>
-                                                <li><a href="blog-details.html">Blog Details Page</a></li>
-                                            </ul>
-                                            <!-- Mobile Menu Dropdown End -->
-                                        </li>
-                                        <li>
-                                            <a href="#">pages</a>
-                                            <!-- Mobile Menu Dropdown Start -->
-                                            <ul>
-                                                <li><a href="login.html">login Page</a></li>
-                                                <li><a href="register.html">Register Page</a></li>
-                                                <li><a href="404.html">404 Page</a></li>
-                                            </ul>
-                                            <!-- Mobile Menu Dropdown End -->
-                                        </li>
-                                        <li><a href="about.html">about us</a></li>
-                                        <li><a href="contact.html">contact us</a></li>
-                                    </ul>
-                                </nav>
-                            </div>*@
-                        </div>
+                        @{ Html.RenderAction("ShowMobileMenu", "Home");}
                         <!-- Mobile Menu  End -->
                     </div>
                     <!-- Row End -->

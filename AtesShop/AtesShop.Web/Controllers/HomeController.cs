@@ -95,14 +95,64 @@ namespace AtesShop.Web.Controllers
             return PartialView("_Menu", model);
         }
 
+        public ActionResult ShowMobileMenu()
+        {
+            MenuViewModel model = new MenuViewModel();
+            model.MainMenuList = menuService.GetMainMenus();
+            foreach (var main in model.MainMenuList)
+            {
+                main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
+                main.SubMenus = menuService.GetSubMenuByParent(main.Id);
+
+                foreach (var sub in main.SubMenus)
+                {
+                    sub.Name = resourceProvider.GetResource(sub.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
+                }
+            }
+
+            return PartialView("_MobileMenu", model);
+        }
+
+        public ActionResult ShowLangMenu()
+        {
+            LangMenuViewModel model = new LangMenuViewModel();
+
+            Dictionary<string, string> languages = new Dictionary<string, string>();
+            Dictionary<string, string> currencies = new Dictionary<string, string>();
+
+            languages.Add("en-us", "English");
+            languages.Add("tr-tr", "Türkçe");
+            languages.Add("zh-tw", "中文");
+
+            currencies.Add("en-us", "USD");
+            currencies.Add("tr-tr", "TRY");
+            currencies.Add("zh-tw", "NTD");
+
+            model.Languages = languages;
+            model.Currencies = currencies;
+
+            if (Request.Cookies["_culture"] != null)
+            {
+                string culture = Request.Cookies["_culture"].Value;
+                model.SelectedLanguage = languages[culture];
+                model.SelectedCurrency = currencies[culture];
+            }
+            else
+            {
+                model.SelectedLanguage = languages["en-us"];
+                model.SelectedCurrency = currencies["en-us"];
+            }
+            
+            return PartialView("_LangMenu", model);
+        }
+
         public ActionResult SetCulture(string culture)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
 
             RouteData.Values["culture"] = culture;
-
-
+            
 
             // Save culture in a cookie
             

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ImageController : Controller
     {
         ImageService imageService = new ImageService();

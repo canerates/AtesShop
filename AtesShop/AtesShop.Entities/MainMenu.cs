@@ -21,6 +21,6 @@ namespace AtesShop.Entities
         public virtual List<SubMenu> SubMenus { get; set; }
 
         public string ResourceKey { get; set; }
-
+        
     }
 }

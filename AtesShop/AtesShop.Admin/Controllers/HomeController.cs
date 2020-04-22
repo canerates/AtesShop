@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace AtesShop.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         public ActionResult Index()

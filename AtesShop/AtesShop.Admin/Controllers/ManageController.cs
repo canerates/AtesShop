@@ -10,7 +10,7 @@ using AtesShop.Admin.Models;
 
 namespace AtesShop.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
