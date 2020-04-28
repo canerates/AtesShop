@@ -28,6 +28,7 @@
                 <th>Product Price</th>
                 <th>Translate Actions</th>
                 <th>Category</th>
+                <th>Discount</th>
                 <th>Featured</th>
                 <th>New</th>
                 <th>Top Rated</th>
@@ -46,7 +47,12 @@
                             <td>@elem.ProductNameResources[i].Culture</td>
                             <td>@elem.ProductNameResources[i].Value</td>
                             <td>@elem.ProductDescriptionResources[i].Value</td>
-                            <td>@elem.ProductPriceResources[i].Value</td>
+                            <td>
+                            @foreach (var price in elem.ProductPriceResources[i].Prices)
+                            {
+                                @price.RoleName <text>:</text> @price.Value <br />
+                            }
+                            </td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <button type="button" class="editTranslationBtn btn btn-primary" data-culture="@elem.ProductNameResources[i].Culture" data-id="@elem.Product.Id">Edit T.</button>
@@ -57,6 +63,20 @@
                             @if (i == 0)
                             {
                                 <td rowspan="@elem.ResourceCount">@elem.Product.Category.Name</td>
+
+                                //Discount
+                                <td rowspan="@elem.ResourceCount">
+                                    @if (elem.Product.isDiscount)
+                                    {
+                                        <span class="glyphicon glyphicon-ok" style="color:darkseagreen"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                                    }
+                                </td>
+
+                                //Featured
                                 <td rowspan="@elem.ResourceCount">
                                     @if (elem.Product.isFeatured)
                                     {

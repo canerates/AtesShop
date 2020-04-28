@@ -16,7 +16,9 @@ namespace AtesShop.Entities
 
         public string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public string Price { get; set; }
+
+        public string PrePrice { get; set; }
         
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
@@ -25,6 +27,8 @@ namespace AtesShop.Entities
 
         public string ImageIdList { get; set; }
 
+        public bool isDiscount { get; set; }
+        
         public bool isFeatured { get; set; }
 
         public bool isNew { get; set; }

@@ -78,7 +78,7 @@ namespace AtesShop.Admin.ViewModels
         public List<Resource> NameResources { get; set; }
         public List<Resource> DescriptionResources { get; set; }
         public int ResourceCount { get; set; }
-        public int TranslationId { get; set; }
+        public int KeySetId { get; set; }
 
     }
 

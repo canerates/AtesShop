@@ -81,7 +81,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$47.00</span><del class="prev-price">$55.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -109,7 +109,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$98.00</span><del class="prev-price">$120.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -137,7 +137,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$25.00</span><del class="prev-price">$39.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -172,7 +172,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$98.00</span><del class="prev-price">$120.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -200,7 +200,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$47.00</span><del class="prev-price">$55.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -228,7 +228,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <p><span class="price">$47.00</span><del class="prev-price">$55.00</del></p>
+                                        <p><span class="price">Contact Us</span></p>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>
@@ -290,21 +290,21 @@
 
     var priceSlider = $("#slider-range").slider({
         range: true,
-        min: 0,
-        max: @Model.MaximumPrice +20,
+        min: @Model.MinimumPrice - ((@Model.MaximumPrice - @Model.MinimumPrice) * 0.2 ),
+        max: @Model.MaximumPrice + ((@Model.MaximumPrice - @Model.MinimumPrice) * 0.2 ),
         values: [@Model.MinimumPrice, @Model.MaximumPrice],
         slide: function (event, ui) {
             minimumPrice = ui.values[0];
             maximumPrice = ui.values[1];
 
-            $("#amount").val("$" + minimumPrice + "  $" + maximumPrice);
+            $("#amount").val( minimumPrice + "  " + maximumPrice);
 
             clearTimeout(callTimeout);
             callTimeout = setTimeout(getData, 500);
         }
     });
 
-    $("#amount").val("$" + minimumPrice + "  $" + maximumPrice);
+    $("#amount").val( minimumPrice + "  " + maximumPrice);
 
     var focusAction = function () {
         $('html, body').animate({

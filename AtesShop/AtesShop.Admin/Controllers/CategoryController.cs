@@ -14,7 +14,7 @@ namespace AtesShop.Admin.Controllers
     {
         CategoryService categoryService = new CategoryService();
         ImageService imageService = new ImageService();
-        TranslationService translationService = new TranslationService();
+        ResourceKeyService keyService = new ResourceKeyService();
         ResourceService resourceService = new ResourceService();
 
         [HttpGet]
@@ -53,14 +53,14 @@ namespace AtesShop.Admin.Controllers
                 }
                 elem.Images = images;
 
-                //Translations
+                //Category Key Set
 
-                var translation = translationService.GetCategoryTranslationByCategory(category.Id);
+                var keySet = keyService.GetCategoryKeySetByCategory(category.Id);
 
-                elem.CategoryNameResources = resourceService.GetResourcesByKey(translation.CategoryNameResourceKey);
-                elem.CategoryDescriptionResources = resourceService.GetResourcesByKey(translation.CategoryDescriptionResourceKey);
+                elem.CategoryNameResources = resourceService.GetResourcesByKey(keySet.NameKey);
+                elem.CategoryDescriptionResources = resourceService.GetResourcesByKey(keySet.DescriptionKey);
 
-                elem.ResourceCount = resourceService.GetResourcesCountByKey(translation.CategoryNameResourceKey);
+                elem.ResourceCount = resourceService.GetResourcesCountByKey(keySet.NameKey);
                 
                 model.Add(elem);
             }
@@ -92,29 +92,21 @@ namespace AtesShop.Admin.Controllers
 
             categoryService.SaveCategory(newCategory);
 
-            //CategoryTranslation
+            //Category Key Set
 
-            var newTranslation = new CategoryTranslation();
-            newTranslation.Category = newCategory;
-            newTranslation.CategoryNameResourceKey = "CategoryName" + newCategory.Id;
-            newTranslation.CategoryDescriptionResourceKey = "CategoryDesc" + newCategory.Id;
+            var newCategoryKeySet = new CategoryKey();
+            newCategoryKeySet.Category = newCategory;
+            newCategoryKeySet.NameKey = "CategoryName" + newCategory.Id;
+            newCategoryKeySet.DescriptionKey = "CategoryDesc" + newCategory.Id;
 
-            translationService.SaveCategoryTranslation(newTranslation);
+            keyService.SaveCategoryKeySet(newCategoryKeySet);
 
             //Resource
 
-            var categoryNameResource = new Resource();
-            categoryNameResource.Key = newTranslation.CategoryNameResourceKey;
-            categoryNameResource.Value = model.Name;
-            categoryNameResource.Culture = "en-us";
+            var categoryNameResource = generateResource(newCategoryKeySet.NameKey, model.Name, "en-us");
+            var categoryDescriptionResource = generateResource(newCategoryKeySet.DescriptionKey, model.Name, "en-us");
 
             resourceService.SaveResource(categoryNameResource);
-
-            var categoryDescriptionResource = new Resource();
-            categoryDescriptionResource.Key = newTranslation.CategoryDescriptionResourceKey;
-            categoryDescriptionResource.Value = model.Description;
-            categoryDescriptionResource.Culture = "en-us";
-
             resourceService.SaveResource(categoryDescriptionResource);
             
             return RedirectToAction("CategoryTable");
@@ -151,34 +143,20 @@ namespace AtesShop.Admin.Controllers
             }
             
             categoryService.UpdateCategory(currentCategory);
-
-            //Resource Table
-            var currentTranslation = translationService.GetCategoryTranslationByCategory(model.Id);
-
-            var categoryNameResource = new Resource();
-            categoryNameResource = resourceService.GetResource(currentTranslation.CategoryNameResourceKey, "en-us");
-            categoryNameResource.Value = model.Name;
-
-            resourceService.UpdateResource(categoryNameResource);
-
-            var categoryDescriptionResource = new Resource();
-            categoryDescriptionResource = resourceService.GetResource(currentTranslation.CategoryDescriptionResourceKey, "en-us");
-            categoryDescriptionResource.Value = model.Description;
-
-            resourceService.UpdateResource(categoryDescriptionResource);
-
+            
             return RedirectToAction("CategoryTable");
         }
         
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var currentTranslation = translationService.GetCategoryTranslationByCategory(id);
+            var currentKeySet = keyService.GetCategoryKeySetByCategory(id);
 
-            resourceService.DeleteResources(currentTranslation.CategoryNameResourceKey);
-            resourceService.DeleteResources(currentTranslation.CategoryDescriptionResourceKey);
-
+            resourceService.DeleteResources(currentKeySet.NameKey);
+            resourceService.DeleteResources(currentKeySet.DescriptionKey);
+            
             categoryService.DeleteCategory(id);
+
             return RedirectToAction("CategoryTable");
         }
 
@@ -187,13 +165,13 @@ namespace AtesShop.Admin.Controllers
         {
             CategoryTranslationResources model = new CategoryTranslationResources();
 
-            var currentTranslation = translationService.GetCategoryTranslationByCategory(id);
+            var currentKeySet = keyService.GetCategoryKeySetByCategory(id);
 
-            model.NameResources = resourceService.GetResourcesByKey(currentTranslation.CategoryNameResourceKey);
-            model.DescriptionResources = resourceService.GetResourcesByKey(currentTranslation.CategoryDescriptionResourceKey);
-            model.ResourceCount = resourceService.GetResourcesCountByKey(currentTranslation.CategoryNameResourceKey);
+            model.NameResources = resourceService.GetResourcesByKey(currentKeySet.NameKey);
+            model.DescriptionResources = resourceService.GetResourcesByKey(currentKeySet.DescriptionKey);
+            model.ResourceCount = resourceService.GetResourcesCountByKey(currentKeySet.NameKey);
 
-            model.TranslationId = currentTranslation.Id;
+            model.KeySetId = currentKeySet.Id;
 
             return PartialView(model);
         }
@@ -201,21 +179,13 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult AddTranslation(NewCategoryTranslationModel model)
         {
-            var translation = translationService.GetCategoryTranslation(model.Id);
+            var currentKeySet = keyService.GetCategoryKeySet(model.Id);
 
             //Resource
-            var categoryNameResource = new Resource();
-            categoryNameResource.Key = translation.CategoryNameResourceKey;
-            categoryNameResource.Value = model.Name;
-            categoryNameResource.Culture = model.Culture;
-
+            var categoryNameResource = generateResource(currentKeySet.NameKey, model.Name, model.Culture);
+            var categoryDescriptionResource = generateResource(currentKeySet.DescriptionKey, model.Description, model.Culture);
+            
             resourceService.SaveResource(categoryNameResource);
-
-            var categoryDescriptionResource = new Resource();
-            categoryDescriptionResource.Key = translation.CategoryDescriptionResourceKey;
-            categoryDescriptionResource.Value = model.Description;
-            categoryDescriptionResource.Culture = model.Culture;
-
             resourceService.SaveResource(categoryDescriptionResource);
             
             return RedirectToAction("CategoryTable");
@@ -225,11 +195,11 @@ namespace AtesShop.Admin.Controllers
         public ActionResult EditTranslation(int id, string culture)
         {
             EditCategoryTranslationViewModel model = new EditCategoryTranslationViewModel();
-            var translation = translationService.GetCategoryTranslationByCategory(id);
+            var currentKeySet = keyService.GetCategoryKeySetByCategory(id);
 
-            model.Id = translation.Id;
-            model.Name = resourceService.GetResource(translation.CategoryNameResourceKey, culture).Value;
-            model.Description = resourceService.GetResource(translation.CategoryDescriptionResourceKey, culture).Value;
+            model.Id = currentKeySet.Id;
+            model.Name = resourceService.GetResource(currentKeySet.NameKey, culture).Value;
+            model.Description = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Value;
             model.Culture = culture;
 
             return PartialView(model);
@@ -238,18 +208,27 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult EditTranslation(EditCategoryTranslationViewModel model)
         {
-            var translation = translationService.GetCategoryTranslation(model.Id);
-
+            var currentKeySet = keyService.GetCategoryKeySet(model.Id);
+            
             var categoryNameResource = new Resource();
-            categoryNameResource = resourceService.GetResource(translation.CategoryNameResourceKey, model.Culture);
+            categoryNameResource = resourceService.GetResource(currentKeySet.NameKey, model.Culture);
             categoryNameResource.Value = model.Name;
 
             var categoryDescriptionResource = new Resource();
-            categoryDescriptionResource = resourceService.GetResource(translation.CategoryDescriptionResourceKey, model.Culture);
+            categoryDescriptionResource = resourceService.GetResource(currentKeySet.DescriptionKey, model.Culture);
             categoryDescriptionResource.Value = model.Description;
 
             resourceService.UpdateResource(categoryNameResource);
             resourceService.UpdateResource(categoryDescriptionResource);
+
+            if (model.Culture == "en-us")
+            {
+                var currentCategory = categoryService.GetCategory(currentKeySet.CategoryId);
+                currentCategory.Name = model.Name;
+                currentCategory.Description = model.Description;
+
+                categoryService.UpdateCategory(currentCategory);
+            }
 
             return RedirectToAction("CategoryTable");
         }
@@ -257,15 +236,24 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteTranslation(int id, string culture)
         {
-            var translation = translationService.GetCategoryTranslationByCategory(id);
+            var currentKeySet = keyService.GetCategoryKeySetByCategory(id);
 
-            var categoryNameResourceId = resourceService.GetResource(translation.CategoryNameResourceKey, culture).Id;
-            var categoryDescriptionId = resourceService.GetResource(translation.CategoryDescriptionResourceKey, culture).Id;
+            var categoryNameResourceId = resourceService.GetResource(currentKeySet.NameKey, culture).Id;
+            var categoryDescriptionId = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Id;
 
             resourceService.DeleteResource(categoryNameResourceId);
             resourceService.DeleteResource(categoryDescriptionId);
 
             return RedirectToAction("CategoryTable");
+        }
+
+        public Resource generateResource(string key, string value, string culture)
+        {
+            var resource = new Resource();
+            resource.Key = key;
+            resource.Value = value;
+            resource.Culture = culture;
+            return resource;
         }
     }
 }

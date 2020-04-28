@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace AtesShop.Entities
 {
-    public class CategoryTranslation
+    public class CategoryKey
     {
         public int Id { get; set; }
 
-        public string CategoryNameResourceKey { get; set; }
+        public string NameKey { get; set; }
 
-        public string CategoryDescriptionResourceKey { get; set; }
-        
+        public string DescriptionKey { get; set; }
+
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
 

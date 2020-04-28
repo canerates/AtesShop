@@ -25,9 +25,11 @@
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Description = c.String(),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Price = c.String(),
+                        PrePrice = c.String(),
                         CategoryId = c.Int(nullable: false),
                         ImageIdList = c.String(),
+                        isDiscount = c.Boolean(nullable: false),
                         isFeatured = c.Boolean(nullable: false),
                         isNew = c.Boolean(nullable: false),
                         isTopRated = c.Boolean(nullable: false),
@@ -38,12 +40,12 @@
                 .Index(t => t.CategoryId);
             
             CreateTable(
-                "dbo.CategoryTranslations",
+                "dbo.CategoryKeys",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        CategoryNameResourceKey = c.String(),
-                        CategoryDescriptionResourceKey = c.String(),
+                        NameKey = c.String(),
+                        DescriptionKey = c.String(),
                         CategoryId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -92,13 +94,27 @@
                 .Index(t => t.MainMenuId);
             
             CreateTable(
-                "dbo.ProductTranslations",
+                "dbo.Prices",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ProductNameResourceKey = c.String(),
-                        ProductDescriptionResourceKey = c.String(),
-                        ProductPriceResourceKey = c.String(),
+                        Key = c.String(),
+                        Value = c.String(),
+                        PreValue = c.String(),
+                        Culture = c.String(),
+                        RoleId = c.String(),
+                        RoleName = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.ProductKeys",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        NameKey = c.String(),
+                        DescriptionKey = c.String(),
+                        PriceKey = c.String(),
                         ProductId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -120,20 +136,21 @@
         
         public override void Down()
         {
-            DropForeignKey("dbo.ProductTranslations", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.ProductKeys", "ProductId", "dbo.Products");
             DropForeignKey("dbo.SubMenus", "MainMenuId", "dbo.MainMenus");
-            DropForeignKey("dbo.CategoryTranslations", "CategoryId", "dbo.Categories");
+            DropForeignKey("dbo.CategoryKeys", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
-            DropIndex("dbo.ProductTranslations", new[] { "ProductId" });
+            DropIndex("dbo.ProductKeys", new[] { "ProductId" });
             DropIndex("dbo.SubMenus", new[] { "MainMenuId" });
-            DropIndex("dbo.CategoryTranslations", new[] { "CategoryId" });
+            DropIndex("dbo.CategoryKeys", new[] { "CategoryId" });
             DropIndex("dbo.Products", new[] { "CategoryId" });
             DropTable("dbo.Resources");
-            DropTable("dbo.ProductTranslations");
+            DropTable("dbo.ProductKeys");
+            DropTable("dbo.Prices");
             DropTable("dbo.SubMenus");
             DropTable("dbo.MainMenus");
             DropTable("dbo.Images");
-            DropTable("dbo.CategoryTranslations");
+            DropTable("dbo.CategoryKeys");
             DropTable("dbo.Products");
             DropTable("dbo.Categories");
         }

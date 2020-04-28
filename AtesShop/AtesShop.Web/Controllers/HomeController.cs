@@ -2,6 +2,8 @@
 using AtesShop.Services;
 using AtesShop.Web.Helpers;
 using AtesShop.Web.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,42 +15,79 @@ namespace AtesShop.Web.Controllers
 {
     public class HomeController : BaseController
     {
+        private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         ProductService productService = new ProductService();
         ImageService imageService = new ImageService();
         MenuService menuService = new MenuService();
+        ResourceKeyService keyService = new ResourceKeyService();
         private static IResourceProvider resourceProvider = new DbResourceProvider();
 
         public ActionResult Index()
         {
+            string roleName;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                roleName = UserManager.GetRoles(User.Identity.GetUserId()).FirstOrDefault();
+
+            }
+            else
+            {
+                roleName = "User";
+            }
+
             HomeViewModel model = new HomeViewModel();
 
-            model.FeaturedProducts = productService.GeFeaturedProducts();
+            var products = productService.GetProducts();
 
-            foreach (var product in model.FeaturedProducts)
+            foreach (var product in products)
             {
                 product.Images = imageService.GetImagesByList(product.ImageIdList);
+                var keys = keyService.GetProductKeySetByProduct(product.Id);
+
+                //Localization
+                product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
+                product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+                product.Price = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, false) as string;
+                product.PrePrice = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, true) as string;
             }
+            
+            products = CommonHelper.ProductsCurrencyFormat(products, CultureInfo.CurrentUICulture.Name);
 
-            model.NewProducts = productService.GetNewProducts();
+            model.FeaturedProducts = products.Where(x => x.isFeatured).ToList();
 
-            foreach (var product in model.NewProducts)
-            {
-                product.Images = imageService.GetImagesByList(product.ImageIdList);
-            }
+            model.NewProducts = products.Where(x => x.isNew).ToList();
 
-            model.TopRatedProducts = productService.GetTopRatedProducts();
+            model.TopRatedProducts = products.Where(x => x.isTopRated).ToList();
 
-            foreach (var product in model.TopRatedProducts)
-            {
-                product.Images = imageService.GetImagesByList(product.ImageIdList);
-            }
-
-            model.BestSellerProducts = productService.GetBestSellerProducts();
-
-            foreach (var product in model.BestSellerProducts)
-            {
-                product.Images = imageService.GetImagesByList(product.ImageIdList);
-            }
+            model.BestSellerProducts = products.Where(x => x.isBestSeller).ToList();
+            
 
             return View(model);
         }

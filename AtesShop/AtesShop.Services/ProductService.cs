@@ -39,23 +39,7 @@ namespace AtesShop.Services
                     .ToList();
             }
         }
-
-        public int GetMaximumPrice()
-        {
-            using (var context = new ASContext())
-            {
-                return (int)(context.Products.Max(x => x.Price));
-            }
-        }
-
-        public int GetMinimumPrice()
-        {
-            using (var context = new ASContext())
-            {
-                return (int)(context.Products.Min(x => x.Price));
-            }
-        }
-
+        
         public List<Product> GetProductsByCategory(int categoryId)
         {
             using (var context = new ASContext())
@@ -138,12 +122,12 @@ namespace AtesShop.Services
             }
         }
 
-        public List<Product> SearchProducts(string searchKey, int? categoryId, int? maximumPrice, int? minimumPrice, int? sortId, int? sortType, int pageNo, int pageSize)
+        public List<Product> SearchProducts(string searchKey, int? categoryId, int? sortId, int? sortType, int pageNo, int pageSize)
         {
             using (var context = new ASContext())
             {
                 var products = context.Products.ToList();
-
+                
                 if (categoryId.HasValue)
                 {
                     products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
@@ -153,17 +137,7 @@ namespace AtesShop.Services
                 {
                     products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
-
-                if (minimumPrice.HasValue)
-                {
-                    products = products.Where(x => x.Price >= minimumPrice.Value).ToList();
-                }
-
-                if (maximumPrice.HasValue)
-                {
-                    products = products.Where(x => x.Price <= maximumPrice.Value).ToList();
-                }
-
+                
                 if (sortId.HasValue && sortType.HasValue)
                 {
                     switch (sortId.Value)
@@ -188,7 +162,7 @@ namespace AtesShop.Services
             }
         }
 
-        public int SearchProductsCount(string searchKey, int? categoryId, int? maximumPrice, int? minimumPrice, int? sortBy)
+        public int SearchProductsCount(string searchKey, int? categoryId, int? sortBy)
         {
             using (var context = new ASContext())
             {
@@ -203,17 +177,7 @@ namespace AtesShop.Services
                 {
                     products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
-
-                if (minimumPrice.HasValue)
-                {
-                    products = products.Where(x => x.Price >= minimumPrice.Value).ToList();
-                }
-
-                if (maximumPrice.HasValue)
-                {
-                    products = products.Where(x => x.Price <= maximumPrice.Value).ToList();
-                }
-
+                
                 if (sortBy.HasValue)
                 {
                     switch (sortBy.Value)

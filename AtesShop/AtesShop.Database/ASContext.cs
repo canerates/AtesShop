@@ -21,9 +21,9 @@ namespace AtesShop.Database
         public DbSet<MainMenu> MainMenus { get; set; }
         public DbSet<SubMenu> SubMenus { get; set; }
         public DbSet<Resource> Resources { get; set; }
-        public DbSet<ProductTranslation> ProductTranslations { get; set; }
-        public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         public DbSet<Price> Prices { get; set; }
+        public DbSet<ProductKey> ProductKeys { get; set; }
+        public DbSet<CategoryKey> CategoryKeys { get; set; }
 
     }
 }

@@ -1,40 +1,52 @@
-﻿@model EditProductTranslationViewModel
+﻿@model EditPriceViewModel
 @{
-    ViewBag.Title = "Edit Product Translation";
-    
+    ViewBag.Title = "Edit Resource";
 }
-
 <div class="container">
     <div class="page-header">
-        <h2>Edit Product Translation</h2>
+        <h2>Edit Price</h2>
     </div>
 </div>
 
+
 <div class="container">
-    <form id="editProductTranslation" class="form-horizontal">
+    <form id="editPrice" class="form-horizontal">
 
         <input type="hidden" name="Id" value="@Model.Id" />
-        
-
-        <div class="form-group">
-            <label class="control-label col-sm-2">Culture</label>
-            <div class="col-sm-10">
-                <input class="form-control" name="Culture" value="@Model.Culture" readonly />
-            </div>
-        </div>
-        
 
         <div class="form-group">
             <label class="control-label col-sm-2">Product Name</label>
             <div class="col-sm-10">
-                <input class="form-control" name="Name" value="@Model.Name" />
+                <input class="form-control" name="Key" value="@Model.ProductName" readonly />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-sm-2">Product Description</label>
+            <label class="control-label col-sm-2">Culture (Lang.)</label>
             <div class="col-sm-10">
-                <input class="form-control" name="Description" value="@Model.Description" />
+                <input class="form-control" name="Culture" value="@Model.Culture" readonly />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Role Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="RoleName" value="@Model.RoleName" readonly />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Price</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Value" value="@Model.Value" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Price</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="PreValue" value="@Model.PreValue" />
             </div>
         </div>
 
@@ -45,13 +57,15 @@
         </div>
     </form>
 </div>
+
+
 <script>
 
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Product/EditTranslation',
-            data: $("#editProductTranslation").serialize()
+            url: '/Price/Edit',
+            data: $("#editPrice").serialize()
         })
         .done(function (response) {
             //alert("Success");
@@ -62,7 +76,6 @@
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
         });
-
     });
 
 </script>

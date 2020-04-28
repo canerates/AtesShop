@@ -2,6 +2,7 @@
 using AtesShop.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace AtesShop.Resources
     public class DbResourceProvider: BaseResourceProvider
     {
         ResourceService resourceService = new ResourceService();
+        PriceService priceService = new PriceService();
 
         protected override IList<Resource> ReadResources()
         {
@@ -31,6 +33,31 @@ namespace AtesShop.Resources
             }
 
             return resource;
+        }
+
+        protected override IList<Price> ReadPrices()
+        {
+            var prices = priceService.GetPrices();
+
+            return prices;
+        }
+
+        protected override Price ReadPrice(string name, string culture, string role)
+        {
+            Price price = priceService.GetPrice(name, culture, role);
+            
+            if (price == null)
+            {
+                price = new Price();
+                price.Key = "DefaultKey";
+                price.Value = "Contact Us";
+                price.PreValue = " ";
+                price.RoleName = "DefaultRole";
+                price.RoleId = "1";
+                
+            }
+            
+            return price;
         }
     }
 }

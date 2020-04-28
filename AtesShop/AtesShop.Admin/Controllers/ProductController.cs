@@ -1,6 +1,8 @@
 ﻿using AtesShop.Admin.ViewModels;
 using AtesShop.Entities;
 using AtesShop.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,27 @@ namespace AtesShop.Admin.Controllers
     //[Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
+
+        private ApplicationRoleManager _roleManager;
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
         ProductService productService = new ProductService();
         CategoryService categoryService = new CategoryService();
         ImageService imageService = new ImageService();
         ResourceService resourceService = new ResourceService();
-        TranslationService translationService = new TranslationService();
+        ResourceKeyService keyService = new ResourceKeyService();
+        PriceService priceService = new PriceService();
 
         [HttpGet]
         public ActionResult Index()
@@ -52,15 +70,30 @@ namespace AtesShop.Admin.Controllers
                     }
                     elem.Images = images;
 
-                //Translations
+                //Product Key Set
 
-                var translation = translationService.GetProductTranslationByProduct(product.Id);
+                var keySet = keyService.GetProductKeySetByProduct(product.Id);
 
-                elem.ProductNameResources = resourceService.GetResourcesByKey(translation.ProductNameResourceKey);
-                elem.ProductDescriptionResources = resourceService.GetResourcesByKey(translation.ProductDescriptionResourceKey);
-                elem.ProductPriceResources = resourceService.GetResourcesByKey(translation.ProductPriceResourceKey);
+                elem.ProductNameResources = resourceService.GetResourcesByKey(keySet.NameKey);
+                elem.ProductDescriptionResources = resourceService.GetResourcesByKey(keySet.DescriptionKey);
 
-                elem.ResourceCount = resourceService.GetResourcesCountByKey(translation.ProductNameResourceKey);
+                //Price
+
+                var priceResources = new List<PricesByCultureModel>();
+                var cultures = priceService.GetPriceDistinctCulturesByPriceKey(keySet.PriceKey);
+
+                foreach (var cl in cultures)
+                {
+                    var pricesByCulture = new PricesByCultureModel();
+                    pricesByCulture.Prices = priceService.GetPricesByKeyAndCulture(keySet.PriceKey, cl);
+                    pricesByCulture.Culture = cl;
+                    priceResources.Add(pricesByCulture);
+                }
+                
+
+                elem.ProductPriceResources = priceResources;
+
+                elem.ResourceCount = resourceService.GetResourcesCountByKey(keySet.NameKey);
 
                 model.Add(elem);
             }
@@ -87,6 +120,7 @@ namespace AtesShop.Admin.Controllers
             newProduct.Price = model.Price;
             //newProduct.CategoryId = model.CategoryId;
             newProduct.Category = categoryService.GetCategory(model.CategoryId);
+            newProduct.isDiscount = model.isDiscount;
             newProduct.isFeatured = model.isFeatured;
             newProduct.isNew = model.isNew;
             newProduct.isTopRated = model.isTopRated;
@@ -99,38 +133,33 @@ namespace AtesShop.Admin.Controllers
             productService.SaveProduct(newProduct);
 
 
-            //ProductTranslation
+            //Product Key Set
             
-            var newTranslation = new ProductTranslation();
-            newTranslation.Product = newProduct;
-            newTranslation.ProductNameResourceKey = "ProductName" + newProduct.Id;
-            newTranslation.ProductDescriptionResourceKey = "ProductDesc" + newProduct.Id; 
-            newTranslation.ProductPriceResourceKey = "ProductPrice" + newProduct.Id;
+            var newProductKeySet = new ProductKey();
+            newProductKeySet.Product = newProduct;
+            newProductKeySet.NameKey = "ProductName" + newProduct.Id;
+            newProductKeySet.DescriptionKey = "ProductDesc" + newProduct.Id;
+            newProductKeySet.PriceKey = "ProductPrice" + newProduct.Id;
 
-            translationService.SaveProductTranslation(newTranslation);
-
-
+            keyService.SaveProductKeySet(newProductKeySet);
+            
             //Resource
-            var productNameResource = new Resource();
-            productNameResource.Key = newTranslation.ProductNameResourceKey;
-            productNameResource.Value = model.Name;
-            productNameResource.Culture = "en-us";
+            var productNameResource = generateResource(newProductKeySet.NameKey, model.Name, "en-us");
+            var productDescriptionResource = generateResource(newProductKeySet.DescriptionKey, model.Description, "en-us");
 
             resourceService.SaveResource(productNameResource);
-
-            var productDescriptionResource = new Resource();
-            productDescriptionResource.Key = newTranslation.ProductDescriptionResourceKey;
-            productDescriptionResource.Value = model.Description;
-            productDescriptionResource.Culture = "en-us";
-
             resourceService.SaveResource(productDescriptionResource);
-
-            var productPriceResource = new Resource();
-            productPriceResource.Key = newTranslation.ProductPriceResourceKey;
+            
+            //Price
+            var productPriceResource = new Price();
+            productPriceResource.Key = newProductKeySet.PriceKey;
             productPriceResource.Value = model.Price.ToString();
             productPriceResource.Culture = "en-us";
+            productPriceResource.RoleName = "User";
+            var role = RoleManager.FindByName("User");
+            productPriceResource.RoleId = role.Id;
 
-            resourceService.SaveResource(productPriceResource);
+            priceService.SavePrice(productPriceResource);
             
             return RedirectToAction("ProductTable");
         }
@@ -145,11 +174,9 @@ namespace AtesShop.Admin.Controllers
             List<int> selectedImageIdList = currentProduct.ImageIdList.Split(',').Select(int.Parse).ToList();
 
             model.Id = currentProduct.Id;
-            model.Name = currentProduct.Name;
-            model.Description = currentProduct.Description;
-            model.Price = currentProduct.Price;
             model.ImageIdList = currentProduct.ImageIdList;
             model.CategoryId = currentProduct.CategoryId;
+            model.isDiscount = currentProduct.isDiscount;
             model.isFeatured = currentProduct.isFeatured;
             model.isNew = currentProduct.isNew;
             model.isTopRated = currentProduct.isTopRated;
@@ -165,11 +192,9 @@ namespace AtesShop.Admin.Controllers
         {
             //Products Table
             var currentProduct = productService.GetProduct(model.Id);
-            currentProduct.Name = model.Name;
-            currentProduct.Description = model.Description;
-            currentProduct.Price = model.Price;
             currentProduct.ImageIdList = model.ImageIdList;
             currentProduct.CategoryId = model.CategoryId;
+            currentProduct.isDiscount = model.isDiscount;
             currentProduct.isFeatured = model.isFeatured;
             currentProduct.isNew = model.isNew;
             currentProduct.isTopRated = model.isTopRated;
@@ -181,27 +206,6 @@ namespace AtesShop.Admin.Controllers
             }
 
             productService.UpdateProduct(currentProduct);
-
-            //Resource Table
-            var currentTranslation = translationService.GetProductTranslationByProduct(model.Id);
-
-            var productNameResource = new Resource();
-            productNameResource = resourceService.GetResource(currentTranslation.ProductNameResourceKey, "en-us");
-            productNameResource.Value = model.Name;
-
-            resourceService.UpdateResource(productNameResource);
-
-            var productDescriptionResource = new Resource();
-            productDescriptionResource = resourceService.GetResource(currentTranslation.ProductDescriptionResourceKey, "en-us");
-            productDescriptionResource.Value = model.Description;
-
-            resourceService.UpdateResource(productDescriptionResource);
-
-            var productPriceResource = new Resource();
-            productPriceResource = resourceService.GetResource(currentTranslation.ProductPriceResourceKey, "en-us");
-            productPriceResource.Value = model.Price.ToString();
-            
-            resourceService.UpdateResource(productPriceResource);
             
             return RedirectToAction("ProductTable");
         }
@@ -209,11 +213,11 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var currentTranslation = translationService.GetProductTranslationByProduct(id);
+            var currentKeySet = keyService.GetProductKeySetByProduct(id);
             
-            resourceService.DeleteResources(currentTranslation.ProductNameResourceKey);
-            resourceService.DeleteResources(currentTranslation.ProductDescriptionResourceKey);
-            resourceService.DeleteResources(currentTranslation.ProductPriceResourceKey);
+            resourceService.DeleteResources(currentKeySet.NameKey);
+            resourceService.DeleteResources(currentKeySet.DescriptionKey);
+            priceService.DeletePrices(currentKeySet.PriceKey);
             
             productService.DeleteProduct(id);
             
@@ -225,14 +229,13 @@ namespace AtesShop.Admin.Controllers
         {
             ProductTranslationResources model = new ProductTranslationResources();
             
-            var currentTranslation = translationService.GetProductTranslationByProduct(id);
+            var currentKeySet = keyService.GetProductKeySetByProduct(id);
 
-            model.NameResources = resourceService.GetResourcesByKey(currentTranslation.ProductNameResourceKey);
-            model.DescriptionResources = resourceService.GetResourcesByKey(currentTranslation.ProductDescriptionResourceKey);
-            model.PriceResources = resourceService.GetResourcesByKey(currentTranslation.ProductPriceResourceKey);
-            model.ResourceCount = resourceService.GetResourcesCountByKey(currentTranslation.ProductNameResourceKey);
+            model.NameResources = resourceService.GetResourcesByKey(currentKeySet.NameKey);
+            model.DescriptionResources = resourceService.GetResourcesByKey(currentKeySet.DescriptionKey);
+            model.ResourceCount = resourceService.GetResourcesCountByKey(currentKeySet.NameKey);
 
-            model.TranslationId = currentTranslation.Id;
+            model.KeySetId = currentKeySet.Id;
             
             return PartialView(model);
         }
@@ -240,30 +243,31 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult AddTranslation(NewProductTranslationModel model)
         {
-            var translation = translationService.GetProductTranslation(model.Id);
+            var currentKeySet = keyService.GetProductKeySet(model.Id);
 
             //Resource
-            var productNameResource = new Resource();
-            productNameResource.Key = translation.ProductNameResourceKey;
-            productNameResource.Value = model.Name;
-            productNameResource.Culture = model.Culture;
+            var productNameResource = generateResource(currentKeySet.NameKey, model.Name, model.Culture);
+            var productDescriptionResource = generateResource(currentKeySet.DescriptionKey, model.Description, model.Culture);
 
             resourceService.SaveResource(productNameResource);
-
-            var productDescriptionResource = new Resource();
-            productDescriptionResource.Key = translation.ProductDescriptionResourceKey;
-            productDescriptionResource.Value = model.Description;
-            productDescriptionResource.Culture = model.Culture;
-
             resourceService.SaveResource(productDescriptionResource);
 
-            var productPriceResource = new Resource();
-            productPriceResource.Key = translation.ProductPriceResourceKey;
-            productPriceResource.Value = model.Price;
-            productPriceResource.Culture = model.Culture;
+            //Price
+            var prices = priceService.GetPricesByKeyAndCulture(currentKeySet.PriceKey, "en-us");
+            
+            foreach (var price in prices)
+            {
+                var newPrice = new Price();
+                newPrice.Key = currentKeySet.PriceKey;
+                newPrice.Value = "0";
+                newPrice.RoleId = price.RoleId;
+                newPrice.RoleName = price.RoleName;
+                newPrice.Culture = model.Culture;
 
-            resourceService.SaveResource(productPriceResource);
+                priceService.SavePrice(newPrice);
 
+            }
+            
             return RedirectToAction("ProductTable");
         }
 
@@ -271,12 +275,11 @@ namespace AtesShop.Admin.Controllers
         public ActionResult EditTranslation(int id, string culture)
         {
             EditProductTranslationViewModel model = new EditProductTranslationViewModel();
-            var translation = translationService.GetProductTranslationByProduct(id);
+            var currentKeySet = keyService.GetProductKeySetByProduct(id);
 
-            model.Id = translation.Id;
-            model.Name = resourceService.GetResource(translation.ProductNameResourceKey, culture).Value;
-            model.Description = resourceService.GetResource(translation.ProductDescriptionResourceKey, culture).Value;
-            model.Price = resourceService.GetResource(translation.ProductPriceResourceKey, culture).Value;
+            model.Id = currentKeySet.Id;
+            model.Name = resourceService.GetResource(currentKeySet.NameKey, culture).Value;
+            model.Description = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Value;
             model.Culture = culture;
             
             return PartialView(model);
@@ -285,23 +288,27 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult EditTranslation(EditProductTranslationViewModel model)
         {
-            var translation = translationService.GetProductTranslation(model.Id);
+            var currentKeySet = keyService.GetProductKeySet(model.Id);
 
             var productNameResource = new Resource();
-            productNameResource = resourceService.GetResource(translation.ProductNameResourceKey, model.Culture);
+            productNameResource = resourceService.GetResource(currentKeySet.NameKey, model.Culture);
             productNameResource.Value = model.Name;
 
             var productDescriptionResource = new Resource();
-            productDescriptionResource = resourceService.GetResource(translation.ProductDescriptionResourceKey, model.Culture);
+            productDescriptionResource = resourceService.GetResource(currentKeySet.DescriptionKey, model.Culture);
             productDescriptionResource.Value = model.Description;
-
-            var productPriceResource = new Resource();
-            productPriceResource = resourceService.GetResource(translation.ProductPriceResourceKey, model.Culture);
-            productPriceResource.Value = model.Price;
-
+            
             resourceService.UpdateResource(productNameResource);
             resourceService.UpdateResource(productDescriptionResource);
-            resourceService.UpdateResource(productPriceResource);
+
+            if (model.Culture == "en-us")
+            {
+                var currentProduct = productService.GetProduct(currentKeySet.ProductId);
+                currentProduct.Name = model.Name;
+                currentProduct.Description = model.Description;
+
+                productService.UpdateProduct(currentProduct);
+            }
 
             return RedirectToAction("ProductTable");
         }
@@ -309,17 +316,30 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteTranslation(int id, string culture)
         {
-            var translation = translationService.GetProductTranslationByProduct(id);
+            var currentKeySet = keyService.GetProductKeySetByProduct(id);
 
-            var productNameResourceId = resourceService.GetResource(translation.ProductNameResourceKey, culture).Id;
-            var productDescriptionId = resourceService.GetResource(translation.ProductDescriptionResourceKey, culture).Id;
-            var productPriceId = resourceService.GetResource(translation.ProductPriceResourceKey, culture).Id;
+            var productNameResourceId = resourceService.GetResource(currentKeySet.NameKey, culture).Id;
+            var productDescriptionId = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Id;
+            var prices = priceService.GetPricesByKeyAndCulture(currentKeySet.PriceKey, culture);
 
             resourceService.DeleteResource(productNameResourceId);
             resourceService.DeleteResource(productDescriptionId);
-            resourceService.DeleteResource(productPriceId);
+
+            foreach (var price in prices)
+            {
+                priceService.DeletePrice(price.Id);
+            }
             
             return RedirectToAction("ProductTable");
+        }
+
+        public Resource generateResource(string key, string value, string culture)
+        {
+            var resource = new Resource();
+            resource.Key = key;
+            resource.Value = value;
+            resource.Culture = culture;
+            return resource;
         }
     }
 }

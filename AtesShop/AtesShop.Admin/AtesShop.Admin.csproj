@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\PriceController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\ImageViewModels.cs" />
     <Compile Include="ViewModels\MenuViewModels.cs" />
+    <Compile Include="ViewModels\PriceViewModels.cs" />
     <Compile Include="ViewModels\ProductViewModels.cs" />
     <Compile Include="ViewModels\ResourceViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
@@ -4265,6 +4267,10 @@
     <Content Include="Views\Resource\Create.cshtml" />
     <Content Include="Views\Resource\Edit.cshtml" />
     <Content Include="Views\Resource\AddTranslation.cshtml" />
+    <Content Include="Views\Price\Index.cshtml" />
+    <Content Include="Views\Price\PriceTable.cshtml" />
+    <Content Include="Views\Price\Create.cshtml" />
+    <Content Include="Views\Price\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

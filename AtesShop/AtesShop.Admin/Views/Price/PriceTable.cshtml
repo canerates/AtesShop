@@ -1,0 +1,133 @@
+﻿@model List<PriceListViewModel>
+@{
+    ViewBag.Title = "Price Table";
+}
+
+<div class="container ">
+    <form class="form-inline" method="post">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" id="newBtn">Add</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-info" id="searchBtn"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+        <div class="form-group">
+            <input id="searchTxt" class="form-control" name="search" placeholder="Enter key" />
+        </div>
+    </form>
+</div>
+<br />
+<div class="container" id="tableContainer">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Culture (Lang.)</th>
+                <th>Role Name</th>
+                <th>Price</th>
+                <th>Previous Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="5"></td></tr>
+            @foreach (var elem in Model)
+            {
+                for (int i = 0; i < elem.PriceCount; i++)
+                {
+                    <tr>
+                        @if (i == 0)
+                        {
+                            <td rowspan="@elem.PriceCount">@elem.ProductName</td>
+                        }
+
+                        <td>@elem.Prices[i].Culture</td>
+                        <td>@elem.Prices[i].RoleName</td>
+                        <td>@elem.Prices[i].Value</td>
+                        <td>@elem.Prices[i].PreValue</td>
+                        <td>
+                            <div class="btn-group-inline">
+                                <button type="button" class="editBtn btn btn-primary" data-id="@elem.Prices[i].Id">Edit</button>
+                                <button type="button" class="deleteBtn btn btn-danger" data-id="@elem.Prices[i].Id">Delete</button>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+                <tr><td colspan="5"></td></tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Price/PriceTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#newBtn").click(function () {
+        $.ajax({
+            url: '/Price/Create'
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+    $(".editBtn").click(function () {
+        $.ajax({
+            url: '/Price/Edit',
+            data: {
+                ID: $(this).attr("data-id")
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $(".deleteBtn").click(function () {
+        var confirmDelete = confirm("Are you sure you want to delete this price?");
+        if (confirmDelete) {
+            $.ajax({
+                type: "POST",
+                url: '/Price/Delete',
+                data: {
+                    ID: $(this).attr("data-id")
+                }
+            })
+            .done(function (response) {
+                //alert("Success");
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                alert("Fail");
+            });
+        }
+    });
+
+</script>
+
