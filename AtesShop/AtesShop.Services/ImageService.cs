@@ -10,6 +10,24 @@ namespace AtesShop.Services
 {
     public class ImageService
     {
+        #region Singleton
+        public static ImageService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ImageService();
+
+                return instance;
+            }
+        }
+        private static ImageService instance { get; set; }
+
+        private ImageService()
+        {
+        }
+
+        #endregion
+
         public Image GetImage(int imageId)
         {
             using (var context = new ASContext())

@@ -11,8 +11,6 @@ namespace AtesShop.Admin.Controllers
 {
     public class ResourceController : Controller
     {
-        ResourceService resourceService = new ResourceService();
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -23,15 +21,15 @@ namespace AtesShop.Admin.Controllers
         public ActionResult ResourceTable(string search)
         {
             List<ResourceKeyViewModel> model = new List<ResourceKeyViewModel>();
-            var resourceKeys = resourceService.GetResourceDistinctKeys();
+            var resourceKeys = ResourceService.Instance.GetResourceDistinctKeys();
             
             foreach (var key in resourceKeys)
             {
                 ResourceKeyViewModel elem = new ResourceKeyViewModel();
                 elem.ResourceKey = key;
-                elem.ResourceCount = resourceService.GetResourcesCountByKey(key);
+                elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(key);
 
-                var resources = resourceService.GetResourcesByKey(key);
+                var resources = ResourceService.Instance.GetResourcesByKey(key);
 
                 if (!string.IsNullOrEmpty(search))
                 {
@@ -62,7 +60,7 @@ namespace AtesShop.Admin.Controllers
             newResource.Key = model.Key;
             newResource.Value = model.Value;
 
-            resourceService.SaveResource(newResource);
+            ResourceService.Instance.SaveResource(newResource);
 
             return RedirectToAction("ResourceTable");
         }
@@ -71,7 +69,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Edit(int id)
         {
             ResourceViewModel model = new ResourceViewModel();
-            var currentResource = resourceService.GetResourceById(id);
+            var currentResource = ResourceService.Instance.GetResourceById(id);
 
             model.Id = id;
             model.Key = currentResource.Key;
@@ -84,10 +82,10 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(ResourceViewModel model)
         {
-            var currentResource = resourceService.GetResourceById(model.Id);
+            var currentResource = ResourceService.Instance.GetResourceById(model.Id);
             currentResource.Value = model.Value;
 
-            resourceService.UpdateResource(currentResource);
+            ResourceService.Instance.UpdateResource(currentResource);
 
             return RedirectToAction("ResourceTable");
         }
@@ -95,7 +93,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            resourceService.DeleteResource(id);
+            ResourceService.Instance.DeleteResource(id);
 
             return RedirectToAction("ResourceTable");
         }
@@ -104,7 +102,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult AddTranslation(int id)
         {
             ResourceViewModel model = new ResourceViewModel();
-            var currentResource = resourceService.GetResourceById(id);
+            var currentResource = ResourceService.Instance.GetResourceById(id);
             
             model.Id = id;
             model.Key = currentResource.Key;
@@ -114,7 +112,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult AddTranslation(ResourceViewModel model)
         {
-            var resources = resourceService.GetResourcesByKey(model.Key);
+            var resources = ResourceService.Instance.GetResourcesByKey(model.Key);
 
             foreach (var resource in resources)
             {
@@ -129,7 +127,7 @@ namespace AtesShop.Admin.Controllers
             newResource.Key = model.Key;
             newResource.Value = model.Value;
 
-            resourceService.SaveResource(newResource);
+            ResourceService.Instance.SaveResource(newResource);
 
 
             return RedirectToAction("ResourceTable");

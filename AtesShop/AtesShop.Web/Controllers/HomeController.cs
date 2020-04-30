@@ -41,11 +41,7 @@ namespace AtesShop.Web.Controllers
                 _userManager = value;
             }
         }
-
-        ProductService productService = new ProductService();
-        ImageService imageService = new ImageService();
-        MenuService menuService = new MenuService();
-        ResourceKeyService keyService = new ResourceKeyService();
+        
         private static IResourceProvider resourceProvider = new DbResourceProvider();
 
         public ActionResult Index()
@@ -64,18 +60,14 @@ namespace AtesShop.Web.Controllers
 
             HomeViewModel model = new HomeViewModel();
 
-            var products = productService.GetProducts();
+            var products = ProductService.Instance.GetProducts(CultureInfo.CurrentUICulture.Name, roleName);
 
             foreach (var product in products)
             {
-                product.Images = imageService.GetImagesByList(product.ImageIdList);
-                var keys = keyService.GetProductKeySetByProduct(product.Id);
-
+                var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
                 //Localization
                 product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
                 product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-                product.Price = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, false) as string;
-                product.PrePrice = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, true) as string;
             }
             
             products = CommonHelper.ProductsCurrencyFormat(products, CultureInfo.CurrentUICulture.Name);
@@ -119,11 +111,11 @@ namespace AtesShop.Web.Controllers
         public ActionResult ShowMenu()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = menuService.GetMainMenus();
+            model.MainMenuList = MenuService.Instance.GetMainMenus();
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
-                main.SubMenus = menuService.GetSubMenuByParent(main.Id);
+                main.SubMenus = MenuService.Instance.GetSubMenuByParent(main.Id);
 
                 foreach (var sub in main.SubMenus)
                 {
@@ -137,11 +129,11 @@ namespace AtesShop.Web.Controllers
         public ActionResult ShowMobileMenu()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = menuService.GetMainMenus();
+            model.MainMenuList = MenuService.Instance.GetMainMenus();
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
-                main.SubMenus = menuService.GetSubMenuByParent(main.Id);
+                main.SubMenus = MenuService.Instance.GetSubMenuByParent(main.Id);
 
                 foreach (var sub in main.SubMenus)
                 {
@@ -166,7 +158,7 @@ namespace AtesShop.Web.Controllers
             currencies.Add("en-us", "USD");
             currencies.Add("tr-tr", "TRY");
             currencies.Add("zh-tw", "NTD");
-
+            
             model.Languages = languages;
             model.Currencies = currencies;
 

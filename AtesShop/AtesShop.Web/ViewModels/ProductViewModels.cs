@@ -24,6 +24,7 @@ namespace AtesShop.Web.ViewModels
         public string Description { get; set; }
         public string Price { get; set; }
         public string PrePrice { get; set; }
+        public bool isDiscount { get; set; }
         public int CategoryId { get; set; }
         public List<Image> ProductImages { get; set; }
         public List<Product> RelatedProducts { get; set; }
@@ -38,5 +39,8 @@ namespace AtesShop.Web.ViewModels
         public bool IsListView { get; set; }
         public int SortId { get; set; }
         public int SortType { get; set; }
+        public int MaximumPrice { get; set; }
+        public int MinimumPrice { get; set; }
+
     }
 }

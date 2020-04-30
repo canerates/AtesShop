@@ -1,6 +1,6 @@
-﻿using AtesShop.Entities;
-using AtesShop.Resources;
+﻿using AtesShop.Resources;
 using AtesShop.Services;
+using AtesShop.Web.Helpers;
 using AtesShop.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,8 +10,8 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using static AtesShop.Web.Helpers.SharedHelper;
-using AtesShop.Web.Helpers;
 
 namespace AtesShop.Web.Controllers
 {
@@ -44,19 +44,14 @@ namespace AtesShop.Web.Controllers
                 _userManager = value;
             }
         }
-
-        ProductService productService = new ProductService();
-        CategoryService categoryService = new CategoryService();
-        ImageService imageService = new ImageService();
+        
         private static IResourceProvider resourceProvider = new DbResourceProvider();
-        ResourceKeyService keyService = new ResourceKeyService();
-        PriceService priceService = new PriceService();
         
         [HttpGet]
         public ActionResult Index(int? categoryId, string search)
         {
             string roleName;
-
+            
             if (User.Identity.IsAuthenticated)
             {
                 roleName = UserManager.GetRoles(User.Identity.GetUserId()).FirstOrDefault();
@@ -66,13 +61,13 @@ namespace AtesShop.Web.Controllers
             {
                 roleName = "User";
             }
-
+            
             ProductViewModel model = new ProductViewModel();
             
-            model.Categories = categoryService.GetCategories();
-            model.ProductCount = productService.GetProductsCount();
-            model.MaximumPrice = priceService.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, roleName);
-            model.MinimumPrice = priceService.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, roleName);
+            model.Categories = CategoryService.Instance.GetCategories();
+            model.ProductCount = ProductService.Instance.GetProductsCount();
+            model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, roleName);
+            model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, roleName);
             model.SearchKey = search;
 
             if (categoryId.HasValue)
@@ -102,33 +97,31 @@ namespace AtesShop.Web.Controllers
             ProductListViewModel model = new ProductListViewModel();
             model.IsListView = isList;
 
+            model.MaximumPrice = maximumPrice.HasValue ? maximumPrice.Value : 0;
+            model.MinimumPrice = minimumPrice.HasValue ? minimumPrice.Value : 0;
+
             int pageSize = isList ? 5 : 9;
             pageNo = pageNo.HasValue ? pageNo.Value : 1;
-            var totalProducts = model.Products.Count;
-
-            //Resource Key
-
-            model.Products = productService.SearchProducts(search, categoryId, sortId, sortType, pageNo.Value, pageSize);
+            
+            model.Products = ProductService.Instance.SearchProducts(search, CultureInfo.CurrentUICulture.Name, roleName, categoryId, sortId, sortType, pageNo.Value, pageSize, minimumPrice, maximumPrice );
 
             if (categoryId.HasValue && categoryId != 0) model.CategoryId = categoryId.Value;
             else model.CategoryId = 0;
 
             foreach (var product in model.Products)
             {
-                product.Images = imageService.GetImagesByList(product.ImageIdList);
-                var keys = keyService.GetProductKeySetByProduct(product.Id);
+                var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
 
                 //Localization
                 product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
                 product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-                product.Price = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, false) as string;
-                product.PrePrice = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, true) as string;
-            }
 
-            model.Products = CommonHelper.FilterProductsByMaxMinPrice(model.Products, maximumPrice, minimumPrice);
+            }
             model.Products = CommonHelper.ProductsCurrencyFormat(model.Products, CultureInfo.CurrentUICulture.Name);
 
-            model.Pager = new Pager(totalProducts, pageNo, pageSize);
+            var totalProductsCount = ProductService.Instance.SearchProductsCount(search, CultureInfo.CurrentUICulture.Name, roleName, categoryId, minimumPrice, maximumPrice);
+
+            model.Pager = new Pager(totalProductsCount, pageNo, pageSize);
             model.SortId = sortId.HasValue ? sortId.Value : 1;
             model.SortType = sortType.HasValue ? sortType.Value : 1;
             
@@ -149,35 +142,34 @@ namespace AtesShop.Web.Controllers
             {
                 roleName = "User";
             }
-
-            var product = productService.GetProduct(id);
-            var keys = keyService.GetProductKeySetByProduct(product.Id);
+            
             ProductDetailViewModel model = new ProductDetailViewModel();
 
-            if(product != null)
+            var product = ProductService.Instance.GetProduct(id, CultureInfo.CurrentUICulture.Name, roleName);
+
+
+            if (product != null)
             {
+                product = CommonHelper.ProductCurrencyFormat(product, CultureInfo.CurrentUICulture.Name);
+
                 model.Id = product.Id;
                 model.Name = product.Name;
                 model.Description = product.Description;
-                model.Price = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, false) as string;
-                model.PrePrice = resourceProvider.GetPriceValue(keys.PriceKey, CultureInfo.CurrentUICulture.Name, roleName, true) as string;
+                model.Price = product.Price;
+                model.PrePrice = product.PrePrice;
+                model.isDiscount = product.isDiscount;
                 model.CategoryId = product.CategoryId;
-                model.ProductImages = imageService.GetImagesByList(product.ImageIdList);
-
-
-                model.RelatedProducts = productService.GetProductsByCategory(product.CategoryId).Where(p => p.Id != id).ToList();
-
-                foreach (var relatedProduct in model.RelatedProducts)
-                {
-                    relatedProduct.Images = imageService.GetImagesByList(relatedProduct.ImageIdList);
-                }
+                model.ProductImages = product.Images;
+                
+                model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, roleName).Where(p => p.Id != id).ToList();
+                model.RelatedProducts = CommonHelper.ProductsCurrencyFormat(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
             }
             return View(model);
         }
         [HttpGet]
         public ActionResult Image(int id)
         {
-            var image = imageService.GetImage(id);
+            var image = ImageService.Instance.GetImage(id);
             return File(image.Data, image.ContentType);
         }
     }

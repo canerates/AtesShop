@@ -13,10 +13,6 @@ namespace AtesShop.Admin.Controllers
 {
     public class PriceController : Controller
     {
-        PriceService priceService = new PriceService();
-        ProductService productService = new ProductService();
-        ResourceKeyService keyService = new ResourceKeyService();
-
         private ApplicationRoleManager _roleManager;
 
         public ApplicationRoleManager RoleManager
@@ -41,14 +37,14 @@ namespace AtesShop.Admin.Controllers
         public ActionResult PriceTable(string search)
         {
             List<PriceListViewModel> model = new List<PriceListViewModel>();
-            var keySet = priceService.GetPriceDistinctKeys();
+            var keySet = PriceService.Instance.GetPriceDistinctKeys();
 
             foreach (var key in keySet)
             {
                 PriceListViewModel modelElement = new PriceListViewModel();
-                modelElement.ProductName = keyService.GetProductKeySetByPriceKey(key).Product.Name;
-                modelElement.PriceCount = priceService.GetPriceCountByKey(key);
-                modelElement.Prices = priceService.GetPricesByKey(key);
+                modelElement.ProductName = ResourceKeyService.Instance.GetProductKeySetByPriceKey(key).Product.Name;
+                modelElement.PriceCount = PriceService.Instance.GetPriceCountByKey(key);
+                modelElement.Prices = PriceService.Instance.GetPricesByKey(key);
                 model.Add(modelElement);
             }
             
@@ -59,7 +55,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Create()
         {
             NewPriceViewModel model = new NewPriceViewModel();
-            model.AvailableProducts = productService.GetProducts();
+            model.AvailableProducts = ProductService.Instance.GetProducts();
 
             var roles = new List<RoleViewModel>();
 
@@ -77,7 +73,7 @@ namespace AtesShop.Admin.Controllers
         {
             var newPrice = new Price();
 
-            var productKeySet = keyService.GetProductKeySetByProduct(model.ProductId);
+            var productKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(model.ProductId);
             newPrice.Key = productKeySet.PriceKey;
 
             foreach (var role in RoleManager.Roles)
@@ -94,7 +90,7 @@ namespace AtesShop.Admin.Controllers
             newPrice.Value = model.Value;
             newPrice.PreValue = model.PreValue;
 
-            priceService.SavePrice(newPrice);
+            PriceService.Instance.SavePrice(newPrice);
             
             return RedirectToAction("PriceTable");
         }
@@ -103,10 +99,10 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Edit(int id)
         {
             EditPriceViewModel model = new EditPriceViewModel();
-            var currentPrice = priceService.GetPriceById(id);
+            var currentPrice = PriceService.Instance.GetPriceById(id);
 
             model.Id = currentPrice.Id;
-            model.ProductName = keyService.GetProductKeySetByPriceKey(currentPrice.Key).Product.Name;
+            model.ProductName = ResourceKeyService.Instance.GetProductKeySetByPriceKey(currentPrice.Key).Product.Name;
             model.Culture = currentPrice.Culture;
             model.Value = currentPrice.Value;
             model.PreValue = currentPrice.PreValue;
@@ -118,11 +114,11 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(EditPriceViewModel model)
         {
-            var currentPrice = priceService.GetPriceById(model.Id);
+            var currentPrice = PriceService.Instance.GetPriceById(model.Id);
             currentPrice.Value = model.Value;
             currentPrice.PreValue = model.PreValue;
 
-            priceService.UpdatePrice(currentPrice);
+            PriceService.Instance.UpdatePrice(currentPrice);
 
             return RedirectToAction("PriceTable");
         }
@@ -130,7 +126,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            priceService.DeletePrice(id);
+            PriceService.Instance.DeletePrice(id);
 
             return RedirectToAction("PriceTable");
         }

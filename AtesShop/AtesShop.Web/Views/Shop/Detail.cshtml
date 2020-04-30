@@ -286,7 +286,14 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <h4><a href="@Url.Action("Detail", "Shop", new { id = product.Id })">@product.Name</a></h4>
-                            <p><span class="price">@product.Price</span><del class="prev-price">$55.00</del></p>
+                            @if (product.isDiscount)
+                            {
+                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                            }
+                            else
+                            {
+                                <p><span class="price">@product.Price</span></p>
+                            }
                             <div class="pro-actions">
                                 <div class="actions-secondary">
                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>

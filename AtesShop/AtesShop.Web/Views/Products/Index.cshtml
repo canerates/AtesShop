@@ -7,6 +7,7 @@
     var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
     var searchKey = Model.SearchKey == null ? "null" : Model.SearchKey.ToString();
 }
+
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
@@ -290,8 +291,8 @@
 
     var priceSlider = $("#slider-range").slider({
         range: true,
-        min: @Model.MinimumPrice - ((@Model.MaximumPrice - @Model.MinimumPrice) * 0.2 ),
-        max: @Model.MaximumPrice + ((@Model.MaximumPrice - @Model.MinimumPrice) * 0.2 ),
+        min: @Model.MinimumPrice,
+        max: @Model.MaximumPrice,
         values: [@Model.MinimumPrice, @Model.MaximumPrice],
         slide: function (event, ui) {
             minimumPrice = ui.values[0];

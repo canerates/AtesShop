@@ -13,8 +13,6 @@ namespace AtesShop.Admin.Controllers
     //[Authorize(Roles = "Admin")]
     public class ImageController : Controller
     {
-        ImageService imageService = new ImageService();
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -24,7 +22,7 @@ namespace AtesShop.Admin.Controllers
         [HttpGet]
         public ActionResult ImageTable(string search)
         {
-            var images = imageService.GetImages();
+            var images = ImageService.Instance.GetImages();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -58,7 +56,7 @@ namespace AtesShop.Admin.Controllers
                 image.Data = imageData;
                 image.ContentType = model.File.ContentType;
 
-                imageService.SaveImage(image);
+                ImageService.Instance.SaveImage(image);
             }
             return RedirectToAction("ImageTable");
         }
@@ -66,7 +64,7 @@ namespace AtesShop.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var image = imageService.GetImage(id);
+            var image = ImageService.Instance.GetImage(id);
             EditImageViewModel model = new EditImageViewModel();
 
             model.Id = image.Id;
@@ -82,7 +80,7 @@ namespace AtesShop.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentImage = imageService.GetImage(model.Id);
+                var currentImage = ImageService.Instance.GetImage(model.Id);
 
 
                 if (model.File != null && model.File.ContentLength > 0 )
@@ -98,7 +96,7 @@ namespace AtesShop.Admin.Controllers
                 }
                 currentImage.Name = model.Name;
 
-                imageService.UpdateImage(currentImage);
+                ImageService.Instance.UpdateImage(currentImage);
             }
             
             return RedirectToAction("ImageTable");
@@ -107,7 +105,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            imageService.DeleteImage(id);
+            ImageService.Instance.DeleteImage(id);
             return RedirectToAction("ImageTable");
         }
     }

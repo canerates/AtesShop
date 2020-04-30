@@ -11,6 +11,24 @@ namespace AtesShop.Services
 {
     public class CategoryService
     {
+        #region Singleton
+        public static CategoryService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new CategoryService();
+
+                return instance;
+            }
+        }
+        private static CategoryService instance { get; set; }
+
+        private CategoryService()
+        {
+        }
+
+        #endregion
+
         public Category GetCategory(int id)
         {
             using (var context = new ASContext())

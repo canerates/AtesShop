@@ -10,6 +10,24 @@ namespace AtesShop.Services
 {
     public class PriceService
     {
+        #region Singleton
+        public static PriceService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new PriceService();
+
+                return instance;
+            }
+        }
+        private static PriceService instance { get; set; }
+
+        private PriceService()
+        {
+        }
+
+        #endregion
+
         public Price GetPrice(string key, string culture, string role)
         {
             using (var context = new ASContext())

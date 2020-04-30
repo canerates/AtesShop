@@ -11,24 +11,22 @@ namespace AtesShop.Resources
 {
     public class DbResourceProvider: BaseResourceProvider
     {
-        ResourceService resourceService = new ResourceService();
-        PriceService priceService = new PriceService();
-
+        
         protected override IList<Resource> ReadResources()
         {
-            var resources = resourceService.GetResources();
+            var resources = ResourceService.Instance.GetResources();
 
             return resources;
         }
 
         protected override Resource ReadResource(string name, string culture)
         {
-            Resource resource = resourceService.GetResource(name, culture);
+            Resource resource = ResourceService.Instance.GetResource(name, culture);
 
             if (resource == null)
             {
                 var defaultCulture = "en-US";
-                resource = resourceService.GetResource(name, defaultCulture);
+                resource = ResourceService.Instance.GetResource(name, defaultCulture);
 
             }
 
@@ -37,14 +35,14 @@ namespace AtesShop.Resources
 
         protected override IList<Price> ReadPrices()
         {
-            var prices = priceService.GetPrices();
+            var prices = PriceService.Instance.GetPrices();
 
             return prices;
         }
 
         protected override Price ReadPrice(string name, string culture, string role)
         {
-            Price price = priceService.GetPrice(name, culture, role);
+            Price price = PriceService.Instance.GetPrice(name, culture, role);
             
             if (price == null)
             {

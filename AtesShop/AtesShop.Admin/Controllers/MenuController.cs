@@ -11,9 +11,6 @@ namespace AtesShop.Admin.Controllers
 {
     public class MenuController : Controller
     {
-        MenuService menuService = new MenuService();
-        ResourceService resourceService = new ResourceService();
-
         [HttpGet]
         public ActionResult Index(int type)
         {
@@ -30,7 +27,7 @@ namespace AtesShop.Admin.Controllers
 
             if (type == 1)
             {
-                var menus = menuService.GetMainMenus();
+                var menus = MenuService.Instance.GetMainMenus();
                 if (!string.IsNullOrEmpty(search))
                 {
                     menus = menus.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -47,8 +44,8 @@ namespace AtesShop.Admin.Controllers
 
 
                     //Resources
-                    elem.NameResources = resourceService.GetResourcesByKey(menu.ResourceKey);
-                    elem.ResourceCount = resourceService.GetResourcesCountByKey(menu.ResourceKey);
+                    elem.NameResources = ResourceService.Instance.GetResourcesByKey(menu.ResourceKey);
+                    elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(menu.ResourceKey);
 
                     model.Add(elem);
                 }
@@ -56,7 +53,7 @@ namespace AtesShop.Admin.Controllers
             }
             else
             {
-                var menus = menuService.GetSubMenus();
+                var menus = MenuService.Instance.GetSubMenus();
 
                 if (!string.IsNullOrEmpty(search))
                 {
@@ -74,8 +71,8 @@ namespace AtesShop.Admin.Controllers
                     elem.MainMenu = menu.MainMenu;
 
                     //Resources
-                    elem.NameResources = resourceService.GetResourcesByKey(menu.ResourceKey);
-                    elem.ResourceCount = resourceService.GetResourcesCountByKey(menu.ResourceKey);
+                    elem.NameResources = ResourceService.Instance.GetResourcesByKey(menu.ResourceKey);
+                    elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(menu.ResourceKey);
 
                     model.Add(elem);
                 }
@@ -88,7 +85,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Create(int type)
         {
             NewMenuViewModel model = new NewMenuViewModel();
-            model.AvailableMainMenus = menuService.GetMainMenus();
+            model.AvailableMainMenus = MenuService.Instance.GetMainMenus();
             model.Type = type;
             return PartialView(model);
         }
@@ -106,7 +103,7 @@ namespace AtesShop.Admin.Controllers
                 newMainMenu.ControllerName = model.ControllerName;
                 newMainMenu.ResourceKey = model.Name.Replace(" ", "") + "T" + model.Type + "O" + model.OrderId;
 
-                menuService.SaveMainMenu(newMainMenu);
+                MenuService.Instance.SaveMainMenu(newMainMenu);
 
                 //Resource
                 var menuNameResource = new Resource();
@@ -114,7 +111,7 @@ namespace AtesShop.Admin.Controllers
                 menuNameResource.Value = model.Name;
                 menuNameResource.Culture = "en-us";
 
-                resourceService.SaveResource(menuNameResource);
+                ResourceService.Instance.SaveResource(menuNameResource);
                 
             }
             else
@@ -124,10 +121,10 @@ namespace AtesShop.Admin.Controllers
                 newSubMenu.OrderId = model.OrderId;
                 newSubMenu.ActionName = model.ActionName;
                 newSubMenu.ControllerName = model.ControllerName;
-                newSubMenu.MainMenu = menuService.GetMainMenu(model.MainMenuId);
+                newSubMenu.MainMenu = MenuService.Instance.GetMainMenu(model.MainMenuId);
                 newSubMenu.ResourceKey = model.Name.Replace(" ", "") + "T" + model.Type + "O" + model.OrderId;
 
-                menuService.SaveSubMenu(newSubMenu);
+                MenuService.Instance.SaveSubMenu(newSubMenu);
 
                 //Resource
                 var menuNameResource = new Resource();
@@ -135,7 +132,7 @@ namespace AtesShop.Admin.Controllers
                 menuNameResource.Value = model.Name;
                 menuNameResource.Culture = "en-us";
 
-                resourceService.SaveResource(menuNameResource);
+                ResourceService.Instance.SaveResource(menuNameResource);
             }
 
             return RedirectToAction("MenuTable", new { type = model.Type });
@@ -149,7 +146,7 @@ namespace AtesShop.Admin.Controllers
 
             if (type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(id);
+                var currentMenu = MenuService.Instance.GetMainMenu(id);
                 model.Id = currentMenu.Id;
                 model.Name = currentMenu.Name;
                 model.OrderId = currentMenu.OrderId;
@@ -160,14 +157,14 @@ namespace AtesShop.Admin.Controllers
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(id);
+                var currentMenu = MenuService.Instance.GetSubMenu(id);
                 model.Id = currentMenu.Id;
                 model.Name = currentMenu.Name;
                 model.OrderId = currentMenu.OrderId;
                 model.ActionName = currentMenu.ActionName;
                 model.ControllerName = currentMenu.ControllerName;
                 model.MainMenuId = currentMenu.MainMenuId;
-                model.AvailableMainMenus = menuService.GetMainMenus();
+                model.AvailableMainMenus = MenuService.Instance.GetMainMenus();
                 model.ResourceKey = currentMenu.ResourceKey;
             }
             
@@ -179,41 +176,41 @@ namespace AtesShop.Admin.Controllers
         {
             if (model.Type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(model.Id);
+                var currentMenu = MenuService.Instance.GetMainMenu(model.Id);
                 currentMenu.Name = model.Name;
                 currentMenu.OrderId = model.OrderId;
                 currentMenu.ActionName = model.ActionName;
                 currentMenu.ControllerName = model.ControllerName;
 
-                menuService.UpdateMainMenu(currentMenu);
+                MenuService.Instance.UpdateMainMenu(currentMenu);
 
                 //Resource
 
                 var menuNameResource = new Resource();
-                menuNameResource = resourceService.GetResource(model.ResourceKey, "en-us");
+                menuNameResource = ResourceService.Instance.GetResource(model.ResourceKey, "en-us");
                 menuNameResource.Value = model.Name;
 
-                resourceService.UpdateResource(menuNameResource);
+                ResourceService.Instance.UpdateResource(menuNameResource);
 
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(model.Id);
+                var currentMenu = MenuService.Instance.GetSubMenu(model.Id);
                 currentMenu.Name = model.Name;
                 currentMenu.OrderId = model.OrderId;
                 currentMenu.ActionName = model.ActionName;
                 currentMenu.ControllerName = model.ControllerName;
                 currentMenu.MainMenuId = model.MainMenuId;
 
-                menuService.UpdateSubMenu(currentMenu);
+                MenuService.Instance.UpdateSubMenu(currentMenu);
 
                 //Resource
 
                 var menuNameResource = new Resource();
-                menuNameResource = resourceService.GetResource(model.ResourceKey, "en-us");
+                menuNameResource = ResourceService.Instance.GetResource(model.ResourceKey, "en-us");
                 menuNameResource.Value = model.Name;
 
-                resourceService.UpdateResource(menuNameResource);
+                ResourceService.Instance.UpdateResource(menuNameResource);
             }
 
             return RedirectToAction("MenuTable", new { type = model.Type });
@@ -224,17 +221,17 @@ namespace AtesShop.Admin.Controllers
         {
             if (type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(id);
-                resourceService.DeleteResources(currentMenu.ResourceKey);
+                var currentMenu = MenuService.Instance.GetMainMenu(id);
+                ResourceService.Instance.DeleteResources(currentMenu.ResourceKey);
 
-                menuService.DeleteMainMenu(id);
+                MenuService.Instance.DeleteMainMenu(id);
 
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(id);
-                resourceService.DeleteResources(currentMenu.ResourceKey);
-                menuService.DeleteSubMenu(id);
+                var currentMenu = MenuService.Instance.GetSubMenu(id);
+                ResourceService.Instance.DeleteResources(currentMenu.ResourceKey);
+                MenuService.Instance.DeleteSubMenu(id);
             }
             return RedirectToAction("MenuTable", new { type = type });
         }
@@ -248,15 +245,15 @@ namespace AtesShop.Admin.Controllers
 
             if (type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(id);
-                model.Resources = resourceService.GetResourcesByKey(currentMenu.ResourceKey);
-                model.ResourceCount = resourceService.GetResourcesCountByKey(currentMenu.ResourceKey);
+                var currentMenu = MenuService.Instance.GetMainMenu(id);
+                model.Resources = ResourceService.Instance.GetResourcesByKey(currentMenu.ResourceKey);
+                model.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(currentMenu.ResourceKey);
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(id);
-                model.Resources = resourceService.GetResourcesByKey(currentMenu.ResourceKey);
-                model.ResourceCount = resourceService.GetResourcesCountByKey(currentMenu.ResourceKey);
+                var currentMenu = MenuService.Instance.GetSubMenu(id);
+                model.Resources = ResourceService.Instance.GetResourcesByKey(currentMenu.ResourceKey);
+                model.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(currentMenu.ResourceKey);
             }
             
             return PartialView(model);
@@ -267,23 +264,23 @@ namespace AtesShop.Admin.Controllers
         {
             if (model.Type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(model.Id);
+                var currentMenu = MenuService.Instance.GetMainMenu(model.Id);
                 var menuResource = new Resource();
                 menuResource.Key = currentMenu.ResourceKey;
                 menuResource.Culture = model.Culture;
                 menuResource.Value = model.Name;
 
-                resourceService.SaveResource(menuResource);
+                ResourceService.Instance.SaveResource(menuResource);
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(model.Id);
+                var currentMenu = MenuService.Instance.GetSubMenu(model.Id);
                 var menuResource = new Resource();
                 menuResource.Key = currentMenu.ResourceKey;
                 menuResource.Culture = model.Culture;
                 menuResource.Value = model.Name;
 
-                resourceService.SaveResource(menuResource);
+                ResourceService.Instance.SaveResource(menuResource);
             }
             
             return RedirectToAction("MenuTable" , new { type = model.Type });
@@ -299,14 +296,14 @@ namespace AtesShop.Admin.Controllers
 
             if (type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(id);
-                model.Name = resourceService.GetResource(currentMenu.ResourceKey, culture).Value;
+                var currentMenu = MenuService.Instance.GetMainMenu(id);
+                model.Name = ResourceService.Instance.GetResource(currentMenu.ResourceKey, culture).Value;
 
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(id);
-                model.Name = resourceService.GetResource(currentMenu.ResourceKey, culture).Value;
+                var currentMenu = MenuService.Instance.GetSubMenu(id);
+                model.Name = ResourceService.Instance.GetResource(currentMenu.ResourceKey, culture).Value;
             }
             
             return PartialView(model);
@@ -319,19 +316,19 @@ namespace AtesShop.Admin.Controllers
 
             if (model.Type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(model.Id);
-                menuResource = resourceService.GetResource(currentMenu.ResourceKey, model.Culture);
+                var currentMenu = MenuService.Instance.GetMainMenu(model.Id);
+                menuResource = ResourceService.Instance.GetResource(currentMenu.ResourceKey, model.Culture);
                 
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(model.Id);
-                menuResource = resourceService.GetResource(currentMenu.ResourceKey, model.Culture);
+                var currentMenu = MenuService.Instance.GetSubMenu(model.Id);
+                menuResource = ResourceService.Instance.GetResource(currentMenu.ResourceKey, model.Culture);
 
             }
 
             menuResource.Value = model.Name;
-            resourceService.UpdateResource(menuResource);
+            ResourceService.Instance.UpdateResource(menuResource);
             
             return RedirectToAction("MenuTable", new { type = model.Type });
         }
@@ -341,15 +338,15 @@ namespace AtesShop.Admin.Controllers
         {
             if (type == 1)
             {
-                var currentMenu = menuService.GetMainMenu(id);
-                var menuResourceId = resourceService.GetResource(currentMenu.ResourceKey, culture).Id;
-                resourceService.DeleteResource(menuResourceId);
+                var currentMenu = MenuService.Instance.GetMainMenu(id);
+                var menuResourceId = ResourceService.Instance.GetResource(currentMenu.ResourceKey, culture).Id;
+                ResourceService.Instance.DeleteResource(menuResourceId);
             }
             else
             {
-                var currentMenu = menuService.GetSubMenu(id);
-                var menuResourceId = resourceService.GetResource(currentMenu.ResourceKey, culture).Id;
-                resourceService.DeleteResource(menuResourceId);
+                var currentMenu = MenuService.Instance.GetSubMenu(id);
+                var menuResourceId = ResourceService.Instance.GetResource(currentMenu.ResourceKey, culture).Id;
+                ResourceService.Instance.DeleteResource(menuResourceId);
             }
 
             return RedirectToAction("MenuTable");

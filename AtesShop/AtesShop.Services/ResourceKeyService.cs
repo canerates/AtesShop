@@ -10,6 +10,24 @@ namespace AtesShop.Services
 {
     public class ResourceKeyService
     {
+        #region Singleton
+        public static ResourceKeyService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ResourceKeyService();
+
+                return instance;
+            }
+        }
+        private static ResourceKeyService instance { get; set; }
+
+        private ResourceKeyService()
+        {
+        }
+
+        #endregion
+
         public ProductKey GetProductKeySet(int id)
         {
             using (var context = new ASContext())

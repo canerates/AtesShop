@@ -6,11 +6,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace AtesShop.Services
 {
     public class ProductService
     {
+        #region Singleton
+        public static ProductService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ProductService();
+
+                return instance;
+            }
+        }
+        private static ProductService instance { get; set; }
+
+        private ProductService()
+        {
+        }
+
+        #endregion
+
+
+        #region Admin
+
         public Product GetProduct(int productId)
         {
             using (var context = new ASContext())
@@ -26,84 +48,40 @@ namespace AtesShop.Services
                 return context.Products.Include(x => x.Category).ToList();
             }
         }
-
-        public List<Product> GetProducts(int pageNo, int pageSize)
-        {
-            using (var context = new ASContext())
-            {
-                return context.Products
-                    .OrderBy(x => x.Id)
-                    .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize)
-                    .Include(x => x.Category)
-                    .ToList();
-            }
-        }
         
-        public List<Product> GetProductsByCategory(int categoryId)
+        public void SaveProduct(Product product)
         {
             using (var context = new ASContext())
             {
-                return context.Products
-                    .Where(x => x.Category.Id == categoryId)
-                    .Include(x => x.Category)
-                    .ToList();
+                context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
+                context.Products.Add(product);
+                context.SaveChanges();
             }
         }
 
-        public List<Product> GetProductsByCategory(int categoryId, int pageNo, int pageSize)
+        public void UpdateProduct(Product product)
         {
             using (var context = new ASContext())
             {
-                return context.Products
-                    .Where(x => x.Category.Id == categoryId)
-                    .OrderBy(x => x.Id)
-                    .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize)
-                    .Include(x => x.Category)
-                    .ToList();
+                context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
             }
         }
 
-        public List<Product> GeFeaturedProducts()
-        {
-            using (var context= new ASContext())
-            {
-                return context.Products
-                    .Where(x => x.isFeatured)
-                    .ToList();
-            }
-        }
-
-        public List<Product> GetNewProducts()
+        public void DeleteProduct(int id)
         {
             using (var context = new ASContext())
             {
-                return context.Products
-                    .Where(x => x.isNew)
-                    .ToList();
+                //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
+                var product = context.Products.Find(id);
+                context.Products.Remove(product);
+                context.SaveChanges();
             }
         }
+        #endregion
 
-        public List<Product> GetTopRatedProducts()
-        {
-            using (var context = new ASContext())
-            {
-                return context.Products
-                    .Where(x => x.isTopRated)
-                    .ToList();
-            }
-        }
 
-        public List<Product> GetBestSellerProducts()
-        {
-            using (var context = new ASContext())
-            {
-                return context.Products
-                    .Where(x => x.isBestSeller)
-                    .ToList();
-            }
-        }
+        #region Web
 
         public int GetProductsCount()
         {
@@ -112,17 +90,8 @@ namespace AtesShop.Services
                 return context.Products.Count();
             }
         }
-        public int GetProductsCountByCategory(int categoryId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.Products
-                    .Where(x => x.Category.Id == categoryId)
-                    .Count();
-            }
-        }
 
-        public List<Product> SearchProducts(string searchKey, int? categoryId, int? sortId, int? sortType, int pageNo, int pageSize)
+        public List<Product> SearchProducts(string searchKey, string culture, string role, int? categoryId, int? sortId, int? sortType, int pageNo, int pageSize, int? minimum, int? maximum)
         {
             using (var context = new ASContext())
             {
@@ -157,12 +126,25 @@ namespace AtesShop.Services
                     }
                 }
 
+                products = FormatProductsInfo(products, culture, role);
+
+                if (maximum.HasValue && minimum.HasValue)
+                {
+                    List<Product> excludedProducts = new List<Product>();
+
+                    excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
+                    foreach (var product in excludedProducts)
+                    {
+                        products.Remove(product);
+                    }
+                }
+
                 return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
                 
             }
         }
 
-        public int SearchProductsCount(string searchKey, int? categoryId, int? sortBy)
+        public int SearchProductsCount(string searchKey, string culture, string role, int? categoryId, int? minimum, int? maximum)
         {
             using (var context = new ASContext())
             {
@@ -173,60 +155,95 @@ namespace AtesShop.Services
                     products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
                 }
 
+                products = FormatProductsInfo(products, culture, role);
+
+                if (maximum.HasValue && minimum.HasValue)
+                {
+                    List<Product> excludedProducts = new List<Product>();
+
+                    excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
+                    foreach (var product in excludedProducts)
+                    {
+                        products.Remove(product);
+                    }
+                }
+                
                 if (!string.IsNullOrEmpty(searchKey))
                 {
                     products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
                 
-                if (sortBy.HasValue)
-                {
-                    switch (sortBy.Value)
-                    {
-                        case 2:
-                            products = products.OrderByDescending(x => x.Id).ToList();
-                            break;
-                        case 3:
-                            products.OrderBy(x => x.Price).ToList();
-                            break;
-                        default:
-                            products = products.OrderByDescending(x => x.Price).ToList();
-                            break;
-                    }
-                }
-
                 return products.Count();
 
             }
         }
-        
-        public void SaveProduct(Product product)
+
+        public Product GetProduct(int productId, string culture, string role)
         {
             using (var context = new ASContext())
             {
-                context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
-                context.Products.Add(product);
-                context.SaveChanges();
+                var product = context.Products.Find(productId);
+                return FormatProductInfo(product, culture, role);
             }
         }
 
-        public void UpdateProduct(Product product)
+        public List<Product> GetProducts(string culture, string role)
         {
             using (var context = new ASContext())
             {
-                context.Entry(product).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
+                var products = context.Products.Include(x => x.Category).ToList();
+                return FormatProductsInfo(products, culture, role);
             }
         }
 
-        public void DeleteProduct(int id)
+        public List<Product> GetProductsByCategory(int categoryId, string culture, string role)
         {
             using (var context = new ASContext())
             {
-                //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
-                var product = context.Products.Find(id);
-                context.Products.Remove(product);
-                context.SaveChanges();
+                var products = context.Products.Where(x => x.Category.Id == categoryId).Include(x => x.Category).ToList();
+                return FormatProductsInfo(products, culture, role);
             }
         }
+
+        public List<Product> FormatProductsInfo(List<Product> products, string culture, string role)
+        {
+            List<Product> newProducts = new List<Product>();
+
+            foreach (var product in products)
+            {
+                Product newProduct = new Product();
+                newProduct = FormatProductInfo(product, culture, role);
+                newProducts.Add(product);
+            }
+
+            return newProducts;
+        }
+
+        public Product FormatProductInfo(Product product, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                //Image List
+                List<int> idList = product.ImageIdList.Split(',').Select(int.Parse).ToList();
+                product.Images = context.Images.Where(x => idList.Contains(x.Id)).ToList();
+                
+                //Price
+                var keys = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
+                var price = context.Prices.Where(x => x.Key == keys.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
+                if (price == null)
+                {
+                    product.Price = "Contact Us";
+                    product.PrePrice = " ";
+                }
+                else
+                {
+                    product.Price = price.Value;
+                    product.PrePrice = price.PreValue;
+                }
+            }
+            return product;
+        }
+        #endregion
+
     }
 }

@@ -28,14 +28,7 @@ namespace AtesShop.Admin.Controllers
                 _roleManager = value;
             }
         }
-
-        ProductService productService = new ProductService();
-        CategoryService categoryService = new CategoryService();
-        ImageService imageService = new ImageService();
-        ResourceService resourceService = new ResourceService();
-        ResourceKeyService keyService = new ResourceKeyService();
-        PriceService priceService = new PriceService();
-
+        
         [HttpGet]
         public ActionResult Index()
         {
@@ -46,7 +39,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult ProductTable(string search)
         {
             List<ProductViewModel> model = new List<ProductViewModel>();
-            var products = productService.GetProducts();
+            var products = ProductService.Instance.GetProducts();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -65,27 +58,27 @@ namespace AtesShop.Admin.Controllers
 
                     foreach (var id in imageIdList)
                     {
-                        var image = imageService.GetImage(id);
+                        var image = ImageService.Instance.GetImage(id);
                         images.Add(image);
                     }
                     elem.Images = images;
 
                 //Product Key Set
 
-                var keySet = keyService.GetProductKeySetByProduct(product.Id);
+                var keySet = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
 
-                elem.ProductNameResources = resourceService.GetResourcesByKey(keySet.NameKey);
-                elem.ProductDescriptionResources = resourceService.GetResourcesByKey(keySet.DescriptionKey);
+                elem.ProductNameResources = ResourceService.Instance.GetResourcesByKey(keySet.NameKey);
+                elem.ProductDescriptionResources = ResourceService.Instance.GetResourcesByKey(keySet.DescriptionKey);
 
                 //Price
 
                 var priceResources = new List<PricesByCultureModel>();
-                var cultures = priceService.GetPriceDistinctCulturesByPriceKey(keySet.PriceKey);
+                var cultures = PriceService.Instance.GetPriceDistinctCulturesByPriceKey(keySet.PriceKey);
 
                 foreach (var cl in cultures)
                 {
                     var pricesByCulture = new PricesByCultureModel();
-                    pricesByCulture.Prices = priceService.GetPricesByKeyAndCulture(keySet.PriceKey, cl);
+                    pricesByCulture.Prices = PriceService.Instance.GetPricesByKeyAndCulture(keySet.PriceKey, cl);
                     pricesByCulture.Culture = cl;
                     priceResources.Add(pricesByCulture);
                 }
@@ -93,7 +86,7 @@ namespace AtesShop.Admin.Controllers
 
                 elem.ProductPriceResources = priceResources;
 
-                elem.ResourceCount = resourceService.GetResourcesCountByKey(keySet.NameKey);
+                elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(keySet.NameKey);
 
                 model.Add(elem);
             }
@@ -104,8 +97,8 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Create()
         {
             NewProductViewModel model = new NewProductViewModel();
-            model.AvailableImages = imageService.GetImages();
-            model.AvailableCategories = categoryService.GetCategories();
+            model.AvailableImages = ImageService.Instance.GetImages();
+            model.AvailableCategories = CategoryService.Instance.GetCategories();
             model.SelectedImages = new List<int>();
             return PartialView(model);
         }
@@ -119,7 +112,7 @@ namespace AtesShop.Admin.Controllers
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
             //newProduct.CategoryId = model.CategoryId;
-            newProduct.Category = categoryService.GetCategory(model.CategoryId);
+            newProduct.Category = CategoryService.Instance.GetCategory(model.CategoryId);
             newProduct.isDiscount = model.isDiscount;
             newProduct.isFeatured = model.isFeatured;
             newProduct.isNew = model.isNew;
@@ -130,7 +123,7 @@ namespace AtesShop.Admin.Controllers
             {
                 newProduct.ImageIdList = string.Join(",", model.SelectedImages);
             }
-            productService.SaveProduct(newProduct);
+            ProductService.Instance.SaveProduct(newProduct);
 
 
             //Product Key Set
@@ -141,14 +134,14 @@ namespace AtesShop.Admin.Controllers
             newProductKeySet.DescriptionKey = "ProductDesc" + newProduct.Id;
             newProductKeySet.PriceKey = "ProductPrice" + newProduct.Id;
 
-            keyService.SaveProductKeySet(newProductKeySet);
+            ResourceKeyService.Instance.SaveProductKeySet(newProductKeySet);
             
             //Resource
             var productNameResource = generateResource(newProductKeySet.NameKey, model.Name, "en-us");
             var productDescriptionResource = generateResource(newProductKeySet.DescriptionKey, model.Description, "en-us");
 
-            resourceService.SaveResource(productNameResource);
-            resourceService.SaveResource(productDescriptionResource);
+            ResourceService.Instance.SaveResource(productNameResource);
+            ResourceService.Instance.SaveResource(productDescriptionResource);
             
             //Price
             var productPriceResource = new Price();
@@ -159,7 +152,7 @@ namespace AtesShop.Admin.Controllers
             var role = RoleManager.FindByName("User");
             productPriceResource.RoleId = role.Id;
 
-            priceService.SavePrice(productPriceResource);
+            PriceService.Instance.SavePrice(productPriceResource);
             
             return RedirectToAction("ProductTable");
         }
@@ -168,9 +161,9 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Edit(int id)
         {
             EditProductViewModel model = new EditProductViewModel();
-            var currentProduct = productService.GetProduct(id);
-            var availableCategories = categoryService.GetCategories();
-            var availableImages = imageService.GetImages();
+            var currentProduct = ProductService.Instance.GetProduct(id);
+            var availableCategories = CategoryService.Instance.GetCategories();
+            var availableImages = ImageService.Instance.GetImages();
             List<int> selectedImageIdList = currentProduct.ImageIdList.Split(',').Select(int.Parse).ToList();
 
             model.Id = currentProduct.Id;
@@ -191,7 +184,7 @@ namespace AtesShop.Admin.Controllers
         public ActionResult Edit(EditProductViewModel model)
         {
             //Products Table
-            var currentProduct = productService.GetProduct(model.Id);
+            var currentProduct = ProductService.Instance.GetProduct(model.Id);
             currentProduct.ImageIdList = model.ImageIdList;
             currentProduct.CategoryId = model.CategoryId;
             currentProduct.isDiscount = model.isDiscount;
@@ -205,7 +198,7 @@ namespace AtesShop.Admin.Controllers
                 currentProduct.ImageIdList = string.Join(",", model.SelectedImages);
             }
 
-            productService.UpdateProduct(currentProduct);
+            ProductService.Instance.UpdateProduct(currentProduct);
             
             return RedirectToAction("ProductTable");
         }
@@ -213,13 +206,13 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var currentKeySet = keyService.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
+
+            ResourceService.Instance.DeleteResources(currentKeySet.NameKey);
+            ResourceService.Instance.DeleteResources(currentKeySet.DescriptionKey);
+            PriceService.Instance.DeletePrices(currentKeySet.PriceKey);
             
-            resourceService.DeleteResources(currentKeySet.NameKey);
-            resourceService.DeleteResources(currentKeySet.DescriptionKey);
-            priceService.DeletePrices(currentKeySet.PriceKey);
-            
-            productService.DeleteProduct(id);
+            ProductService.Instance.DeleteProduct(id);
             
             return RedirectToAction("ProductTable");
         }
@@ -229,11 +222,11 @@ namespace AtesShop.Admin.Controllers
         {
             ProductTranslationResources model = new ProductTranslationResources();
             
-            var currentKeySet = keyService.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
 
-            model.NameResources = resourceService.GetResourcesByKey(currentKeySet.NameKey);
-            model.DescriptionResources = resourceService.GetResourcesByKey(currentKeySet.DescriptionKey);
-            model.ResourceCount = resourceService.GetResourcesCountByKey(currentKeySet.NameKey);
+            model.NameResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.NameKey);
+            model.DescriptionResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.DescriptionKey);
+            model.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(currentKeySet.NameKey);
 
             model.KeySetId = currentKeySet.Id;
             
@@ -243,17 +236,17 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult AddTranslation(NewProductTranslationModel model)
         {
-            var currentKeySet = keyService.GetProductKeySet(model.Id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySet(model.Id);
 
             //Resource
             var productNameResource = generateResource(currentKeySet.NameKey, model.Name, model.Culture);
             var productDescriptionResource = generateResource(currentKeySet.DescriptionKey, model.Description, model.Culture);
 
-            resourceService.SaveResource(productNameResource);
-            resourceService.SaveResource(productDescriptionResource);
+            ResourceService.Instance.SaveResource(productNameResource);
+            ResourceService.Instance.SaveResource(productDescriptionResource);
 
             //Price
-            var prices = priceService.GetPricesByKeyAndCulture(currentKeySet.PriceKey, "en-us");
+            var prices = PriceService.Instance.GetPricesByKeyAndCulture(currentKeySet.PriceKey, "en-us");
             
             foreach (var price in prices)
             {
@@ -264,7 +257,7 @@ namespace AtesShop.Admin.Controllers
                 newPrice.RoleName = price.RoleName;
                 newPrice.Culture = model.Culture;
 
-                priceService.SavePrice(newPrice);
+                PriceService.Instance.SavePrice(newPrice);
 
             }
             
@@ -275,11 +268,11 @@ namespace AtesShop.Admin.Controllers
         public ActionResult EditTranslation(int id, string culture)
         {
             EditProductTranslationViewModel model = new EditProductTranslationViewModel();
-            var currentKeySet = keyService.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
 
             model.Id = currentKeySet.Id;
-            model.Name = resourceService.GetResource(currentKeySet.NameKey, culture).Value;
-            model.Description = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Value;
+            model.Name = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Value;
+            model.Description = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Value;
             model.Culture = culture;
             
             return PartialView(model);
@@ -288,26 +281,26 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult EditTranslation(EditProductTranslationViewModel model)
         {
-            var currentKeySet = keyService.GetProductKeySet(model.Id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySet(model.Id);
 
             var productNameResource = new Resource();
-            productNameResource = resourceService.GetResource(currentKeySet.NameKey, model.Culture);
+            productNameResource = ResourceService.Instance.GetResource(currentKeySet.NameKey, model.Culture);
             productNameResource.Value = model.Name;
 
             var productDescriptionResource = new Resource();
-            productDescriptionResource = resourceService.GetResource(currentKeySet.DescriptionKey, model.Culture);
+            productDescriptionResource = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, model.Culture);
             productDescriptionResource.Value = model.Description;
-            
-            resourceService.UpdateResource(productNameResource);
-            resourceService.UpdateResource(productDescriptionResource);
+
+            ResourceService.Instance.UpdateResource(productNameResource);
+            ResourceService.Instance.UpdateResource(productDescriptionResource);
 
             if (model.Culture == "en-us")
             {
-                var currentProduct = productService.GetProduct(currentKeySet.ProductId);
+                var currentProduct = ProductService.Instance.GetProduct(currentKeySet.ProductId);
                 currentProduct.Name = model.Name;
                 currentProduct.Description = model.Description;
 
-                productService.UpdateProduct(currentProduct);
+                ProductService.Instance.UpdateProduct(currentProduct);
             }
 
             return RedirectToAction("ProductTable");
@@ -316,18 +309,18 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteTranslation(int id, string culture)
         {
-            var currentKeySet = keyService.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
 
-            var productNameResourceId = resourceService.GetResource(currentKeySet.NameKey, culture).Id;
-            var productDescriptionId = resourceService.GetResource(currentKeySet.DescriptionKey, culture).Id;
-            var prices = priceService.GetPricesByKeyAndCulture(currentKeySet.PriceKey, culture);
+            var productNameResourceId = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Id;
+            var productDescriptionId = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Id;
+            var prices = PriceService.Instance.GetPricesByKeyAndCulture(currentKeySet.PriceKey, culture);
 
-            resourceService.DeleteResource(productNameResourceId);
-            resourceService.DeleteResource(productDescriptionId);
+            ResourceService.Instance.DeleteResource(productNameResourceId);
+            ResourceService.Instance.DeleteResource(productDescriptionId);
 
             foreach (var price in prices)
             {
-                priceService.DeletePrice(price.Id);
+                PriceService.Instance.DeletePrice(price.Id);
             }
             
             return RedirectToAction("ProductTable");

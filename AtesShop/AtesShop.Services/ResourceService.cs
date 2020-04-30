@@ -10,6 +10,25 @@ namespace AtesShop.Services
 {
     public class ResourceService
     {
+
+        #region Singleton
+        public static ResourceService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ResourceService();
+
+                return instance;
+            }
+        }
+        private static ResourceService instance { get; set; }
+
+        private ResourceService()
+        {
+        }
+
+        #endregion
+
         public List<Resource> GetResources()
         {
             using (var context = new ASContext())

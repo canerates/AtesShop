@@ -39,5 +39,7 @@ namespace AtesShop.Web.ViewModels
         public bool IsListView { get; set; }
         public int SortId { get; set; }
         public int SortType { get; set; }
+        public int MaximumPrice { get; set; }
+        public int MinimumPrice { get; set; }
     }
 }

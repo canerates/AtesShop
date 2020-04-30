@@ -6,9 +6,10 @@
     var current = ((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + 1;
     var size = (((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + (Model.Products.Count < Model.Pager.PageSize ? Model.Products.Count : Model.Pager.PageSize));
     var total = Model.Pager.TotalItems;
+    var maximum = Model.MaximumPrice == 0 ? string.Empty : Model.MaximumPrice.ToString();
+    var minimum = Model.MinimumPrice == 0 ? string.Empty : Model.MinimumPrice.ToString();
 
     var itemListDesc = "Showing " + current + " - " + size + " of " + total;
-
 
     this.ViewContext.HttpContext.Items["Stuff"] = itemListDesc;
 
@@ -164,7 +165,10 @@
                                                  categoryId = categoryParameter,
                                                  pageNo = page,
                                                  sortId = Model.SortId,
-                                                 sortType = Model.SortType
+                                                 sortType = Model.SortType,
+                                                 maximumPrice = maximum,
+                                                 minimumPrice = minimum
+                                                 
                                              },
                                              new AjaxOptions
                                              {
@@ -188,7 +192,9 @@
                               categoryId = categoryParameter,
                               pageNo = Model.Pager.CurrentPage + 1,
                               sortId = Model.SortId,
-                              sortType = Model.SortType
+                              sortType = Model.SortType,
+                              maximumPrice = maximum,
+                              minimumPrice = minimum
                           },
                           new AjaxOptions
                           {
@@ -220,4 +226,11 @@
     </div>
 
 </div>
+
 <!--Breadcrumb and Page Show End -->
+
+<script>
+
+    
+
+</script>

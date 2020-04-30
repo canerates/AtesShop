@@ -11,6 +11,23 @@ namespace AtesShop.Services
 {
     public class MenuService
     {
+        #region Singleton
+        public static MenuService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new MenuService();
+
+                return instance;
+            }
+        }
+        private static MenuService instance { get; set; }
+
+        private MenuService()
+        {
+        }
+
+        #endregion
 
         public MainMenu GetMainMenu(int id)
         {
