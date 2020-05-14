@@ -1,0 +1,78 @@
+﻿@model List<FeatureViewModel>
+
+@{
+    ViewBag.Title = "FeatureTable";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>Features</h2>
+    </div>
+</div>
+
+@*<div class="container ">
+    <form class="form-inline" method="post">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" id="newBtn">Add</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-info" id="searchBtn"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+        <div class="form-group">
+            <input id="searchTxt" class="form-control" name="search" placeholder="Enter key" />
+        </div>
+    </form>
+</div>
+<br />*@
+<div class="container" id="tableContainer">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Feature Key</th>
+                <th>Culture</th>
+                <th>Feature Value</th>
+                @*<th>Translate Actions</th>
+                <th>Feature Actions</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="5"></td></tr>
+            @foreach (var elem in Model)
+            {
+                for (int i = 0; i < elem.ResourceCount; i++)
+                {
+                    <tr>
+                        @if (i == 0)
+                        {
+                            <td rowspan="@elem.ResourceCount">@elem.FeatureResources[i].Key</td>
+                        }
+
+
+                        <td>@elem.FeatureResources[i].Culture</td>
+                        <td>@elem.FeatureResources[i].Value</td>
+                        @*<td>
+                            <div class="btn-group-vertical">
+                                <button type="button" class="editTranslationBtn btn btn-primary" data-culture="@elem.FeatureResources[i].Culture" data-id="@elem.FeatureResources[i].Id">Edit T.</button>
+                                <button type="button" @if (elem.FeatureResources[i].Culture == "en-us") { <text> disabled</text> } class="deleteTranslationBtn btn btn-danger" data-culture="@elem.FeatureResources[i].Culture" data-id="@elem.FeatureResources[i].Id">Delete T.</button>
+                            </div>
+                        </td>*@
+
+                        @*@if (i == 0)
+                        {
+                            <td rowspan="@elem.ResourceCount">
+                                <div class="btn-group-vertical">
+                                    <button type="button" class="editBtn btn btn-primary" data-id="@elem.Feature.FeatureId">Edit F.</button>
+                                    <button type="button" class="addTranslationBtn btn btn-success" data-id="@elem.Feature.FeatureId">Add T.</button>
+                                    <button type="button" class="deleteBtn btn btn-danger" data-id="@elem.Feature.FeatureId">Delete F.</button>
+                                </div>
+                            </td>
+                        }*@
+                    </tr>
+                }
+                <tr><td colspan="5"></td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

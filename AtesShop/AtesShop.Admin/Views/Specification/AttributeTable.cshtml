@@ -1,0 +1,54 @@
+﻿@model List<ProductAttributeViewModel>
+@{
+    ViewBag.Title = "AttributeTable";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>Product Attributes</h2>
+    </div>
+</div>
+
+<div class="container ">
+    <button type="button" class="btn btn-primary" id="newSectionBtn">Add Section</button>
+    <button type="button" class="btn btn-primary" id="newAttributeBtn">Add Attribute</button>
+</div>
+<br />
+
+<div class="container" id="tableContainer">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Section</th>
+                <th>Attribute Type</th>
+                <th>Attribute Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="4"></td></tr>
+            @foreach (var elem in Model)
+        {
+            for (int i = 0; i < elem.SectionCells.Count; i++)
+            {
+                for (int j = 0; j < elem.SectionCells[i].Types.Count; j++)
+                {
+                        <tr>
+                            @if (i == 0 && j == 0)
+                            {
+                                <td rowspan="@elem.AttributesCount">@elem.Product.Name <br /> @elem.Product.Description</td>
+                            }
+                            @if (j == 0)
+                            {
+                                <td rowspan="@elem.SectionCells[i].Types.Count()">@elem.SectionCells[i].Section.Name</td>
+                            }
+                            <td>@elem.SectionCells[i].Types[j].Name</td>
+                            <td>@elem.SectionCells[i].Values[j].Name</td>
+                        </tr>
+                    }
+                }
+                <tr><td colspan="4"></td></tr>
+            }
+        </tbody>
+    </table>
+</div>

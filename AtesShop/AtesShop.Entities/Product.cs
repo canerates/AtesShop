@@ -42,6 +42,13 @@ namespace AtesShop.Entities
         [NotMapped]
         public List<Image> Images { get; set; }
 
+        public virtual List<Rating> Ratings { get; set; }
 
+        [NotMapped]
+        public decimal Rate { get; set; }
+        
+
+        public virtual List<ProductAttribute> Attributes { get; set; }
+        
     }
 }

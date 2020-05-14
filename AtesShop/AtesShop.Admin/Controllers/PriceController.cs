@@ -43,8 +43,10 @@ namespace AtesShop.Admin.Controllers
             {
                 PriceListViewModel modelElement = new PriceListViewModel();
                 modelElement.ProductName = ResourceKeyService.Instance.GetProductKeySetByPriceKey(key).Product.Name;
+                modelElement.ProductDescription = ResourceKeyService.Instance.GetProductKeySetByPriceKey(key).Product.Description;
                 modelElement.PriceCount = PriceService.Instance.GetPriceCountByKey(key);
                 modelElement.Prices = PriceService.Instance.GetPricesByKey(key);
+                
                 model.Add(modelElement);
             }
             

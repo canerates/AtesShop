@@ -53,15 +53,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASContext.cs" />
-    <Compile Include="Migrations\202004280821004_initialized.cs" />
-    <Compile Include="Migrations\202004280821004_initialized.designer.cs">
-      <DependentUpon>202004280821004_initialized.cs</DependentUpon>
+    <Compile Include="Migrations\202005120618538_initialized.cs" />
+    <Compile Include="Migrations\202005120618538_initialized.designer.cs">
+      <DependentUpon>202005120618538_initialized.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005120641220_orderByAdded.cs" />
+    <Compile Include="Migrations\202005120641220_orderByAdded.designer.cs">
+      <DependentUpon>202005120641220_orderByAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -71,8 +77,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004280821004_initialized.resx">
-      <DependentUpon>202004280821004_initialized.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005120618538_initialized.resx">
+      <DependentUpon>202005120618538_initialized.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005120641220_orderByAdded.resx">
+      <DependentUpon>202005120641220_orderByAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

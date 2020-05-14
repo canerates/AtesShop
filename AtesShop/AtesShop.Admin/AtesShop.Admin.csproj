@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SpecificationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -229,6 +230,7 @@
     <Compile Include="ViewModels\PriceViewModels.cs" />
     <Compile Include="ViewModels\ProductViewModels.cs" />
     <Compile Include="ViewModels\ResourceViewModels.cs" />
+    <Compile Include="ViewModels\SpecificationViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4271,6 +4273,12 @@
     <Content Include="Views\Price\PriceTable.cshtml" />
     <Content Include="Views\Price\Create.cshtml" />
     <Content Include="Views\Price\Edit.cshtml" />
+    <Content Include="Views\Specification\Index.cshtml" />
+    <Content Include="Views\Specification\FeatureTable.cshtml" />
+    <Content Include="Views\Specification\ASectionTable.cshtml" />
+    <Content Include="Views\Specification\ATypeTable.cshtml" />
+    <Content Include="Views\Specification\AValueTable.cshtml" />
+    <Content Include="Views\Specification\AttributeTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,6 +13,8 @@ namespace AtesShop.Admin.ViewModels
 
         public string ProductName { get; set; }
 
+        public string ProductDescription { get; set; }
+        
         public int PriceCount { get; set; }
 
         public List<Price> Prices { get; set; }

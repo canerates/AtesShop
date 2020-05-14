@@ -1,0 +1,46 @@
+﻿@model List<AttributeValueViewModel>
+
+@{
+    ViewBag.Title = "AValueTable";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h2>Attribute Values</h2>
+    </div>
+</div>
+
+<div class="container" id="tableContainer">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>AttributeValue Key</th>
+                <th>Culture</th>
+                <th>AttributeValue Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="5"></td></tr>
+            @foreach (var elem in Model)
+            {
+                for (int i = 0; i < elem.ResourceCount; i++)
+                {
+                    <tr>
+                        @if (i == 0)
+                        {
+                            <td rowspan="@elem.ResourceCount">@elem.AValueResources[i].Key</td>
+                        }
+
+
+                        <td>@elem.AValueResources[i].Culture</td>
+                        <td>@elem.AValueResources[i].Value</td>
+
+                    </tr>
+                }
+                <tr><td colspan="5"></td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

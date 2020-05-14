@@ -1,8 +1,7 @@
 ﻿@model ProductDetailViewModel
 @{
     ViewBag.Title = "Detail";
-
-
+    
 }
 
 <!-- Breadcrumb Start -->
@@ -10,8 +9,8 @@
     <div class="container">
         <div class="breadcrumb">
             <ul>
-                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                <li><a href="@Url.Action( "Index", "Products")">Products</a></li>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li><a href="@Url.Action( "Index", "Products")">@AtesShop.Resources.Resources.ProductsT1O2</a></li>
                 <li class="active"><a href="@Url.Action("Detail", "Products")">@Model.Name</a></li>
             </ul>
         </div>
@@ -69,46 +68,72 @@
             <div class="col-lg-7">
                 <div class="thubnail-desc fix">
                     <h3 class="product-header">@Model.Name</h3>
-                    <div class="rating-summary fix mtb-10">
+                    <p class="ptb-10">@Model.Description</p>
+                    <div class="rating-summary fix mb-10">
                         <div class="rating f-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <div class="rating-feedback f-left">
-                            <a href="#">(1 review)</a>
-                            <a href="#">add to your review</a>
+                            @for (int k = 0; k < 5; k++)
+                            {
+                                if (k < Model.Rate)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                }
+                            }
                         </div>
                     </div>
-                    <div class="pro-price mb-10">
-                        @if (Model.isDiscount)
+                    
+                        @if (Request.IsAuthenticated)
                         {
-                            <p><span class="price">@Model.Price</span><del class="prev-price">@Model.PrePrice</del></p>
+                            <div class="pro-price mb-10">
+                                @if (Model.isDiscount)
+                                {
+                                <p><span class="price">@Model.Price</span><del class="prev-price">@Model.PrePrice</del></p>
+                                }
+                                else
+                                {
+                                <p><span class="price">@Model.Price</span></p>
+                                }
+                            </div>
                         }
                         else
                         {
-                            <p><span class="price">@Model.Price</span></p>
+                            <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
+                                <ul class="list-inline">
+                                    <li><a href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a></li>
+                                </ul>
+                            </div>
+                            
                         }
-                    </div>
-                    <div class="pro-ref mb-15">
-                        <p><span class="in-stock">IN STOCK</span><span class="sku">50</span></p>
-                    </div>
-                    <div class="box-quantity">
-                        <form action="#">
-                            <input class="number" id="numeric" type="number" min="1" value="1">
-                            <a class="add-cart" href="#">add to cart</a>
-                        </form>
-                    </div>
-                    <div class="product-link">
-                        <ul class="list-inline">
-                            <li><a href="#">Add to Wish List</a></li>
-                            <li><a href="#">Add to compare</a></li>
-                            <li><a href="#">Email</a></li>
-                        </ul>
-                    </div>
-                    <p class="ptb-20">@Model.Description</p>
+                        <div class="feature-section">
+                            <ul>
+                                @foreach (var feature in Model.ProductFeatures)
+                                {
+                                    <li>@feature.FeatureValue</li>
+                                }
+                            </ul>
+                            
+                        </div>
+
+                         @*<div class="pro-ref mb-15">
+                                 <p><span class="in-stock">IN STOCK</span><span class="sku">50</span></p>
+                             </div>
+                             <div class="box-quantity">
+                                 <form action="#">
+                                     <input class="number" id="numeric" type="number" min="1" value="1">
+                                     <a class="add-cart" href="#">add to cart</a>
+                                 </form>
+                             </div>*@
+                         @*<div class="product-link">
+                                 <ul class="list-inline">
+                                     <li><a href="#">Add to Wish List</a></li>
+                                     <li><a href="#">Add to compare</a></li>
+                                     <li><a href="#">Email</a></li>
+                                 </ul>
+                             </div>*@
+                         
                 </div>
             </div>
             <!-- Thumbnail Description End -->
@@ -124,18 +149,32 @@
         <div class="row">
             <div class="col-sm-12">
                 <ul class="main-thumb-desc nav">
-                    <li><a class="active" data-toggle="tab" href="#dtail">Details</a></li>
+                    <li><a class="active" data-toggle="tab" href="#dtail">Specifications</a></li>
                     <li><a data-toggle="tab" href="#review">Reviews 1</a></li>
                 </ul>
                 <!-- Product Thumbnail Tab Content Start -->
                 <div class="tab-content thumb-content border-default">
                     <div id="dtail" class="tab-pane in active">
-                        <p>Power Active Smart Surveillance Systems provide a wide range of high quality video display and professional control solutions with basic and smart functions which enables protection of your security.</p>
-                        <ul class="tab-list-item">
-                            <li> IP Camera</li>
-                            <li> NVR Device</li>
-                            <li> Solar Panel</li>
-                        </ul>
+                        <table style="font-size:14px; width:100%;border-spacing:0px;table-layout:fixed;word-wrap:break-word;">
+                            <tbody>
+                                @foreach (var sect in Model.Attributes)
+                                {
+                                    <tr>
+                                        <td colspan="60" style="border:1px solid #FFFFFF;padding:1px 0px 1px 5px;vertical-align:middle;background-color:#C3C5C5;font-weight:bold;">@sect.Key.Name</td>
+                                    </tr>
+                                    
+                                    foreach (var val in sect.Value)
+                                    {
+                                        <tr>
+                                            <td colspan="18" style="border:1px solid #FFFFFF;padding:1px 0px 1px 5px;vertical-align:middle;background-color:#F2F2F2;">@val.AttributeType.Name</td>
+                                            <td colspan="42" style="border:1px solid #FFFFFF;padding:1px 0px 1px 5px;vertical-align:middle;background-color:#F2F2F2;">@val.AttributeValue.Name</td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                        
                     </div>
                     <div id="review" class="tab-pane">
                         <!-- Reviews Start -->
@@ -278,29 +317,48 @@
                         <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                                @for (int k = 0; k < 5; k++)
+                                {
+                                    if (k < Model.Rate)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-star-o"></i>
+                                    }
+                                }
                             </div>
                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                            @if (product.isDiscount)
+                            <p>@product.Description</p>
+                            @if (Request.IsAuthenticated)
                             {
-                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                if (product.isDiscount)
+                                {
+                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                }
+                                else
+                                {
+                                    <p><span class="price">@product.Price</span></p>
+                                }
                             }
                             else
                             {
-                                <p><span class="price">@product.Price</span></p>
+                                <div class="pro-actions">
+                                    <div class="actions-secondary">
+                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                    </div>
+                                </div>
                             }
+                            
 
-                            <div class="pro-actions">
+                            @*<div class="pro-actions">
                                 <div class="actions-secondary">
                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                     <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <!-- Product Content End -->
                         @*<span class="sticker-new">-32%</span>*@

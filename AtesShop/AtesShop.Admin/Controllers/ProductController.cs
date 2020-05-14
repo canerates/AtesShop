@@ -111,6 +111,7 @@ namespace AtesShop.Admin.Controllers
             newProduct.Name = model.Name;
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
+            newProduct.PrePrice = model.PrePrice;
             //newProduct.CategoryId = model.CategoryId;
             newProduct.Category = CategoryService.Instance.GetCategory(model.CategoryId);
             newProduct.isDiscount = model.isDiscount;
@@ -146,7 +147,8 @@ namespace AtesShop.Admin.Controllers
             //Price
             var productPriceResource = new Price();
             productPriceResource.Key = newProductKeySet.PriceKey;
-            productPriceResource.Value = model.Price.ToString();
+            productPriceResource.Value = model.Price;
+            productPriceResource.PreValue = model.PrePrice;
             productPriceResource.Culture = "en-us";
             productPriceResource.RoleName = "User";
             var role = RoleManager.FindByName("User");

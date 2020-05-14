@@ -49,7 +49,7 @@
                         <td>@elem.Resources[i].Culture</td>
                         <td>@elem.Resources[i].Value</td>
                         <td>
-                            <div class="btn-group">
+                            <div class="btn-group-vertical">
                                 <button type="button" class="editBtn btn btn-primary" data-id="@elem.Resources[i].Id">Edit</button>
                                 <button type="button" @if (elem.Resources[i].Culture == "en-us") { <text> disabled</text> } class="deleteBtn btn btn-danger" data-id="@elem.Resources[i].Id">Delete</button>
                             </div>

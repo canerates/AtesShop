@@ -782,7 +782,7 @@ ul.ht-dropdown.dropdown-style-two li {
     width: 12px;
     height: 12px;
     /*background: #8FBA22 ;*/
-    background: #fff;
+    background: #000;
     margin: 0 7px;
     display: inline-block;
     line-height: 12px;
@@ -870,13 +870,13 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 
 .product-rating i {
-    color: #f9ba48;
+    color: #8FBA22;
     font-size: 14px;
     line-height: 20px;
 }
-.product-rating i:nth-child(n+4){
+/*.product-rating i:nth-child(n+4){
     color: #444;
-}
+}*/
 .price {
     font-size: 14px;
 }
@@ -1756,7 +1756,7 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .rating i,
 .review-list i {
-    color: #f9ba48;
+    color: #8FBA22;
     font-size: 14px;
     line-height: 20px;
 }
@@ -1837,6 +1837,38 @@ ul.ht-dropdown.dropdown-style-two li {
     background: #8FBA22 none repeat scroll 0 0;
     border-color: #8FBA22;
     color: #fff;
+}
+
+.feature-section {
+    border-top: 1px solid #ebebeb;
+    padding-top: 25px;
+    margin-top: 20px;
+}
+
+.feature-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-section ul li {
+    padding-left: 16px;
+}
+
+/*.feature-section ul li {
+    display: list-item;
+    list-style-type: square;
+    list-style: square;
+    margin-left: 1em;
+}*/
+
+.feature-section ul li::before {
+    content: "✦";
+    color: #8FBA22;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: -1em;
 }
 
 .main-thumb-desc li {

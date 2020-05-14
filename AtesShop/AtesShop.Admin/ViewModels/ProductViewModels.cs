@@ -36,6 +36,8 @@ namespace AtesShop.Admin.ViewModels
 
         public string Price { get; set; }
 
+        public string PrePrice { get; set; }
+        
         public string ImageIdList { get; set; }
 
         public int CategoryId { get; set; }

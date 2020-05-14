@@ -7,13 +7,13 @@ namespace AtesShop.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class initialized : IMigrationMetadata
+    public sealed partial class orderByAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initialized));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(orderByAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004280821004_initialized"; }
+            get { return "202005120641220_orderByAdded"; }
         }
         
         string IMigrationMetadata.Source

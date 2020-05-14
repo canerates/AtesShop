@@ -21,16 +21,16 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Product Name</th>
-                <th>Culture (Lang.)</th>
-                <th>Role Name</th>
-                <th>Price</th>
-                <th>Previous Price</th>
-                <th>Actions</th>
+                <th colspan="3">Product Name</th>
+                <th colspan="1">Culture (Lang.)</th>
+                <th colspan="1">Role Name</th>
+                <th colspan="1">Price</th>
+                <th colspan="1">Previous Price</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td colspan="5"></td></tr>
+            <tr><td colspan="8"></td></tr>
             @foreach (var elem in Model)
             {
                 for (int i = 0; i < elem.PriceCount; i++)
@@ -38,14 +38,14 @@
                     <tr>
                         @if (i == 0)
                         {
-                            <td rowspan="@elem.PriceCount">@elem.ProductName</td>
+                            <td colspan="3" rowspan="@elem.PriceCount">@elem.ProductName <br /> @elem.ProductDescription</td>
                         }
 
-                        <td>@elem.Prices[i].Culture</td>
-                        <td>@elem.Prices[i].RoleName</td>
-                        <td>@elem.Prices[i].Value</td>
-                        <td>@elem.Prices[i].PreValue</td>
-                        <td>
+                        <td colspan="1">@elem.Prices[i].Culture</td>
+                        <td colspan="1">@elem.Prices[i].RoleName</td>
+                        <td colspan="1">@elem.Prices[i].Value</td>
+                        <td colspan="1">@elem.Prices[i].PreValue</td>
+                        <td colspan="2">
                             <div class="btn-group-inline">
                                 <button type="button" class="editBtn btn btn-primary" data-id="@elem.Prices[i].Id">Edit</button>
                                 <button type="button" class="deleteBtn btn btn-danger" data-id="@elem.Prices[i].Id">Delete</button>
@@ -54,7 +54,7 @@
 
                     </tr>
                 }
-                <tr><td colspan="5"></td></tr>
+                <tr><td colspan="8"></td></tr>
             }
             
         </tbody>

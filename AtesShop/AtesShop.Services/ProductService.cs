@@ -240,9 +240,17 @@ namespace AtesShop.Services
                     product.Price = price.Value;
                     product.PrePrice = price.PreValue;
                 }
+
+                var rateTotal = context.Ratings.Where(x => x.ProductId == product.Id).Sum(x => x.Rate);
+                var rateCount = context.Ratings.Where(x => x.ProductId == product.Id).Count();
+
+                product.Rate = rateTotal / rateCount;
+
+                return product;
             }
-            return product;
+            
         }
+        
         #endregion
 
     }

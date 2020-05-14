@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <div class="page-header text-center">
+        <h1>Specifications</h1>
+    </div>
+
+    <div class="btn-toolbar">
+        <button type="button" id="featureBtn" class="btn btn-primary">Features</button>
+        <button type="button" id="sectionBtn" class="btn btn-primary">Attribute Sections</button>
+        <button type="button" id="typeBtn" class="btn btn-primary">Attirbute Types</button>
+        <button type="button" id="valueBtn" class="btn btn-primary">Attribute Values</button>
+        <button type="button" id="attrBtn" class="btn btn-primary">Product Attributes</button>
+    </div>
+
+</div>
+
+<div class="container" id="tableContainer">
+    
+</div>
+
+
+<script>
+    $("#featureBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Specification/FeatureTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#sectionBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Specification/ASectionTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#typeBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Specification/ATypeTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#valueBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Specification/AValueTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#attrBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Specification/AttributeTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+</script>
+

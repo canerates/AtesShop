@@ -30,16 +30,18 @@ namespace AtesShop.Admin.Controllers
                 elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(key);
 
                 var resources = ResourceService.Instance.GetResourcesByKey(key);
+                
+                elem.Resources = resources;
 
                 if (!string.IsNullOrEmpty(search))
                 {
                     resources = resources.Where(r => r.Value != null && r.Value.ToLower().Contains(search.ToLower())).ToList();
                 }
 
-                elem.Resources = resources;
-                
-
-                model.Add(elem);
+                if (resources.Count != 0)
+                {
+                    model.Add(elem);
+                }
             }
             
             return PartialView(model);

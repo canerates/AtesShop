@@ -24,6 +24,13 @@ namespace AtesShop.Database
         public DbSet<Price> Prices { get; set; }
         public DbSet<ProductKey> ProductKeys { get; set; }
         public DbSet<CategoryKey> CategoryKeys { get; set; }
-
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<AttributeSection> AttributeSections { get; set; }
+        public DbSet<AttributeType> AttributeTypes { get; set; }
+        public DbSet<AttributeValue> AttributeValues { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<ProductFeature> ProductFeatures { get; set; }
+        public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        
     }
 }

@@ -106,29 +106,49 @@
                     <!-- Product Content Start -->
                     <div class="pro-content">
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (i < product.Rate)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                else
+                                {
+                                    <i style="color: #444" class="fa fa-star"></i>
+                                }
+                            }
                         </div>
                         <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                        @if (product.isDiscount)
+
+                        @if (Request.IsAuthenticated)
                         {
-                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                            if (product.isDiscount)
+                            {
+                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                            }
+                            else
+                            {
+                                <p><span class="price">@product.Price</span></p>
+                            }
                         }
                         else
                         {
-                            <p><span class="price">@product.Price</span></p>
+                            <div class="pro-actions">
+                                <div class="actions-secondary">
+                                    <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                </div>
+                            </div>
                         }
 
-                        <div class="pro-actions">
+                        <p>@product.Description</p>
+                        
+                        @*<div class="pro-actions">
                             <div class="actions-secondary">
                                 <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                 <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                 <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                     <!-- Product Content End -->
                 </div>
@@ -195,22 +215,34 @@
                                 <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (i < product.Rate)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            else
+                                            {
+                                                <i style="color: #444" class="fa fa-star"></i>
+                                            }
+                                        }
                                     </div>
                                     <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                                    @if (product.isDiscount)
+                                    @if (Request.IsAuthenticated)
                                     {
-                                        <p><span class="price">@product.Price</span></p><p><del class="price">@product.PrePrice</del></p>
+                                        if (product.isDiscount)
+                                        {
+                                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                        }
+                                        else
+                                        {
+                                            <p><span class="price">@product.Price</span></p>
+                                        }
                                     }
                                     else
                                     {
-                                        <p><span class="price">@product.Price</span></p>
+                                        <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
                                     }
-                                    
                                 </div>
                                 <!-- Product Content End -->
                             </div>
@@ -266,28 +298,48 @@
                                         <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                                @for (int i = 0; i < 5; i++)
+                                                {
+                                                    if (i < product.Rate)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i style="color: #444" class="fa fa-star"></i>
+                                                    }
+                                                }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                                            @if (product.isDiscount)
+                                            @if (Request.IsAuthenticated)
                                             {
-                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                if (product.isDiscount)
+                                                {
+                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span class="price">@product.Price</span></p>
+                                                }
                                             }
+
                                             else
                                             {
-                                                <p><span class="price">@product.Price</span></p>
+                                                <div class="pro-actions">
+                                                    <div class="actions-secondary">
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                    </div>
+                                                </div>
                                             }
-                                            <div class="pro-actions">
+
+                                            <p>@product.Description</p>
+                                            @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                     <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <!-- Product Content End -->
                                     </div>
@@ -320,28 +372,47 @@
                                         <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                                @for (int i = 0; i < 5; i++)
+                                                {
+                                                    if (i < product.Rate)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i style="color: #444" class="fa fa-star"></i>
+                                                    }
+                                                }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                                            @if (product.isDiscount)
+                                            @if (Request.IsAuthenticated)
                                             {
-                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                if (product.isDiscount)
+                                                {
+                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span class="price">@product.Price</span></p>
+                                                }
                                             }
                                             else
                                             {
-                                                <p><span class="price">@product.Price</span></p>
+                                                <div class="pro-actions">
+                                                    <div class="actions-secondary">
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                    </div>
+                                                </div>
                                             }
-                                            <div class="pro-actions">
+
+                                            <p>@product.Description</p>
+                                            @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                     <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <!-- Product Content End -->
                                     </div>
@@ -374,28 +445,47 @@
                                         <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                                @for (int i = 0; i < 5; i++)
+                                                {
+                                                    if (i < product.Rate)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i style="color: #444" class="fa fa-star"></i>
+                                                    }
+                                                }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                                            @if (product.isDiscount)
+                                            @if (Request.IsAuthenticated)
                                             {
-                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                if (product.isDiscount)
+                                                {
+                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span class="price">@product.Price</span></p>
+                                                }
                                             }
                                             else
                                             {
-                                                <p><span class="price">@product.Price</span></p>
+                                                <div class="pro-actions">
+                                                    <div class="actions-secondary">
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                    </div>
+                                                </div>
                                             }
-                                            <div class="pro-actions">
+
+                                            <p>@product.Description</p>
+                                            @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                     <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <!-- Product Content End -->
                                     </div>
@@ -505,22 +595,35 @@
                     <!-- Product Content Start -->
                     <div class="pro-content">
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (i < product.Rate)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                else
+                                {
+                                    <i style="color: #444" class="fa fa-star"></i>
+                                }
+                            }
                         </div>
                         <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                        @if (product.isDiscount)
+                        @if (Request.IsAuthenticated)
                         {
-                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                            if (product.isDiscount)
+                            {
+                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                            }
+                            else
+                            {
+                                <p><span class="price">@product.Price</span></p>
+                            }
                         }
                         else
                         {
-                            <p><span class="price">@product.Price</span></p>
+                            <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
                         }
-                        
+
                     </div>
                     <!-- Product Content End -->
                 </div>

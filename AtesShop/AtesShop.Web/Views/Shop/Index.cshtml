@@ -5,15 +5,16 @@
     ViewBag.Title = "Index";
 
     var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
-    var searchKey = Model.SearchKey == null ? "null" : Model.SearchKey.ToString();
+    var searchKey = Model.SearchKey == null ? null : Model.SearchKey.ToString();
+    
 }
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
             <ul>
-                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                <li class="active"><a href="@Url.Action( "Index", "Shop")">Shop</a></li>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li class="active"><a href="@Url.Action( "Index", "Shop")">@AtesShop.Resources.Resources.ShopT1O3</a></li>
             </ul>
         </div>
     </div>
@@ -246,8 +247,9 @@
                 <div class="grid-list-top border-default universal-padding fix mb-30">
                     <div class="grid-list-view f-left">
                         <ul class="list-inline nav">
-                            <li><a class="active" data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
-                            <li><a data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
+                            <li><a data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
+                            <li><a class="active" data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
+                            
                             @*<li><span id="item-list-description" class="grid-item-list"></span></li>*@
                         </ul>
                     </div>
@@ -267,7 +269,7 @@
                 </div>
                 <div id="tableContainer"> 
                     @{
-                        Html.RenderAction("ProductList");
+                        Html.RenderAction("ProductList", new { minimumPrice = Model.MinimumPrice, maximumPrice = Model.MaximumPrice, isList = Model.IsListView });
                     }
                 </div>
             </div>
@@ -281,7 +283,7 @@
 
 <script>
 
-    var isListView = false;
+    var isListView = @Json.Encode(Model.IsListView);
     var sortId = 1;
     var sortType = 1;
     var callTimeout;
@@ -345,7 +347,7 @@
         $.ajax({
             url: '@Url.Action("ProductList", "Shop")',
             data: {
-                searchKey: "@searchKey",
+                search: "@Model.SearchKey",
                 categoryId: @categoryId,
                 minimumPrice: minimumPrice,
                 maximumPrice: maximumPrice,

@@ -6,10 +6,13 @@
     var current = ((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + 1;
     var size = (((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + (Model.Products.Count < Model.Pager.PageSize ? Model.Products.Count : Model.Pager.PageSize));
     var total = Model.Pager.TotalItems;
-    var maximum = Model.MaximumPrice == 0 ? string.Empty : Model.MaximumPrice.ToString();
-    var minimum = Model.MinimumPrice == 0 ? string.Empty : Model.MinimumPrice.ToString();
+    var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
 
     var itemListDesc = "Showing " + current + " - " + size + " of " + total;
+
+    var isList = Model.IsListView == true ? 1 : 0;
+
+    var pageSort = Model.IsListView == true ? 4 : 6;
 
     this.ViewContext.HttpContext.Items["Stuff"] = itemListDesc;
     
@@ -47,13 +50,20 @@
                                 <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (i < product.Rate)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            else
+                                            {
+                                                <i style="color: #444" class="fa fa-star"></i>
+                                            }
+                                        }
                                     </div>
                                     <h4><a href="@Url.Action("Detail", "Shop", new { id = product.Id })">@product.Name</a></h4>
+                                    <p>@product.Description</p>
                                     @if (product.isDiscount)
                                     {
                                         <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
@@ -107,14 +117,27 @@
                             <!-- Product Content Start -->
                             <div class="pro-content">
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < product.Rate)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i style="color: #444" class="fa fa-star"></i>
+                                        }
+                                    }
                                 </div>
                                 <h4><a href="@Url.Action("Detail", "Shop", new { id = product.Id })">@product.Name</a></h4>
-                                <p><span class="price">$@product.Price</span><del class="prev-price">$100.00</del></p>
+                                @if (product.isDiscount)
+                                {
+                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                }
+                                else
+                                {
+                                <p><span class="price">@product.Price</span></p>
+                                }
                                 <p>@product.Description</p>
                                 <div class="pro-actions">
                                     <div class="actions-secondary">
@@ -152,14 +175,18 @@
                     @Ajax.RawActionLink(page.ToString(),
                                              "ProductList",
                                              "Shop",
-                                             new { isList = Model.IsListView,
+                                             new
+                                             {
+                                                 search = Model.SearchKey,
+                                                 isList = Json.Encode(Model.IsListView),
                                                  categoryId = categoryParameter,
                                                  pageNo = page,
                                                  sortId = Model.SortId,
                                                  sortType = Model.SortType,
-                                                 maximumPrice = maximum,
-                                                 minimumPrice = minimum
-                                                 
+                                                 pageSize = Model.PageSize,
+                                                 maximumPrice = Model.MaximumPrice,
+                                                 minimumPrice = Model.MinimumPrice
+
                                              },
                                              new AjaxOptions
                                              {
@@ -177,13 +204,17 @@
                     @Ajax.RawActionLink("<i class='fa fa-angle-right'></i>",
                           "ProductList",
                           "Shop",
-                          new { isList = Model.IsListView,
+                          new
+                          {
+                              search = Model.SearchKey,
+                              isList = Json.Encode(Model.IsListView),
                               categoryId = categoryParameter,
                               pageNo = Model.Pager.CurrentPage + 1,
                               sortId = Model.SortId,
                               sortType = Model.SortType,
-                              maximumPrice = maximum,
-                              minimumPrice = minimum
+                              pageSize = Model.PageSize,
+                              maximumPrice = Model.MaximumPrice,
+                              minimumPrice = Model.MinimumPrice
                           },
                           new AjaxOptions
                           {
@@ -206,13 +237,48 @@
     <div id="dataFromPartial">@itemListDesc</div>
     <div class="toolbar-sorter-footer">
         <label>show</label>
-        <select class="sorter" name="sorter">
-            <option value="Position" selected="selected">12</option>
-            <option value="Product Name">15</option>
-            <option value="Price">30</option>
+        <select id="sorterSelect" class="sorter" name="sorter">
+            <option value="@pageSort">@pageSort</option>
+            <option value="@(pageSort * 2)">@(pageSort * 2)</option>
+            <option value="@(pageSort * 3)">@(pageSort * 3)</option>
         </select>
         <span>per page</span>
     </div>
     
 </div>
 <!--Breadcrumb and Page Show End -->
+
+<script>
+
+    var isListView = @Json.Encode(Model.IsListView);
+
+    $('#sorterSelect').val("@Model.PageSize");
+    $('#sorterSelect').change(function () {
+        var sortValue = this.value;
+
+        $.ajax({
+            url: '@Url.Action("ProductList", "Products")',
+            data: {
+                search: "@Model.SearchKey",
+                categoryId: @categoryId,
+                minimumPrice: @Model.MinimumPrice,
+                maximumPrice: @Model.MaximumPrice,
+                isList: isListView,
+                sortId: @Model.SortType,
+                sortType: @Model.SortType,
+                pageSize: sortValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            alert("Fail");
+        });
+
+    });
+
+
+
+</script>

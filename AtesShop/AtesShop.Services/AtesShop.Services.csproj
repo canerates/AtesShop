@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeService.cs" />
+    <Compile Include="FeatureService.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="PriceService.cs" />

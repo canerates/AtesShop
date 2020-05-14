@@ -68,6 +68,7 @@ namespace AtesShop.Web.Controllers
                 //Localization
                 product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
                 product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+                
             }
             
             products = CommonHelper.ProductsCurrencyFormat(products, CultureInfo.CurrentUICulture.Name);
