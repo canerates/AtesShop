@@ -81,6 +81,10 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -139,21 +143,18 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
@@ -349,6 +350,68 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\localization\messages_ar.js" />
+    <Content Include="Scripts\localization\messages_az.js" />
+    <Content Include="Scripts\localization\messages_bg.js" />
+    <Content Include="Scripts\localization\messages_bn_BD.js" />
+    <Content Include="Scripts\localization\messages_ca.js" />
+    <Content Include="Scripts\localization\messages_cs.js" />
+    <Content Include="Scripts\localization\messages_da.js" />
+    <Content Include="Scripts\localization\messages_de.js" />
+    <Content Include="Scripts\localization\messages_el.js" />
+    <Content Include="Scripts\localization\messages_es.js" />
+    <Content Include="Scripts\localization\messages_es_AR.js" />
+    <Content Include="Scripts\localization\messages_es_PE.js" />
+    <Content Include="Scripts\localization\messages_et.js" />
+    <Content Include="Scripts\localization\messages_eu.js" />
+    <Content Include="Scripts\localization\messages_fa.js" />
+    <Content Include="Scripts\localization\messages_fi.js" />
+    <Content Include="Scripts\localization\messages_fr.js" />
+    <Content Include="Scripts\localization\messages_ge.js" />
+    <Content Include="Scripts\localization\messages_gl.js" />
+    <Content Include="Scripts\localization\messages_he.js" />
+    <Content Include="Scripts\localization\messages_hr.js" />
+    <Content Include="Scripts\localization\messages_hu.js" />
+    <Content Include="Scripts\localization\messages_hy_AM.js" />
+    <Content Include="Scripts\localization\messages_id.js" />
+    <Content Include="Scripts\localization\messages_is.js" />
+    <Content Include="Scripts\localization\messages_it.js" />
+    <Content Include="Scripts\localization\messages_ja.js" />
+    <Content Include="Scripts\localization\messages_ka.js" />
+    <Content Include="Scripts\localization\messages_kk.js" />
+    <Content Include="Scripts\localization\messages_ko.js" />
+    <Content Include="Scripts\localization\messages_lt.js" />
+    <Content Include="Scripts\localization\messages_lv.js" />
+    <Content Include="Scripts\localization\messages_mk.js" />
+    <Content Include="Scripts\localization\messages_my.js" />
+    <Content Include="Scripts\localization\messages_nl.js" />
+    <Content Include="Scripts\localization\messages_no.js" />
+    <Content Include="Scripts\localization\messages_pl.js" />
+    <Content Include="Scripts\localization\messages_pt_BR.js" />
+    <Content Include="Scripts\localization\messages_pt_PT.js" />
+    <Content Include="Scripts\localization\messages_ro.js" />
+    <Content Include="Scripts\localization\messages_ru.js" />
+    <Content Include="Scripts\localization\messages_sd.js" />
+    <Content Include="Scripts\localization\messages_si.js" />
+    <Content Include="Scripts\localization\messages_sk.js" />
+    <Content Include="Scripts\localization\messages_sl.js" />
+    <Content Include="Scripts\localization\messages_sr.js" />
+    <Content Include="Scripts\localization\messages_sr_lat.js" />
+    <Content Include="Scripts\localization\messages_sv.js" />
+    <Content Include="Scripts\localization\messages_th.js" />
+    <Content Include="Scripts\localization\messages_tj.js" />
+    <Content Include="Scripts\localization\messages_tr.js" />
+    <Content Include="Scripts\localization\messages_uk.js" />
+    <Content Include="Scripts\localization\messages_ur.js" />
+    <Content Include="Scripts\localization\messages_vi.js" />
+    <Content Include="Scripts\localization\messages_zh.js" />
+    <Content Include="Scripts\localization\messages_zh_TW.js" />
+    <Content Include="Scripts\localization\methods_de.js" />
+    <Content Include="Scripts\localization\methods_es_CL.js" />
+    <Content Include="Scripts\localization\methods_fi.js" />
+    <Content Include="Scripts\localization\methods_it.js" />
+    <Content Include="Scripts\localization\methods_nl.js" />
+    <Content Include="Scripts\localization\methods_pt.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

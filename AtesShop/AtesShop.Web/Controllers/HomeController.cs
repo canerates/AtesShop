@@ -62,14 +62,14 @@ namespace AtesShop.Web.Controllers
 
             var products = ProductService.Instance.GetProducts(CultureInfo.CurrentUICulture.Name, roleName);
 
-            foreach (var product in products)
-            {
-                var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
-                //Localization
-                product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+            //foreach (var product in products)
+            //{
+            //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
+            //    //Localization
+            //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
+            //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
                 
-            }
+            //}
             
             products = CommonHelper.ProductsCurrencyFormat(products, CultureInfo.CurrentUICulture.Name);
 

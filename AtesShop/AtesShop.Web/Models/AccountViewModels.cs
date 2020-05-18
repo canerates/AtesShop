@@ -49,7 +49,7 @@ namespace AtesShop.Web.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Enter your email address or username here...")]
+        [Display(Name = "E-mail address or Username")]
         public string EmailOrUserName { get; set; }
 
         [Required]

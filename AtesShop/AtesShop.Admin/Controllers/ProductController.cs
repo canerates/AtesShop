@@ -155,6 +155,14 @@ namespace AtesShop.Admin.Controllers
             productPriceResource.RoleId = role.Id;
 
             PriceService.Instance.SavePrice(productPriceResource);
+
+            //Rating
+            var newRating = new Rating();
+            newRating.Product = newProduct;
+            newRating.IpAddress = "NULL";
+            newRating.Rate = 4;
+
+            ProductService.Instance.SaveProductRating(newRating);
             
             return RedirectToAction("ProductTable");
         }

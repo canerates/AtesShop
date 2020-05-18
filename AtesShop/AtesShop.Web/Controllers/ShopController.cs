@@ -61,16 +61,16 @@ namespace AtesShop.Web.Controllers
             if (categoryId.HasValue && categoryId != 0) model.CategoryId = categoryId.Value;
             else model.CategoryId = 0;
 
-            foreach (var product in model.Products)
-            {
-                var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
+            //foreach (var product in model.Products)
+            //{
+            //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
 
-                //Localization
-                product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+            //    //Localization
+            //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
+            //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
                 
 
-            }
+            //}
             model.Products = CommonHelper.ProductsCurrencyFormat(model.Products, CultureInfo.CurrentUICulture.Name);
             var totalProductsCount = ProductService.Instance.SearchProductsCount(search, CultureInfo.CurrentUICulture.Name, "User", categoryId, minimumPrice, maximumPrice);
 
@@ -128,15 +128,15 @@ namespace AtesShop.Web.Controllers
                 model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, "User").Where(p => p.Id != id).ToList();
                 model.RelatedProducts = CommonHelper.ProductsCurrencyFormat(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
 
-                foreach (var prdct in model.RelatedProducts)
-                {
-                    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(prdct.Id);
+                //foreach (var prdct in model.RelatedProducts)
+                //{
+                //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(prdct.Id);
 
-                    //Localization
-                    prdct.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                    prdct.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+                //    //Localization
+                //    prdct.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
+                //    prdct.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
 
-                }
+                //}
 
                 return View(model);
             }

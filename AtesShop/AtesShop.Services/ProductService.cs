@@ -78,6 +78,25 @@ namespace AtesShop.Services
                 context.SaveChanges();
             }
         }
+
+        public Rating GetProductRatings(int productId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Ratings.Where(x => x.ProductId == productId).FirstOrDefault();
+            }
+        }
+        
+        public void SaveProductRating(Rating rating)
+        {
+            using (var context = new ASContext())
+            {
+                context.Entry(rating.Product).State = System.Data.Entity.EntityState.Unchanged;
+                context.Ratings.Add(rating);
+                context.SaveChanges();
+            }
+        }
+        
         #endregion
 
 
@@ -100,11 +119,6 @@ namespace AtesShop.Services
                 if (categoryId.HasValue)
                 {
                     products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(searchKey))
-                {
-                    products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
                 
                 if (sortId.HasValue && sortType.HasValue)
@@ -139,6 +153,11 @@ namespace AtesShop.Services
                     }
                 }
 
+                if (!string.IsNullOrEmpty(searchKey))
+                {
+                    products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower()) || x.Description.ToLower().Contains(searchKey.ToLower())).ToList();
+                }
+
                 return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
                 
             }
@@ -167,12 +186,12 @@ namespace AtesShop.Services
                         products.Remove(product);
                     }
                 }
-                
+
                 if (!string.IsNullOrEmpty(searchKey))
                 {
-                    products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower())).ToList();
+                    products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower()) || x.Description.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
-                
+
                 return products.Count();
 
             }
@@ -239,6 +258,28 @@ namespace AtesShop.Services
                 {
                     product.Price = price.Value;
                     product.PrePrice = price.PreValue;
+                }
+
+                var name = context.Resources.Where(x => x.Key == keys.NameKey && x.Culture == culture).FirstOrDefault();
+                if (name == null)
+                {
+                    var defaultCulture = "en-us";
+                    product.Name = context.Resources.Where(x => x.Key == keys.NameKey && x.Culture == defaultCulture).FirstOrDefault().Value;
+                }
+                else
+                {
+                    product.Name = name.Value;
+                }
+
+                var description = context.Resources.Where(x => x.Key == keys.DescriptionKey && x.Culture == culture).FirstOrDefault();
+                if (description == null)
+                {
+                    var defaultCulture = "en-us";
+                    product.Description = context.Resources.Where(x => x.Key == keys.DescriptionKey && x.Culture == defaultCulture).FirstOrDefault().Value;
+                }
+                else
+                {
+                    product.Description = description.Value;
                 }
 
                 var rateTotal = context.Ratings.Where(x => x.ProductId == product.Id).Sum(x => x.Rate);
