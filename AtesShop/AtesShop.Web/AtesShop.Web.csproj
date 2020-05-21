@@ -285,6 +285,7 @@
     <Content Include="Content\img\icon\4.png" />
     <Content Include="Content\img\icon\call.png" />
     <Content Include="Content\img\icon\favicon.png" />
+    <Content Include="Content\img\icon\loader.gif" />
     <Content Include="Content\img\logo\logo.png" />
     <Content Include="Content\img\menu\1.jpg" />
     <Content Include="Content\img\menu\2.jpg" />

@@ -6,7 +6,7 @@
 
     var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
     var searchKey = Model.SearchKey == null ? null : Model.SearchKey.ToString();
-    
+
 }
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
@@ -14,7 +14,7 @@
         <div class="breadcrumb">
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
-                <li class="active"><a href="@Url.Action( "Index", "Shop")">@AtesShop.Resources.Resources.ShopT1O3</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopT1O3</a></li>
             </ul>
         </div>
     </div>
@@ -48,11 +48,15 @@
                         <div class="group-title">
                             <h2>price</h2>
                         </div>
-                        <form action="#">
+                        <form action="javascript:getData()">
                             <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
                                 <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                             </div>
-                            <input id="amount" class="amount" readonly="" type="text">
+                            <input id="minPrice" class="amount" type="number" min="0" oninput="validity.valid||(value='');">
+                            <input id="maxPrice" style="float: right;" class="amount" type="number" min="0" oninput="validity.valid||(value='');">
+                            <div style="display:inline-block; width:100%;">
+                                <button class="btn" id="price-range-submit">Apply</button>
+                            </div>
                         </form>
                     </div>
 
@@ -299,19 +303,68 @@
             minimumPrice = ui.values[0];
             maximumPrice = ui.values[1];
 
-            $("#amount").val( minimumPrice + "  " + maximumPrice);
+            $("#minPrice").val(minimumPrice);
+            $("#maxPrice").val(maximumPrice);
 
-            clearTimeout(callTimeout);
-            callTimeout = setTimeout(getData, 500);
+            //clearTimeout(callTimeout);
+            //callTimeout = setTimeout(getData, 500);
         }
     });
 
-    $("#amount").val( minimumPrice + "  " + maximumPrice);
+    $("#minPrice").val( minimumPrice);
+    $("#maxPrice").val( maximumPrice);
+
+    $("#minPrice").on ('blur', function () {
+        updateSliderVal("min");
+
+    });
+
+    $("#maxPrice").on ('blur', function () {
+        updateSliderVal("max");
+    });
+
+    var updateSliderVal = function (key) {
+        minimumPrice = parseInt($("#minPrice").val(), 10);
+        maximumPrice = parseInt($("#maxPrice").val(), 10);
+        var sliderMin = @Model.MinimumPrice;
+        var sliderMax = @Model.MaximumPrice;
+
+        switch (key) {
+            case "min":
+                if (minimumPrice < sliderMin) {
+                    $("#minPrice").val(sliderMin);
+                    priceSlider.slider('values', 0, sliderMin);
+                }
+                else if(minimumPrice > maximumPrice) {
+                    $("#minPrice").val((maximumPrice - 1));
+                    priceSlider.slider('values', 0, (maximumPrice - 1));
+                }
+                else {
+                    priceSlider.slider('values', 0, minimumPrice);
+                }
+                break;
+            case "max":
+                if (maximumPrice > sliderMax) {
+                    $("#maxPrice").val(sliderMax);
+                    priceSlider.slider('values', 1, sliderMax);
+                }
+                else if(maximumPrice < minimumPrice) {
+                    $("#maxPrice").val((minimumPrice + 1));
+                    priceSlider.slider('values', 1, (minimumPrice + 1));
+                }
+                else {
+                    priceSlider.slider('values', 1, maximumPrice);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     var focusAction = function () {
         $('html, body').animate({
-            scrollTop: $('#tableContainer').offset().top - 100
-        }, 1000);
+            scrollTop: $('#tableContainer').offset().top - 200
+        }, 500);
     }
 
     var switchView = function (isList) {
@@ -354,6 +407,9 @@
                 isList: isListView,
                 sortId: sortId,
                 sortType: sortType
+            },
+            beforeSend: function (){
+                loadingAnimation();
             }
         })
         .done(function (response) {
@@ -363,6 +419,11 @@
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
         });
+    }
+
+    var loadingAnimation = function () {
+        focusAction();
+        $("#tableContainer").html("<div class='loading-product'><div class='loading-gif'></div></div>");
     }
 
 </script>

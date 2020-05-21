@@ -1570,18 +1570,66 @@ ul.ht-dropdown.dropdown-style-two li {
 .amount {
     padding: 5px 0;
     text-align: center;
-    font-size: 15px;
-    margin-top: 8px;
-    color: #808080;
+    font-size: 14px;
+    margin-top: 15px;
+    /*margin-left: 15px;*/
+    /*margin-right: 15px;*/
+    color: #555;
     background: transparent;
+    background-color: rgba(128,128,128,0.05);
     border: none;
+    border-radius: 5px;
+    overflow: hidden;
+    line-height: 100%;
+}
+
+.amount:focus {
+    border: none;
+    border-color: #8FBA22;
+    background-color: rgba(143, 186, 34, 0.3);
+}
+
+.amount[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .amount,
 .price-button {
     word-spacing: 25px;
-    width: 100%;
+    width: 30%;
     text-align: center;
+}
+
+
+
+#price-range-submit {
+    margin-top: 20px;
+    width:40%;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: #eef0f1 none repeat scroll 0 0;
+    border-radius: 5px;
+    border: none;
+    display: inline-block;
+    height: 32px;
+    line-height: inherit;
+    position: relative;
+    text-align: center;
+    cursor:pointer;
+    transition: all 0.15s ease 0s;
+    
+}
+
+#price-range-submit:hover {
+    opacity: 0.8;
+    color: #fff;
+    background-color: #8FBA22;
+    box-shadow: none;
+}
+
+#price-range-submit:focus {
+    opacity: 0.8;
+    box-shadow: none;
 }
 
 .flter-option.mb-80 {
@@ -1718,6 +1766,29 @@ ul.ht-dropdown.dropdown-style-two li {
 #list-view .sticker-new, #list-view .sticker-sale {
     top: 30px;
 }
+
+.loading-product {
+    display:    block;
+    position:   absolute;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 );
+}
+.loading-gif {
+    display:    block;
+    position:   relative;
+    width:      100%;
+    padding-top:50%;
+    z-index:    1000;
+    background: url(../img/icon/loader.gif) 
+                50% 50% 
+                no-repeat;
+}
+
+
 /*----------------------------------------*/
 /* 11. Product Page CSS
 /*----------------------------------------*/

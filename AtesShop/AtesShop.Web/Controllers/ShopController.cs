@@ -26,8 +26,8 @@ namespace AtesShop.Web.Controllers
             
             model.Categories = CategoryService.Instance.GetCategories();
             model.ProductCount = ProductService.Instance.GetProductsCount();
-            model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, "User");
-            model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, "User");
+            model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
+            model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
             model.SearchKey = search;
             model.IsListView = true;
 

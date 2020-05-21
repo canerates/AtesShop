@@ -109,12 +109,28 @@ namespace AtesShop.Services
             }
         }
         
-        public int GetMaximumPrice(string culture, string role)
+        public int GetMaximumPrice(string culture, string role, int? categoryId)
         {
             using (var context = new ASContext())
             {
-                var prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
+                var prices = new List<Price>();
 
+                if (categoryId.HasValue)
+                {
+                    var products = context.Products.Where(x => x.CategoryId == categoryId.Value).ToList();
+
+                    foreach (var product in products)
+                    {
+                        var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
+                        var price = context.Prices.Where(x => x.Key == key.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
+                        prices.Add(price);
+                    }
+                }
+                else
+                {
+                    prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
+                }
+                
                 if(prices.Count != 0)
                 {
                     return (int)prices.Max(x => Convert.ToInt64(x.Value));
@@ -126,11 +142,27 @@ namespace AtesShop.Services
             }
         }
 
-        public int GetMinimumPrice(string culture, string role)
+        public int GetMinimumPrice(string culture, string role, int? categoryId)
         {
             using (var context = new ASContext())
             {
-                var prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
+                var prices = new List<Price>();
+
+                if (categoryId.HasValue)
+                {
+                    var products = context.Products.Where(x => x.CategoryId == categoryId.Value).ToList();
+
+                    foreach (var product in products)
+                    {
+                        var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
+                        var price = context.Prices.Where(x => x.Key == key.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
+                        prices.Add(price);
+                    }
+                }
+                else
+                {
+                    prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
+                }
 
                 if (prices.Count != 0)
                 {

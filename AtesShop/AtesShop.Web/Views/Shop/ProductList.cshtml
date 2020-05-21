@@ -190,6 +190,7 @@
                                              },
                                              new AjaxOptions
                                              {
+                                                 OnBegin = "loadingAnimation()",
                                                  HttpMethod = "GET",
                                                  UpdateTargetId = "tableContainer",
                                                  InsertionMode = InsertionMode.Replace,
@@ -218,6 +219,7 @@
                           },
                           new AjaxOptions
                           {
+                              OnBegin = "loadingAnimation()",
                               HttpMethod = "GET",
                               UpdateTargetId = "tableContainer",
                               InsertionMode = InsertionMode.Replace,
@@ -255,9 +257,9 @@
     $('#sorterSelect').val("@Model.PageSize");
     $('#sorterSelect').change(function () {
         var sortValue = this.value;
-
+        
         $.ajax({
-            url: '@Url.Action("ProductList", "Products")',
+            url: '@Url.Action("ProductList", "Shop")',
             data: {
                 search: "@Model.SearchKey",
                 categoryId: @categoryId,
@@ -267,6 +269,9 @@
                 sortId: @Model.SortType,
                 sortType: @Model.SortType,
                 pageSize: sortValue
+            },
+            beforeSend: function (){
+                loadingAnimation();
             }
         })
         .done(function (response) {
@@ -278,7 +283,5 @@
         });
 
     });
-
-
 
 </script>

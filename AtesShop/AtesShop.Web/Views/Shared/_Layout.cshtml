@@ -40,8 +40,6 @@
     <!-- modernizr js -->
     <script src="~/Content/js/vendor/modernizr-2.8.3.min.js"></script>
     
-
-    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
 
@@ -50,14 +48,28 @@
 
     <script src="~/Content/js/jquery-ui.min.js"></script>
 
-    @*<style type="text/css">
-        * {
-            font-family: 'Georgia', sans-serif;
+    <style>
+        #hideAll
+        {
+          position: fixed;
+          left: 0px; 
+          right: 0px; 
+          top: 0px; 
+          bottom: 0px; 
+          background-color: white;
+          z-index: 99;
+
         }
-    </style>*@
+    </style>
+
 </head>
 
 <body>
+    <div style="display: none" id="hideAll">&nbsp;</div>
+    <script type="text/javascript">
+        document.getElementById("hideAll").style.display = "block";
+        window.onload = function () { document.getElementById("hideAll").style.display = "none"; }
+    </script> 
 
     <!-- Wrapper Start -->
     <div class="wrapper">
@@ -70,7 +82,7 @@
                         <!-- Header Top left Start -->
                         <div class="col-lg-4 col-md-12 d-center">
                             <div class="header-top-left">
-                                <img src="~/Content/img/icon/call.png" alt="">Call Us : +11 222 3333
+                                <img src="~/Content/img/icon/call.png" alt="">Call Us : +886 2 8990 3339
                             </div>
                         </div>
                         <!-- Header Top left End -->
@@ -104,7 +116,7 @@
             <!-- Header Bottom Start -->
             <div class="header-bottom header-sticky">
                 <div class="container">
-                    <div class="row">
+                    <div id="header_row" class="row">
                         <div class="col-xl-3 col-lg-2 col-sm-5 col-5">
                             <div class="logo">
                                 <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo/logo.png" alt="logo-image"></a>
@@ -348,6 +360,7 @@
     <script src="~/Content/js/main.js"></script>
 
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 
 </body>
 </html>
