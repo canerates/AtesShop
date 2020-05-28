@@ -1,4 +1,5 @@
 ﻿using AtesShop.Entities;
+using AtesShop.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace AtesShop.Web.ViewModels
         public List<int> CartProductIdList { get; set; }
         public string CartTotalPrice { get; set; }
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
+
+        public ApplicationUser User { get; set; }
 
     }
 

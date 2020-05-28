@@ -15,9 +15,38 @@ using static AtesShop.Web.Helpers.SharedHelper;
 
 namespace AtesShop.Web.Controllers
 {
+    
     public class ShopController : BaseController
     {
         private static IResourceProvider resourceProvider = new DbResourceProvider();
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
 
         [HttpGet]
         public ActionResult Index(int? categoryId, string search)
@@ -208,6 +237,7 @@ namespace AtesShop.Web.Controllers
             return PartialView("_CartSummary", model);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult Checkout()
         {
@@ -233,6 +263,8 @@ namespace AtesShop.Web.Controllers
                 model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
             }
+
+            model.User = UserManager.FindById(User.Identity.GetUserId());
 
             return View(model);
         }
