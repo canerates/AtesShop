@@ -49,4 +49,23 @@ namespace AtesShop.Web.ViewModels
         public int MaximumPrice { get; set; }
         public int MinimumPrice { get; set; }
     }
+
+    public class CheckoutViewModel
+    {
+        public List<Product> CartProducts { get; set; }
+        public List<int> CartProductIdList { get; set; }
+        public string CartTotalPrice { get; set; }
+        public Dictionary<int, string> CartProductsSubTotal { get; set; }
+
+    }
+
+    public class CartViewModel
+    {
+        public List<Product> CartProducts { get; set; }
+        public List<int> CartProductIdList { get; set; }
+        public string CartTotalPrice { get; set; }
+        public Dictionary<int, string> CartProductsSubTotal { get; set; }
+
+
+    }
 }

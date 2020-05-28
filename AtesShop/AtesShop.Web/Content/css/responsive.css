@@ -861,7 +861,7 @@ p.checkout-coupon input[type="submit"] {
     top:-48px;
 }
 .actions-secondary a.add-cart {
-    width: 97px;
+    /*width: 97px;*/
 }
 .full-col,
 .logo.mt-20.pull-left {

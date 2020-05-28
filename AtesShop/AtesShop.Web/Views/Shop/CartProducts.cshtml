@@ -1,0 +1,141 @@
+﻿@model CartViewModel
+@if (Model != null)
+{
+    if (Model.CartProducts != null && Model.CartProducts.Count > 0)
+    {
+        <!-- Cart Main Area Start -->
+        <div class="cart-main-area pb-80 pb-sm-50">
+            <div class="container">
+                <h2 class="text-capitalize sub-heading">cart</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Form Start -->
+                        @*<form action="#">*@
+                        <!-- Table Content Start -->
+                        <div id="cartTable">
+                            <!-- Table Content Start -->
+                            <div class="table-content table-responsive mb-50">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-thumbnail">Image</th>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                            <th class="product-subtotal">Total</th>
+                                            <th class="product-remove">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.CartProducts)
+                                        {
+                                            var productQuantity = Model.CartProductIdList.Where(productId => productId == product.Id).Count();
+
+                                            <tr>
+                                                <td class="product-thumbnail">
+                                                    <a href="#"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                                </td>
+                                                <td class="product-name"><a href="#">@product.Name <br /> @product.Description</a></td>
+                                                <td class="product-price"><span class="amount">@product.Price</span></td>
+                                                <td class="product-quantity"><input type="number" class="productQuantity" min="1" required oninput="validity.valid||(value='');" data-id="@product.Id" value="@productQuantity" /></td>
+                                                <td class="product-subtotal">@Model.CartProductsSubTotal[product.Id]</td>
+                                                <td class="product-remove"> <a class="productRemove" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                <input id="cartTotalPrice" type="hidden" value="@Model.CartTotalPrice" />
+                            </div>
+                            <!-- Table Content Start -->
+                        </div>
+
+                        <!-- Table Content Start -->
+                        <div class="row">
+                            <!-- Cart Button Start -->
+                            <div class="col-lg-8 col-md-7">
+                                <div class="buttons-cart">
+                                    <a id="updateCartBtn" class="off-white-bg" href="" onclick="updateCart(); return false;">Update Cart</a>
+                                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                                </div>
+                            </div>
+                            <!-- Cart Button Start -->
+                            <!-- Cart Totals Start -->
+                            <div class="col-lg-4 col-md-12">
+                                <div class="cart_totals">
+                                    <h2>Cart Totals</h2>
+                                    <br />
+                                    <table>
+                                        <tbody>
+                                            <tr class="cart-subtotal">
+                                                <th>Subtotal</th>
+                                                <td><span id="subTotalPrice" class="amount">@Model.CartTotalPrice</span></td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>Total</th>
+                                                <td>
+                                                    <strong><span id="totalPrice" class="amount">@Model.CartTotalPrice</span></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="wc-proceed-to-checkout">
+                                        <a href="@Url.Action("Checkout", "Shop")">Proceed to Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Cart Totals End -->
+                        </div>
+                        <!-- Row End -->
+                        @*</form>*@
+                        <!-- Form End -->
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+        </div>
+        <!-- Cart Main Area End -->
+    }
+    else
+    {
+        <div class="cart-main-area pb-80 pb-sm-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-content pb-20"><p>No products in cart.</p></div>
+                        <div class="row">
+                            <!-- Cart Button Start -->
+                            <div class="col-lg-8 col-md-7">
+                                <div class="buttons-cart">
+                                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $('.productQuantity').on('change', function (event) {
+        event.preventDefault();
+        if ($(this).val() != null && $(this).val() != "") {
+            $(this).attr('value', $(this).val());
+        }
+        else {
+            $(this).val('1');
+            $(this).attr('value', '1');
+        }
+
+    });
+
+    $('.productRemove').click(function () {
+        event.preventDefault();
+        $(this).parent().siblings('.product-quantity').children().attr('value', 0);
+        updateCart();
+    })
+</script>
+
+

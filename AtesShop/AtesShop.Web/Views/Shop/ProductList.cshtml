@@ -24,7 +24,7 @@
     <div class="tab-content fix">
         @if (!Model.IsListView)
             {
-            <div id="grid-view" class="tab-pane active ">
+            <div id="grid-view" class="tab-pane active " style="padding:10px;">
                 <div class="row">
                     <!-- Single Product Start -->
                     @foreach (var product in Model.Products)
@@ -76,7 +76,7 @@
                                     <div class="pro-actions">
                                         <div class="actions-secondary">
                                             <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                            <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
+                                            <a class="add-cart" href="" data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                             <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
             }
             else
             {
-                <div id="list-view" class="tab-pane active">
+                <div id="list-view" class="tab-pane active" style="padding:10px;">
                     <!-- Single Product Start -->
 
                     @foreach (var product in Model.Products)
@@ -142,7 +142,7 @@
                                 <div class="pro-actions">
                                     <div class="actions-secondary">
                                         <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                        <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
+                                        <a class="add-cart" href=" " data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                         <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                                              },
                                              new AjaxOptions
                                              {
-                                                 OnBegin = "loadingAnimation()",
+                                                 OnBegin = "ajaxLoading()",
                                                  HttpMethod = "GET",
                                                  UpdateTargetId = "tableContainer",
                                                  InsertionMode = InsertionMode.Replace,
@@ -219,7 +219,7 @@
                           },
                           new AjaxOptions
                           {
-                              OnBegin = "loadingAnimation()",
+                              OnBegin = "ajaxLoading()",
                               HttpMethod = "GET",
                               UpdateTargetId = "tableContainer",
                               InsertionMode = InsertionMode.Replace,
@@ -271,7 +271,7 @@
                 pageSize: sortValue
             },
             beforeSend: function (){
-                loadingAnimation();
+                ajaxLoading();
             }
         })
         .done(function (response) {
@@ -282,6 +282,71 @@
             alert("Fail");
         });
 
+    });
+
+    var products;
+
+    $('.add-cart').click(function (event) {
+        event.preventDefault();
+
+        var currentCartCookie = $.cookie('CartProducts');
+
+        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) 
+        {
+            products = currentCartCookie.split('-');
+        }
+        else
+        {
+            products = [];
+        }
+        var productId = $(this).attr('data-id');
+
+        products.push(productId);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var cart = $('.cart-counter');
+        
+        var imgtodrag = $(this).parents().eq(3).children().eq(0).find("img").eq(1);
+        if (imgtodrag) {
+            var imgclone = imgtodrag.clone()
+                .offset({
+                    top: imgtodrag.offset().top,
+                    left: imgtodrag.offset().left
+                })
+                .css({
+                    'opacity': '0.5',
+                    'position': 'absolute',
+                    'height': '210px',
+                    'width': '270px',
+                    'z-index': '1050'
+                })
+                .appendTo($('body'))
+                .animate({
+                    'top': cart.offset().top + 10,
+                    'left': cart.offset().left + 10,
+                    'width': 90,
+                    'height': 70
+                }, 1000, 'easeInOutExpo');
+            
+            setTimeout(function () {
+                cart.effect("shake", {
+                    times: 2,
+                    distance: 5
+                }, 200);
+                updateCartIcon();
+            }, 1500);
+
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function () {
+                $(this).detach()
+            });
+        }
+        $(this).blur();
+
+        
     });
 
 </script>

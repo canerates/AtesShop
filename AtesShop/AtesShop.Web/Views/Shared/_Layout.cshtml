@@ -48,28 +48,14 @@
 
     <script src="~/Content/js/jquery-ui.min.js"></script>
 
-    <style>
-        #hideAll
-        {
-          position: fixed;
-          left: 0px; 
-          right: 0px; 
-          top: 0px; 
-          bottom: 0px; 
-          background-color: white;
-          z-index: 99;
-
-        }
-    </style>
-
 </head>
 
 <body>
-    <div style="display: none" id="hideAll">&nbsp;</div>
-    <script type="text/javascript">
-        document.getElementById("hideAll").style.display = "block";
-        window.onload = function () { document.getElementById("hideAll").style.display = "none"; }
-    </script> 
+
+    <!-- Preloader -->
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
 
     <!-- Wrapper Start -->
     <div class="wrapper">
@@ -140,43 +126,8 @@
                                     </li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
                                     <li>
-                                        <a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
-                                        <ul class="ht-dropdown main-cart-box">
-                                            <li>
-                                                <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="~/Content/img/products/nvr1.png" alt="cart-image"></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <h6><a href="#">PA-SR-N1600000</a></h6>
-                                                        <span>1 × $108.00</span>
-                                                    </div>
-                                                    <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
-                                                <!-- Cart Box End -->
-                                                <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="~/Content/img/products/nvr1.png" alt="cart-image"></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <h6><a href="#">PA-SR-N0800000</a></h6>
-                                                        <span>2 × $99.00</span>
-                                                    </div>
-                                                    <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
-                                                <!-- Cart Box End -->
-                                                <!-- Cart Footer Inner Start -->
-                                                <div class="cart-footer fix">
-                                                    <h5>total :<span class="f-right">$306.00</span></h5>
-                                                    <div class="cart-actions">
-                                                        <a class="checkout" href="#">Checkout</a>
-                                                    </div>
-                                                </div>
-                                                <!-- Cart Footer Inner End -->
-                                            </li>
-                                        </ul>
+                                        <a href="@Url.Action("Cart", "Shop")"><i class="fa fa-shopping-basket"></i><span id="cartProductQuantity" class="cart-counter">0</span></a>
+                                        @*@{ Html.RenderAction("_CartSummary", "Shop");}*@
                                     </li>
                                 </ul>
                             </div>
@@ -350,6 +301,8 @@
     <script src="~/Content/js/jquery.nivo.slider.js"></script>
     <!-- fancybox js -->
     <script src="~/Content/js/jquery.fancybox.min.js"></script>
+
+    <script src="~/Content/js/jquery.cookie.js"></script>
     <!-- bootstrap -->
     <script src="~/Content/js/bootstrap.min.js"></script>
     <!-- popper -->
@@ -359,8 +312,9 @@
     <!-- main js -->
     <script src="~/Content/js/main.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
 
 </body>
 </html>

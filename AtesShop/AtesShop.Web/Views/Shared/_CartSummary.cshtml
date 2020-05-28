@@ -1,0 +1,34 @@
+﻿@model CartViewModel
+
+<ul class="ht-dropdown main-cart-box">
+    <li>
+        @foreach (var product in Model.CartProducts)
+        {
+            var productQuantity = Model.CartProductIdList.Where(productId => productId == product.Id).Count();
+
+            <!-- Cart Box Start -->
+            <div class="single-cart-box">
+                <div class="cart-img">
+                    <a href="#"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                </div>
+                <div class="cart-content">
+                    <h6><a href="#">@product.Name</a></h6>
+                    <span>@productQuantity × @product.Price</span>
+                </div>
+                <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
+            </div>
+            <!-- Cart Box End -->
+        }
+        <!-- Cart Footer Inner Start -->
+        
+        <!-- Cart Footer Inner End -->
+    </li>
+    <li>
+        <div class="cart-footer fix">
+            <h5>total :<span class="f-right">@Model.CartTotalPrice</span></h5>
+            <div class="cart-actions">
+                <a class="checkout" href="@Url.Action("Checkout", "Shop")">Checkout</a>
+            </div>
+        </div>
+    </li>
+</ul>

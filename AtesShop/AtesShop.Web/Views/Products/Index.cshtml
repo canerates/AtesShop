@@ -414,7 +414,7 @@
                 sortType: sortType
             },
             beforeSend: function (){
-                loadingAnimation();
+                ajaxLoading();
             }
         })
         .done(function (response) {
@@ -426,9 +426,9 @@
         });
     }
 
-    var loadingAnimation = function () {
+    var ajaxLoading = function () {
         focusAction();
-        $("#tableContainer").html("<div class='loading-product'><div class='loading-gif'></div></div>");
+        $("#tableContainer").html("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
     }
 
 </script>

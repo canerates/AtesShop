@@ -1,0 +1,70 @@
+﻿
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("Index", "Shop")">Shop</a></li>
+                <li class="active"><a href="@Url.Action("Cart", "Shop")">Cart</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<div id="cartContainer">
+    @{
+        Html.RenderAction("CartProducts");
+    }
+</div>
+
+<script>
+    
+    var updateCookie = function () {
+        var products = [];
+
+        var productCount = $('.product-quantity').children().length;
+
+        for (var i = 0; i < productCount; i++) {
+            var productQuantity = $('.product-quantity').children().eq(i).attr('value');
+            var productId = $('.product-quantity').children().eq(i).attr('data-id');
+            for (var j = 0; j < productQuantity; j++) {
+                products.push(productId);
+            }
+        }
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var cart = $('.cart-counter');
+        cart.effect("shake", {
+            times: 2,
+            distance: 5
+        }, 200);
+        updateCartIcon();
+    }
+
+    var updateCart = function () {
+        updateCookie();
+
+        $.ajax({
+            url: '@Url.Action("CartProducts", "Shop")'
+
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#cartContainer").html(response);
+            updateTotalPrice();
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            alert("Fail");
+        });
+    }
+
+    var updateTotalPrice = function () {
+        var total = $('#cartTotalPrice').val();
+        $('#subTotalPrice').html(total);
+        $('#totalPrice').html(total);
+    }
+
+</script>
+

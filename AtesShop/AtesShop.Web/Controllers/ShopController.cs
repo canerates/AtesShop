@@ -36,7 +36,6 @@ namespace AtesShop.Web.Controllers
                 model.CategoryId = categoryId.Value;
             }
             
-
             return View(model);
         }
         
@@ -143,6 +142,100 @@ namespace AtesShop.Web.Controllers
             else { return HttpNotFound(); }
         }
         
+        [HttpGet]
+        public ActionResult Cart()
+        {
+            return View();
+        }
 
+        [HttpGet]
+        public ActionResult CartProducts()
+        {
+            CartViewModel model = new CartViewModel();
+
+            var totalPrice = 0;
+            Dictionary<int, string> subtotal = new Dictionary<int, string>();
+            var CartProductsCookie = Request.Cookies["CartProducts"];
+
+            if (CartProductsCookie != null && CartProductsCookie.Value != "")
+            {
+                model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
+
+                foreach (var product in model.CartProducts)
+                {
+                    subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
+                }
+                
+                model.CartProductsSubTotal = subtotal;
+
+                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
+                model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+            }
+
+            return PartialView(model);
+        }
+        
+
+        [HttpGet]
+        public ActionResult CartSummary()
+        {
+
+            CartViewModel model = new CartViewModel();
+
+            var totalPrice = 0;
+            Dictionary<int, string> subtotal = new Dictionary<int, string>();
+            var CartProductsCookie = Request.Cookies["CartProducts"];
+
+            if (CartProductsCookie != null && CartProductsCookie.Value != "")
+            {
+                model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
+
+                foreach (var product in model.CartProducts)
+                {
+                    subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
+                }
+
+                model.CartProductsSubTotal = subtotal;
+
+                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
+                model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+            }
+
+            return PartialView("_CartSummary", model);
+        }
+
+        [HttpGet]
+        public ActionResult Checkout()
+        {
+            CheckoutViewModel model = new CheckoutViewModel();
+
+            var totalPrice = 0;
+            Dictionary<int, string> subtotal = new Dictionary<int, string>();
+            var CartProductsCookie = Request.Cookies["CartProducts"];
+
+            if (CartProductsCookie != null && CartProductsCookie.Value != "")
+            {
+                model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
+
+                foreach (var product in model.CartProducts)
+                {
+                    subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
+                }
+
+                model.CartProductsSubTotal = subtotal;
+
+                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
+                model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+            }
+
+            return View(model);
+        }
+        
     }
 }

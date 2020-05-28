@@ -28,6 +28,7 @@
     21. About Us CSS
     22. My Account CSS
     23. Home Three CSS
+    24. Preloader
   
 -----------------------------------------------------*/
 
@@ -1762,32 +1763,17 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 #grid-view .single-product, #list-view .single-product{
     margin-bottom: 30px;
+    border: 1px solid rgba(235,235,235, 0.5)
+} 
+
+#grid-view .single-product:hover, #list-view .single-product:hover{
+    border: 1px solid transparent;
+    box-shadow: 0px 5px 14.25px 0.75px rgba(0, 0, 0, 0.07);
 }
+
 #list-view .sticker-new, #list-view .sticker-sale {
     top: 30px;
 }
-
-.loading-product {
-    display:    block;
-    position:   absolute;
-    z-index:    1000;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba( 255, 255, 255, .8 );
-}
-.loading-gif {
-    display:    block;
-    position:   relative;
-    width:      100%;
-    padding-top:50%;
-    z-index:    1000;
-    background: url(../img/icon/loader.gif) 
-                50% 50% 
-                no-repeat;
-}
-
 
 /*----------------------------------------*/
 /* 11. Product Page CSS
@@ -4100,4 +4086,110 @@ legend {
 
 .mobile-menu nav ul{
     display: none;
+}
+
+/*----------------------------------------*/
+/* 24. Preloader
+/*----------------------------------------*/
+
+#loading-overlay {
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background: #fff;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+}
+
+.loader:before,
+.loader:after {
+    position: absolute;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    content: "";
+    -webkit-animation: preloader-wave 1.6s linear infinite;
+        animation: preloader-wave 1.6s linear infinite; 
+    border-radius: 50%;
+    background: #8FBA22;
+}
+
+.loader:after {
+    -webkit-animation-delay: -.8s;
+       animation-delay: -.8s;
+}
+
+@-webkit-keyframes preloader-wave {
+    0% {
+        -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+        opacity: .5;
+    }
+    100% {
+        -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+        opacity: 0;
+    }
+}
+
+@keyframes preloader-wave {
+    0% {
+        -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+        opacity: .5;
+    }
+    100% {
+        -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+        opacity: 0;
+    }
+}
+
+
+#ajax-loading-overlay {
+    display: block;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 255, 255, 255, .8 );
+}
+
+.ajax-loader {
+    display: block;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 100%;
+}
+
+.ajax-loader:before,
+.ajax-loader:after {
+    position: absolute;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    content: "";
+    -webkit-animation: preloader-wave 1.6s linear infinite;
+        animation: preloader-wave 1.6s linear infinite; 
+    border-radius: 50%;
+    background: #8FBA22;
+}
+
+.ajax-loader:after {
+    -webkit-animation-delay: -.8s;
+       animation-delay: -.8s;
 }

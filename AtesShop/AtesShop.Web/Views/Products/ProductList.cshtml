@@ -24,8 +24,8 @@
     <div class="tab-content fix">
         @if (!Model.IsListView)
         {
-            <div id="grid-view" class="tab-pane active">
-                <div class="row">
+            <div id="grid-view" class="tab-pane active" style="padding:10px;">
+                <div class="row" >
                     <!-- Single Product Start -->
                     @foreach (var product in Model.Products)
                     {
@@ -105,7 +105,7 @@
         }
         else
         {
-            <div id="list-view" class="tab-pane active">
+            <div id="list-view" class="tab-pane active" style="padding:10px;">
                 <!-- Single Product Start -->
         
                 @foreach (var product in Model.Products)
@@ -205,7 +205,7 @@
                                       },
                                       new AjaxOptions
                                       {
-                                          OnBegin = "loadingAnimation()",
+                                          OnBegin = "ajaxLoading()",
                                           HttpMethod = "GET",
                                           UpdateTargetId = "tableContainer",
                                           InsertionMode = InsertionMode.Replace,
@@ -234,7 +234,7 @@
                    },
                    new AjaxOptions
                    {
-                       OnBegin = "loadingAnimation()",
+                       OnBegin = "ajaxLoading()",
                        HttpMethod = "GET",
                        UpdateTargetId = "tableContainer",
                        InsertionMode = InsertionMode.Replace,
@@ -287,7 +287,7 @@
                 pageSize: sortValue
             },
             beforeSend: function (){
-                loadingAnimation();
+                ajaxLoading();
             }
         })
         .done(function (response) {

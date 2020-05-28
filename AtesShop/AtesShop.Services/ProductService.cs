@@ -215,6 +215,15 @@ namespace AtesShop.Services
             }
         }
 
+        public List<Product> GetProducts(List<int> productIdList, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var products = context.Products.Where(x => productIdList.Contains(x.Id)).ToList();
+                return FormatProductsInfo(products, culture, role);
+            }
+        }
+
         public List<Product> GetProductsByCategory(int categoryId, string culture, string role)
         {
             using (var context = new ASContext())

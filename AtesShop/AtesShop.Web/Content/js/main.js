@@ -248,7 +248,7 @@
     /*----------------------------------------------------
     10. Brand Banner Activation
     -----------------------------------------------------*/
-$('.brand-banner').on('changed.owl.carousel initialized.owl.carousel', function (event) {
+    $('.brand-banner').on('changed.owl.carousel initialized.owl.carousel', function (event) {
         $(event.target)
 
                 .find('.owl-item').removeClass('last')
@@ -509,6 +509,37 @@ $('.brand-banner').on('changed.owl.carousel initialized.owl.carousel', function 
             }
         }
     })
-     
-    
+
+    /*----------------------------------------------------
+    22.Preloader
+    -----------------------------------------------------*/
+    var removePreloader = function () {
+        $(window).on('load', function () {
+            $('.loader').fadeOut();
+            $('#loading-overlay').delay(500).fadeOut('slow');
+        });
+    };
+
+    //Dom Ready
+    $(function () {
+        removePreloader();
+        updateCartIcon();
+    });
+
+
 })(jQuery);
+
+var updateCartIcon = function () {
+    var cartProducts;
+
+    var currentCartCookie = $.cookie('CartProducts');
+
+    if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+        cartProducts = currentCartCookie.split('-');
+    }
+    else {
+        cartProducts = [];
+    }
+
+    $('#cartProductQuantity').html(cartProducts.length);
+};

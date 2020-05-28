@@ -26,7 +26,7 @@ namespace AtesShop.Web.Helpers
             }
             return products;
         }
-
+        
         internal static Product ProductCurrencyFormat( Product product, string culture)
         {
             if (product.Price != "Contact Us")
