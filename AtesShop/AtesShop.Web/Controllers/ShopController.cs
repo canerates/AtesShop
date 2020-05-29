@@ -268,6 +268,13 @@ namespace AtesShop.Web.Controllers
 
             return View(model);
         }
+
+
+        [HttpPost]
+        public ActionResult PlaceOrder()
+        {
+            return RedirectToAction("Index");
+        }
         
     }
 }

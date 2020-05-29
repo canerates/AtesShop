@@ -56,6 +56,7 @@
     <Compile Include="FeatureService.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="MenuService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="PriceService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="CategoryService.cs" />

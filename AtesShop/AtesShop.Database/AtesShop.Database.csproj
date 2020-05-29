@@ -61,6 +61,14 @@
     <Compile Include="Migrations\202005120641220_orderByAdded.designer.cs">
       <DependentUpon>202005120641220_orderByAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005290240540_orderEntitiesAdded.cs" />
+    <Compile Include="Migrations\202005290240540_orderEntitiesAdded.designer.cs">
+      <DependentUpon>202005290240540_orderEntitiesAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005290242569_orderEntitiesAdded2.cs" />
+    <Compile Include="Migrations\202005290242569_orderEntitiesAdded2.designer.cs">
+      <DependentUpon>202005290242569_orderEntitiesAdded2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +90,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005120641220_orderByAdded.resx">
       <DependentUpon>202005120641220_orderByAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005290240540_orderEntitiesAdded.resx">
+      <DependentUpon>202005290240540_orderEntitiesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005290242569_orderEntitiesAdded2.resx">
+      <DependentUpon>202005290242569_orderEntitiesAdded2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
