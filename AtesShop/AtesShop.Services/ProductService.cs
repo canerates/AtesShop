@@ -13,6 +13,7 @@ namespace AtesShop.Services
     public class ProductService
     {
         #region Singleton
+
         public static ProductService Instance
         {
             get
@@ -29,10 +30,9 @@ namespace AtesShop.Services
         }
 
         #endregion
-
-
+        
         #region Admin
-
+        
         public Product GetProduct(int productId)
         {
             using (var context = new ASContext())
@@ -79,34 +79,43 @@ namespace AtesShop.Services
             }
         }
 
-        public Rating GetProductRatings(int productId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.Ratings.Where(x => x.ProductId == productId).FirstOrDefault();
-            }
-        }
-        
-        public void SaveProductRating(Rating rating)
-        {
-            using (var context = new ASContext())
-            {
-                context.Entry(rating.Product).State = System.Data.Entity.EntityState.Unchanged;
-                context.Ratings.Add(rating);
-                context.SaveChanges();
-            }
-        }
-        
         #endregion
-
-
+        
         #region Web
 
-        public int GetProductsCount()
+        public Product GetProduct(int productId, string culture, string role)
         {
             using (var context = new ASContext())
             {
-                return context.Products.Count();
+                var product = context.Products.Find(productId);
+                return FormatProductInfo(product, culture, role);
+            }
+        }
+
+        public List<Product> GetProducts(string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var products = context.Products.Include(x => x.Category).ToList();
+                return FormatProductsInfo(products, culture, role);
+            }
+        }
+
+        public List<Product> GetProductsByCategory(int categoryId, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var products = context.Products.Where(x => x.Category.Id == categoryId).Include(x => x.Category).ToList();
+                return FormatProductsInfo(products, culture, role);
+            }
+        }
+
+        public List<Product> GetProductsByIdList(List<int> productIdList, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var products = context.Products.Where(x => productIdList.Contains(x.Id)).ToList();
+                return FormatProductsInfo(products, culture, role);
             }
         }
 
@@ -115,12 +124,12 @@ namespace AtesShop.Services
             using (var context = new ASContext())
             {
                 var products = context.Products.ToList();
-                
+
                 if (categoryId.HasValue)
                 {
                     products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
                 }
-                
+
                 if (sortId.HasValue && sortType.HasValue)
                 {
                     switch (sortId.Value)
@@ -159,10 +168,18 @@ namespace AtesShop.Services
                 }
 
                 return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
-                
+
             }
         }
 
+        public int GetProductsCount()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Products.Count();
+            }
+        }
+        
         public int SearchProductsCount(string searchKey, string culture, string role, int? categoryId, int? minimum, int? maximum)
         {
             using (var context = new ASContext())
@@ -194,42 +211,6 @@ namespace AtesShop.Services
 
                 return products.Count();
 
-            }
-        }
-
-        public Product GetProduct(int productId, string culture, string role)
-        {
-            using (var context = new ASContext())
-            {
-                var product = context.Products.Find(productId);
-                return FormatProductInfo(product, culture, role);
-            }
-        }
-
-        public List<Product> GetProducts(string culture, string role)
-        {
-            using (var context = new ASContext())
-            {
-                var products = context.Products.Include(x => x.Category).ToList();
-                return FormatProductsInfo(products, culture, role);
-            }
-        }
-
-        public List<Product> GetProducts(List<int> productIdList, string culture, string role)
-        {
-            using (var context = new ASContext())
-            {
-                var products = context.Products.Where(x => productIdList.Contains(x.Id)).ToList();
-                return FormatProductsInfo(products, culture, role);
-            }
-        }
-
-        public List<Product> GetProductsByCategory(int categoryId, string culture, string role)
-        {
-            using (var context = new ASContext())
-            {
-                var products = context.Products.Where(x => x.Category.Id == categoryId).Include(x => x.Category).ToList();
-                return FormatProductsInfo(products, culture, role);
             }
         }
 

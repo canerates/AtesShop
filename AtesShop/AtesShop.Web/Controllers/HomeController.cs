@@ -112,11 +112,11 @@ namespace AtesShop.Web.Controllers
         public ActionResult ShowMenu()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = MenuService.Instance.GetMainMenus();
+            model.MainMenuList = MenuService.Instance.GetMainMenuList();
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
-                main.SubMenus = MenuService.Instance.GetSubMenuByParent(main.Id);
+                main.SubMenus = MenuService.Instance.GetSubMenuListByParent(main.Id);
 
                 foreach (var sub in main.SubMenus)
                 {
@@ -130,11 +130,11 @@ namespace AtesShop.Web.Controllers
         public ActionResult ShowMobileMenu()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = MenuService.Instance.GetMainMenus();
+            model.MainMenuList = MenuService.Instance.GetMainMenuList();
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
-                main.SubMenus = MenuService.Instance.GetSubMenuByParent(main.Id);
+                main.SubMenus = MenuService.Instance.GetSubMenuListByParent(main.Id);
 
                 foreach (var sub in main.SubMenus)
                 {

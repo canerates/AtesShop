@@ -29,6 +29,8 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
         public Category GetCategory(int id)
         {
             using (var context = new ASContext())
@@ -73,6 +75,54 @@ namespace AtesShop.Services
                 context.SaveChanges();
             }
         }
+
+        #endregion
+
+        #region Web
+
+        public List<Category> GetCategories(string culture)
+        {
+            using (var context = new ASContext())
+            {
+                var categories = context.Categories.Include(x => x.Products).ToList();
+                return FormatCategoriesInfo(categories, culture);
+            }
+        }
+
+        public List<Category> FormatCategoriesInfo(List<Category> categories, string culture)
+        {
+            using (var context = new ASContext())
+            {
+                foreach (var category in categories)
+                {
+                    var keys = context.CategoryKeys.Where(x => x.CategoryId == category.Id).FirstOrDefault();
+
+                    var name = context.Resources.Where(x => x.Key == keys.NameKey && x.Culture == culture).FirstOrDefault();
+                    if (name == null)
+                    {
+                        var defaultCulture = "en-us";
+                        category.Name = context.Resources.Where(x => x.Key == keys.NameKey && x.Culture == defaultCulture).FirstOrDefault().Value;
+                    }
+                    else
+                    {
+                        category.Name = name.Value;
+                    }
+
+                    var description = context.Resources.Where(x => x.Key == keys.DescriptionKey && x.Culture == culture).FirstOrDefault();
+                    if (description == null)
+                    {
+                        var defaultCulture = "en-us";
+                        category.Description = context.Resources.Where(x => x.Key == keys.NameKey && x.Culture == defaultCulture).FirstOrDefault().Value;
+                    }
+                    else
+                    {
+                        category.Description = description.Value;
+                    }
+                }
+                return categories;
+            }
+        }
         
+        #endregion
     }
 }

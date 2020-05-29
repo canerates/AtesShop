@@ -28,6 +28,20 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
+        public List<Feature> GetFeatures()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Features.ToList();
+            }
+        }
+
+        #endregion
+        
+        #region Web
+
         public List<Feature> GetProductFeatures(int productId)
         {
             using (var context = new ASContext())
@@ -43,12 +57,7 @@ namespace AtesShop.Services
             }
         }
 
-        public List<Feature> GetFeatures()
-        {
-            using (var context = new ASContext())
-            {
-                return context.Features.ToList();
-            }
-        }
+        #endregion
+        
     }
 }

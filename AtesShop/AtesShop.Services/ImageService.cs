@@ -28,6 +28,8 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
         public Image GetImage(int imageId)
         {
             using (var context = new ASContext())
@@ -41,16 +43,6 @@ namespace AtesShop.Services
             using (var context = new ASContext())
             {
                 return context.Images.ToList();
-            }
-        }
-
-        public List<Image> GetImagesByList(string idText)
-        {
-            List<int> idList = idText.Split(',').Select(int.Parse).ToList();
-
-            using (var context = new ASContext())
-            {
-                return context.Images.Where(i => idList.Contains(i.Id)).ToList();
             }
         }
 
@@ -81,5 +73,20 @@ namespace AtesShop.Services
                 context.SaveChanges();
             }
         }
+
+        #endregion
+
+        #region Web
+
+        public Image GetImgFile(int imageId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Images.Find(imageId);
+            }
+        }
+
+        #endregion
+        
     }
 }

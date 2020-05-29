@@ -64,7 +64,7 @@ namespace AtesShop.Web.Controllers
             
             ProductViewModel model = new ProductViewModel();
             
-            model.Categories = CategoryService.Instance.GetCategories();
+            model.Categories = CategoryService.Instance.GetCategories(CultureInfo.CurrentUICulture.Name);
             model.ProductCount = ProductService.Instance.GetProductsCount();
             model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, roleName, categoryId);
             model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, roleName, categoryId);
@@ -204,10 +204,11 @@ namespace AtesShop.Web.Controllers
             }
             return View(model);
         }
+
         [HttpGet]
         public ActionResult Image(int id)
         {
-            var image = ImageService.Instance.GetImage(id);
+            var image = ImageService.Instance.GetImgFile(id);
             return File(image.Data, image.ContentType);
         }
     }

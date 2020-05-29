@@ -50,7 +50,7 @@ namespace AtesShop.Admin.Controllers
 
                 //Category Key Set
 
-                var keySet = ResourceKeyService.Instance.GetCategoryKeySetByCategory(category.Id);
+                var keySet = ResourceKeyService.Instance.GetCategoryKeySetByCategoryId(category.Id);
 
                 elem.CategoryNameResources = ResourceService.Instance.GetResourcesByKey(keySet.NameKey);
                 elem.CategoryDescriptionResources = ResourceService.Instance.GetResourcesByKey(keySet.DescriptionKey);
@@ -145,7 +145,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategory(id);
+            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategoryId(id);
 
             ResourceService.Instance.DeleteResources(currentKeySet.NameKey);
             ResourceService.Instance.DeleteResources(currentKeySet.DescriptionKey);
@@ -160,7 +160,7 @@ namespace AtesShop.Admin.Controllers
         {
             CategoryTranslationResources model = new CategoryTranslationResources();
 
-            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategory(id);
+            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategoryId(id);
 
             model.NameResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.NameKey);
             model.DescriptionResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.DescriptionKey);
@@ -190,11 +190,11 @@ namespace AtesShop.Admin.Controllers
         public ActionResult EditTranslation(int id, string culture)
         {
             EditCategoryTranslationViewModel model = new EditCategoryTranslationViewModel();
-            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategory(id);
+            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategoryId(id);
 
             model.Id = currentKeySet.Id;
-            model.Name = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Value;
-            model.Description = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Value;
+            model.Name = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, culture).Value;
+            model.Description = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, culture).Value;
             model.Culture = culture;
 
             return PartialView(model);
@@ -206,11 +206,11 @@ namespace AtesShop.Admin.Controllers
             var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySet(model.Id);
             
             var categoryNameResource = new Resource();
-            categoryNameResource = ResourceService.Instance.GetResource(currentKeySet.NameKey, model.Culture);
+            categoryNameResource = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, model.Culture);
             categoryNameResource.Value = model.Name;
 
             var categoryDescriptionResource = new Resource();
-            categoryDescriptionResource = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, model.Culture);
+            categoryDescriptionResource = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, model.Culture);
             categoryDescriptionResource.Value = model.Description;
 
             ResourceService.Instance.UpdateResource(categoryNameResource);
@@ -231,10 +231,10 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteTranslation(int id, string culture)
         {
-            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategory(id);
+            var currentKeySet = ResourceKeyService.Instance.GetCategoryKeySetByCategoryId(id);
 
-            var categoryNameResourceId = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Id;
-            var categoryDescriptionId = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Id;
+            var categoryNameResourceId = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, culture).Id;
+            var categoryDescriptionId = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, culture).Id;
 
             ResourceService.Instance.DeleteResource(categoryNameResourceId);
             ResourceService.Instance.DeleteResource(categoryDescriptionId);

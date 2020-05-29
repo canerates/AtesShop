@@ -29,6 +29,10 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
+        #region MainMenu
+
         public MainMenu GetMainMenu(int id)
         {
             using (var context = new ASContext())
@@ -71,12 +75,15 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
                 var menu = context.MainMenus.Find(id);
                 context.MainMenus.Remove(menu);
                 context.SaveChanges();
             }
         }
+
+        #endregion
+
+        #region SubMenu
 
         public SubMenu GetSubMenu(int id)
         {
@@ -97,19 +104,7 @@ namespace AtesShop.Services
                     .ToList();
             }
         }
-
-        public List<SubMenu> GetSubMenuByParent(int mainMenuId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.SubMenus
-                    .Where(x => x.MainMenuId == mainMenuId)
-                    .Include(x => x.MainMenu)
-                    .OrderBy(x => x.OrderId)
-                    .ToList();
-            }
-        }
-
+        
         public void SaveSubMenu(SubMenu menu)
         {
             using (var context = new ASContext())
@@ -141,5 +136,37 @@ namespace AtesShop.Services
                 context.SaveChanges();
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Web
+
+        public List<MainMenu> GetMainMenuList()
+        {
+            using (var context = new ASContext())
+            {
+                return context.MainMenus
+                    .Include(x => x.SubMenus)
+                    .OrderBy(x => x.OrderId)
+                    .ToList();
+            }
+        }
+
+        public List<SubMenu> GetSubMenuListByParent(int mainMenuId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.SubMenus
+                    .Where(x => x.MainMenuId == mainMenuId)
+                    .Include(x => x.MainMenu)
+                    .OrderBy(x => x.OrderId)
+                    .ToList();
+            }
+        }
+
+        #endregion
+        
     }
 }

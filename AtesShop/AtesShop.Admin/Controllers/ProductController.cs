@@ -65,7 +65,7 @@ namespace AtesShop.Admin.Controllers
 
                 //Product Key Set
 
-                var keySet = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
+                var keySet = ResourceKeyService.Instance.GetProductKeySetByProductId(product.Id);
 
                 elem.ProductNameResources = ResourceService.Instance.GetResourcesByKey(keySet.NameKey);
                 elem.ProductDescriptionResources = ResourceService.Instance.GetResourcesByKey(keySet.DescriptionKey);
@@ -162,7 +162,7 @@ namespace AtesShop.Admin.Controllers
             newRating.IpAddress = "NULL";
             newRating.Rate = 4;
 
-            ProductService.Instance.SaveProductRating(newRating);
+            RatingService.Instance.SaveProductRating(newRating);
             
             return RedirectToAction("ProductTable");
         }
@@ -216,7 +216,7 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProductId(id);
 
             ResourceService.Instance.DeleteResources(currentKeySet.NameKey);
             ResourceService.Instance.DeleteResources(currentKeySet.DescriptionKey);
@@ -232,7 +232,7 @@ namespace AtesShop.Admin.Controllers
         {
             ProductTranslationResources model = new ProductTranslationResources();
             
-            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProductId(id);
 
             model.NameResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.NameKey);
             model.DescriptionResources = ResourceService.Instance.GetResourcesByKey(currentKeySet.DescriptionKey);
@@ -278,11 +278,11 @@ namespace AtesShop.Admin.Controllers
         public ActionResult EditTranslation(int id, string culture)
         {
             EditProductTranslationViewModel model = new EditProductTranslationViewModel();
-            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProductId(id);
 
             model.Id = currentKeySet.Id;
-            model.Name = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Value;
-            model.Description = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Value;
+            model.Name = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, culture).Value;
+            model.Description = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, culture).Value;
             model.Culture = culture;
             
             return PartialView(model);
@@ -294,11 +294,11 @@ namespace AtesShop.Admin.Controllers
             var currentKeySet = ResourceKeyService.Instance.GetProductKeySet(model.Id);
 
             var productNameResource = new Resource();
-            productNameResource = ResourceService.Instance.GetResource(currentKeySet.NameKey, model.Culture);
+            productNameResource = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, model.Culture);
             productNameResource.Value = model.Name;
 
             var productDescriptionResource = new Resource();
-            productDescriptionResource = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, model.Culture);
+            productDescriptionResource = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, model.Culture);
             productDescriptionResource.Value = model.Description;
 
             ResourceService.Instance.UpdateResource(productNameResource);
@@ -319,10 +319,10 @@ namespace AtesShop.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteTranslation(int id, string culture)
         {
-            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(id);
+            var currentKeySet = ResourceKeyService.Instance.GetProductKeySetByProductId(id);
 
-            var productNameResourceId = ResourceService.Instance.GetResource(currentKeySet.NameKey, culture).Id;
-            var productDescriptionId = ResourceService.Instance.GetResource(currentKeySet.DescriptionKey, culture).Id;
+            var productNameResourceId = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.NameKey, culture).Id;
+            var productDescriptionId = ResourceService.Instance.GetResourceByKeyCulture(currentKeySet.DescriptionKey, culture).Id;
             var prices = PriceService.Instance.GetPricesByKeyAndCulture(currentKeySet.PriceKey, culture);
 
             ResourceService.Instance.DeleteResource(productNameResourceId);

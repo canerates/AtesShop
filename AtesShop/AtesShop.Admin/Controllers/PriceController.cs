@@ -75,7 +75,7 @@ namespace AtesShop.Admin.Controllers
         {
             var newPrice = new Price();
 
-            var productKeySet = ResourceKeyService.Instance.GetProductKeySetByProduct(model.ProductId);
+            var productKeySet = ResourceKeyService.Instance.GetProductKeySetByProductId(model.ProductId);
             newPrice.Key = productKeySet.PriceKey;
 
             foreach (var role in RoleManager.Roles)

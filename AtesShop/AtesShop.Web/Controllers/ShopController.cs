@@ -53,7 +53,7 @@ namespace AtesShop.Web.Controllers
         {
             ShopViewModel model = new ShopViewModel();
             
-            model.Categories = CategoryService.Instance.GetCategories();
+            model.Categories = CategoryService.Instance.GetCategories(CultureInfo.CurrentUICulture.Name);
             model.ProductCount = ProductService.Instance.GetProductsCount();
             model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
             model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
@@ -189,7 +189,7 @@ namespace AtesShop.Web.Controllers
             if (CartProductsCookie != null && CartProductsCookie.Value != "")
             {
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
 
                 foreach (var product in model.CartProducts)
@@ -220,7 +220,7 @@ namespace AtesShop.Web.Controllers
             if (CartProductsCookie != null && CartProductsCookie.Value != "")
             {
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
 
                 foreach (var product in model.CartProducts)
@@ -250,7 +250,7 @@ namespace AtesShop.Web.Controllers
             if (CartProductsCookie != null && CartProductsCookie.Value != "")
             {
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProducts(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
 
                 foreach (var product in model.CartProducts)

@@ -28,6 +28,10 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
+        #region ProductKey
+
         public ProductKey GetProductKeySet(int id)
         {
             using (var context = new ASContext())
@@ -36,7 +40,7 @@ namespace AtesShop.Services
             }
         }
 
-        public ProductKey GetProductKeySetByProduct(int productId)
+        public ProductKey GetProductKeySetByProductId(int productId)
         {
             using (var context = new ASContext())
             {
@@ -72,6 +76,9 @@ namespace AtesShop.Services
             }
         }
 
+        #endregion
+
+        #region CategoryKey
 
         public CategoryKey GetCategoryKeySet(int id)
         {
@@ -81,7 +88,7 @@ namespace AtesShop.Services
             }
         }
 
-        public CategoryKey GetCategoryKeySetByCategory(int categoryId)
+        public CategoryKey GetCategoryKeySetByCategoryId(int categoryId)
         {
             using (var context = new ASContext())
             {
@@ -109,6 +116,29 @@ namespace AtesShop.Services
             }
         }
 
+        #endregion
+
+        #endregion
+
+        #region Web
+
+        public ProductKey GetProductKeySetByProduct(int productId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductKeys.Where(x => x.ProductId == productId).SingleOrDefault();
+            }
+        }
+
+        public CategoryKey GetCategoryKeySetByCategory(int categoryId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.CategoryKeys.Where(x => x.CategoryId == categoryId).SingleOrDefault();
+            }
+        }
+
+        #endregion
 
     }
 }

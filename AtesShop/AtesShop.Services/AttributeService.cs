@@ -29,13 +29,75 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Admin
+
+        public List<AttributeSection> GetAttributeSections()
+        {
+            using (var context = new ASContext())
+            {
+                return context.AttributeSections.ToList();
+            }
+        }
+
+        public List<AttributeSection> GetAttributeSections(int productId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => x.ProductId == productId).Select(x => x.AttributeSection).Distinct().ToList();
+            }
+        }
+
+        public List<AttributeType> GetAttributeTypes()
+        {
+            using (var context = new ASContext())
+            {
+                return context.AttributeTypes.ToList();
+            }
+        }
+
+        public List<AttributeType> GetAttributeTypes(int productId, int sectionId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => x.ProductId == productId && x.AttributeSectionId == sectionId).Select(x => x.AttributeType).ToList();
+            }
+        }
+
+        public List<AttributeValue> GetAttributeValues()
+        {
+            using (var context = new ASContext())
+            {
+                return context.AttributeValues.ToList();
+            }
+        }
+
+        public List<AttributeValue> GetAttributeValues(int productId, int sectionId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => x.ProductId == productId && x.AttributeSectionId == sectionId).Select(x => x.AttributeValue).ToList();
+            }
+        }
+
+        public int GetProductAttributesCount(int productId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => x.ProductId == productId).Count();
+            }
+        }
+
+        #endregion
+
+        #region Web
+
         public Dictionary<AttributeSection, List<ProductAttribute>> GetProductAttributes(int productId)
         {
             using (var context = new ASContext())
             {
                 Dictionary<AttributeSection, List<ProductAttribute>> dict = new Dictionary<AttributeSection, List<ProductAttribute>>();
                 var attributes = context.ProductAttributes.Where(x => x.ProductId == productId).Include("AttributeType").Include("AttributeValue").Include("AttributeSection").ToList();
-                
+
                 foreach (var attr in attributes)
                 {
                     if (dict.ContainsKey(attr.AttributeSection))
@@ -53,85 +115,6 @@ namespace AtesShop.Services
             }
         }
 
-        public List<ProductAttribute> GetProductAttributeList(int productId)
-        {
-            using (var context = new ASContext())
-            {
-
-                return context.ProductAttributes.Where(x => x.ProductId == productId).ToList();
-            }
-        }
-        
-        public List<AttributeType> GetAttributeTypesByProductAndSection(int productId, int sectionId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.ProductAttributes.Where(x => x.ProductId == productId && x.AttributeSectionId == sectionId).Select(x => x.AttributeType).ToList();
-            }
-        }
-
-        public List<AttributeValue> GetAttributesValueByProductAndSection(int productId, int sectionId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.ProductAttributes.Where(x => x.ProductId == productId && x.AttributeSectionId == sectionId).Select(x => x.AttributeValue).ToList();
-            }
-        }
-
-        public int GetProductAttributesCount(int productId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.ProductAttributes.Where(x => x.ProductId == productId).Count();
-            }
-        }
-
-        public List<AttributeSection> GetAttributeSections()
-        {
-            using (var context = new ASContext())
-            {
-                return context.AttributeSections.ToList();
-            }
-        }
-
-        public List<AttributeSection> GetAttributeSectionsByProduct(int productId)
-        {
-            using (var context = new ASContext())
-            {
-                return context.ProductAttributes.Where(x => x.ProductId == productId).Select(x => x.AttributeSection).Distinct().ToList();
-            }
-        }
-
-        public List<AttributeType> GetAttributeTypes()
-        {
-            using (var context = new ASContext())
-            {
-                return context.AttributeTypes.ToList();
-            }
-        }
-
-        public int GetAttributeTypeCount()
-        {
-            using (var context = new ASContext())
-            {
-                return context.AttributeTypes.Count();
-            }
-        }
-
-        public List<AttributeValue> GetAttributeValues()
-        {
-            using (var context = new ASContext())
-            {
-                return context.AttributeValues.ToList();
-            }
-        }
-
-        public int GetAttributeValueCount()
-        {
-            using (var context = new ASContext())
-            {
-                return context.AttributeValues.Count();
-            }
-        }
+        #endregion
     }
 }

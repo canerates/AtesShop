@@ -107,7 +107,7 @@ namespace AtesShop.Admin.Controllers
                 ProductAttributeViewModel elem = new ProductAttributeViewModel();
                 elem.Product = product;
                 
-                var sections = AttributeService.Instance.GetAttributeSectionsByProduct(product.Id);
+                var sections = AttributeService.Instance.GetAttributeSections(product.Id);
 
                 List<SectionCellViewModel> sectCells = new List<SectionCellViewModel>();
 
@@ -116,8 +116,8 @@ namespace AtesShop.Admin.Controllers
                     SectionCellViewModel sectCell = new SectionCellViewModel();
 
                     sectCell.Section = section;
-                    sectCell.Types = AttributeService.Instance.GetAttributeTypesByProductAndSection(product.Id, section.AttributeSectionId);
-                    sectCell.Values = AttributeService.Instance.GetAttributesValueByProductAndSection(product.Id, section.AttributeSectionId);
+                    sectCell.Types = AttributeService.Instance.GetAttributeTypes(product.Id, section.AttributeSectionId);
+                    sectCell.Values = AttributeService.Instance.GetAttributeValues(product.Id, section.AttributeSectionId);
 
                     sectCells.Add(sectCell);
                 }

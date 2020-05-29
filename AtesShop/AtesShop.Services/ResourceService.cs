@@ -29,15 +29,17 @@ namespace AtesShop.Services
 
         #endregion
 
-        public List<Resource> GetResources()
+        #region Admin
+
+        public Resource GetResourceById(int id)
         {
             using (var context = new ASContext())
             {
-                return context.Resources.ToList();
+                return context.Resources.Find(id);
             }
         }
 
-        public Resource GetResource(string key, string culture)
+        public Resource GetResourceByKeyCulture(string key, string culture)
         {
             using (var context = new ASContext())
             {
@@ -52,14 +54,6 @@ namespace AtesShop.Services
             using (var context = new ASContext())
             {
                 return context.Resources.Where(x => x.Key == key).ToList();
-            }
-        }
-
-        public Resource GetResourceById(int id)
-        {
-            using (var context = new ASContext())
-            {
-                return context.Resources.Find(id);
             }
         }
 
@@ -117,5 +111,29 @@ namespace AtesShop.Services
             }
         }
 
+        #endregion
+
+        #region Resource
+
+        public List<Resource> GetResources()
+        {
+            using (var context = new ASContext())
+            {
+                return context.Resources.ToList();
+            }
+        }
+
+        public Resource GetResource(string key, string culture)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Resources
+                    .Where(x => x.Key == key && x.Culture == culture)
+                    .FirstOrDefault();
+            }
+        }
+
+        #endregion
+        
     }
 }

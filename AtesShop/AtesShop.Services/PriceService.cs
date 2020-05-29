@@ -28,28 +28,13 @@ namespace AtesShop.Services
 
         #endregion
 
-        public Price GetPrice(string key, string culture, string role)
-        {
-            using (var context = new ASContext())
-            {
-                return context.Prices
-                    .Where(x => x.Key == key && x.Culture == culture && x.RoleName == role)
-                    .FirstOrDefault();
-            }
-        }
+        #region Admin
+
         public Price GetPriceById(int id)
         {
             using (var context = new ASContext())
             {
                 return context.Prices.Find(id);
-            }
-        }
-
-        public List<Price> GetPrices()
-        {
-            using (var context = new ASContext())
-            {
-                return context.Prices.OrderBy(x => x.Key).ThenBy(x => x.Culture).ThenBy(x => x.RoleId).ToList();
             }
         }
 
@@ -88,7 +73,7 @@ namespace AtesShop.Services
                     .Select(x => x.Culture).Distinct().ToList();
             }
         }
-        
+
         public int GetPriceCountByKey(string key)
         {
             using (var context = new ASContext())
@@ -108,7 +93,49 @@ namespace AtesShop.Services
                     .Count();
             }
         }
-        
+
+        public void SavePrice(Price price)
+        {
+            using (var context = new ASContext())
+            {
+                context.Prices.Add(price);
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdatePrice(Price price)
+        {
+            using (var context = new ASContext())
+            {
+                context.Entry(price).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public void DeletePrice(int id)
+        {
+            using (var context = new ASContext())
+            {
+                var price = context.Prices.Find(id);
+                context.Prices.Remove(price);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeletePrices(string key)
+        {
+            using (var context = new ASContext())
+            {
+                var prices = context.Prices.Where(x => x.Key == key).ToList();
+                context.Prices.RemoveRange(prices);
+                context.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region Web
+
         public int GetMaximumPrice(string culture, string role, int? categoryId)
         {
             using (var context = new ASContext())
@@ -130,8 +157,8 @@ namespace AtesShop.Services
                 {
                     prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
                 }
-                
-                if(prices.Count != 0)
+
+                if (prices.Count != 0)
                 {
                     return (int)prices.Max(x => Convert.ToInt64(x.Value));
                 }
@@ -175,42 +202,6 @@ namespace AtesShop.Services
             }
         }
 
-        public void SavePrice(Price price)
-        {
-            using (var context = new ASContext())
-            {
-                context.Prices.Add(price);
-                context.SaveChanges();
-            }
-        }
-
-        public void UpdatePrice(Price price)
-        {
-            using (var context = new ASContext())
-            {
-                context.Entry(price).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
-
-        public void DeletePrice(int id)
-        {
-            using (var context = new ASContext())
-            {
-                var price = context.Prices.Find(id);
-                context.Prices.Remove(price);
-                context.SaveChanges();
-            }
-        }
-
-        public void DeletePrices(string key)
-        {
-            using (var context = new ASContext())
-            {
-                var prices = context.Prices.Where(x => x.Key == key).ToList();
-                context.Prices.RemoveRange(prices);
-                context.SaveChanges();
-            }
-        }
+        #endregion
     }
 }
