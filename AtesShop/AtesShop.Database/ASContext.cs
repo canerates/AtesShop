@@ -32,10 +32,11 @@ namespace AtesShop.Database
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
 
-        public DbSet<Address> Addresses { get; set; }
+        public DbSet<OrderAddress> OrderAddresses { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<UserAddress> UserAddresses { get; set; }
         
     }
 }

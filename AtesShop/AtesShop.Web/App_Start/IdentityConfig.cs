@@ -117,4 +117,6 @@ namespace AtesShop.Web
             return applicationRoleManager;
         }
     }
+    
+
 }

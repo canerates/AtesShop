@@ -1,6 +1,8 @@
-﻿using AtesShop.Resources;
+﻿using AtesShop.Entities;
+using AtesShop.Resources;
 using AtesShop.Services;
 using AtesShop.Web.Helpers;
+using AtesShop.Web.Models;
 using AtesShop.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,12 +12,11 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using static AtesShop.Web.Helpers.SharedHelper;
 
 namespace AtesShop.Web.Controllers
 {
-    
+
     public class ShopController : BaseController
     {
         private static IResourceProvider resourceProvider = new DbResourceProvider();
@@ -47,12 +48,11 @@ namespace AtesShop.Web.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult Index(int? categoryId, string search)
         {
             ShopViewModel model = new ShopViewModel();
-            
+
             model.Categories = CategoryService.Instance.GetCategories(CultureInfo.CurrentUICulture.Name);
             model.ProductCount = ProductService.Instance.GetProductsCount();
             model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
@@ -64,15 +64,15 @@ namespace AtesShop.Web.Controllers
             {
                 model.CategoryId = categoryId.Value;
             }
-            
+
             return View(model);
         }
-        
+
         [HttpGet]
         [NoDirectAccess]
         public ActionResult ProductList(string search, int? categoryId, int? pageNo, int? minimumPrice, int? maximumPrice, int? sortId, int? sortType, int? pageSize, bool isList)
         {
-            
+
             ShopListViewModel model = new ShopListViewModel();
             model.IsListView = isList;
 
@@ -83,7 +83,7 @@ namespace AtesShop.Web.Controllers
             pageNo = pageNo.HasValue ? pageNo.Value : 1;
             model.PageSize = pageSize.HasValue ? pageSize.Value : isList ? 4 : 6;
             model.SearchKey = search;
-            
+
             model.Products = ProductService.Instance.SearchProducts(search, CultureInfo.CurrentUICulture.Name, "User", categoryId, sortId, sortType, pageNo.Value, model.PageSize, minimumPrice, maximumPrice);
 
             if (categoryId.HasValue && categoryId != 0) model.CategoryId = categoryId.Value;
@@ -96,7 +96,7 @@ namespace AtesShop.Web.Controllers
             //    //Localization
             //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
             //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-                
+
 
             //}
             model.Products = CommonHelper.ProductsCurrencyFormat(model.Products, CultureInfo.CurrentUICulture.Name);
@@ -170,7 +170,7 @@ namespace AtesShop.Web.Controllers
             }
             else { return HttpNotFound(); }
         }
-        
+
         [HttpGet]
         public ActionResult Cart()
         {
@@ -196,7 +196,7 @@ namespace AtesShop.Web.Controllers
                 {
                     subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
                 }
-                
+
                 model.CartProductsSubTotal = subtotal;
 
                 model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
@@ -205,7 +205,6 @@ namespace AtesShop.Web.Controllers
 
             return PartialView(model);
         }
-        
 
         [HttpGet]
         public ActionResult CartSummary()
@@ -237,43 +236,249 @@ namespace AtesShop.Web.Controllers
             return PartialView("_CartSummary", model);
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult Checkout()
         {
             CheckoutViewModel model = new CheckoutViewModel();
-
+            
             var totalPrice = 0;
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
             if (CartProductsCookie != null && CartProductsCookie.Value != "")
             {
-                model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
-                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
+                var cartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                //model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = ProductService.Instance.GetProductsByIdList(cartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * cartProductIdList.Where(productId => productId == x.Id).Count());
+
+                List<ProductsQuantityViewModel> quantityList = new List<ProductsQuantityViewModel>();
 
                 foreach (var product in model.CartProducts)
                 {
-                    subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
+                    var newQuantityModel = new ProductsQuantityViewModel();
+                    newQuantityModel.productId = product.Id;
+                    newQuantityModel.productQuantity = cartProductIdList.Where(productId => productId == product.Id).Count();
+                    quantityList.Add(newQuantityModel);
+
+                    subtotal.Add(product.Id, (int.Parse(product.Price) * newQuantityModel.productQuantity).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
                 }
 
+                model.Quantities = quantityList;
                 model.CartProductsSubTotal = subtotal;
 
                 model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
             }
 
-            model.User = UserManager.FindById(User.Identity.GetUserId());
+            if (Request.IsAuthenticated)
+            {
+                model.User = UserManager.FindById(User.Identity.GetUserId());
+                model.UserAddressList = UserService.Instance.GetUserAddressList(model.User.Id);
+            }
+
 
             return View(model);
         }
 
-
         [HttpPost]
-        public ActionResult PlaceOrder()
+        public ActionResult Checkout(CheckoutViewModel model)
         {
-            return RedirectToAction("Index");
+            ModelState.Remove("EmailOrUserName");
+            ModelState.Remove("Password");
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            
+            if (Request.IsAuthenticated)
+            {
+                var billAddress = new OrderAddress();
+                var shipAddress = new OrderAddress();
+
+                if (model.SelectedAddress != 0)
+                {
+                    var selectedAddress = UserService.Instance.GetUserAddress(model.SelectedAddress);
+
+                    //Create bill order address
+                    billAddress = generateOrderAddress(selectedAddress.FirstName, selectedAddress.LastName, selectedAddress.CompanyName, selectedAddress.Email, selectedAddress.Phone, selectedAddress.Country, selectedAddress.State, selectedAddress.City, selectedAddress.ZipCode, selectedAddress.Line1, selectedAddress.Line2);
+                    OrderService.Instance.SaveOrderAddress(billAddress);
+                    
+                }
+                else
+                {
+                    //Create bill order address
+                    billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.Phone, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
+                    OrderService.Instance.SaveOrderAddress(billAddress);
+
+                    //Save user adress
+                    if (model.Bill.SaveAddress)
+                    {
+                        var newUserAddress = new UserAddress();
+                        newUserAddress.FirstName = billAddress.FirstName;
+                        newUserAddress.LastName = billAddress.LastName;
+                        newUserAddress.CompanyName = billAddress.CompanyName;
+                        newUserAddress.Email = billAddress.Email;
+                        newUserAddress.Phone = billAddress.Phone;
+                        newUserAddress.Country = billAddress.Country;
+                        newUserAddress.State = billAddress.State;
+                        newUserAddress.City = billAddress.City;
+                        newUserAddress.ZipCode = billAddress.ZipCode;
+                        newUserAddress.Line1 = billAddress.Line1;
+                        newUserAddress.Line2 = billAddress.Line2;
+                        newUserAddress.UserId = User.Identity.GetUserId();
+
+                        UserService.Instance.SaveUserAddress(newUserAddress);
+                    }
+                }
+                
+                if (model.Ship.isShipDifferent)
+                {
+                    //Create ship order address
+                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.Phone, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
+                    OrderService.Instance.SaveOrderAddress(shipAddress);
+                }
+                else
+                {
+                    shipAddress = billAddress;
+                }
+
+                //Create order
+                var newOrder = new Order();
+                newOrder.BillingAddress = billAddress;
+                newOrder.ShippingAddress = shipAddress;
+                newOrder.Date = DateTime.Now;
+                newOrder.Status = "Pending..";
+                newOrder.TotalPrice = model.CartTotalPrice;
+                newOrder.UserId = User.Identity.GetUserId();
+                newOrder.PaymentType = "Not Confirmed.";
+                newOrder.OrderNote = model.OrderNote;
+                OrderService.Instance.SaveOrder(newOrder);
+
+                //Create order items
+
+                foreach (var qty in model.Quantities)
+                {
+                    var product = ProductService.Instance.GetProduct(qty.productId);
+
+                    var newOrderItem = new OrderItem();
+                    newOrderItem.Order = newOrder;
+                    newOrderItem.Product = product;
+                    newOrderItem.Quantity = qty.productQuantity;
+
+                    OrderService.Instance.SaveOrderItem(newOrderItem);
+                }
+            }
+            else
+            {
+                ////Create account 
+                //if (model.Account.CreateAccount)
+                //{
+                //    var user = new ApplicationUser { UserName = model.Account.UserName, Email = model.Account.Email, FirstName = model.Bill.FirstName, LastName = model.Bill.LastName };
+                //    var result = UserManager.Create(user, model.Account.Password);
+
+                //    if (result.Succeeded)
+                //    {
+                //        result = UserManager.AddToRole(user.Id, "User");
+                //        SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                //    }
+                //    else
+                //    {
+                //        return View(model);
+                //    }
+                //}
+                
+                var billAddress = new OrderAddress();
+                var shipAddress = new OrderAddress();
+
+                //Create bill order address
+                billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.Phone, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
+                OrderService.Instance.SaveOrderAddress(billAddress);
+
+                if (model.Ship.isShipDifferent)
+                {
+                    //Create ship order address
+                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.Phone, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
+                    OrderService.Instance.SaveOrderAddress(shipAddress);
+                }
+                else
+                {
+                    shipAddress = billAddress;
+                }
+
+                //Create order
+                var newOrder = new Order();
+                newOrder.BillingAddress = billAddress;
+                newOrder.ShippingAddress = shipAddress;
+                newOrder.Date = DateTime.Now;
+                newOrder.Status = "Pending..";
+                newOrder.TotalPrice = model.CartTotalPrice;
+                newOrder.UserId = "NULL";
+                newOrder.PaymentType = "Not Confirmed.";
+                newOrder.OrderNote = model.OrderNote;
+                
+                //Save order
+                OrderService.Instance.SaveOrder(newOrder);
+
+                //Create order items
+
+                foreach (var qty in model.Quantities)
+                {
+                    var product = ProductService.Instance.GetProduct(qty.productId);
+
+                    var newOrderItem = new OrderItem();
+                    newOrderItem.Order = newOrder;
+                    newOrderItem.Product = product;
+                    newOrderItem.Quantity = qty.productQuantity;
+
+                    OrderService.Instance.SaveOrderItem(newOrderItem);
+                }
+
+                
+
+
+            }
+            
+            return RedirectToAction("Success");
+        }
+        
+        [HttpGet]
+        public ActionResult Success()
+        {
+
+            return View();
+        }
+
+
+        private OrderAddress generateOrderAddress(
+            string firstname, 
+            string lastname, 
+            string companyname, 
+            string email, 
+            string phone, 
+            string country, 
+            string state, 
+            string city, 
+            string zipcode, 
+            string line1, 
+            string line2
+            )
+        {
+            var newAddress = new OrderAddress();
+            newAddress.FirstName = firstname;
+            newAddress.LastName = lastname;
+            newAddress.CompanyName = companyname;
+            newAddress.Email = email;
+            newAddress.Phone = phone;
+            newAddress.Country = country;
+            newAddress.State = state;
+            newAddress.City = city;
+            newAddress.ZipCode = zipcode;
+            newAddress.Line1 = line1;
+            newAddress.Line2 = line2;
+
+            return newAddress;
         }
         
     }

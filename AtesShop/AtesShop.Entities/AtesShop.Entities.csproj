@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs" />
     <Compile Include="AttributeSection.cs" />
     <Compile Include="AttributeType.cs" />
     <Compile Include="AttributeValue.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Image.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Order.cs" />
-    <Compile Include="OrderDetail.cs" />
+    <Compile Include="OrderAddress.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="Price.cs" />
     <Compile Include="Product.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Rating.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="SubMenu.cs" />
+    <Compile Include="UserAddress.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

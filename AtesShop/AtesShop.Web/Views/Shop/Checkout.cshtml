@@ -1,5 +1,9 @@
 ﻿@model CheckoutViewModel
 
+@{ 
+    bool isAddressExist = Model.UserAddressList == null || Model.UserAddressList.Count ==  0 ? false : true;
+
+}
 
 @if (Model != null)
 {
@@ -35,7 +39,51 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="coupon-accordion">
-                            
+                            @if (!Request.IsAuthenticated)
+                            {
+	                        	 <!-- ACCORDION START -->
+                                <h3>Returning customer? <span id="showlogin">Click here to login</span></h3>
+                                <div id="checkout-login" class="coupon-content">
+                                    <div class="coupon-info">
+
+                                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = this.Request.RawUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                            <p class="form-row-first">
+                                                <label>Username or E-mail <span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.EmailOrUserName, new { @id = "email"})
+                                                @Html.ValidationMessageFor(m => m.EmailOrUserName, "", new { @class = "text-danger" })
+                                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                                            </p>
+
+                                            <p class="form-row-last">
+                                                <label>Password <span class="required">*</span></label>
+                                                @Html.PasswordFor(m => m.Password, new { @id = "pwd"})
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                                            </p>
+                                            <p class="form-row">
+                                                <input type="submit" value="Login" />
+                                                <label>
+                                                    <input type="checkbox" />
+                                                    Remember me
+                                                </label>
+                                            </p>
+                                            
+                                            <p class="lost-password">@Html.ActionLink("Lost your password?", "Account", "ForgotPassword")</p>
+                                        }
+                                    </div>
+                                </div>
+
+                            <!-- ACCORDION END -->
+                            }
+	                        
+
+
                             <!-- ACCORDION START -->
                             <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
                             <div id="checkout_coupon" class="coupon-checkout-content">
@@ -58,106 +106,21 @@
         <!-- checkout-area start -->
         <div class="checkout-area pt-30  pb-60">
             <div class="container">
-                <form action="#">
+
+                @using (Html.BeginForm("Checkout", "Shop", new { ReturnUrl = this.Request.RawUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    
+
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="checkbox-form">
+
                                 <h3>Billing Details</h3>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="country-select mb-30">
-                                            <label>Country <span class="required">*</span></label>
-                                            <select>
-                                                <option value="volvo">Taiwan</option>
-                                                <option value="saab">Algeria</option>
-                                                <option value="mercedes">Afghanistan</option>
-                                                <option value="audi">Ghana</option>
-                                                <option value="audi2">Albania</option>
-                                                <option value="audi3">Bahrain</option>
-                                                <option value="audi4">Colombia</option>
-                                                <option value="audi5">Dominican Republic</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>First Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" value="@Model.User.FirstName" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Last Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" value="@Model.User.LastName" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Company Name</label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Address <span class="required">*</span></label>
-                                            <input type="text" placeholder="Street address" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list mtb-30">
-                                            <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Town / City <span class="required">*</span></label>
-                                            <input type="text" placeholder="Town / City" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>State / County <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Postcode / Zip <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Email Address <span class="required">*</span></label>
-                                            <input type="email" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Phone  <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list create-acc mb-30">
-                                            <input id="cbox" type="checkbox" />
-                                            <label>Create an account?</label>
-                                        </div>
-                                        <div id="cbox_info" class="checkout-form-list create-accounts mb-25">
-                                            <p class="mb-10">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                            <label>Account password  <span class="required">*</span></label>
-                                            <input type="password" placeholder="password" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="different-address">
-                                    <div class="ship-different-title">
-                                        <h3>
-                                            <label>Ship to a different address?</label>
-                                            <input id="ship-box" type="checkbox" />
-                                        </h3>
-                                    </div>
-                                    <div id="ship-box-info">
+                                
+                                    @if (!Request.IsAuthenticated)
+                                    {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="country-select mb-30">
@@ -174,96 +137,585 @@
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-6">
-                                                <div class="checkout-form-list mb-30">
+                                                <div class="checkout-form-list">
                                                     <label>First Name <span class="required">*</span></label>
-                                                    <input type="text" placeholder=""/>
+                                                    @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.FirstName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Last Name <span class="required">*</span></label>
-                                                    <input type="text" placeholder=""/>
+                                                    @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.LastName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Company Name</label>
-                                                    <input type="text" placeholder="" />
+                                                    @Html.TextBoxFor(m => m.Bill.CompanyName, new { @id = "billCompanyName" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.CompanyName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="checkout-form-list mb-30">
+                                                <div class="checkout-form-list">
                                                     <label>Address <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Street address" />
+                                                    @Html.TextBoxFor(m => m.Bill.Address1, new { @id = "billAddressLine1" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.Address1, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="checkout-form-list mb-30">
-                                                    <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
+                                                <div class="checkout-form-list mtb-30">
+                                                    @Html.TextBoxFor(m => m.Bill.Address2, new { @id = "billAddressLine2" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.Address2, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Town / City <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Town / City" />
+                                                    @Html.TextBoxFor(m => m.Bill.City, new { @id = "billAddressCity" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.City, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>State / County <span class="required">*</span></label>
-                                                    <input type="text" placeholder="" />
+                                                    @Html.TextBoxFor(m => m.Bill.State, new { @id = "billAddressState" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.State, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Postcode / Zip <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Postcode / Zip" />
+                                                    @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Email Address <span class="required">*</span></label>
-                                                    <input type="email" placeholder="" />
+                                                    @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
+
+
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Phone  <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Postcode / Zip" />
+                                                    @Html.TextBoxFor(m => m.Bill.Phone, new { @id = "billPhone" })
+                                                    @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list create-acc mb-30">
+                                                    @*<input id="cbox" type="checkbox" name="CreateAccount" />*@
+                                                    @Html.CheckBoxFor(m => m.Account.CreateAccount, new { @id = "cbox" })
+                                                    <label>Create an account?</label>
+                                                </div>
+
+                                                <div id="cbox_info" class="checkout-form-list create-accounts mb-25">
+                                                    <p class="mb-15">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+
+                                                    <label>Username <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Account.UserName, new { @class = "form-control", @id = "unameR" })
+                                                    @Html.ValidationMessageFor(m => m.Account.UserName, "", new { @class = "text-danger" })
+                                                    <div class="mb-25"></div>
+
+                                                    <label>Email <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Account.Email, new { @class = "form-control", @id = "emailR" })
+                                                    @Html.ValidationMessageFor(m => m.Account.Email, "", new { @class = "text-danger" })
+                                                    <div class="mb-25"></div>
+
+                                                    <label>Account password  <span class="required">*</span></label>
+                                                    @Html.PasswordFor(m => m.Account.Password, new { @class = "form-control", @id = "pwdR" })
+                                                    @Html.ValidationMessageFor(m => m.Account.Password, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="order-notes">
-                                        <div class="checkout-form-list">
-                                            <label>Order Notes</label>
-                                            <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+
+                                        <div class="different-address">
+                                            <div class="ship-different-title">
+                                                <h3>
+                                                    <label>Ship to a different address?</label>
+                                                    @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
+                                                    @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
+                                                </h3>
+                                            </div>
+                                            <div id="ship-box-info">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="country-select mb-30">
+                                                            <label>Country <span class="required">*</span></label>
+                                                            <select>
+                                                                <option value="volvo">Taiwan</option>
+                                                                <option value="saab">Algeria</option>
+                                                                <option value="mercedes">Afghanistan</option>
+                                                                <option value="audi">Ghana</option>
+                                                                <option value="audi2">Albania</option>
+                                                                <option value="audi3">Bahrain</option>
+                                                                <option value="audi4">Colombia</option>
+                                                                <option value="audi5">Dominican Republic</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>First Name <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Last Name <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Company Name</label>
+                                                            @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Address <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="checkout-form-list mb-30">
+                                                            @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Town / City <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>State / County <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Postcode / Zip <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Email Address <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-list mb-30">
+                                                            <label>Phone  <span class="required">*</span></label>
+                                                            @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
+                                                            @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="order-notes">
+                                                <div class="checkout-form-list">
+                                                    <label>Order Notes</label>
+                                                    @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    }
+                                    else
+                                    {
+                                        if (isAddressExist)
+                                        {
+                                              <div class="row">
+                                              @{ var i = 0; }
+                                              @foreach (var address in Model.UserAddressList)
+                                              {
+                                                  <label class="address-group col-md-12 mb-10" >
+                                                      @if (i == 0)
+                                                      {
+                                                        @Html.RadioButtonFor(m => m.SelectedAddress, address.Id, new { @checked = "checked" })
+                                                      }
+                                                      else
+                                                      {
+                                                        @Html.RadioButtonFor(m => m.SelectedAddress, address.Id)
+                                                      }
+                                                      
+                                                      @*<input type="radio" name="addressRadio" value="@address.Id" @if (i==0) { <text> checked= "checked" </text>} />*@
+                                                      <div href="" class="address-content p-10">
+                                                          <p>@address.FirstName @address.LastName</p>
+                                                          <p>@address.Line1 @address.Line2</p>
+                                                          <p>@address.City, @address.State @address.ZipCode</p>
+                                                          <p>@address.Country</p>
+                                                          <p>@address.Phone</p>
+                                                      </div>
+                                                  </label>
+                                                  i++;
+                                              }
+                                              </div>
+
+                                            <div class="different-address">
+                                                <div class="ship-different-title">
+                                                    <h3>
+                                                        <label>Ship to a different address?</label>
+                                                        @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
+                                                        @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
+                                                    </h3>
+                                                </div>
+                                                <div id="ship-box-info">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="country-select mb-30">
+                                                                <label>Country <span class="required">*</span></label>
+                                                                <select>
+                                                                    <option value="volvo">Taiwan</option>
+                                                                    <option value="saab">Algeria</option>
+                                                                    <option value="mercedes">Afghanistan</option>
+                                                                    <option value="audi">Ghana</option>
+                                                                    <option value="audi2">Albania</option>
+                                                                    <option value="audi3">Bahrain</option>
+                                                                    <option value="audi4">Colombia</option>
+                                                                    <option value="audi5">Dominican Republic</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>First Name <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Last Name <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Company Name</label>
+                                                                @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Address <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Town / City <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>State / County <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Postcode / Zip <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Email Address <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Phone  <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="order-notes">
+                                                    <div class="checkout-form-list">
+                                                        <label>Order Notes</label>
+                                                        @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="country-select mb-30">
+                                                        <label>Country <span class="required">*</span></label>
+                                                        <select>
+                                                            <option value="volvo">Taiwan</option>
+                                                            <option value="saab">Algeria</option>
+                                                            <option value="mercedes">Afghanistan</option>
+                                                            <option value="audi">Ghana</option>
+                                                            <option value="audi2">Albania</option>
+                                                            <option value="audi3">Bahrain</option>
+                                                            <option value="audi4">Colombia</option>
+                                                            <option value="audi5">Dominican Republic</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list">
+                                                        <label>First Name <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.FirstName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Last Name <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.LastName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Company Name</label>
+                                                        @Html.TextBoxFor(m => m.Bill.CompanyName, new { @id = "billCompanyName" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.CompanyName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-list">
+                                                        <label>Address <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.Address1, new { @id = "billAddressLine1" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.Address1, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-list mtb-30">
+                                                        @Html.TextBoxFor(m => m.Bill.Address2, new { @id = "billAddressLine2" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.Address2, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Town / City <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.City, new { @id = "billAddressCity" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.City, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>State / County <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.State, new { @id = "billAddressState" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.State, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Postcode / Zip <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Email Address <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-list mb-30">
+                                                        <label>Phone  <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.Bill.Phone, new { @id = "billPhone" })
+                                                        @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-list create-acc mb-30">
+                                                        @Html.CheckBoxFor(m => m.Bill.SaveAddress, new { @id = "sbox" })
+                                                        <label>Save in Address book</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="different-address">
+                                                <div class="ship-different-title">
+                                                    <h3>
+                                                        <label>Ship to a different address?</label>
+                                                        @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
+                                                        @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
+                                                    </h3>
+                                                </div>
+                                                <div id="ship-box-info">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="country-select mb-30">
+                                                                <label>Country <span class="required">*</span></label>
+                                                                <select>
+                                                                    <option value="volvo">Taiwan</option>
+                                                                    <option value="saab">Algeria</option>
+                                                                    <option value="mercedes">Afghanistan</option>
+                                                                    <option value="audi">Ghana</option>
+                                                                    <option value="audi2">Albania</option>
+                                                                    <option value="audi3">Bahrain</option>
+                                                                    <option value="audi4">Colombia</option>
+                                                                    <option value="audi5">Dominican Republic</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>First Name <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Last Name <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Company Name</label>
+                                                                @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Address <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Town / City <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>State / County <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Postcode / Zip <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Email Address <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="checkout-form-list mb-30">
+                                                                <label>Phone  <span class="required">*</span></label>
+                                                                @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
+                                                                @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="order-notes">
+                                                    <div class="checkout-form-list">
+                                                        <label>Order Notes</label>
+                                                        @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols="30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                     
+                                     
+                                     
                             </div>
+
                         </div>
                         <div class="col-lg-6 col-md-6">
+
+                            @for (int i = 0; i < Model.Quantities.Count; i++)
+                            {
+                                @Html.HiddenFor(m => m.Quantities[i].productId)
+                                @Html.HiddenFor(m => m.Quantities[i].productQuantity)
+                            }
+                            @Html.HiddenFor(m => m.CartTotalPrice)
+
                             <div class="your-order">
                                 <h3>Your order</h3>
                                 <div class="your-order-table table-responsive">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th class="product-name">Product</th>
-                                                <th class="product-total">Total</th>
+                                                <th colspan="1" class="product-name">Product</th>
+                                                <th colspan="1" class="product-quantity">Quantity</th>
+                                                <th colspan="1" class="product-total">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var product in Model.CartProducts)
                                             {
-                                                var productQuantity = Model.CartProductIdList.Where(productId => productId == product.Id).Count();
-
+                                                var productQuantity = Model.Quantities.Where(x => x.productId == product.Id).Select(x => x.productQuantity).FirstOrDefault();
+                                                
                                                 <tr class="cart_item">
                                                     <td class="product-name">
-                                                        @product.Name <br /> @product.Description <br /> <strong class="product-quantity"> × @productQuantity</strong>
+                                                        @product.Name <br /> @product.Description
                                                     </td>
+                                                    <td class="product-quantity">@productQuantity</td>
                                                     <td class="product-total">
                                                         <span class="amount">@Model.CartProductsSubTotal[product.Id]</span>
                                                     </td>
@@ -272,11 +724,13 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="cart-subtotal">
-                                                <th>Cart Subtotal</th>
+                                                <th colspan="1">Cart Subtotal</th>
+                                                <td></td>
                                                 <td><span class="amount">@Model.CartTotalPrice</span></td>
                                             </tr>
                                             <tr class="order-total">
-                                                <th>Order Total</th>
+                                                <th colspan="1">Order Total</th>
+                                                <td></td>
                                                 <td>
                                                     <strong><span class="amount">@Model.CartTotalPrice</span></strong>
                                                 </td>
@@ -286,61 +740,38 @@
                                 </div>
                                 <div class="payment-method">
                                     <div class="payment-accordion">
-                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="headingOne">
-                                                    <h4 class="panel-title">
-                                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Direct Bank Transfer
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseOne" class="panel-collapse collapse  in show" role="tabpanel" aria-labelledby="headingOne">
-                                                    <div class="panel-body">
-                                                        <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="headingTwo">
-                                                    <h4 class="panel-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                            Cheque Payment
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                    <div class="panel-body">
-                                                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="headingThree">
-                                                    <h4 class="panel-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                            PayPal
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                    <div class="panel-body">
-                                                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="order-button-payment">
-                                            <input type="submit" value="Place order" />
+                                            <input id="placeOrder" type="submit" value="Place Order" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                }
             </div>
         </div>
         <!-- checkout-area end -->
     }
 }
+else
+{
+    
+}
+
+<script>
+    $('#placeOrder').click(function () {
+        $.cookie('CartProducts', "", { path: '/' });
+    })
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+}
+
+<script src="../../Client_Scripts/MvcFoolproofJQueryValidation.js" type="text/javascript"></script>
+<script src="../../Client_Scripts/mvcfoolproof.unobtrusive.js" type="text/javascript"></script>
+
+

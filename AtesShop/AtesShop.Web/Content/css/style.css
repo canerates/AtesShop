@@ -2747,6 +2747,28 @@ p.checkout-coupon input[type="submit"] {
     font-weight: 500;
     font-size: 25px;
 }
+
+.address-group > input {
+    visibility: hidden;
+    position: absolute;
+}
+
+.address-group > input + div{
+    cursor: pointer;
+    border: 1px solid rgba(235,235,235, 0);
+}
+
+.address-group > div:hover {
+    border: 1px solid rgba(235,235,235, 0.85);
+    color: #555;
+}
+
+.address-group > input:checked + div{
+    border: 1px solid rgba(143,186,34, 0.25);
+    background-color: #f2f2f2;
+}
+
+
 /*----------------------------------------*/
 /* 14. Blog CSS
 /*----------------------------------------*/

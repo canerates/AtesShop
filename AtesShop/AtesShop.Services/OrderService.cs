@@ -71,52 +71,30 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                context.Entry(order.BillingDetail).State = System.Data.Entity.EntityState.Unchanged;
-                context.Entry(order.ShippingDetail).State = System.Data.Entity.EntityState.Unchanged;
+                context.Entry(order.BillingAddress).State = System.Data.Entity.EntityState.Unchanged;
+                context.Entry(order.ShippingAddress).State = System.Data.Entity.EntityState.Unchanged;
                 context.Orders.Add(order);
                 context.SaveChanges();
             }
         }
 
         #endregion
+        
+        #region OrderAddress
 
-        #region OrderDetail
-
-        public List<OrderDetail> GetOrderDetails()
+        public List<OrderAddress> GetOrderAddresses()
         {
             using (var context = new ASContext())
             {
-                return context.OrderDetails.ToList();
+                return context.OrderAddresses.ToList();
             }
         }
 
-        public void SaveOrderDetail(OrderDetail orderDetail)
+        public void SaveOrderAddress(OrderAddress address)
         {
             using (var context = new ASContext())
             {
-                context.Entry(orderDetail.Address).State = System.Data.Entity.EntityState.Unchanged;
-                context.OrderDetails.Add(orderDetail);
-                context.SaveChanges();
-            }
-        }
-
-        #endregion
-
-        #region Address
-
-        public List<Address> GetAddresses()
-        {
-            using (var context = new ASContext())
-            {
-                return context.Addresses.ToList();
-            }
-        }
-
-        public void SaveAddress(Address address)
-        {
-            using (var context = new ASContext())
-            {
-                context.Addresses.Add(address);
+                context.OrderAddresses.Add(address);
                 context.SaveChanges();
             }
         }

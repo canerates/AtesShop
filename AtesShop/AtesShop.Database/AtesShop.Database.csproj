@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,6 +70,34 @@
     <Compile Include="Migrations\202005290242569_orderEntitiesAdded2.designer.cs">
       <DependentUpon>202005290242569_orderEntitiesAdded2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005290709006_orderAndOrderDetailPropAdded.cs" />
+    <Compile Include="Migrations\202005290709006_orderAndOrderDetailPropAdded.designer.cs">
+      <DependentUpon>202005290709006_orderAndOrderDetailPropAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006010826257_addressChangeToOrderAddress.cs" />
+    <Compile Include="Migrations\202006010826257_addressChangeToOrderAddress.designer.cs">
+      <DependentUpon>202006010826257_addressChangeToOrderAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006010848275_userAddressEdited4.cs" />
+    <Compile Include="Migrations\202006010848275_userAddressEdited4.designer.cs">
+      <DependentUpon>202006010848275_userAddressEdited4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006010850022_userAddressEdited5.cs" />
+    <Compile Include="Migrations\202006010850022_userAddressEdited5.designer.cs">
+      <DependentUpon>202006010850022_userAddressEdited5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006040626297_userAddressEdited.cs" />
+    <Compile Include="Migrations\202006040626297_userAddressEdited.designer.cs">
+      <DependentUpon>202006040626297_userAddressEdited.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006040954219_orderEntitiesUpdated2.cs" />
+    <Compile Include="Migrations\202006040954219_orderEntitiesUpdated2.designer.cs">
+      <DependentUpon>202006040954219_orderEntitiesUpdated2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006050631250_orderNoteAdded.cs" />
+    <Compile Include="Migrations\202006050631250_orderNoteAdded.designer.cs">
+      <DependentUpon>202006050631250_orderNoteAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +125,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005290242569_orderEntitiesAdded2.resx">
       <DependentUpon>202005290242569_orderEntitiesAdded2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005290709006_orderAndOrderDetailPropAdded.resx">
+      <DependentUpon>202005290709006_orderAndOrderDetailPropAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006010826257_addressChangeToOrderAddress.resx">
+      <DependentUpon>202006010826257_addressChangeToOrderAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006010848275_userAddressEdited4.resx">
+      <DependentUpon>202006010848275_userAddressEdited4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006010850022_userAddressEdited5.resx">
+      <DependentUpon>202006010850022_userAddressEdited5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006040626297_userAddressEdited.resx">
+      <DependentUpon>202006040626297_userAddressEdited.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006040954219_orderEntitiesUpdated2.resx">
+      <DependentUpon>202006040954219_orderEntitiesUpdated2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006050631250_orderNoteAdded.resx">
+      <DependentUpon>202006050631250_orderNoteAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

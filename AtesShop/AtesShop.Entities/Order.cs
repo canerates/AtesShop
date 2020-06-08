@@ -11,21 +11,27 @@ namespace AtesShop.Entities
     {
         public int Id { get; set; }
 
-        [ForeignKey("BillingDetail")]
-        public int BillingDetailId { get; set; }
+        public string UserId { get; set; }
         
-        public virtual OrderDetail BillingDetail { get; set; }
+        [ForeignKey("BillingAddress")]
+        public int BillingAddressId { get; set; }
+        
+        public virtual OrderAddress BillingAddress { get; set; }
 
-        [ForeignKey("ShippingDetail")]
-        public int? ShippingDetailId { get; set; }
+        [ForeignKey("ShippingAddress")]
+        public int? ShippingAddressId { get; set; }
         
-        public virtual OrderDetail ShippingDetail { get; set; }
+        public virtual OrderAddress ShippingAddress { get; set; }
 
         public DateTime Date { get; set; }
 
         public string Status { get; set; }
 
+        public string PaymentType { get; set; }
+
         public string TotalPrice { get; set; }
+
+        public string OrderNote { get; set; }
 
         public virtual List<OrderItem> OrderItems { get; set; }
         

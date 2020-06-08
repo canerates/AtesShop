@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AtesShop.Web.Models
 {
@@ -36,7 +37,7 @@ namespace AtesShop.Web.Models
         public ApplicationRole() : base() { }
         public ApplicationRole(string roleName) : base(roleName) { }
     }
-
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
