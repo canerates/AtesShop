@@ -183,6 +183,9 @@ namespace AtesShop.Web.Controllers
             CartViewModel model = new CartViewModel();
 
             var totalPrice = 0;
+            double taxPrice = 0;
+            double totalPriceWithTax = 0;
+
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
@@ -191,6 +194,8 @@ namespace AtesShop.Web.Controllers
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
+                taxPrice = (0.05) * totalPrice;
+                totalPriceWithTax = totalPrice + taxPrice;
 
                 foreach (var product in model.CartProducts)
                 {
@@ -201,6 +206,8 @@ namespace AtesShop.Web.Controllers
 
                 model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+                model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+                model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
             }
 
             return PartialView(model);
@@ -242,6 +249,9 @@ namespace AtesShop.Web.Controllers
             CheckoutViewModel model = new CheckoutViewModel();
             
             var totalPrice = 0;
+            double taxPrice = 0;
+            double totalPriceWithTax = 0;
+
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
@@ -251,6 +261,8 @@ namespace AtesShop.Web.Controllers
                 //model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductService.Instance.GetProductsByIdList(cartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * cartProductIdList.Where(productId => productId == x.Id).Count());
+                taxPrice = (0.05) * totalPrice;
+                totalPriceWithTax = totalPrice + taxPrice;
 
                 List<ProductsQuantityViewModel> quantityList = new List<ProductsQuantityViewModel>();
 
@@ -269,6 +281,8 @@ namespace AtesShop.Web.Controllers
 
                 model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+                model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+                model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
             }
 
             if (Request.IsAuthenticated)
@@ -350,7 +364,7 @@ namespace AtesShop.Web.Controllers
                 newOrder.ShippingAddress = shipAddress;
                 newOrder.Date = DateTime.Now;
                 newOrder.Status = "Pending..";
-                newOrder.TotalPrice = model.CartTotalPrice;
+                newOrder.TotalPrice = model.CartTotalPriceWithTax;
                 newOrder.UserId = User.Identity.GetUserId();
                 newOrder.PaymentType = "Not Confirmed.";
                 newOrder.OrderNote = model.OrderNote;
@@ -413,7 +427,7 @@ namespace AtesShop.Web.Controllers
                 newOrder.ShippingAddress = shipAddress;
                 newOrder.Date = DateTime.Now;
                 newOrder.Status = "Pending..";
-                newOrder.TotalPrice = model.CartTotalPrice;
+                newOrder.TotalPrice = model.CartTotalPriceWithTax;
                 newOrder.UserId = "NULL";
                 newOrder.PaymentType = "Not Confirmed.";
                 newOrder.OrderNote = model.OrderNote;

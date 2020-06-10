@@ -693,7 +693,7 @@
                                 @Html.HiddenFor(m => m.Quantities[i].productId)
                                 @Html.HiddenFor(m => m.Quantities[i].productQuantity)
                             }
-                            @Html.HiddenFor(m => m.CartTotalPrice)
+                            @Html.HiddenFor(m => m.CartTotalPriceWithTax)
 
                             <div class="your-order">
                                 <h3>Your order</h3>
@@ -728,11 +728,16 @@
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTotalPrice</span></td>
                                             </tr>
+                                            <tr class="cart-subtotal">
+                                                <th colspan="1">Tax (5%)</th>
+                                                <td></td>
+                                                <td><span class="amount">@Model.CartTaxPrice</span></td>
+                                            </tr>
                                             <tr class="order-total">
                                                 <th colspan="1">Order Total</th>
                                                 <td></td>
                                                 <td>
-                                                    <strong><span class="amount">@Model.CartTotalPrice</span></strong>
+                                                    <strong><span class="amount">@Model.CartTotalPriceWithTax</span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>

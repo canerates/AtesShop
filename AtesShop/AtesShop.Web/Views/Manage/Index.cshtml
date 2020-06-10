@@ -3,7 +3,107 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Manage")">Account</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Page Start Here -->
+<div class="my-account white-bg pb-60">
+    <div class="container">
+        <div class="account-dashboard">
+            <div class="dashboard-upper-info">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-single-info">
+                            <p class="user-name">Hello <span>@Model.FullName</span></p>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm1", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <p>(not @Model.FullName  <a href="javascript:document.getElementById('logoutForm1').submit()">logout</a>)</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-single-info">
+                            <p>Need Assistance? Customer service at.</p>
+                            <p>admin@poweractive.com</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-single-info">
+                            <p>E-mail them at </p>
+                            <p>support@poweractive.com</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-single-info text-center">
+                            <a class="view-cart" href="@Url.Action("Cart", "Shop")"><i class="fa fa-cart-plus" aria-hidden="true"></i>view cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <!-- Nav tabs -->
+                    <ul class="nav flex-column dashboard-list" role="tablist">
+                        <li><a class="active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
+                        <li><a data-toggle="tab" href="#orders">Orders</a></li>
+                        <li><a data-toggle="tab" href="#downloads">Downloads</a></li>
+                        <li><a data-toggle="tab" href="#address">Addresses</a></li>
+                        <li><a data-toggle="tab" href="#account-details">Account details</a></li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm2", @class = "navbar-right" }))
+                        {
+                        @Html.AntiForgeryToken()
+                            <li><a href="javascript:document.getElementById('logoutForm2').submit()">logout</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-lg-10">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard-content mt-all-40">
+                        <div id="dashboard" class="tab-pane active">
+                            <h3>Dashboard </h3>
+                            <p>From your account dashboard. you can easily check & view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
+                        </div>
+                        <div id="orders" class="tab-pane fade">
+                        @{ 
+                            Html.RenderAction("Orders");
+                        }
+                        </div>
+                        <div id="downloads" class="tab-pane fade">
+                        @{
+                            Html.RenderAction("Downloads");
+                        }
+                        </div>
+                        <div id="address" class="tab-pane">
+                        @{
+                            Html.RenderAction("Address");
+                        }
+                        </div>
+
+                        <div id="account-details" class="tab-pane fade">
+                        @{
+                            Html.RenderAction("Details");
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- My Account Page End Here -->
+
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -85,3 +185,7 @@
         </dd>
     </dl>
 </div>
+
+<script>
+
+</script>

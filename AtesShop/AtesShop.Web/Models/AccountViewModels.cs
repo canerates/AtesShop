@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Foolproof;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AtesShop.Web.Models
@@ -90,7 +91,21 @@ namespace AtesShop.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        
+
+        [Required]
+        [Display(Name = "Business Type")]
+        public string BusinessType { get; set; }
+
+        [RequiredIfNot("BusinessType", "User", ErrorMessage = "Company Name must be filled.")]
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+
+        //[RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "HomeT1O1")]
+        [RequiredIfNot("BusinessType", "User", ErrorMessage = "Tax Number must be filled.")]
+        [Display(Name = "Tax Number")]
+        public string TaxNumber { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

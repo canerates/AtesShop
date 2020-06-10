@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AtesShop.Web.Models;
+using AtesShop.Services;
 
 namespace AtesShop.Web.Controllers
 {
@@ -64,13 +65,20 @@ namespace AtesShop.Web.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+
+            var orders = OrderService.Instance.GetOrders();
+            
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                FullName = user.FirstName + " " + user.LastName,
+                
             };
             return View(model);
         }
@@ -332,6 +340,74 @@ namespace AtesShop.Web.Controllers
 
             base.Dispose(disposing);
         }
+
+        [HttpGet]
+        public ActionResult Orders()
+        {
+            OrdersViewModel model = new OrdersViewModel();
+            var orders = OrderService.Instance.GetOrders();
+            model.Orders = orders;
+
+            return PartialView(model);
+        }
+        
+        [HttpGet]
+        public ActionResult Downloads()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult Downloads(DownloadsViewModel model)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Address()
+        {
+            AddressViewModel model = new AddressViewModel();
+
+            var userId = User.Identity.GetUserId();
+            model.AddressList = UserService.Instance.GetUserAddressList(userId);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult Address(AddressViewModel model)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Details()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Details(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+
 
 #region Helpers
         // Used for XSRF protection when adding external logins

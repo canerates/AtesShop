@@ -106,10 +106,8 @@
                     @if (Model.Price != "Contact Us")
                     {
                         <div class="box-quantity">
-                            <form action="#">
-                                <input class="number" id="numeric" type="number" min="1" value="1">
-                                <a class="add-cart" href="#">add to cart</a>
-                            </form>
+                            <input class="number" id="numeric" type="number" min="1" value="1">
+                            <a class="add-cart-qty" href="#" data-id="@Model.Id">add to cart</a>
                         </div>
                     }
                     
@@ -339,7 +337,7 @@
                             <div class="pro-actions">
                                 <div class="actions-secondary">
                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
+                                    <a class="add-cart" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
                             </div>
@@ -355,3 +353,141 @@
     </div>
 </div>
 <!-- Realted Product End -->
+
+<script>
+    var products;
+
+    $('.add-cart').click(function (event) {
+        event.preventDefault();
+
+        var currentCartCookie = $.cookie('CartProducts');
+
+        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+            products = currentCartCookie.split('-');
+        }
+        else {
+            products = [];
+        }
+        var productId = $(this).attr('data-id');
+
+        products.push(productId);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var cart = $('.cart-counter');
+
+        var imgtodrag = $(this).parents().eq(3).children().eq(0).find("img").eq(1);
+        if (imgtodrag) {
+            var imgclone = imgtodrag.clone()
+                .offset({
+                    top: imgtodrag.offset().top,
+                    left: imgtodrag.offset().left
+                })
+                .css({
+                    'opacity': '0.5',
+                    'position': 'absolute',
+                    'height': '210px',
+                    'width': '270px',
+                    'z-index': '1050'
+                })
+                .appendTo($('body'))
+                .animate({
+                    'top': cart.offset().top + 10,
+                    'left': cart.offset().left + 10,
+                    'width': 90,
+                    'height': 70
+                }, 1000, 'easeInOutExpo');
+
+            setTimeout(function () {
+                cart.effect("shake", {
+                    times: 2,
+                    distance: 5
+                }, 200);
+                updateCartIcon();
+            }, 1500);
+
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function () {
+                $(this).detach()
+            });
+        }
+        $(this).blur();
+    });
+
+    $('.add-cart-qty').click(function (event) {
+        event.preventDefault();
+
+        var currentCartCookie = $.cookie('CartProducts');
+
+        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+            products = currentCartCookie.split('-');
+        }
+        else {
+            products = [];
+        }
+        var productId = $(this).attr('data-id');
+        var productQty = $('#numeric').val();
+
+        if ($.isNumeric(productQty) && productQty > 0) {
+            for (var i = 0; i < productQty; i++) {
+                products.push(productId);
+            }
+        }
+        else {
+            products.push(productId);
+        }
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var cart = $('.cart-counter');
+
+        var imgtodrag = $(this).parents().eq(3).children().find('div.active img');
+        if (imgtodrag) {
+            var imgclone = imgtodrag.clone()
+                .offset({
+                    top: imgtodrag.offset().top,
+                    left: imgtodrag.offset().left
+                })
+                .css({
+                    'opacity': '0.5',
+                    'position': 'absolute',
+                    'height': '210px',
+                    'width': '270px',
+                    'z-index': '1050'
+                })
+                .appendTo($('body'))
+                .animate({
+                    'top': cart.offset().top + 10,
+                    'left': cart.offset().left + 10,
+                    'width': 90,
+                    'height': 70
+                }, 1000, 'easeInOutExpo');
+
+            setTimeout(function () {
+                cart.effect("shake", {
+                    times: 2,
+                    distance: 5
+                }, 200);
+                updateCartIcon();
+            }, 1500);
+
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function () {
+                $(this).detach()
+            });
+        }
+        $(this).blur();
+    });
+
+    $('#numeric').bind('keyup mouseup change', function () {
+        var value = $(this).val();
+        if (!($.isNumeric(value)) || value < 1) {
+            $(this).val(1);
+        }
+    });
+
+</script>

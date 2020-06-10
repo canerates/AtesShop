@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using AtesShop.Entities;
 
 namespace AtesShop.Web.Models
 {
@@ -12,6 +13,9 @@ namespace AtesShop.Web.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        public string FullName { get; set; }
+        
     }
 
     public class ManageLoginsViewModel
@@ -83,4 +87,25 @@ namespace AtesShop.Web.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class OrdersViewModel
+    {
+        public List<Order> Orders { get; set; }
+    }
+
+    public class DownloadsViewModel
+    {
+
+    }
+
+    public class AddressViewModel
+    {
+        public List<UserAddress> AddressList { get; set; }
+    }
+
+    public class DetailsViewModel
+    {
+
+    }
+
 }

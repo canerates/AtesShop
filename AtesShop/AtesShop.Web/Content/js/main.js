@@ -23,7 +23,8 @@
  19. Best Product Activation
  20. Blog Realted Post activation
  21.Best Seller  Unique Activation
-
+ 22.Preloader
+ 23.Register Account
 
 
 ================================================*/
@@ -520,12 +521,28 @@
         });
     };
 
+    /*----------------------------------------------------
+    23.Register Account
+    -----------------------------------------------------*/
+
+    $('.business-input input[type="radio"]').change(function () {
+        if ($(this).val() != "User") {
+            if ($('#companyInfo').is(':hidden')) {
+                $('#companyInfo').slideToggle();
+            }
+        }
+        else {
+            if (!$('#companyInfo').is(':hidden')) {
+                $('#companyInfo').slideToggle();
+            }
+        }
+    });
+
     //Dom Ready
     $(function () {
         removePreloader();
         updateCartIcon();
     });
-
 
 })(jQuery);
 

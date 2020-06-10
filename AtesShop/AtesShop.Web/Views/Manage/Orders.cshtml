@@ -1,0 +1,35 @@
+﻿@model AtesShop.Web.Models.OrdersViewModel
+
+<h3>Orders</h3>
+@if (Model.Orders.Count == 0)
+{
+    <div>No orders.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Orders.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@Model.Orders[i].Date.ToString("MMM dd, yyyy")</td>
+                        <td>@Model.Orders[i].Status</td>
+                        <td>@Model.Orders[i].TotalPrice</td>
+                        <td><a class="view" href="#">view</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

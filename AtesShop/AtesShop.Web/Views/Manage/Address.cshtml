@@ -1,0 +1,24 @@
+﻿@model AtesShop.Web.Models.AddressViewModel
+
+<div class="col-md-12">
+    <a class="view" href="#">Add</a>
+    <a class="view" href="#">Edit</a>
+    <a class="view-delete" href="#">Delete</a>
+</div>
+
+
+@foreach (var address in Model.AddressList)
+{
+    <label class="address-group col-md-6 mb-10">
+        <input type="radio" name="addressRadio" value="@address.Id"/>
+        <div href="" class="address-content p-10">
+            <p>@address.FirstName @address.LastName</p>
+            <p>@address.Line1 @address.Line2</p>
+            <p>@address.City, @address.State @address.ZipCode</p>
+            <p>@address.Country</p>
+            <p>@address.Phone</p>
+        </div>
+    </label>
+    
+
+}

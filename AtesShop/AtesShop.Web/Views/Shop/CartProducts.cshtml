@@ -71,10 +71,14 @@
                                                 <th>Subtotal</th>
                                                 <td><span id="subTotalPrice" class="amount">@Model.CartTotalPrice</span></td>
                                             </tr>
+                                            <tr class="cart-subtotal">
+                                                <th>Tax (5%)</th>
+                                                <td><span id="subTotalPrice" class="amount">@Model.CartTaxPrice</span></td>
+                                            </tr>
                                             <tr class="order-total">
                                                 <th>Total</th>
                                                 <td>
-                                                    <strong><span id="totalPrice" class="amount">@Model.CartTotalPrice</span></strong>
+                                                    <strong><span id="totalPrice" class="amount">@Model.CartTotalPriceWithTax</span></strong>
                                                 </td>
                                             </tr>
                                         </tbody>

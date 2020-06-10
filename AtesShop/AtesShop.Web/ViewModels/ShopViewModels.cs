@@ -61,6 +61,8 @@ namespace AtesShop.Web.ViewModels
         public List<ProductsQuantityViewModel> Quantities { get; set; }
 
         public string CartTotalPrice { get; set; }
+        public string CartTaxPrice { get; set; }
+        public string CartTotalPriceWithTax { get; set; }
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
 
         public ApplicationUser User { get; set; }
@@ -95,6 +97,9 @@ namespace AtesShop.Web.ViewModels
         public List<Product> CartProducts { get; set; }
         public List<int> CartProductIdList { get; set; }
         public string CartTotalPrice { get; set; }
+        public string CartTaxPrice { get; set; }
+        public string CartTotalPriceWithTax { get; set; }
+        
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
         
     }

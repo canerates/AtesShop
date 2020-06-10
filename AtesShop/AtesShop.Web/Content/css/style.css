@@ -1861,7 +1861,26 @@ ul.ht-dropdown.dropdown-style-two li {
     width: 117px;
 }
 
+.add-cart-qty {
+    background: #8FBA22 none repeat scroll 0 0;
+    border-color: #8FBA22;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    height: 35px;
+    line-height: 36px;
+    padding: 0 10px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 117px;
+}
+
 .add-cart:hover,.add-cart:focus {
+    opacity: 0.8;
+    color: #fff;
+}
+
+.add-cart-qty:hover,.add-cart-qty:focus {
     opacity: 0.8;
     color: #fff;
 }
@@ -3404,6 +3423,11 @@ legend {
     margin-right: 10px;
 }
 
+.business-input label.radio-inline {
+    padding-top: 0;
+    margin-right: 10px;
+}
+
 .newsletter-btn,
 .customer-btn,
 .return-customer-btn {
@@ -3995,10 +4019,19 @@ legend {
   padding: 5px 12px;
   text-transform: capitalize;
 }
-.view:hover,.view:focus,.show-btn:hover,.view-cart:hover,.view-cart:focus{
+
+.view-delete {
+  background: #ff0000  none repeat scroll 0 0;
+  color: #fff;
+  padding: 5px 12px;
+  text-transform: capitalize;
+}
+
+.view:hover,.view:focus,.show-btn:hover,.view-cart:hover,.view-cart:focus,.view-delete:hover,.view-delete:focus{
     color: #fff;
     background: #1a1a1a;
 }
+
 #dashboard a:hover {
     color: #003c97;
 }
@@ -4008,7 +4041,7 @@ legend {
     margin-top: 25px;
 }
 
-#address .view {
+#address .view, .view-delete {
   display: inline-block;
   font-size: 14px;
   margin: 15px 0 12px;

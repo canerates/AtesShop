@@ -488,6 +488,10 @@
     <Content Include="Views\Shared\_CartSummary.cshtml" />
     <Content Include="Views\Shop\Checkout.cshtml" />
     <Content Include="Views\Shop\Success.cshtml" />
+    <Content Include="Views\Manage\Orders.cshtml" />
+    <Content Include="Views\Manage\Downloads.cshtml" />
+    <Content Include="Views\Manage\Address.cshtml" />
+    <Content Include="Views\Manage\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

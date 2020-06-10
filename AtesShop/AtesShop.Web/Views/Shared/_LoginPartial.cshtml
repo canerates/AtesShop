@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    <a href="#"><i class="fa fa-user-o"></i></a>
+    <a href="@Url.Action("Index", "Manage")"><i class="fa fa-user-o"></i></a>
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -10,7 +10,7 @@
     <ul class="ht-dropdown">
         <li>
             @*@Html.ActionLink("My Account", "Index", "Manage")*@
-            <a href="#">My Account</a>
+            <a href="@Url.Action("Index", "Manage")">My Account</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
     </ul>
@@ -18,7 +18,7 @@
 }
 else
 {   
-    <a href="#"><i class="fa fa-user-o"></i></a>
+    <a href="@Url.Action("Index", "Manage")"><i class="fa fa-user-o"></i></a>
     <ul class="ht-dropdown">
         <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
         <li>@Html.ActionLink("Register", "Register", "Account")</li>
