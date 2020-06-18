@@ -49,6 +49,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(int? categoryId, string search)
         {
             ShopViewModel model = new ShopViewModel();
@@ -58,7 +59,7 @@ namespace AtesShop.Web.Controllers
             model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
             model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, "User", categoryId);
             model.SearchKey = search;
-            model.IsListView = true;
+            model.IsListView = false;
 
             if (categoryId.HasValue)
             {
@@ -99,7 +100,12 @@ namespace AtesShop.Web.Controllers
 
 
             //}
-            model.Products = CommonHelper.ProductsCurrencyFormat(model.Products, CultureInfo.CurrentUICulture.Name);
+            model.Products = CommonHelper.FormatCurrency(model.Products, CultureInfo.CurrentUICulture.Name);
+            if (Request.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                model.Products = CommonHelper.WishlistCheck(model.Products, userId);
+            }
             var totalProductsCount = ProductService.Instance.SearchProductsCount(search, CultureInfo.CurrentUICulture.Name, "User", categoryId, minimumPrice, maximumPrice);
 
             model.Pager = new Pager(totalProductsCount, pageNo, model.PageSize);
@@ -110,6 +116,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Detail(int id)
         {
             ShopDetailViewModel model = new ShopDetailViewModel();
@@ -117,7 +124,14 @@ namespace AtesShop.Web.Controllers
 
             if (product != null)
             {
-                product = CommonHelper.ProductCurrencyFormat(product, CultureInfo.CurrentUICulture.Name);
+                product = CommonHelper.FormatCurrency(product, CultureInfo.CurrentUICulture.Name);
+
+                if (Request.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId();
+                    product = CommonHelper.WishlistCheck(product, userId);
+                }
+
                 var key = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
 
                 model.Id = product.Id;
@@ -125,8 +139,9 @@ namespace AtesShop.Web.Controllers
                 model.Description = resourceProvider.GetResource(key.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
                 model.Price = product.Price;
                 model.PrePrice = product.PrePrice;
-                model.isDiscount = product.isDiscount;
+                model.IsDiscount = product.isDiscount;
                 model.CategoryId = product.CategoryId;
+                model.IsWished = product.isWished;
                 model.ProductImages = product.Images;
                 model.Rate = product.Rate;
 
@@ -154,8 +169,14 @@ namespace AtesShop.Web.Controllers
                 model.ProductFeatures = features;
 
                 model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, "User").Where(p => p.Id != id).ToList();
-                model.RelatedProducts = CommonHelper.ProductsCurrencyFormat(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
+                model.RelatedProducts = CommonHelper.FormatCurrency(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
 
+                if (Request.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId();
+                    model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
+                }
+                
                 //foreach (var prdct in model.RelatedProducts)
                 //{
                 //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(prdct.Id);
@@ -172,6 +193,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Cart()
         {
             return View();
@@ -204,43 +226,13 @@ namespace AtesShop.Web.Controllers
 
                 model.CartProductsSubTotal = subtotal;
 
-                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
+                model.CartProducts = CommonHelper.FormatCurrency(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
             }
 
             return PartialView(model);
-        }
-
-        [HttpGet]
-        public ActionResult CartSummary()
-        {
-
-            CartViewModel model = new CartViewModel();
-
-            var totalPrice = 0;
-            Dictionary<int, string> subtotal = new Dictionary<int, string>();
-            var CartProductsCookie = Request.Cookies["CartProducts"];
-
-            if (CartProductsCookie != null && CartProductsCookie.Value != "")
-            {
-                model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
-                totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
-
-                foreach (var product in model.CartProducts)
-                {
-                    subtotal.Add(product.Id, (int.Parse(product.Price) * model.CartProductIdList.Where(productId => productId == product.Id).Count()).ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name)));
-                }
-
-                model.CartProductsSubTotal = subtotal;
-
-                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
-                model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
-            }
-
-            return PartialView("_CartSummary", model);
         }
 
         [HttpGet]
@@ -279,7 +271,7 @@ namespace AtesShop.Web.Controllers
                 model.Quantities = quantityList;
                 model.CartProductsSubTotal = subtotal;
 
-                model.CartProducts = CommonHelper.ProductsCurrencyFormat(model.CartProducts, CultureInfo.CurrentUICulture.Name);
+                model.CartProducts = CommonHelper.FormatCurrency(model.CartProducts, CultureInfo.CurrentUICulture.Name);
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
@@ -463,8 +455,7 @@ namespace AtesShop.Web.Controllers
 
             return View();
         }
-
-
+        
         private OrderAddress generateOrderAddress(
             string firstname, 
             string lastname, 

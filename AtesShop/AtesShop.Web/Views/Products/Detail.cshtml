@@ -1,7 +1,14 @@
 ﻿@model ProductDetailViewModel
 @{
     ViewBag.Title = "Detail";
-    
+
+    List<int> idList = new List<int>();
+    var CompareProductsCookie = Request.Cookies["CompareProducts"];
+    if (CompareProductsCookie != null && CompareProductsCookie.Value != "")
+    {
+        idList = CompareProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+        idList.RemoveAt(0);
+    }
 }
 
 <!-- Breadcrumb Start -->
@@ -88,7 +95,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <div class="pro-price mb-10">
-                                @if (Model.isDiscount)
+                                @if (Model.IsDiscount)
                                 {
                                 <p><span class="price">@Model.Price</span><del class="prev-price">@Model.PrePrice</del></p>
                                 }
@@ -97,12 +104,23 @@
                                 <p><span class="price">@Model.Price</span></p>
                                 }
                             </div>
+
+                            <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
+                                <ul class="list-inline">
+                                    <li><a class="add-wishlist @if (Model.IsWished) {<text>selected</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
+                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
+                                </ul>
+                            </div>
+
                         }
                         else
                         {
                             <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
                                 <ul class="list-inline">
                                     <li><a href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a></li>
+                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                                 </ul>
                             </div>
                             
@@ -330,7 +348,9 @@
                                 }
                             </div>
                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                            <p>@product.Description</p>
+                            <div class="pro-description">
+                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                            </div>
                             @if (Request.IsAuthenticated)
                             {
                                 if (product.isDiscount)
@@ -342,23 +362,21 @@
                                     <p><span class="price">@product.Price</span></p>
                                 }
                             }
-                            else
-                            {
-                                <div class="pro-actions">
-                                    <div class="actions-secondary">
-                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
-                                    </div>
-                                </div>
-                            }
-                            
 
-                            @*<div class="pro-actions">
+                            <div class="pro-actions">
                                 <div class="actions-secondary">
-                                    <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                    @if (!Request.IsAuthenticated)
+                                    {
+                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                    }
+                                    <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
-                            </div>*@
+                            </div>
+                            
                         </div>
                         <!-- Product Content End -->
                         @*<span class="sticker-new">-32%</span>*@
@@ -371,3 +389,85 @@
     </div>
 </div>
 <!-- Realted Product End -->
+
+<script>
+    var products;
+
+    $('.add-wishlist').click(function () {
+        event.preventDefault();
+        var wishBtn = $(this);
+        var productId = wishBtn.attr('data-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToWishlist", "Generic")',
+            data: {
+                productId: productId
+            }
+        })
+        .done(function (response) {
+            wishBtn.addClass('selected');
+            wishBtn.addClass('animated');
+            heartAnimation();
+
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $('.add-compare').click(function (event) {
+        event.preventDefault();
+        var compareBtn = $(this);
+        var productId = compareBtn.attr('data-id');
+        var categoryId = compareBtn.attr('data-cat-id');
+
+        var currentCompareCookie = $.cookie('CompareProducts');
+
+        if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null)
+        {
+            products = currentCompareCookie.split('-');
+        }
+        else
+        {
+            products = [];
+        }
+
+        if (products.length >= 4) {
+
+            swal({
+                title: "Comparison limit (3).",
+                text: "Do you want to compare products now ?",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: "Compare", className: 'sweet-warning button'},
+                    cancel: "Cancel"
+                }
+            })
+            .then((value) => {
+                if (value) {
+                    var url = "@Url.Action("Compare", "Generic")";
+                    window.location.href = url;
+                }
+            });
+        }
+
+        else if (products.length > 0 && products[0] != categoryId) {
+            swal({
+                text: "Please choose the same category for comparison.",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: 'Ok', className: 'sweet-warning button'}
+                }
+            });
+        }
+        else {
+            if (products.length == 0) {
+                products.push(categoryId);
+            }
+            products.push(productId);
+            $.cookie('CompareProducts', products.join('-'), { path: '/' });
+            compareBtn.addClass('selected');
+            compareBtn.addClass('animated');
+        }
+    });
+</script>

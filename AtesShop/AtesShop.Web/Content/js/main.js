@@ -560,3 +560,60 @@ var updateCartIcon = function () {
 
     $('#cartProductQuantity').html(cartProducts.length);
 };
+
+var heartAnimation = function () {
+    $('#heartWish').effect("shake", {
+        times: 3,
+        distance: 5
+    }, 800);
+}
+
+var cartAnimation2 = function () {
+    $('.cart-counter').effect("shake", {
+        times: 3,
+        distance: 5
+    }, 800);
+    updateCartIcon();
+}
+
+var cartAnimation = function (cart, imgtodrag) {
+
+    if (imgtodrag) {
+        var imgclone = imgtodrag.clone()
+            .offset({
+                top: imgtodrag.offset().top,
+                left: imgtodrag.offset().left
+            })
+            .css({
+                'opacity': '0.5',
+                'position': 'absolute',
+                'height': '210px',
+                'width': '270px',
+                'z-index': '1050'
+            })
+            .appendTo($('body'))
+            .animate({
+                'top': cart.offset().top + 10,
+                'left': cart.offset().left + 10,
+                'width': 90,
+                'height': 70
+            }, 1000, 'easeInOutExpo');
+
+        setTimeout(function () {
+            cart.effect("shake", {
+                times: 2,
+                distance: 5
+            }, 200);
+            updateCartIcon();
+        }, 1500);
+
+        imgclone.animate({
+            'width': 0,
+            'height': 0
+        }, function () {
+            $(this).detach()
+        });
+    }
+}
+
+

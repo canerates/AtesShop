@@ -16,20 +16,7 @@ namespace AtesShop.Web.ViewModels
         public List<Product> BestSellerProducts { get; set; }
     }
 
-    public class MenuViewModel
-    {
-        public List<MainMenu> MainMenuList { get; set; }
-    }
-
-    public class LangMenuViewModel
-    {
-        public Dictionary<string, string> Languages { get; set; }
-        public Dictionary<string, string> Currencies { get; set; }
-
-        public string SelectedLanguage { get; set; }
-        public string SelectedCurrency { get; set; }
-
-    }
+    
 
 
 }

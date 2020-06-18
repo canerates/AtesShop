@@ -2,7 +2,13 @@
 @{
     ViewBag.Title = "Detail";
 
-
+    List<int> idList = new List<int>();
+    var CompareProductsCookie = Request.Cookies["CompareProducts"];
+    if (CompareProductsCookie != null && CompareProductsCookie.Value != "")
+    {
+        idList = CompareProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+        idList.RemoveAt(0);
+    }
 }
 
 <!-- Breadcrumb Start -->
@@ -91,7 +97,7 @@
                         </div>*@
                     </div>
                     <div class="pro-price mb-10">
-                        @if (Model.isDiscount)
+                        @if (Model.IsDiscount)
                         {
                             <p><span class="price">@Model.Price</span><del class="prev-price">@Model.PrePrice</del></p>
                         }
@@ -113,9 +119,13 @@
                     
                     <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
                         <ul class="list-inline">
-                            <li><a href="#">Add to Wish List</a></li>
-                            <li><a href="#">Add to compare</a></li>
-                            <li><a href="#">Email</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><a class="add-wishlist @if (Model.IsWished) {<text>selected</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
+                            }
+                            
+                            <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                            <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                         </ul>
                     </div>
 
@@ -325,7 +335,9 @@
                                 }
                             </div>
                             <h4><a href="@Url.Action("Detail", "Shop", new { id = product.Id })">@product.Name</a></h4>
-                            <p>@product.Description</p>
+                            <div class="pro-description">
+                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                            </div>
                             @if (product.isDiscount)
                             {
                                 <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
@@ -336,9 +348,13 @@
                             }
                             <div class="pro-actions">
                                 <div class="actions-secondary">
-                                    <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                    }
+                                    
                                     <a class="add-cart" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                    <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -377,42 +393,9 @@
         var cart = $('.cart-counter');
 
         var imgtodrag = $(this).parents().eq(3).children().eq(0).find("img").eq(1);
-        if (imgtodrag) {
-            var imgclone = imgtodrag.clone()
-                .offset({
-                    top: imgtodrag.offset().top,
-                    left: imgtodrag.offset().left
-                })
-                .css({
-                    'opacity': '0.5',
-                    'position': 'absolute',
-                    'height': '210px',
-                    'width': '270px',
-                    'z-index': '1050'
-                })
-                .appendTo($('body'))
-                .animate({
-                    'top': cart.offset().top + 10,
-                    'left': cart.offset().left + 10,
-                    'width': 90,
-                    'height': 70
-                }, 1000, 'easeInOutExpo');
 
-            setTimeout(function () {
-                cart.effect("shake", {
-                    times: 2,
-                    distance: 5
-                }, 200);
-                updateCartIcon();
-            }, 1500);
+        cartAnimation(cart, imgtodrag);
 
-            imgclone.animate({
-                'width': 0,
-                'height': 0
-            }, function () {
-                $(this).detach()
-            });
-        }
         $(this).blur();
     });
 
@@ -444,42 +427,8 @@
         var cart = $('.cart-counter');
 
         var imgtodrag = $(this).parents().eq(3).children().find('div.active img');
-        if (imgtodrag) {
-            var imgclone = imgtodrag.clone()
-                .offset({
-                    top: imgtodrag.offset().top,
-                    left: imgtodrag.offset().left
-                })
-                .css({
-                    'opacity': '0.5',
-                    'position': 'absolute',
-                    'height': '210px',
-                    'width': '270px',
-                    'z-index': '1050'
-                })
-                .appendTo($('body'))
-                .animate({
-                    'top': cart.offset().top + 10,
-                    'left': cart.offset().left + 10,
-                    'width': 90,
-                    'height': 70
-                }, 1000, 'easeInOutExpo');
 
-            setTimeout(function () {
-                cart.effect("shake", {
-                    times: 2,
-                    distance: 5
-                }, 200);
-                updateCartIcon();
-            }, 1500);
-
-            imgclone.animate({
-                'width': 0,
-                'height': 0
-            }, function () {
-                $(this).detach()
-            });
-        }
+        cartAnimation(cart, imgtodrag);
         $(this).blur();
     });
 
@@ -487,6 +436,84 @@
         var value = $(this).val();
         if (!($.isNumeric(value)) || value < 1) {
             $(this).val(1);
+        }
+    });
+
+    $('.add-wishlist').click(function () {
+        event.preventDefault();
+        var wishBtn = $(this);
+        var productId = wishBtn.attr('data-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToWishlist", "Generic")',
+            data: {
+                productId: productId
+            }
+        })
+        .done(function (response) {
+            wishBtn.addClass('selected');
+            wishBtn.addClass('animated');
+            heartAnimation();
+
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $('.add-compare').click(function (event) {
+        event.preventDefault();
+        var compareBtn = $(this);
+        var productId = compareBtn.attr('data-id');
+        var categoryId = compareBtn.attr('data-cat-id');
+
+        var currentCompareCookie = $.cookie('CompareProducts');
+
+        if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null)
+        {
+            products = currentCompareCookie.split('-');
+        }
+        else
+        {
+            products = [];
+        }
+
+        if (products.length >= 4) {
+
+            swal({
+                title: "Comparison limit (3).",
+                text: "Do you want to compare products now ?",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: "Compare", className: 'sweet-warning button'},
+                    cancel: "Cancel"
+                }
+            })
+            .then((value) => {
+                if (value) {
+                    var url = "@Url.Action("Compare", "Generic")";
+                    window.location.href = url;
+                }
+            });
+        }
+
+        else if (products.length > 0 && products[0] != categoryId) {
+            swal({
+                text: "Please choose the same category for comparison.",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: 'Ok', className: 'sweet-warning button'}
+                }
+            });
+        }
+        else {
+            if (products.length == 0) {
+                products.push(categoryId);
+            }
+            products.push(productId);
+            $.cookie('CompareProducts', products.join('-'), { path: '/' });
+            compareBtn.addClass('selected');
+            compareBtn.addClass('animated');
         }
     });
 

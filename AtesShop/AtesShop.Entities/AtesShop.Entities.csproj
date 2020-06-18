@@ -82,6 +82,7 @@
     <Compile Include="Resource.cs" />
     <Compile Include="SubMenu.cs" />
     <Compile Include="UserAddress.cs" />
+    <Compile Include="Wishlist.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

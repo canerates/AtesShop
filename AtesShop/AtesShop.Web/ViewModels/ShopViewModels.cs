@@ -31,8 +31,9 @@ namespace AtesShop.Web.ViewModels
         public string Price { get; set; }
         public string PrePrice { get; set; }
         public decimal Rate { get; set; }
-        public bool isDiscount { get; set; }
+        public bool IsDiscount { get; set; }
         public int CategoryId { get; set; }
+        public bool IsWished { get; set; }
         public List<Image> ProductImages { get; set; }
         public List<Product> RelatedProducts { get; set; }
         public Dictionary<AttributeSection, List<ProductAttribute>> Attributes { get; set; }
@@ -103,7 +104,7 @@ namespace AtesShop.Web.ViewModels
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
         
     }
-
+    
     public class NewAccountViewModel
     {
         public bool CreateAccount { get; set; }
@@ -200,7 +201,6 @@ namespace AtesShop.Web.ViewModels
         public bool SaveAddress { get; set; }
 
     }
-    
     
     public class ProductsQuantityViewModel
     {

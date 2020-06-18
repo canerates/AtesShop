@@ -37,6 +37,8 @@ namespace AtesShop.Database
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public DbSet<UserAddress> UserAddresses { get; set; }
+
+        public DbSet<Wishlist> Wishlists { get; set; }
         
     }
 }

@@ -1,0 +1,72 @@
+﻿@model WishlistViewModel
+
+@if (Model != null)
+{
+    if (Model.WishlistProducts != null && Model.WishlistProducts.Count > 0)
+    {
+        <div class="single-sidebar">
+            <div class="group-title">
+                <h2>My Wish List</h2>
+            </div>
+            <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
+
+                @foreach (var product in Model.WishlistProducts)
+                {
+                    <div class="best-seller-multi-product">
+                        <!-- Single Product Start -->
+                        <div class="single-product">
+                            <!-- Product Image Start -->
+                            <div class="pro-img">
+                                <a href="@Url.Action("Wishlist", "Generic")">
+                                    <img class="primary-img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="single-product">
+                                </a>
+                            </div>
+                            <!-- Product Image End -->
+                            <!-- Product Content Start -->
+                            <div class="pro-content">
+                                <h4><a href="@Url.Action("Wishlist", "Generic")">@product.Name <br /> @product.Description</a></h4>
+                                <div class="product-rating">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < product.Rate)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i style="color: #444" class="fa fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                                @if (!Model.isPriceHidden)
+	                            {
+	                            	if (product.isDiscount)
+                                    {
+                                        <div class="mt-10">
+                                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="mt-10">
+                                            <p><span class="price">@product.Price</span></p>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <!-- Product Content End -->
+                        </div>
+                        <!-- Single Product End -->
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+}
+
+
+
+
+
+

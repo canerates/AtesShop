@@ -629,6 +629,22 @@ ul.ht-dropdown.dropdown-style-two li {
     line-height: 15px;
 }
 
+#heartWish {
+    background: none;
+    border-radius: 100%;
+    color: #8FBA22;
+    font-size: 13px;
+    font-weight: 500;
+    height: 23px;
+    line-height: 19px;
+    position: absolute;
+    right: 1px;
+    text-align: center;
+    text-transform: capitalize;
+    top: 15px;
+    width: 23px;
+}
+
 .main-cart-box {
     width: 278px;
     left: auto;
@@ -1081,6 +1097,25 @@ ul.ht-dropdown.dropdown-style-two li {
 .single-product:hover{
     border: 1px solid #ddd;
 }
+
+.new-pro-active .single-product, .hand-tool-active .single-product {
+    position: relative;
+    background: #fff;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    /*border: 1px solid transparent;*/
+    padding: 15px 15px 30px 15px;
+    overflow: hidden;
+    border: 1px solid rgba(235,235,235, 0.5);
+}
+
+.new-pro-active .single-product:hover, .hand-tool-active .single-product:hover{
+    /*border: 1px solid #ddd;*/
+    border: 1px solid transparent;
+    box-shadow: 0px 5px 14.25px 0.75px rgba(0, 0, 0, 0.07);
+}
+
+
 .pro-img {
     position: relative;
     margin-bottom: 20px;
@@ -1142,6 +1177,12 @@ ul.ht-dropdown.dropdown-style-two li {
     z-index: 99;
 }
 
+.pro-description {
+    height:3em; 
+    line-height:1em; 
+    overflow:hidden;
+}
+
 .new-pro-active .owl-item.owl-item.active.last,
 .best-selling-pro .owl-item.owl-item.last.active {
     border-right: none;
@@ -1183,9 +1224,22 @@ ul.ht-dropdown.dropdown-style-two li {
     width: 100%;
     background: #fff;
 }
+
 .actions-secondary a:hover {
     background: #8FBA22;
     color: #fff;
+}
+
+.actions-secondary a.add-wishlist.selected, .actions-secondary a.add-compare.selected{
+    background: #8FBA22;
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+}
+
+.actions-secondary a.add-wishlist.animated, .actions-secondary a.add-compare.animated{
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
+    animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
 }
 
 .actions-secondary a {
@@ -1763,7 +1817,7 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 #grid-view .single-product, #list-view .single-product{
     margin-bottom: 30px;
-    border: 1px solid rgba(235,235,235, 0.5)
+    border: 1px solid rgba(235,235,235, 0.5);
 } 
 
 #grid-view .single-product:hover, #list-view .single-product:hover{
@@ -1862,10 +1916,9 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 
 .add-cart-qty {
-    background: #8FBA22 none repeat scroll 0 0;
-    border-color: #8FBA22;
+    background: #eef0f1 none repeat scroll 0 0;
     border-radius: 3px;
-    color: #fff;
+    color: #555;
     display: inline-block;
     height: 35px;
     line-height: 36px;
@@ -1881,7 +1934,7 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 
 .add-cart-qty:hover,.add-cart-qty:focus {
-    opacity: 0.8;
+    background: #8FBA22;
     color: #fff;
 }
 
@@ -1913,6 +1966,32 @@ ul.ht-dropdown.dropdown-style-two li {
     background: #8FBA22 none repeat scroll 0 0;
     border-color: #8FBA22;
     color: #fff;
+}
+
+.product-link a.add-wishlist.selected {
+    background: #8FBA22 none repeat scroll 0 0;
+    border-color: #8FBA22;
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+}
+
+.product-link a.add-wishlist.animated{
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
+    animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
+}
+
+.product-link a.add-compare.selected {
+    background: #8FBA22 none repeat scroll 0 0;
+    border-color: #8FBA22;
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+}
+
+.product-link a.add-compare.animated{
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
+    animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
 }
 
 .feature-section {
@@ -3643,14 +3722,16 @@ legend {
 }
 
 .compare-content > tbody > tr > td {
-    padding: 20px 15px;
+    padding: 10px 10px;
     vertical-align: middle;
 }
 
 .product-title {
     width: 120px;
-    font-weight: 500;
+    font-weight: bold;
     color: #555;
+    
+    text-align: left;
 }
 
 .product-description {
@@ -3658,7 +3739,7 @@ legend {
 }
 
 .product-description p {
-    text-align: left;
+    text-align: center;
 }
 
 .product-description .compare-cart {
@@ -3677,17 +3758,50 @@ legend {
     color: #fff;
 }
 
+.product-description .compare-wishlist {
+    background: #8FBA22 none repeat scroll 0 0;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    padding: 6px 6px;
+    position: relative;
+    width: 150px;
+}
+.product-description .compare-wishlist:hover {
+    border-color: #8FBA22;
+    background: #555;
+    color: #fff;
+}
+
+.product-description .compare-wishlist.selected {
+    background: #555;
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+}
+
+.product-description .compare-wishlist.animated {
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
+    animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
+}
+
+.product-description .compare-cart.animated {
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
+    animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
+}
+
 .product-description .fa-trash-o {
     color: #666;
     font-size: 16px;
 }
 
 .product-description img {
-    width: 100%;
+    width: 60%;
 }
 
 .compare-details {
-    text-align: left;
+    text-align: center;
 }
 
 .product-description .product-rating i {
@@ -4247,4 +4361,30 @@ legend {
 .ajax-loader:after {
     -webkit-animation-delay: -.8s;
        animation-delay: -.8s;
+}
+
+
+.sweet-warning {
+    background-color: #8FBA22;
+    border: none;
+}
+
+.sweet-warning:not([disabled]):hover {
+    background-color: #303030;
+}
+
+.compare-product-title {
+    /*border:1px solid #FFFFFF;
+    padding:1px 0px 1px 5px;*/
+    /*vertical-align:middle;*/
+    /*background-color:#C3C5C5;*/
+    text-align: left;
+    font-weight: 600;
+}
+
+.compare-product-desc {
+    /*border:1px solid #FFFFFF;
+    padding:1px 0px 1px 5px;*/
+    /*vertical-align:middle;*/
+    /*background-color:#F2F2F2;*/
 }

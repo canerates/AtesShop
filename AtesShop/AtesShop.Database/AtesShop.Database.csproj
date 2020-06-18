@@ -98,6 +98,22 @@
     <Compile Include="Migrations\202006050631250_orderNoteAdded.designer.cs">
       <DependentUpon>202006050631250_orderNoteAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006100952089_wishlistAdded.cs" />
+    <Compile Include="Migrations\202006100952089_wishlistAdded.designer.cs">
+      <DependentUpon>202006100952089_wishlistAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006100955091_wishlistAdded2.cs" />
+    <Compile Include="Migrations\202006100955091_wishlistAdded2.designer.cs">
+      <DependentUpon>202006100955091_wishlistAdded2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006110711331_wishlistPropEdit.cs" />
+    <Compile Include="Migrations\202006110711331_wishlistPropEdit.designer.cs">
+      <DependentUpon>202006110711331_wishlistPropEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006110945032_wishlistEdit2.cs" />
+    <Compile Include="Migrations\202006110945032_wishlistEdit2.designer.cs">
+      <DependentUpon>202006110945032_wishlistEdit2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +162,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006050631250_orderNoteAdded.resx">
       <DependentUpon>202006050631250_orderNoteAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006100952089_wishlistAdded.resx">
+      <DependentUpon>202006100952089_wishlistAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006100955091_wishlistAdded2.resx">
+      <DependentUpon>202006100955091_wishlistAdded2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006110711331_wishlistPropEdit.resx">
+      <DependentUpon>202006110711331_wishlistPropEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006110945032_wishlistEdit2.resx">
+      <DependentUpon>202006110945032_wishlistEdit2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

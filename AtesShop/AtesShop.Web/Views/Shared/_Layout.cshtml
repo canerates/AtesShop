@@ -86,7 +86,7 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="header-top-right">
                                 <ul class="header-list-menu f-right">
-                                   @{ Html.RenderAction("ShowLangMenu", "Home");}
+                                   @{ Html.RenderAction("LanguageMenu", "Shared");}
                                 </ul>
                                 <!-- Header-list-menu End -->
                             </div>
@@ -110,7 +110,7 @@
                         </div>
                         <!-- Primary Vertical-Menu End -->
                         <!-- Search Box Start -->
-                        @{ Html.RenderAction("ShowMenu", "Home");}
+                        @{ Html.RenderAction("MenuTabs", "Shared");}
                         <!-- Search Box End -->
                         <!-- Cartt Box Start -->
                         <div class="col-lg-3 col-sm-7 col-7">
@@ -124,16 +124,16 @@
                                             <li><a href="account.html">Account</a></li>
                                         </ul>*@
                                     </li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a id="wishIcon" href="@Url.Action("Wishlist", "Generic")"><i id="heartIcon" class="fa fa-heart-o"></i><span id="heartWish"><i class="fa fa-heart"></i></span></a></li>
                                     <li>
                                         <a href="@Url.Action("Cart", "Shop")"><i class="fa fa-shopping-basket"></i><span id="cartProductQuantity" class="cart-counter">0</span></a>
-                                        @*@{ Html.RenderAction("_CartSummary", "Shop");}*@
+                                        @*@{ Html.RenderAction("CartMenu", "Shared");}*@
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <!-- Cartt Box End -->
-                        @{ Html.RenderAction("ShowMobileMenu", "Home");}
+                        @{ Html.RenderAction("MobileMenu", "Shared");}
                         <!-- Mobile Menu  End -->
                     </div>
                     <!-- Row End -->
@@ -262,7 +262,7 @@
             <div class="footer-bottom off-white-bg2">
                 <div class="container">
                     <div class="footer-bottom-content">
-                        <p class="copy-right-text">Copyright © <a href="#">Power Active</a> All Rights Reserved.</p>
+                        <p class="copy-right-text">Copyright © <a href="@Url.Action("About","Home")">Power Active</a> All Rights Reserved.</p>
                         <div class="footer-social-content">
                             <ul class="social-content-list">
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -313,6 +313,8 @@
     <script src="~/Content/js/main.js"></script>
 
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 </html>

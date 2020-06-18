@@ -12,7 +12,7 @@ namespace AtesShop.Web.Helpers
     public class CommonHelper
     {
         
-        internal static List<Product> ProductsCurrencyFormat(List<Product> products, string culture)
+        internal static List<Product> FormatCurrency(List<Product> products, string culture)
         {
             foreach (var product in products)
             {
@@ -27,7 +27,7 @@ namespace AtesShop.Web.Helpers
             return products;
         }
         
-        internal static Product ProductCurrencyFormat( Product product, string culture)
+        internal static Product FormatCurrency( Product product, string culture)
         {
             if (product.Price != "Contact Us")
             {
@@ -36,6 +36,25 @@ namespace AtesShop.Web.Helpers
                 product.Price = priceValue.ToString("C", new CultureInfo(culture));
                 product.PrePrice = prePriceValue.ToString("C", new CultureInfo(culture));
             }
+            return product;
+        }
+
+        internal static List<Product> WishlistCheck(List<Product> products, string userId)
+        {
+            var wishlist = UserService.Instance.GetAllWishlistForUser(userId);
+
+            foreach (var product in products)
+            {
+                bool contains = wishlist.Any(x => x.ProductId == product.Id);
+                product.isWished = contains ? true : false;
+            }
+            return products;
+        }
+
+        internal static Product WishlistCheck(Product product, string userId)
+        {
+            bool contains = UserService.Instance.GetAllWishlistForUser(userId).Any(x => x.ProductId == product.Id);
+            product.isWished = contains ? true : false;
             return product;
         }
 

@@ -16,7 +16,6 @@ namespace AtesShop.Web.ViewModels
         public int CategoryId { get; set; }
         public string SearchKey { get; set; }
         public bool IsListView { get; set; }
-
     }
 
     public class ProductDetailViewModel
@@ -27,8 +26,9 @@ namespace AtesShop.Web.ViewModels
         public string Price { get; set; }
         public string PrePrice { get; set; }
         public decimal Rate { get; set; }
-        public bool isDiscount { get; set; }
+        public bool IsDiscount { get; set; }
         public int CategoryId { get; set; }
+        public bool IsWished { get; set; }
         public List<Image> ProductImages { get; set; }
         public List<Product> RelatedProducts { get; set; }
         public Dictionary<AttributeSection, List<ProductAttribute>> Attributes { get; set; }

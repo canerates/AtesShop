@@ -60,189 +60,21 @@
                         </form>
                     </div>
 
-                    <div class="single-sidebar">
-                        <div class="group-title">
-                            <h2>Compare Products</h2>
-                        </div>
-                        <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/ip1_dome.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SC-N4MXXXX-IW</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/nvr1.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SR-N0800000</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/ip1_bullet.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SC-N2MXXXX-I</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                        </div>
+                    <div id="compareSideBar" style="margin-top: 40px;">
+                        @{
+                            Html.RenderAction("CompareSideBar", "Generic");
+                        }
                     </div>
-                    <div class="single-sidebar">
-                        <div class="group-title">
-                            <h2>My Wish List</h2>
-                        </div>
-                        <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/nvr1.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SR-N1600001</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/ip1_dome.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SC-N2MXXXX-IW</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                            <!-- Best Seller Multi Product Start -->
-                            <div class="best-seller-multi-product">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="#">
-                                            <img height="150" width="150" class="primary-img" src="~/Content/img/products/ip1_bullet.png" alt="single-product">
-                                        </a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <h4><a href="#">PA-SC-N4MXXXX-IW</a></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <p><span class="price">Contact Us</span></p>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                                <!-- Single Product End -->
-                            </div>
-                            <!-- Best Seller Multi Product End -->
-                        </div>
+
+                    <div id="wishSideBar" style="margin-top: 40px;">
+                        @{ 
+                            if (Request.IsAuthenticated)
+                            {
+                                Html.RenderAction("WishlistSideBar", "Generic");
+                            }
+                        }
+                        
                     </div>
-                    
                 </div>
             </div>
             <!-- Sidebar Shopping Option End -->
@@ -251,8 +83,8 @@
                 <div class="grid-list-top border-default universal-padding fix mb-30">
                     <div class="grid-list-view f-left">
                         <ul class="list-inline nav">
-                            <li><a data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
-                            <li><a class="active" data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
+                            <li><a class="active" data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
+                            <li><a data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
                             
                             @*<li><span id="item-list-description" class="grid-item-list"></span></li>*@
                         </ul>
@@ -424,6 +256,76 @@
     var ajaxLoading = function () {
         focusAction();
         $("#tableContainer").html("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+    }
+
+    var updateWishSideBar = function () {
+        $.ajax({
+            url: '@Url.Action("WishlistSideBar", "Generic")'
+        
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#wishSideBar").html(response);
+
+            $('.best-seller-pro-two')
+            .owlCarousel({
+                loop: false,
+                nav: false,
+                dots: false,
+                smartSpeed: 1200,
+                margin: 0,
+                responsive: {
+                    0: {
+                        items: 1,
+                        autoplay:true
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 1
+                    }
+                }
+            })
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    }
+
+    var updateCompareSideBar = function () {
+        $.ajax({
+            url: '@Url.Action("CompareSideBar", "Generic")'
+
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#compareSideBar").html(response);
+
+            $('.best-seller-pro-two')
+            .owlCarousel({
+                loop: false,
+                nav: false,
+                dots: false,
+                smartSpeed: 1200,
+                margin: 0,
+                responsive: {
+                    0: {
+                        items: 1,
+                        autoplay: true
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 1
+                    }
+                }
+            })
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
     }
 
 </script>

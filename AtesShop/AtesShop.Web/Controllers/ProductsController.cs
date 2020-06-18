@@ -48,6 +48,7 @@ namespace AtesShop.Web.Controllers
         private static IResourceProvider resourceProvider = new DbResourceProvider();
         
         [HttpGet]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(int? categoryId, string search)
         {
             string roleName;
@@ -69,7 +70,7 @@ namespace AtesShop.Web.Controllers
             model.MaximumPrice = PriceService.Instance.GetMaximumPrice(CultureInfo.CurrentUICulture.Name, roleName, categoryId);
             model.MinimumPrice = PriceService.Instance.GetMinimumPrice(CultureInfo.CurrentUICulture.Name, roleName, categoryId);
             model.SearchKey = search;
-            model.IsListView = true;
+            model.IsListView = false;
 
             if (categoryId.HasValue)
             {
@@ -120,7 +121,13 @@ namespace AtesShop.Web.Controllers
             //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
             //}
             
-            model.Products = CommonHelper.ProductsCurrencyFormat(model.Products, CultureInfo.CurrentUICulture.Name);
+            model.Products = CommonHelper.FormatCurrency(model.Products, CultureInfo.CurrentUICulture.Name);
+
+            if (Request.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                model.Products = CommonHelper.WishlistCheck(model.Products, userId);
+            }
 
             var totalProductsCount = ProductService.Instance.SearchProductsCount(search, CultureInfo.CurrentUICulture.Name, roleName, categoryId, minimumPrice, maximumPrice);
 
@@ -132,6 +139,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Detail(int id)
         {
             string roleName;
@@ -153,7 +161,14 @@ namespace AtesShop.Web.Controllers
 
             if (product != null)
             {
-                product = CommonHelper.ProductCurrencyFormat(product, CultureInfo.CurrentUICulture.Name);
+                product = CommonHelper.FormatCurrency(product, CultureInfo.CurrentUICulture.Name);
+
+                if (Request.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId();
+                    product = CommonHelper.WishlistCheck(product, userId);
+                }
+
                 var key = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
 
                 model.Id = product.Id;
@@ -161,8 +176,9 @@ namespace AtesShop.Web.Controllers
                 model.Description = resourceProvider.GetResource(key.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
                 model.Price = product.Price;
                 model.PrePrice = product.PrePrice;
-                model.isDiscount = product.isDiscount;
+                model.IsDiscount = product.isDiscount;
                 model.CategoryId = product.CategoryId;
+                model.IsWished = product.isWished;
                 model.ProductImages = product.Images;
                 model.Rate = product.Rate;
 
@@ -190,7 +206,13 @@ namespace AtesShop.Web.Controllers
                 model.ProductFeatures = features;
                                 
                 model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, roleName).Where(p => p.Id != id).ToList();
-                model.RelatedProducts = CommonHelper.ProductsCurrencyFormat(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
+                model.RelatedProducts = CommonHelper.FormatCurrency(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
+
+                if (Request.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId();
+                    model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
+                }
 
                 //foreach (var prdct in model.RelatedProducts)
                 //{

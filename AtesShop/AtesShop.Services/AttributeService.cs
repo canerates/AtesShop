@@ -115,6 +115,54 @@ namespace AtesShop.Services
             }
         }
 
+        public List<int> GetDistinctAttrTypesForProIdList(List<int> proIdList)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => proIdList.Contains(x.ProductId)).GroupBy(x => x.AttributeTypeId).Select(y => y.Key).ToList();
+            }
+        }
+
+        public List<int> GetDistinctAttrTypesForProIdList(List<int> proIdList, int sectionId)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => proIdList.Contains(x.ProductId) && x.AttributeSectionId == sectionId).GroupBy(x => x.AttributeTypeId).Select(y => y.Key).ToList();
+            }
+        }
+
+        public List<int> GetDistinctSectionsForProIdList(List<int> proIdList)
+        {
+            using (var context = new ASContext())
+            {
+                return context.ProductAttributes.Where(x => proIdList.Contains(x.ProductId)).GroupBy(x => x.AttributeSectionId).Select(y => y.Key).ToList();
+            }
+        }
+
+        public AttributeSection GetAttributeSection(int id)
+        {
+            using (var context = new ASContext())
+            {
+                return context.AttributeSections.Find(id);
+            }
+        }
+        
+        public ProductAttribute GetProductAttribute(int productId, int attrType)
+        {
+            using (var context = new ASContext())
+            {
+                var proAttr = context.ProductAttributes.Where(x => x.ProductId == productId && x.AttributeType.AttributeTypeId == attrType).Include(x => x.AttributeValue).Include(x => x.AttributeType).FirstOrDefault();
+                if (proAttr == null)
+                {
+                    return new ProductAttribute();
+                }
+                else
+                {
+                    return proAttr;
+                }
+            }
+        }
+
         #endregion
     }
 }

@@ -93,6 +93,78 @@ namespace AtesShop.Services
 
         #endregion
 
+        #region Wishlist
+
+        public List<Wishlist> GetAllWishlistForUser(string userId)
+        {
+            using (var context = new ASContext())
+            {
+                var uid = Guid.Parse(userId);
+                return context.Wishlists.Where(x => x.UserId == uid).ToList();
+            }
+        }
+
+        public Wishlist GetWishlist(string userId, int productId)
+        {
+            using (var context = new ASContext())
+            {
+                var uid = Guid.Parse(userId);
+                return context.Wishlists.Where(x => x.UserId == uid && x.ProductId == productId).FirstOrDefault();
+            }
+        }
+        
+        public void SaveWishlist(Wishlist wish)
+        {
+            using (var context = new ASContext())
+            {
+                try
+                {
+                    context.Entry(wish.Product).State = System.Data.Entity.EntityState.Unchanged;
+                    context.Wishlists.Add(wish);
+                    context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
+            }
+        }
+
+        public void DeleteWishlist(int id)
+        {
+            using (var context = new ASContext())
+            {
+                var wish = context.Wishlists.Find(id);
+                context.Wishlists.Remove(wish);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteWishlist(string userId, int productId)
+        {
+            using (var context = new ASContext())
+            {
+                var uid = Guid.Parse(userId);
+                var wish = context.Wishlists.Where(x => x.UserId == uid && x.ProductId == productId).FirstOrDefault();
+                context.Wishlists.Remove(wish);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteAllWishlistForUser(string userId)
+        {
+            using (var context = new ASContext())
+            {
+                var wishlist = context.Wishlists.Where(x => x.UserId == Guid.Parse(userId)).ToList();
+                context.Wishlists.RemoveRange(wishlist);
+                context.SaveChanges();
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

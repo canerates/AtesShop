@@ -276,7 +276,7 @@ namespace AtesShop.Services
                 var rateCount = context.Ratings.Where(x => x.ProductId == product.Id).Count();
 
                 product.Rate = rateTotal / rateCount;
-
+                
                 return product;
             }
             

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AtesShop.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -43,5 +44,20 @@ namespace AtesShop.Web.ViewModels
         public int TotalPages { get; private set; }
         public int StartPage { get; private set; }
         public int EndPage { get; private set; }
+    }
+
+    public class MenuViewModel
+    {
+        public List<MainMenu> MainMenuList { get; set; }
+    }
+
+    public class LangMenuViewModel
+    {
+        public Dictionary<string, string> Languages { get; set; }
+        public Dictionary<string, string> Currencies { get; set; }
+
+        public string SelectedLanguage { get; set; }
+        public string SelectedCurrency { get; set; }
+
     }
 }

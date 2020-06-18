@@ -46,7 +46,10 @@ namespace AtesShop.Entities
 
         [NotMapped]
         public decimal Rate { get; set; }
-        
+
+        [NotMapped]
+        public bool isWished { get; set; }
+
 
         public virtual List<ProductAttribute> Attributes { get; set; }
         

@@ -36,7 +36,7 @@
                                                     <a href="#"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
                                                 </td>
                                                 <td class="product-name"><a href="#">@product.Name <br /> @product.Description</a></td>
-                                                <td class="product-price"><span class="amount">@product.Price</span></td>
+                                                <td class="product-price"><span class="price">@product.Price</span></td>
                                                 <td class="product-quantity"><input type="number" class="productQuantity" min="1" required oninput="validity.valid||(value='');" data-id="@product.Id" value="@productQuantity" /></td>
                                                 <td class="product-subtotal">@Model.CartProductsSubTotal[product.Id]</td>
                                                 <td class="product-remove"> <a class="productRemove" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>

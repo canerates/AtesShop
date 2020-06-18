@@ -16,6 +16,14 @@
 
     this.ViewContext.HttpContext.Items["Stuff"] = itemListDesc;
 
+    List<int> idList = new List<int>();
+    var CompareProductsCookie = Request.Cookies["CompareProducts"];
+    if (CompareProductsCookie != null && CompareProductsCookie.Value != "")
+    {
+        idList = CompareProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+        idList.RemoveAt(0);
+    }
+
 }
 
 <!-- Grid & List View End -->
@@ -64,34 +72,42 @@
                                     </div>
                                     <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
 
+                                    <div class="pro-description">
+                                        <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                                    </div>
+
                                     @if (Request.IsAuthenticated)
                                     {
                                         if (product.isDiscount)
                                         {
-                                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                            <div class="mt-10">
+                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                            </div>
+                                            
                                         }
                                         else
                                         {
-                                            <p><span class="price">@product.Price</span></p>
+                                            <div class="mt-10">
+                                                <p><span class="price">@product.Price</span></p>
+                                            </div>
                                         }
                                     }
-                                    else
-                                    {
-                                        <div class="pro-actions">
-                                            <div class="actions-secondary">
+                                    
+                                    
+                                    <div class="pro-actions">
+                                        <div class="actions-secondary">
+                                            @if (!Request.IsAuthenticated)
+                                            {
                                                 <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                            }
+                                            <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                         </div>
-                                    }
-                                    <p>@product.Description</p>
-
-                                    @*<div class="pro-actions">
-                                            <div class="actions-secondary">
-                                                <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                                <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                                <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
-                                            </div>
-                                        </div>*@
+                                    </div>
+                                    
                                 </div>
                                 <!-- Product Content End -->
                             </div>
@@ -142,27 +158,38 @@
                                 }
                             </div>
                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                            <p>@product.Description</p>
+                            <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
                             @if (Request.IsAuthenticated)
                             {
                                 if (product.isDiscount)
                                 {
-                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                    <div class="mt-10">
+                                        <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                    </div>                                
                                 }
                                 else
                                 {
-                                    <p><span class="price">@product.Price</span></p>
+                                    <div class="mt-10">
+                                        <p><span class="price">@product.Price</span></p>
+                                    </div>
                                 }
                             }
-                            else
-                            {
-                                <div class="pro-actions">
-                                    <div class="actions-secondary">
+                            
+                            
+                            <div class="pro-actions">
+                                <div class="actions-secondary">
+                                    @if (!Request.IsAuthenticated)
+                                    {
                                         <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
-        
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                    }
+                                    <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
-                            }
+                            </div>
+                            
                         </div>
                         <!-- Product Content End -->
                     </div>
@@ -268,6 +295,21 @@
 
 <script>
 
+    var Start = function () {
+        var idList;
+        var currentCompareCookie = $.cookie('CompareProducts');
+        if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null)
+        {
+            idList = currentCompareCookie.split('-');
+            var compareBtns = $('.add-compare');
+            for (var i = 1; i < idList.length; i++) {
+                $('.add-compare[data-id = '+ idList[i] + ']').addClass('selected');
+            }
+        }
+    }
+
+    window.onload = Start;
+
     var isListView = @Json.Encode(Model.IsListView);
 
     $('#sorterSelect').val("@Model.PageSize");
@@ -299,5 +341,86 @@
         });
 
     });
+
+    $('.add-wishlist').click(function (event) {
+        event.preventDefault();
+        var wishBtn = $(this);
+        var productId = wishBtn.attr('data-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToWishlist", "Generic")',
+            data: {
+                productId: productId
+            }
+        })
+        .done(function (response) {
+            wishBtn.addClass('selected');
+            wishBtn.addClass('animated');
+            heartAnimation();
+            updateWishSideBar();
+
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $('.add-compare').click(function (event) {
+        event.preventDefault();
+        var compareBtn = $(this);
+        var productId = compareBtn.attr('data-id');
+        var categoryId = compareBtn.attr('data-cat-id');
+
+        var currentCompareCookie = $.cookie('CompareProducts');
+
+        if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null)
+        {
+            products = currentCompareCookie.split('-');
+        }
+        else
+        {
+            products = [];
+        }
+
+        if (products.length >= 4) {
+
+            swal({
+                title: "Comparison limit (3).",
+                text: "Do you want to compare products now ?",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: "Compare", className: 'sweet-warning button'},
+                    cancel: "Cancel"
+                }
+            })
+            .then((value) => {
+                if (value) {
+                    var url = "@Url.Action("Compare", "Generic")";
+                    window.location.href = url;
+                }
+            });
+        }
+
+        else if (products.length > 0 && products[0] != categoryId) {
+            swal({
+                text: "Please choose the same category for comparison.",
+                icon: "warning",
+                buttons: {
+                    confirm: {text: 'Ok', className: 'sweet-warning button'}
+                }
+            });
+        }
+        else {
+            if (products.length == 0) {
+                products.push(categoryId);
+            }
+            products.push(productId);
+            $.cookie('CompareProducts', products.join('-'), { path: '/' });
+            compareBtn.addClass('selected');
+            compareBtn.addClass('animated');
+            updateCompareSideBar();
+        }
+    });
+
 
 </script>

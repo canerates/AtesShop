@@ -119,16 +119,24 @@
                             }
                         </div>
                         <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                        <div class="pro-description">
+                            <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                        </div>
 
                         @if (Request.IsAuthenticated)
                         {
                             if (product.isDiscount)
                             {
-                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                <div class="mt-10">
+                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                </div>
                             }
                             else
                             {
-                                <p><span class="price">@product.Price</span></p>
+                                <div class="mt-10">
+                                    <p><span class="price">@product.Price</span></p>
+                                </div>
+                                
                             }
                         }
                         else
@@ -140,8 +148,6 @@
                             </div>
                         }
 
-                        <p>@product.Description</p>
-                        
                         @*<div class="pro-actions">
                             <div class="actions-secondary">
                                 <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -232,11 +238,15 @@
                                     {
                                         if (product.isDiscount)
                                         {
-                                            <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                            <div class="mt-10">
+                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                            </div>
                                         }
                                         else
                                         {
-                                            <p><span class="price">@product.Price</span></p>
+                                            <div class="mt-10">
+                                                <p><span class="price">@product.Price</span></p>
+                                            </div>
                                         }
                                     }
                                     else
@@ -311,15 +321,24 @@
                                                 }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                            <div class="pro-description">
+                                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                                            </div>
                                             @if (Request.IsAuthenticated)
                                             {
                                                 if (product.isDiscount)
                                                 {
-                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    </div>
+                                                    
                                                 }
                                                 else
                                                 {
-                                                    <p><span class="price">@product.Price</span></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span></p>
+                                                    </div>
+                                                    
                                                 }
                                             }
 
@@ -332,7 +351,6 @@
                                                 </div>
                                             }
 
-                                            <p>@product.Description</p>
                                             @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -385,15 +403,23 @@
                                                 }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                            <div class="pro-description">
+                                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                                            </div>
                                             @if (Request.IsAuthenticated)
                                             {
                                                 if (product.isDiscount)
                                                 {
-                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    </div>
+                                                    
                                                 }
                                                 else
                                                 {
-                                                    <p><span class="price">@product.Price</span></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span></p>
+                                                    </div>
                                                 }
                                             }
                                             else
@@ -405,7 +431,6 @@
                                                 </div>
                                             }
 
-                                            <p>@product.Description</p>
                                             @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -458,15 +483,24 @@
                                                 }
                                             </div>
                                             <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                            <div class="pro-description">
+                                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                                            </div>
                                             @if (Request.IsAuthenticated)
                                             {
                                                 if (product.isDiscount)
                                                 {
-                                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                    </div>
+                                                    
                                                 }
                                                 else
                                                 {
-                                                    <p><span class="price">@product.Price</span></p>
+                                                    <div class="mt-10">
+                                                        <p><span class="price">@product.Price</span></p>
+                                                    </div>
+                                                    
                                                 }
                                             }
                                             else
@@ -478,7 +512,6 @@
                                                 </div>
                                             }
 
-                                            <p>@product.Description</p>
                                             @*<div class="pro-actions">
                                                 <div class="actions-secondary">
                                                     <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>

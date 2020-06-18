@@ -1,19 +1,21 @@
-﻿@model MenuViewModel
+﻿
+@model MenuViewModel
 @using AtesShop.Resources
 
-<div class="col-sm-12 d-lg-none">
-    <div class="mobile-menu">
+
+<div class="col-xl-6 col-lg-7 d-none d-lg-block">
+    <div class="middle-menu pull-right">
         <nav>
-            <ul>
+            <ul class="middle-menu-list">
                 @foreach (var main in Model.MainMenuList)
                 {
                     if (main.SubMenus.Count != 0)
                     {
-                        if (main.Name == "Products")
+                        if (main.Name == AtesShop.Resources.Resources.ProductsT1O2)
                         {
                             <li>
-                                <a href="@Url.Action(main.ActionName, main.ControllerName, new { id = string.Empty })">@main.Name</a>
-                                <ul>
+                                <a href="@Url.Action(main.ActionName, main.ControllerName, new { id = string.Empty })">@main.Name<i class="fa fa-angle-down"></i></a>
+                                <ul class="ht-dropdown dropdown-style-two">
                                     @foreach (var sub in main.SubMenus)
                                     {
                                         <li><a href="@Url.Action(sub.ActionName, sub.ControllerName, new { categoryId = sub.ParameterId })">@sub.Name</a></li>
@@ -25,8 +27,8 @@
                         else
                         {
                             <li>
-                                <a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a>
-                                <ul>
+                                <a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name<i class="fa fa-angle-down"></i></a>
+                                <ul class="ht-dropdown dropdown-style-two">
                                     @foreach (var sub in main.SubMenus)
                                     {
                                         <li><a href="@Url.Action(sub.ActionName, sub.ControllerName)">@sub.Name</a></li>
@@ -40,9 +42,10 @@
                     {
                         <li><a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a></li>
                     }
-                }
 
+                }
             </ul>
         </nav>
     </div>
 </div>
+

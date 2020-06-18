@@ -1,0 +1,160 @@
+﻿@model WishlistViewModel
+
+@if (Model != null)
+{
+    if (Model.WishlistProducts != null && Model.WishlistProducts.Count > 0)
+    {
+        <div class="cart-main-area wish-list pb-60">
+            <div class="container">
+                <!-- Section Title Start -->
+                <h2 class="text-capitalize sub-heading">Wishlist</h2>
+                <!-- Section Title Start End -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Form Start -->
+                        <form action="#">
+                            <!-- Table Content Start -->
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-remove">Remove</th>
+                                            <th class="product-thumbnail">Image</th>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-price">Unit Price</th>
+                                            <th class="product-quantity">Stock Status</th>
+                                            <th class="product-subtotal">add to cart</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.WishlistProducts)
+                                        {
+
+                                            <tr>
+                                                <td class="product-remove"> <a class="productRemove" data-id="@product.Id" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                                <td class="product-thumbnail">
+                                                    <a href="@Url.Action("Detail", "Shop", new { id = product.Id})"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                                </td>
+                                                <td class="product-name"><a href="@Url.Action("Detail", "Shop", new { id = product.Id})">@product.Name <br /> @product.Description</a></td>
+                                                <td class="product-price"><span class="price">@product.Price</span></td>
+                                                <td class="product-stock-status"><span>in stock</span></td>
+                                                <td class="product-add-to-cart"><a class="productAddToCart" data-id="@product.Id" href="#">add to cart</a></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Table Content Start -->
+                        </form>
+                        <!-- Form End -->
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="cart-main-area wish-list pb-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-content pb-20">
+                            <p>No products in wishlist.</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-7">
+                                <div class="buttons-cart">
+                                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $('.productRemove').click(function () {
+        event.preventDefault();
+        var el = $(this);
+        var productId = el.attr('data-id');
+
+        if (el.data('requestRunning')) {
+            return;
+        }
+        el.data('requestRunning', true);
+
+        $.ajax({
+            url: '@Url.Action("RemoveFromWishlist", "Generic")',
+            data: {
+                productId: productId
+            }
+            
+        })
+       .done(function (response) {
+           //alert("Success");
+           reloadWishlistProducts();
+           el.data('requestRunning', false);
+       })
+       .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+           //alert("Fail");
+       });
+    });
+
+    var reloadWishlistProducts = function () {
+        $.ajax({
+            url: '@Url.Action("WishlistProducts", "Generic")'
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#wishlistContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    }
+
+    $('.productAddToCart').click(function () {
+        event.preventDefault();
+
+        var currentCartCookie = $.cookie('CartProducts');
+
+        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+            products = currentCartCookie.split('-');
+        }
+        else {
+            products = [];
+        }
+        var productId = $(this).attr('data-id');
+
+        products.push(productId);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var cart = $('.cart-counter');
+
+        var imgtodrag = $(this).parents().eq(1).children('.product-thumbnail').find('img');
+
+        cartAnimation(cart, imgtodrag);
+
+        $.ajax({
+            url: '@Url.Action("RemoveFromWishlist", "Generic")',
+            data: {
+                productId: productId
+            }
+        })
+       .done(function (response) {
+           //alert("Success");
+           reloadWishlistProducts();
+       })
+       .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+           //alert("Fail");
+       });
+    });
+
+</script>
