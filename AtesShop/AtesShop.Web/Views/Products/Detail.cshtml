@@ -9,6 +9,9 @@
         idList = CompareProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
         idList.RemoveAt(0);
     }
+
+    bool isSpecFilesEmpty = Model.SpecFiles == null ? true : false;
+
 }
 
 <!-- Breadcrumb Start -->
@@ -168,7 +171,10 @@
             <div class="col-sm-12">
                 <ul class="main-thumb-desc nav">
                     <li><a class="active" data-toggle="tab" href="#dtail">Specifications</a></li>
-                    <li><a data-toggle="tab" href="#review">Reviews 1</a></li>
+                    @if (!isSpecFilesEmpty)
+                    {
+                        <li><a data-toggle="tab" href="#documents">Documents</a></li>
+                    }
                 </ul>
                 <!-- Product Thumbnail Tab Content Start -->
                 <div class="tab-content thumb-content border-default">
@@ -194,108 +200,17 @@
                         </table>
                         
                     </div>
-                    <div id="review" class="tab-pane">
-                        <!-- Reviews Start -->
-                        <div class="review">
-                            <div class="group-title">
-                                <h2>customer review</h2>
+                    @if (!isSpecFilesEmpty)
+                    {
+                        <div id="documents" class="tab-pane">
+                            <div class="list-group list-group-flush">
+                                @foreach (var doc in Model.SpecFiles)
+                                {
+                                    <a href="@Url.Action("Pdf", "Generic", new { id = doc.Id})" class="list-group-item list-group-item-action">@doc.Name</a>
+                                }
                             </div>
-                            <h4 class="review-mini-title">Caner Ates</h4>
-                            <ul class="review-list">
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>Quality</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Caner Ates</label>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>price</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Review by Caner Ates</label>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>value</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Posted on 1/1/20</label>
-                                </li>
-                                <!-- Single Review List End -->
-                            </ul>
                         </div>
-                        <!-- Reviews End -->
-                        <!-- Reviews Start -->
-                        <div class="review border-default universal-padding mt-30">
-                            <h2 class="review-title mb-30">You're reviewing: <br><span>PA-GS-P482500-S</span></h2>
-                            <p class="review-mini-title">your rating</p>
-                            <ul class="review-list">
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>Quality</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>price</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>value</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                            </ul>
-                            <!-- Reviews Field Start -->
-                            <div class="riview-field mt-40">
-                                <form autocomplete="off" action="#">
-                                    <div class="form-group">
-                                        <label class="req" for="sure-name">Nickname</label>
-                                        <input type="text" class="form-control" id="sure-name" required="required">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="req" for="subject">Summary</label>
-                                        <input type="text" class="form-control" id="subject" required="required">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="req" for="comments">Review</label>
-                                        <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
-                                    </div>
-                                    <button type="submit" disabled class="btn-submit">Submit Review</button>
-                                </form>
-                            </div>
-                            <!-- Reviews Field Start -->
-                        </div>
-                        <!-- Reviews End -->
-                    </div>
+                    }
                 </div>
                 <!-- Product Thumbnail Tab Content End -->
             </div>
@@ -391,7 +306,7 @@
 <!-- Realted Product End -->
 
 <script>
-    var products;
+    
 
     $('.add-wishlist').click(function () {
         event.preventDefault();
@@ -420,6 +335,7 @@
         var compareBtn = $(this);
         var productId = compareBtn.attr('data-id');
         var categoryId = compareBtn.attr('data-cat-id');
+        var products;
 
         var currentCompareCookie = $.cookie('CompareProducts');
 

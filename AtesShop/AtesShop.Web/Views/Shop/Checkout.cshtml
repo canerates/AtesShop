@@ -1,6 +1,7 @@
 ﻿@model CheckoutViewModel
 
 @{ 
+    ViewBag.Title = "Checkout";
     bool isAddressExist = Model.UserAddressList == null || Model.UserAddressList.Count ==  0 ? false : true;
 
 }
@@ -74,7 +75,7 @@
                                                 </label>
                                             </p>
                                             
-                                            <p class="lost-password">@Html.ActionLink("Lost your password?", "Account", "ForgotPassword")</p>
+                                            <p class="lost-password">@Html.ActionLink("Lost your password?", "ForgotPassword", "Account")</p>
                                         }
                                     </div>
                                 </div>
@@ -107,7 +108,7 @@
         <div class="checkout-area pt-30  pb-60">
             <div class="container">
 
-                @using (Html.BeginForm("Checkout", "Shop", new { ReturnUrl = this.Request.RawUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Checkout", "Shop", new { ReturnUrl = this.Request.RawUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "checkoutForm" , role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -125,16 +126,7 @@
                                             <div class="col-md-12">
                                                 <div class="country-select mb-30">
                                                     <label>Country <span class="required">*</span></label>
-                                                    <select>
-                                                        <option value="volvo">Taiwan</option>
-                                                        <option value="saab">Algeria</option>
-                                                        <option value="mercedes">Afghanistan</option>
-                                                        <option value="audi">Ghana</option>
-                                                        <option value="audi2">Albania</option>
-                                                        <option value="audi3">Bahrain</option>
-                                                        <option value="audi4">Colombia</option>
-                                                        <option value="audi5">Dominican Republic</option>
-                                                    </select>
+                                                    @Html.DropDownListFor(m => m.Bill.Country, new SelectList(Model.CountryList))
                                                 </div>
                                             </div>
 
@@ -193,7 +185,7 @@
                                                     @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Email Address <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
@@ -205,14 +197,16 @@
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>Phone  <span class="required">*</span></label>
-                                                    @Html.TextBoxFor(m => m.Bill.Phone, new { @id = "billPhone" })
+                                                    @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
                                                     @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                    <span id="phone-valid-msg-ba" class="phone-hide">✓ Valid</span>
+                                                    <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            @*<div class="col-md-12">
                                                 <div class="checkout-form-list create-acc mb-30">
-                                                    @*<input id="cbox" type="checkbox" name="CreateAccount" />*@
+                                                    
                                                     @Html.CheckBoxFor(m => m.Account.CreateAccount, new { @id = "cbox" })
                                                     <label>Create an account?</label>
                                                 </div>
@@ -234,118 +228,15 @@
                                                     @Html.PasswordFor(m => m.Account.Password, new { @class = "form-control", @id = "pwdR" })
                                                     @Html.ValidationMessageFor(m => m.Account.Password, "", new { @class = "text-danger" })
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
-
-                                        <div class="different-address">
-                                            <div class="ship-different-title">
-                                                <h3>
-                                                    <label>Ship to a different address?</label>
-                                                    @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
-                                                    @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
-                                                </h3>
-                                            </div>
-                                            <div id="ship-box-info">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="country-select mb-30">
-                                                            <label>Country <span class="required">*</span></label>
-                                                            <select>
-                                                                <option value="volvo">Taiwan</option>
-                                                                <option value="saab">Algeria</option>
-                                                                <option value="mercedes">Afghanistan</option>
-                                                                <option value="audi">Ghana</option>
-                                                                <option value="audi2">Albania</option>
-                                                                <option value="audi3">Bahrain</option>
-                                                                <option value="audi4">Colombia</option>
-                                                                <option value="audi5">Dominican Republic</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>First Name <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Last Name <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Company Name</label>
-                                                            @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Address <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="checkout-form-list mb-30">
-                                                            @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Town / City <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>State / County <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Postcode / Zip <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Email Address <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-list mb-30">
-                                                            <label>Phone  <span class="required">*</span></label>
-                                                            @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
-                                                            @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="order-notes">
-                                                <div class="checkout-form-list">
-                                                    <label>Order Notes</label>
-                                                    @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     }
                                     else
                                     {
                                         if (isAddressExist)
                                         {
-                                              <div class="row">
+                                            <div class="row">
                                               @{ var i = 0; }
                                               @foreach (var address in Model.UserAddressList)
                                               {
@@ -371,111 +262,7 @@
                                                   i++;
                                               }
                                               </div>
-
-                                            <div class="different-address">
-                                                <div class="ship-different-title">
-                                                    <h3>
-                                                        <label>Ship to a different address?</label>
-                                                        @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
-                                                        @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
-                                                    </h3>
-                                                </div>
-                                                <div id="ship-box-info">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="country-select mb-30">
-                                                                <label>Country <span class="required">*</span></label>
-                                                                <select>
-                                                                    <option value="volvo">Taiwan</option>
-                                                                    <option value="saab">Algeria</option>
-                                                                    <option value="mercedes">Afghanistan</option>
-                                                                    <option value="audi">Ghana</option>
-                                                                    <option value="audi2">Albania</option>
-                                                                    <option value="audi3">Bahrain</option>
-                                                                    <option value="audi4">Colombia</option>
-                                                                    <option value="audi5">Dominican Republic</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>First Name <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Last Name <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Company Name</label>
-                                                                @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Address <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Town / City <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>State / County <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Postcode / Zip <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Email Address <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Phone  <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="order-notes">
-                                                    <div class="checkout-form-list">
-                                                        <label>Order Notes</label>
-                                                        @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                              
                                         }
                                         else
                                         {
@@ -483,16 +270,7 @@
                                                 <div class="col-md-12">
                                                     <div class="country-select mb-30">
                                                         <label>Country <span class="required">*</span></label>
-                                                        <select>
-                                                            <option value="volvo">Taiwan</option>
-                                                            <option value="saab">Algeria</option>
-                                                            <option value="mercedes">Afghanistan</option>
-                                                            <option value="audi">Ghana</option>
-                                                            <option value="audi2">Albania</option>
-                                                            <option value="audi3">Bahrain</option>
-                                                            <option value="audi4">Colombia</option>
-                                                            <option value="audi5">Dominican Republic</option>
-                                                        </select>
+                                                        @Html.DropDownListFor(m => m.Bill.Country, new SelectList(Model.CountryList), new { @class = "form-control" })
                                                     </div>
                                                 </div>
 
@@ -551,7 +329,7 @@
                                                         @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>Email Address <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
@@ -561,8 +339,10 @@
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>Phone  <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.Phone, new { @id = "billPhone" })
+                                                        @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
                                                         @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                        <span id="phone-valid-msg-ba" class="phone-hide">✓ Valid</span>
+                                                        <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                     </div>
                                                 </div>
 
@@ -573,114 +353,107 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="different-address">
-                                                <div class="ship-different-title">
-                                                    <h3>
-                                                        <label>Ship to a different address?</label>
-                                                        @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
-                                                        @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
-                                                    </h3>
-                                                </div>
-                                                <div id="ship-box-info">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="country-select mb-30">
-                                                                <label>Country <span class="required">*</span></label>
-                                                                <select>
-                                                                    <option value="volvo">Taiwan</option>
-                                                                    <option value="saab">Algeria</option>
-                                                                    <option value="mercedes">Afghanistan</option>
-                                                                    <option value="audi">Ghana</option>
-                                                                    <option value="audi2">Albania</option>
-                                                                    <option value="audi3">Bahrain</option>
-                                                                    <option value="audi4">Colombia</option>
-                                                                    <option value="audi5">Dominican Republic</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>First Name <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Last Name <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Company Name</label>
-                                                                @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Address <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Town / City <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>State / County <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Postcode / Zip <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Email Address <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="checkout-form-list mb-30">
-                                                                <label>Phone  <span class="required">*</span></label>
-                                                                @Html.TextBoxFor(m => m.Ship.Phone, new { @id = "shipPhone" })
-                                                                @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="order-notes">
-                                                    <div class="checkout-form-list">
-                                                        <label>Order Notes</label>
-                                                        @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols="30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         }
 
-                                    }
-                                     
+                                     }
+
+                                <div class="different-address">
+                                    <div class="ship-different-title">
+                                        <h3>
+                                            <label>Ship to a different address?</label>
+                                            @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
+                                            @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
+                                        </h3>
+                                    </div>
+                                    <div id="ship-box-info">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="country-select mb-30">
+                                                    <label>Country <span class="required">*</span></label>
+                                                    @Html.DropDownListFor(m => m.Ship.Country, new SelectList(Model.CountryList), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>First Name <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Last Name <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.LastName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Company Name</label>
+                                                    @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Address <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list mb-30">
+                                                    @Html.TextBoxFor(m => m.Ship.Address2, new { @id = "shipAddressLine2" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.Address2, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Town / City <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>State / County <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Postcode / Zip <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Email Address <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="checkout-form-list mb-30">
+                                                    <label>Phone  <span class="required">*</span></label>
+                                                    @Html.TextBoxFor(m => m.Ship.Phone, new { @class = "form-control", @id = "shipAddressPhone" })
+                                                    @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
+                                                    <span id="phone-valid-msg-sa" class="phone-hide">✓ Valid</span>
+                                                    <span id="phone-error-msg-sa" class="phone-hide"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-notes">
+                                        <div class="checkout-form-list">
+                                            <label>Order Notes</label>
+                                            @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
+                                        </div>
+                                    </div>
+                                </div>
                                      
                                      
                             </div>
@@ -758,18 +531,27 @@
         </div>
         <!-- checkout-area end -->
     }
+    else
+    {
+        <div class="checkout-area pb-60">
+            <div class="container">
+                <div class="text-content pb-20"><p>No products in cart.</p></div>
+                <div class="row">
+                    <!-- Cart Button Start -->
+                    <div class="col-lg-8 col-md-7">
+                        <div class="buttons-cart">
+                            <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
 else
 {
-    
+
 }
-
-<script>
-    $('#placeOrder').click(function () {
-        $.cookie('CartProducts', "", { path: '/' });
-    })
-</script>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -779,4 +561,108 @@ else
 <script src="../../Client_Scripts/MvcFoolproofJQueryValidation.js" type="text/javascript"></script>
 <script src="../../Client_Scripts/mvcfoolproof.unobtrusive.js" type="text/javascript"></script>
 
+<script src="../../Content/js/phone/intlTelInput.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse("#checkoutForm");
+    });
+
+
+
+    //$('#placeOrder').click(function () {
+    //    $.cookie('CartProducts', "", { path: '/' });
+    //})
+
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    
+    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    for (var i = 0; i < countryData.length; i++) {
+        var country = countryData[i];
+        country.name = country.name.replace(/.+\((.+)\)/, "$1");
+    }
+
+    var inputBA = document.querySelector("#billAddressPhone"),
+        errorMsgBA = document.querySelector("#phone-error-msg-ba"),
+        validMsgBA = document.querySelector("#phone-valid-msg-ba");
+
+    var resetBA = function () {
+        inputBA.classList.remove("phone-error");
+        errorMsgBA.innerHTML = "";
+        errorMsgBA.classList.add("phone-hide");
+        validMsgBA.classList.add("phone-hide");
+    };
+
+    var itiBA = window.intlTelInput(inputBA, {
+        nationalMode: true,
+        initialCountry: "TW",
+        utilsScript: "../../Content/js/phone/utils.js?1590403638580"
+    });
+
+    var validatePhoneBA = function () {
+        resetBA();
+        if (inputBA.value.trim()) {
+            if (itiBA.isValidNumber()) {
+                validMsgBA.classList.remove("phone-hide");
+            } else {
+                inputBA.classList.add("phone-error");
+                var errorCode = itiBA.getValidationError();
+                if (errorCode == -99) errorCode = 0;
+                errorMsgBA.innerHTML = errorMap[errorCode];
+                errorMsgBA.classList.remove("phone-hide");
+                inputBA.classList.remove("valid");
+                inputBA.classList.add("input-validation-error");
+            }
+        }
+    }
+
+    inputBA.addEventListener('blur', function () {
+        validatePhoneBA();
+    });
+
+    inputBA.addEventListener('change', resetBA);
+    inputBA.addEventListener('keyup', resetBA);
+
+    var inputSA = document.querySelector("#shipAddressPhone"),
+        errorMsgSA = document.querySelector("#phone-error-msg-sa"),
+        validMsgSA = document.querySelector("#phone-valid-msg-sa");
+
+    var resetSA = function () {
+        inputSA.classList.remove("phone-error");
+        errorMsgSA.innerHTML = "";
+        errorMsgSA.classList.add("phone-hide");
+        validMsgSA.classList.add("phone-hide");
+    };
+
+    var itiSA = window.intlTelInput(inputSA, {
+        nationalMode: true,
+        initialCountry: "TW",
+        utilsScript: "../../Content/js/phone/utils.js?1590403638580"
+    });
+
+    var validatePhoneSA = function () {
+        resetSA();
+        if (inputSA.value.trim()) {
+            if (itiSA.isValidNumber()) {
+                validMsgSA.classList.remove("phone-hide");
+            } else {
+                inputSA.classList.add("phone-error");
+                var errorCode = itiSA.getValidationError();
+                if (errorCode == -99) errorCode = 0;
+                errorMsgSA.innerHTML = errorMap[errorCode];
+                errorMsgSA.classList.remove("phone-hide");
+                inputSA.classList.remove("valid");
+                inputSA.classList.add("input-validation-error");
+            }
+        }
+    }
+
+    inputSA.addEventListener('blur', function () {
+        validatePhoneSA();
+    });
+
+    inputSA.addEventListener('change', resetSA);
+    inputSA.addEventListener('keyup', resetSA);
+
+</script>

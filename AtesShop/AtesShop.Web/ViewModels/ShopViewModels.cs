@@ -77,7 +77,9 @@ namespace AtesShop.Web.ViewModels
         public string OrderNote { get; set; }
 
         public int SelectedAddress { get; set; }
-        
+
+        public List<string> CountryList { get; set; }
+
         // Account: Login Parameters
         [Required]
         [Display(Name = "Username or E-mail")]
@@ -138,6 +140,7 @@ namespace AtesShop.Web.ViewModels
         public string CompanyName { get; set; }
 
         [RequiredIf("isShipDifferent", true)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [RequiredIf("isShipDifferent", true)]
@@ -175,6 +178,7 @@ namespace AtesShop.Web.ViewModels
         public string CompanyName { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

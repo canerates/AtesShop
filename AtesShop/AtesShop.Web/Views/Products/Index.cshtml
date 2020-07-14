@@ -99,9 +99,13 @@
                         <div class="toolbar-sorter">
                             <label>sort by</label>
                             <select id="ddlSort" class="sorter" name="sorter">
-                                <option id="1" value="Default" selected="selected">Select</option>
+                                <option id="1" value="Default" selected="selected">Default</option>
                                 <option id="2" value="Name">Name</option>
-                                <option id="3" value="Price">Price</option>
+                                <option id="3" value="Rate">Rate</option>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <option id="4" value="Price">Price</option>
+                                }
                             </select>
                             <span><a data-toggle="tab" href="#" onclick="switchSort();"><i id="sortTypeSymbol" class="fa fa-arrow-up"></i></a></span>
                         </div>
@@ -253,6 +257,7 @@
         .done(function (response) {
             //alert("Success");
             $("#tableContainer").html(response);
+            
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
@@ -261,7 +266,8 @@
 
     var ajaxLoading = function () {
         focusAction();
-        $("#tableContainer").html("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+        $("#tableContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+        
     }
 
     var updateWishSideBar = function () {

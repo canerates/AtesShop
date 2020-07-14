@@ -37,4 +37,15 @@ namespace AtesShop.Web.ViewModels
         public List<Product> CompareProducts { get; set; }
         public bool isPriceHidden { get; set; }
     }
+
+    public class InfoViewModel
+    {
+        public string Title { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class DocumentViewModel
+    {
+        public List<DocFile> documents { get; set; }
+    }
 }

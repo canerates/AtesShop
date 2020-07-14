@@ -86,7 +86,7 @@ namespace AtesShop.Web.Controllers
         {
             string roleName;
 
-            if (User.Identity.IsAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 roleName = UserManager.GetRoles(User.Identity.GetUserId()).FirstOrDefault();
 
@@ -99,8 +99,9 @@ namespace AtesShop.Web.Controllers
             ProductListViewModel model = new ProductListViewModel();
             model.IsListView = isList;
 
-            model.MaximumPrice = maximumPrice.HasValue ? maximumPrice.Value : 0;
-            model.MinimumPrice = minimumPrice.HasValue ? minimumPrice.Value : 0;
+
+            model.MaximumPrice = maximumPrice.HasValue ? Request.IsAuthenticated ? maximumPrice.Value : 0 : 0;
+            model.MinimumPrice = minimumPrice.HasValue ? Request.IsAuthenticated ? minimumPrice.Value : 0 : 0;
 
             //int pageSize = isList ? 4 : 9;
             pageNo = pageNo.HasValue ? pageNo.Value : 1;
@@ -181,6 +182,12 @@ namespace AtesShop.Web.Controllers
                 model.IsWished = product.isWished;
                 model.ProductImages = product.Images;
                 model.Rate = product.Rate;
+
+                if (product.FileIdList != null)
+                {
+                    List<int> idList = product.FileIdList.Split(',').Select(int.Parse).ToList();
+                    model.SpecFiles = FileService.Instance.GetFiles().Where(x => idList.Contains(x.Id)).ToList();
+                }
 
                 var attributes = AttributeService.Instance.GetProductAttributes(product.Id);
 

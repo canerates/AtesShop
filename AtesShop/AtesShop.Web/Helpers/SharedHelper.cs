@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Routing;
+using System.Web.WebPages;
 
 namespace AtesShop.Web.Helpers
 {
@@ -31,6 +33,20 @@ namespace AtesShop.Web.Helpers
                     //filterContext.Result = new HttpStatusCodeResult(404);
                 }
             }
+        }
+    }
+    
+    public static class HtmlHelperExtensions
+    {
+        public static MvcHtmlString DescriptionFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
+            var description = metadata.Description;
+
+            // fallback! We'll try to show something anyway.
+            if (String.IsNullOrEmpty(description)) description = String.IsNullOrEmpty(metadata.DisplayName) ? metadata.PropertyName : metadata.DisplayName;
+
+            return MvcHtmlString.Create(description);
         }
     }
 }

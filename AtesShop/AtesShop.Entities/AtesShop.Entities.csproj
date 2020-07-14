@@ -66,6 +66,7 @@
     <Compile Include="AttributeValue.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CategoryKey.cs" />
+    <Compile Include="DocFile.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="MainMenu.cs" />

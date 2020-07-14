@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AtesShop.Web.Models;
+using AtesShop.Web.ViewModels;
+using AtesShop.Web.Code;
+using System.IO;
+using System.Net.Mail;
+using System.Text;
 
 namespace AtesShop.Web.Controllers
 {
@@ -169,20 +174,35 @@ namespace AtesShop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber, CompanyName = model.CompanyName, TaxNumber = model.TaxNumber, Subscription = model.Subscription };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddToRoleAsync(user.Id, "User");
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
+                    var subject = "Confirm your Power Active email";
+                    var body = "<p> Hi " + user.FirstName + " " + user.LastName + ",</p><p> Please confirm your Power Active account by clicking the link below. </p><p> <a href=\"" + callbackUrl + "\"> Yes, confirm my account </a> </p>";
+
+                    await UserManager.SendEmailAsync(user.Id, subject, body);
+
+                    //Role request email
+                    if (model.CompanyName != null)
+                    {
+                        IdentityMessage message = new IdentityMessage();
+                        message.Destination = "canerates@poweractive-tw.com";
+                        message.Subject = "Role upgrade request";
+                        message.Body = "<p> Name: " + user.FirstName + " " + user.LastName + "</p> <p> Username: " + user.UserName + "</p> <p> Email: " + user.Email + "</p> <p> Phone: " + user.PhoneNumber + "</p> <p> Role request: " + model.BusinessType + "</p>";
+
+                        await UserManager.EmailService.SendAsync(message);
+                    }
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -197,12 +217,36 @@ namespace AtesShop.Web.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null)
+            if (await UserManager.IsEmailConfirmedAsync(userId))
             {
-                return View("Error");
+                return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidcode });
+            }
+            
+            var tokenExpired = false;
+            var unprotectedData = UserManager.Protector.Unprotect(Convert.FromBase64String(code));
+            var ms = new MemoryStream(unprotectedData);
+
+            using (BinaryReader reader = new BinaryReader(ms))
+            {
+                var creationTime = new DateTimeOffset(reader.ReadInt64(), TimeSpan.Zero);
+                var expirationTime = creationTime + UserManager.TokenLifeSpan;
+                if (expirationTime < DateTimeOffset.UtcNow)
+                {
+                    tokenExpired = true;
+                }
+            }
+
+            if (tokenExpired || userId == null || code == null)
+            {
+                return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidcode });
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Success", "Generic", new { s = SuccessType.emailconfirmation });
+            }
+
+            return RedirectToAction("Error", "Generic", new { e = ErrorType.emailconfirmation });
         }
 
         //
@@ -222,39 +266,66 @@ namespace AtesShop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidemail });
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                var subject = "Reset your Power Active password";
+                var body = "<p> Hi " + user.FirstName + " " + user.LastName + ",</p><p> Please reset your password by clicking the link below. </p><p> <a href=\"" + callbackUrl + "\"> Yes, reset my password </a> </p>" ;
+                
+                await UserManager.SendEmailAsync(user.Id, subject, body);
+                return RedirectToAction("Success", "Generic", new { s = SuccessType.passwordresetemailsent });
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(model); //CHECKAGAIN
         }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
+        
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public async Task<ActionResult> ResetPassword(string userId, string code)
         {
-            return code == null ? View("Error") : View();
+            if (userId == null || code == null)
+            {
+                return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidcode });
+            }
+            else
+            {
+                var tokenExpired = false;
+                var unprotectedData = UserManager.Protector.Unprotect(Convert.FromBase64String(code));
+                var ms = new MemoryStream(unprotectedData);
+
+                using (BinaryReader reader = new BinaryReader(ms))
+                {
+                    var creationTime = new DateTimeOffset(reader.ReadInt64(), TimeSpan.Zero);
+                    var expirationTime = creationTime + UserManager.TokenLifeSpan;
+                    if (expirationTime < DateTimeOffset.UtcNow)
+                    {
+                        tokenExpired = true;
+                    }
+                }
+
+                if (tokenExpired)
+                {
+                    return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidcode });
+                }
+
+                var result = await UserManager.VerifyUserTokenAsync(userId, "ResetPassword", code);
+                if (!result)
+                {
+                    return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidcode });
+                }
+            }
+            return View();
         }
 
         //
@@ -268,29 +339,21 @@ namespace AtesShop.Web.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Error", "Generic", new { e = ErrorType.invalidemail });
             }
+            
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Success", "Generic", new { s = SuccessType.passwordreset });
             }
-            AddErrors(result);
-            return View();
+            return RedirectToAction("Error", "Home");
         }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
+        
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
@@ -438,11 +501,17 @@ namespace AtesShop.Web.Controllers
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
+
+                if (_roleManager != null)
+                {
+                    _roleManager.Dispose();
+                    _roleManager = null;
+                }
             }
 
             base.Dispose(disposing);
         }
-
+        
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

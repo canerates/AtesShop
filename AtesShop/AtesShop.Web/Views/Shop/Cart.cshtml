@@ -1,4 +1,5 @@
-﻿
+﻿@{ViewBag.Title = "Cart"; }
+
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
     <div class="container">
@@ -13,13 +14,27 @@
     <!-- Container End -->
 </div>
 <!-- Breadcrumb End -->
-<div id="cartContainer">
-    @{
-        Html.RenderAction("CartProducts");
-    }
+<div class="cart-main-area pb-80 pb-sm-50">
+    <div class="container">
+        @*<h2 class="text-capitalize sub-heading">cart</h2>*@
+        <div class="row">
+            <div class="col-md-12">
+                <div id="cartContainer">
+                    @{
+                        Html.RenderAction("CartProducts");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
+
+    var ajaxLoading = function () {
+        //focusAction();
+        $("#cartContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+    }
     
     var updateCookie = function () {
         var products = [];
@@ -44,8 +59,8 @@
     }
 
     var updateCart = function () {
+        ajaxLoading();
         updateCookie();
-
         $.ajax({
             url: '@Url.Action("CartProducts", "Shop")'
 

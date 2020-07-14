@@ -27,6 +27,8 @@ namespace AtesShop.Entities
 
         public string ImageIdList { get; set; }
 
+        public string FileIdList { get; set; }
+        
         public bool isDiscount { get; set; }
         
         public bool isFeatured { get; set; }
@@ -41,6 +43,9 @@ namespace AtesShop.Entities
         
         [NotMapped]
         public List<Image> Images { get; set; }
+
+        [NotMapped]
+        public List<DocFile> Files { get; set; }
 
         public virtual List<Rating> Ratings { get; set; }
 

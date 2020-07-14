@@ -13,9 +13,32 @@
 </div>
 <!-- Breadcrumb End -->
 <!-- Wish List Start -->
-<div id="wishlistContainer">
-    @{
-        Html.RenderAction("WishlistProducts");
-    }
+<div class="cart-main-area wish-list pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="wishlistContainer">
+                    @{
+                        Html.RenderAction("WishlistProducts");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <!-- Wish List End -->
+
+<script>
+    var focusAction = function () {
+        $('html, body').animate({
+            scrollTop: $('#wishlistContainer').offset().top - 250
+        }, 500);
+    }
+
+    var ajaxLoading = function () {
+        focusAction();
+        $("#wishlistContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+    }
+
+</script>

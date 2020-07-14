@@ -82,7 +82,7 @@ namespace {0} {{
             if (filePath == null)
                 filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources.cs");
             // write to file
-            using (var writer = File.CreateText(filePath))
+            using (var writer = System.IO.File.CreateText(filePath))
             {
 
                 // write header along with keys

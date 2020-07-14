@@ -1,0 +1,205 @@
+﻿@model AtesShop.Web.Models.AddressFieldViewModel
+
+<div id="newAddress">
+    @using (Ajax.BeginForm("AddAddress", "Manage", new AjaxOptions { OnBegin = "ajaxLoading('address')", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "address" }, new { @class = "form-horizontal", @id = "addressForm" , role = "form" }))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <h3>New Address </h3>
+
+        <div class="register-form login-form clearfix">
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Country, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.DropDownListFor(m => m.Country, new SelectList(Model.CountryList), new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.CompanyName, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Line1, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.Line1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Line1, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Line2, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.Line2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Line2, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.City, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.State, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.ZipCode, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Email, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "deleteAddressPhone" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span id="phone-valid-msg" class="phone-hide">✓ Valid</span>
+                    <span id="phone-error-msg" class="phone-hide"></span>
+                </div>
+            </div>
+
+            <div class="register-box mt-40 f-right">
+                <a id="backBtn" href ="#" class="return-customer-btn">Back</a>
+                <input type="submit" id="addAddressSubmit" name="Submit" value="Save" class="return-customer-btn" />
+            </div>
+
+        </div>
+
+    }
+    
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse("#newAddress > form");
+    });
+
+    $('#backBtn').click(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '@Url.Action("Address", "Manage")',
+            beforeSend: function (){
+                ajaxLoading('address');
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#address").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            alert("Fail");
+        });
+    })
+
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    var input = document.querySelector("#deleteAddressPhone"),
+        errorMsg = document.querySelector("#phone-error-msg"),
+        validMsg = document.querySelector("#phone-valid-msg");
+
+    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    for (var i = 0; i < countryData.length; i++) {
+        var country = countryData[i];
+        country.name = country.name.replace(/.+\((.+)\)/, "$1");
+    }
+
+    var reset = function () {
+        input.classList.remove("phone-error");
+        errorMsg.innerHTML = "";
+        errorMsg.classList.add("phone-hide");
+        validMsg.classList.add("phone-hide");
+    };
+
+    var iti = window.intlTelInput(input, {
+        nationalMode: true,
+        initialCountry: "TW",
+        utilsScript: "../../Content/js/phone/utils.js?1590403638580"
+    });
+
+    var validatePhone = function () {
+        reset();
+        if (input.value.trim()) {
+            if (iti.isValidNumber()) {
+                validMsg.classList.remove("phone-hide");
+            } else {
+                input.classList.add("phone-error");
+                var errorCode = iti.getValidationError();
+                if (errorCode == -99) errorCode = 0;
+                errorMsg.innerHTML = errorMap[errorCode];
+                errorMsg.classList.remove("phone-hide");
+            }
+        }
+    }
+
+    input.addEventListener('blur', function () {
+        validatePhone();
+    });
+
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+
+    $('#addAddressSubmit').on('click', function (e) {
+        if (!iti.isValidNumber() && $('#deleteAddressPhone').val() != "") {
+            e.preventDefault();
+            validatePhone();
+            this.blur();
+        }
+    });
+</script>
+
+
+

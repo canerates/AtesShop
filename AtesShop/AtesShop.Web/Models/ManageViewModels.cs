@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using AtesShop.Entities;
+using Foolproof;
 
 namespace AtesShop.Web.Models
 {
@@ -15,7 +16,9 @@ namespace AtesShop.Web.Models
         public bool BrowserRemembered { get; set; }
 
         public string FullName { get; set; }
-        
+        public int ActiveTabId { get; set; }
+
+
     }
 
     public class ManageLoginsViewModel
@@ -103,9 +106,131 @@ namespace AtesShop.Web.Models
         public List<UserAddress> AddressList { get; set; }
     }
 
+    public class AddressFieldViewModel
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Line1 { get; set; }
+        
+        [Display(Name = " ")]
+        public string Line2 { get; set; }
+
+        [Required]
+        [Display(Name = "Town / City")]
+        public string City { get; set; }
+
+        [Required]
+        [Display(Name = "State / County")]
+        public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Required]
+        [Display(Name = "Postcode / Zip")]
+        public string ZipCode { get; set; }
+
+        [Required]
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Mobile Phone")]
+        public string PhoneNumber { get; set; }
+
+        public List<string> CountryList { get; set; }
+
+        [Display(Name = "Submit")]
+        public string Submit { get; set; }
+
+    }
+
     public class DetailsViewModel
     {
+        [Display(Name = "Social title")]
+        public string Gender { get; set; }
 
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        
+        [Display(Name = "Mobile Phone")]
+        public string PhoneNumber { get; set; }
+        
+        public bool UpdatePassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
+        
+        [Required]
+        [MinimumLength]
+        [AtLeastOneUpperCase]
+        [AtLeastOneLowerCase]
+        [AtLeastOneDigit]
+        [AtLeastOneSpecial]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+        
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        public bool UpdateRole { get; set; }
+
+        [Required]
+        [Display(Name = "New Business Type")]
+        public string NewBusinessType { get; set; }
+        
+        [Required]
+        [Display(Name = "Business Type")]
+        public string BusinessType { get; set; }
+
+        [Required]
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name = "Tax Number")]
+        public string TaxNumber { get; set; }
+
+
+        //[Display(Name = "Birthdate")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        //public string Birthdate { get; set; }
+
+        [Display(Name = "Receive offers from our partners")]
+        public bool isOffer { get; set; }
+        
+        [Display(Name = "Sign up for our newsletter", Description = "Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..")]
+        public bool isSubscribed { get; set; }
     }
 
 }

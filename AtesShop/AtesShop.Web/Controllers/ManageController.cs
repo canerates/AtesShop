@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AtesShop.Web.Models;
 using AtesShop.Services;
+using AtesShop.Entities;
+using System.Collections.Generic;
 
 namespace AtesShop.Web.Controllers
 {
@@ -53,7 +55,7 @@ namespace AtesShop.Web.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(ManageMessageId? message, ActiveTab? activeTab)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -64,9 +66,18 @@ namespace AtesShop.Web.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
+
+            if (activeTab.HasValue)
+            {
+                ViewBag.ActiveTab = activeTab;
+            }
+            else
+            {
+                ViewBag.ActiveTab = ActiveTab.Dashboard;
+            }
+            
             var userId = User.Identity.GetUserId();
             var user = UserManager.FindById(userId);
-
             var orders = OrderService.Instance.GetOrders();
             
 
@@ -377,34 +388,230 @@ namespace AtesShop.Web.Controllers
         [HttpPost]
         public ActionResult Address(AddressViewModel model)
         {
-            return View();
+            return PartialView();
         }
 
         [HttpGet]
-        public ActionResult Details()
+        public ActionResult AddAddress()
+        {
+            AddressFieldViewModel model = new AddressFieldViewModel();
+
+            List<string> countries = new List<string>();
+
+            countries.Add("Taiwan");
+            countries.Add("Vietnam");
+            countries.Add("Turkey");
+            countries.Add("USA");
+
+            model.CountryList = countries;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddAddress(AddressFieldViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (model.Submit == "Back")
+                {
+                    return RedirectToAction("Address");
+                }
+
+                var newAddress = new UserAddress();
+                newAddress.Country = model.Country;
+                newAddress.FirstName = model.FirstName;
+                newAddress.LastName = model.LastName;
+                newAddress.CompanyName = model.CompanyName;
+                newAddress.Line1 = model.Line1;
+                newAddress.Line2 = model.Line2;
+                newAddress.City = model.City;
+                newAddress.State = model.State;
+                newAddress.ZipCode = model.ZipCode;
+                newAddress.Email = model.Email;
+                newAddress.Phone = model.PhoneNumber;
+                newAddress.UserId = User.Identity.GetUserId();
+
+                UserService.Instance.SaveUserAddress(newAddress);
+            }
+            
+            return RedirectToAction("Address");
+        }
+
+        [HttpGet]
+        public ActionResult EditAddress(int addressId)
+        {
+            var address = UserService.Instance.GetUserAddress(addressId);
+
+            AddressFieldViewModel model = new AddressFieldViewModel();
+            model.Id = address.Id;
+            model.FirstName = address.FirstName;
+            model.LastName = address.LastName;
+            model.CompanyName = address.CompanyName;
+            model.Line1 = address.Line1;
+            model.Line2 = address.Line2;
+            model.City = address.City;
+            model.State = address.State;
+            model.Country = address.Country;
+            model.ZipCode = address.ZipCode;
+            model.Email = address.Email;
+            model.PhoneNumber = address.Phone;
+
+            List<string> countries = new List<string>();
+
+            countries.Add("Taiwan");
+            countries.Add("Vietnam");
+            countries.Add("Turkey");
+            countries.Add("USA");
+
+            model.CountryList = countries;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditAddress(AddressFieldViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Submit == "Back")
+                {
+                    return RedirectToAction("Address");
+                }
+
+                var currentAddress = UserService.Instance.GetUserAddress(model.Id);
+
+                currentAddress.FirstName = model.FirstName;
+                currentAddress.LastName = model.LastName;
+                currentAddress.CompanyName = model.CompanyName;
+                currentAddress.Line1 = model.Line1;
+                currentAddress.Line2 = model.Line2;
+                currentAddress.City = model.City;
+                currentAddress.State = model.State;
+                currentAddress.ZipCode = model.ZipCode;
+                currentAddress.Email = model.Email;
+                currentAddress.Phone = model.PhoneNumber;
+
+                UserService.Instance.UpdateUserAddress(currentAddress);
+            }
+            
+            return RedirectToAction("Address");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAddress(int addressId)
+        {
+            UserService.Instance.DeleteUserAddress(addressId);
+
+            return RedirectToAction("Address");
+        }
+        
+        [HttpGet]
+        public ActionResult AccountDetails()
         {
             return PartialView();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Details(ChangePasswordViewModel model)
+
+        [HttpGet]
+        public ActionResult Details()
         {
+            DetailsViewModel model = new DetailsViewModel();
+
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+            var role = UserManager.GetRoles(userId).FirstOrDefault();
+
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.Gender = user.Gender;
+            model.PhoneNumber = user.PhoneNumber;
+            model.isSubscribed = user.Subscription;
+            model.BusinessType = role;
+            model.CompanyName = user.CompanyName;
+            model.TaxNumber = user.TaxNumber;
+            
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Details(DetailsViewModel model)
+        {
+            if (!model.UpdatePassword)
+            {
+                ModelState["OldPassword"].Errors.Clear();
+                ModelState["NewPassword"].Errors.Clear();
+                ModelState["ConfirmPassword"].Errors.Clear();
+            }
+
+            if (!model.UpdateRole && model.BusinessType == "User")
+            {
+                ModelState["CompanyName"].Errors.Clear();
+                ModelState["TaxNumber"].Errors.Clear();
+            }
+            if (model.BusinessType != "User")
+            {
+                ModelState["NewBusinessType"].Errors.Clear();
+            }
+
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView("Details", model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.Gender = model.Gender;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Subscription = model.isSubscribed;
+
+                if (model.UpdateRole)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    IdentityMessage message = new IdentityMessage();
+                    message.Destination = "canerates@poweractive-tw.com";
+                    message.Subject = "Role upgrade request";
+                    message.Body = "<p> Name: " + user.FirstName + " " + user.LastName + "</p> <p> Username: " + user.UserName + "</p> <p> Email: " + user.Email + "</p> <p> Phone: " + user.PhoneNumber + "</p> <p> Role request: " + model.NewBusinessType + "</p>";
+
+                    await UserManager.EmailService.SendAsync(message);
+
+                    TempData["RoleRequest"] = "New Business Type request has been made. Please contact with us for details.";
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+
+                if (model.CompanyName != null && model.TaxNumber != null)
+                {
+                    user.CompanyName = model.CompanyName;
+                    user.TaxNumber = model.TaxNumber;
+                }
+
+                var result1 = await UserManager.UpdateAsync(user);
+
+                if (!result1.Succeeded)
+                {
+                    AddErrors(result1);
+                }
+                
+                if (model.UpdatePassword && model.OldPassword != null && model.NewPassword != null && model.ConfirmPassword != null)
+                {
+                    var result2 = await UserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.NewPassword);
+
+                    if (result2.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        TempData["PasswordChangedSuccess"] = "Password has been changed succesfully.";
+                        return PartialView("Details", model);
+                    }
+                    AddErrors(result2);
+                }
             }
-            AddErrors(result);
-            return View(model);
+            return PartialView("Details", model);
+            
         }
 
 
@@ -458,6 +665,15 @@ namespace AtesShop.Web.Controllers
             RemoveLoginSuccess,
             RemovePhoneSuccess,
             Error
+        }
+
+        public enum ActiveTab
+        {
+            Dashboard,
+            Orders,
+            Downloads,
+            Addresses,
+            Details
         }
 
 #endregion

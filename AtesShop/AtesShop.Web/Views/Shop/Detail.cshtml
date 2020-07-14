@@ -371,11 +371,12 @@
 <!-- Realted Product End -->
 
 <script>
-    var products;
+    
 
     $('.add-cart').click(function (event) {
         event.preventDefault();
 
+        var products;
         var currentCartCookie = $.cookie('CartProducts');
 
         if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
@@ -390,11 +391,9 @@
 
         $.cookie('CartProducts', products.join('-'), { path: '/' });
 
-        var cart = $('.cart-counter');
-
         var imgtodrag = $(this).parents().eq(3).children().eq(0).find("img").eq(1);
 
-        cartAnimation(cart, imgtodrag);
+        dragToCart(imgtodrag);
 
         $(this).blur();
     });
@@ -402,6 +401,7 @@
     $('.add-cart-qty').click(function (event) {
         event.preventDefault();
 
+        var products;
         var currentCartCookie = $.cookie('CartProducts');
 
         if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
@@ -424,11 +424,9 @@
 
         $.cookie('CartProducts', products.join('-'), { path: '/' });
 
-        var cart = $('.cart-counter');
-
         var imgtodrag = $(this).parents().eq(3).children().find('div.active img');
 
-        cartAnimation(cart, imgtodrag);
+        dragToCart(imgtodrag);
         $(this).blur();
     });
 
@@ -466,6 +464,7 @@
         var compareBtn = $(this);
         var productId = compareBtn.attr('data-id');
         var categoryId = compareBtn.attr('data-cat-id');
+        var products;
 
         var currentCompareCookie = $.cookie('CompareProducts');
 

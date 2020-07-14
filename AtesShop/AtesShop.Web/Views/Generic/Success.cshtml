@@ -1,0 +1,27 @@
+﻿@model InfoViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="breadcrumb-area pb-60 pb-sm-30">
+</div>
+<div class="register-account pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="register-title">
+                    <h4 class="mb-20">@Model.Title</h4>
+                    <p class="mb-10">@Model.Message</p>
+                </div>
+
+                <div class="buttons newsletter-input">
+                    <div class="pull-left">
+                        <a href="@Url.Action("Index", "Home")" class="return-customer-btn mr-20">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>

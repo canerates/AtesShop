@@ -20,7 +20,7 @@
     13. Checkout CSS
     14. Blog CSS
     15. Error 404 CSS
-    16. Regester & LogIn CSS
+    16. Register & LogIn CSS
     17. Contact Form CSS
     18. ScrollUp CSS
     19. Home-2 CSS
@@ -29,6 +29,8 @@
     22. My Account CSS
     23. Home Three CSS
     24. Preloader
+    25. Information Page CSS
+
   
 -----------------------------------------------------*/
 
@@ -40,7 +42,7 @@ body {
     /*font-family: '宋体',宋体b8b体,Microsoft YaHei, Arial, sans-serif;*/
     font-weight: 400;
     color: #333;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
 }
 .group-title {
@@ -131,6 +133,65 @@ body {
     top: 0;
     opacity: 0;
 }
+
+.custom-radio-group input[type='radio']:after {
+        width: 16px;
+        height: 16px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+}
+
+.custom-radio-group input[type='radio']:checked:after {
+    width: 16px;
+    height: 16px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #8FBA22;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+.field-validation-valid
+{
+    display: none;
+}
+.input-validation-error
+{
+    border: 1px solid #ff0000 !important;
+}
+
+input.valid
+{
+    border: 1px solid #00C900 !important;
+    background: #fff !important;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold !important;
+    color: #ff0000 !important;
+}
+.validation-summary-valid
+{
+    display: none !important;
+}
+
+
 
 /*----------------------------------------*/
 /* 2. Newsletter Popup CSS
@@ -1178,7 +1239,7 @@ ul.ht-dropdown.dropdown-style-two li {
 }
 
 .pro-description {
-    height:3em; 
+    height:4em; 
     line-height:1em; 
     overflow:hidden;
 }
@@ -2577,6 +2638,23 @@ p.checkout-coupon input[type="submit"]:hover {
     width: inherit;
 }
 
+.coupon-info span {
+    cursor: default;
+    color: #dc3545;
+    font-weight: 400;
+    font-size: 14px;
+    -webkit-transition: 0s;
+    transition: 0s;
+}
+
+.coupon-info span:hover {
+    color: #dc3545;
+    font-weight: 400;
+    font-size: 14px;
+    -webkit-transition: 0s;
+    transition: 0s;
+}
+
 .form-row > label {
     margin-top: 7px;
 }
@@ -2847,25 +2925,31 @@ p.checkout-coupon input[type="submit"] {
 }
 
 .address-group > input {
-    visibility: hidden;
-    position: absolute;
+    visibility: hidden !important;
+    position: absolute !important;
 }
 
-.address-group > input + div{
+.address-group > input + div {
     cursor: pointer;
-    border: 1px solid rgba(235,235,235, 0);
+    border: 1px solid rgba(235,235,235, 0.85);
 }
 
 .address-group > div:hover {
-    border: 1px solid rgba(235,235,235, 0.85);
+    border: 1px solid rgba(235,235,235, 0);
     color: #555;
+    box-shadow: 0px 5px 14.25px 0.75px rgba(0, 0, 0, 0.07);
 }
 
-.address-group > input:checked + div{
-    border: 1px solid rgba(143,186,34, 0.25);
+.address-group > input:checked + div {
+    border: 1px solid rgba(143,186,34, 0.07);
     background-color: #f2f2f2;
+    box-shadow: 0px 5px 14.25px 0.75px rgba(0, 0, 0, 0.07);
 }
 
+.address-content p {
+    font-size: 14px !important;
+    text-transform: capitalize;
+}
 
 /*----------------------------------------*/
 /* 14. Blog CSS
@@ -3478,7 +3562,7 @@ p.checkout-coupon input[type="submit"] {
 }
 
 /*----------------------------------------*/
-/* 16. Regester & LogIn CSS
+/* 16. Register & LogIn CSS
 /*----------------------------------------*/
 .newsletter-input input {
     width: auto;
@@ -3561,6 +3645,79 @@ legend {
 .agree{
     margin-right: 5px;
 }
+
+#phone-error-msg {
+  color: #dc3545;
+}
+#phone-valid-msg {
+  color: #00C900;
+}
+
+#phone-error-msg-detail {
+  color: #dc3545;
+}
+#phone-valid-msg-detail {
+  color: #00C900;
+}
+
+#phone-error-msg-ba {
+  color: #dc3545;
+}
+#phone-valid-msg-ba {
+  color: #00C900;
+}
+
+#phone-error-msg-sa {
+  color: #dc3545;
+}
+#phone-valid-msg-sa {
+  color: #00C900;
+}
+
+input.phone-error {
+  border: 1px solid #FF7C7C;
+}
+.phone-hide {
+  display: none;
+}
+
+#registerForm input::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+
+#registerForm input::-ms-input-placeholder {
+    opacity: 0.5;
+}
+
+#registerForm input::-moz-input-placeholder {
+    opacity: 0.5;
+}
+
+#loginForm input::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+
+#loginForm input::-ms-input-placeholder {
+    opacity: 0.5;
+}
+
+#loginForm input::-moz-input-placeholder {
+    opacity: 0.5;
+}
+
+#checkoutForm input::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+
+#checkoutForm input::-ms-input-placeholder {
+    opacity: 0.5;
+}
+
+#checkoutForm input::-moz-input-placeholder {
+    opacity: 0.5;
+}
+
+
 
 /*----------------------------------------*/
 /* 17. Contact Form CSS
@@ -4146,6 +4303,31 @@ legend {
     background: #1a1a1a;
 }
 
+.address-view-button {
+  background: #8FBA22  none repeat scroll 0 0;
+  color: #fff;
+  padding: 12px 24px;
+  text-transform: capitalize;
+}
+
+.address-view-button-delete {
+  background: #ff0000  none repeat scroll 0 0;
+  color: #fff;
+  padding: 12px 24px;
+  text-transform: capitalize;
+}
+
+.address-view-button:hover, .address-view-button:focus, .address-view-button-delete:hover,.address-view-button-delete:focus {
+    color: #fff;
+    background: #1a1a1a;
+}
+
+.address-view-button.disabled, .address-view-button-delete.disabled {
+    color: #fff;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 #dashboard a:hover {
     color: #003c97;
 }
@@ -4228,6 +4410,108 @@ legend {
     opacity: 0;
     overflow: hidden;
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+/* include generated hidden field here */
+input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+input[type="checkbox"]:checked + .slider {
+  background-color: #8FBA22;
+}
+
+/* include generated hidden field here */
+input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+input[type="checkbox"]:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+/* include generated hidden field here */
+input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+input[type="checkbox"]:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+#detailForm input::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+
+#detailForm input::-ms-input-placeholder {
+    opacity: 0.5;
+}
+
+#detailForm input::-moz-input-placeholder {
+    opacity: 0.5;
+}
+
+#addressForm input::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+
+#addressForm input::-ms-input-placeholder {
+    opacity: 0.5;
+}
+
+#addressForm input::-moz-input-placeholder {
+    opacity: 0.5;
+}
+
+
+.side-button {
+  background: #8FBA22  none repeat scroll 0 0;
+  color: #fff;
+  text-transform: capitalize;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.side-button:focus, .side-button:hover {
+    color: #fff;
+    background: #1a1a1a;
+}
+
+.label-button input {
+    display: none;
+}
+
 /*----------------------------------------*/
 /* 23. Home Three CSS
 /*----------------------------------------*/
@@ -4363,6 +4647,9 @@ legend {
        animation-delay: -.8s;
 }
 
+/*----------------------------------------*/
+/* 26. 
+/*----------------------------------------*/
 
 .sweet-warning {
     background-color: #8FBA22;
@@ -4370,6 +4657,15 @@ legend {
 }
 
 .sweet-warning:not([disabled]):hover {
+    background-color: #303030;
+}
+
+.sweet-delete {
+    background-color: #8FBA22;
+    border: none;
+}
+
+.sweet-delete:not([disabled]):hover {
     background-color: #303030;
 }
 
@@ -4388,3 +4684,4 @@ legend {
     /*vertical-align:middle;*/
     /*background-color:#F2F2F2;*/
 }
+

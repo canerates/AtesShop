@@ -140,6 +140,8 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
+
+                culture = culture == "tr-TR" ? "en-US" : culture;
                 var prices = new List<Price>();
 
                 if (categoryId.HasValue)
@@ -173,6 +175,8 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
+
+                culture = culture == "tr-TR" ? "en-US" : culture;
                 var prices = new List<Price>();
 
                 if (categoryId.HasValue)

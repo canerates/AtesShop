@@ -21,8 +21,23 @@ namespace AtesShop.Web.Models
         [Display(Name = "Last Name")]
         [StringLength(100)]
         public string LastName { get; set; }
-        
 
+        [Display(Name = "Gender")]
+        [StringLength(100)]
+        public string Gender { get; set; }
+
+        [Display(Name = "Birtdate")]
+        public string Birthdate { get; set; }
+
+        [Display(Name =  "Company Name")]
+        public string CompanyName { get; set; }
+
+        [Display(Name = "Tax Number")]
+        public string TaxNumber { get; set; }
+
+        [Display(Name = "Subscription")]
+        public bool Subscription { get; set; }
+        
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

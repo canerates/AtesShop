@@ -1,73 +1,265 @@
 ﻿@model AtesShop.Web.Models.DetailsViewModel
 
+@using AtesShop.Web.Helpers
+
 <h3>Account details </h3>
 <div class="register-form login-form clearfix">
-    <form action="#">
-        <div class="form-group row align-items-center">
-            <label class="col-lg-3 col-md-4 col-form-label">Social title</label>
+
+    @using (Ajax.BeginForm("Details", "Manage", new AjaxOptions { OnBegin = "ajaxLoading('details')", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "details" }, new { @class = "form-horizontal", @id = "detailForm", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "form-group text-danger" })
+        if (TempData["PasswordChangedSuccess"] != null)
+	    {
+	    	 <div class="form-group">
+                 <div style="color: #00C900; font-size:14px; font-weight:bold; line-height:24px;">@TempData["PasswordChangedSuccess"].ToString()</div>
+             </div>
+        }
+        if (TempData["RoleRequest"] != null)
+        {
+            <div class="form-group">
+                <div style="color: #00C900; font-size:14px; font-weight:bold; line-height:24px;">@TempData["RoleRequest"].ToString()</div>
+            </div>
+        }
+
+        <div class="form-group row custom-radio-group">
+            @Html.LabelFor(m => m.Gender, new { @class = "col-lg-3 col-md-4 col-form-label" })
             <div class="col-lg-6 col-md-8">
-                <span class="custom-radio"><input name="id_gender" value="1" type="radio"> Mr.</span>
-                <span class="custom-radio"><input name="id_gender" value="1" type="radio"> Mrs.</span>
+                <span class="custom-radio">
+                    @Html.RadioButtonFor(m => m.Gender, "Mr.", Model.Gender == "Mr." ? "checked" : string.Empty) Mr.
+                </span>
+                <span class="custom-radio">
+                    @Html.RadioButtonFor(m => m.Gender, "Mrs.", Model.Gender == "Mrs." ? "checked" : string.Empty) Mrs.
+                </span>
             </div>
         </div>
+
         <div class="form-group row">
-            <label for="f-name" class="col-lg-3 col-md-4 col-form-label">First Name</label>
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-3 col-md-4 col-form-label" })
             <div class="col-lg-6 col-md-8">
-                <input type="text" class="form-control" id="f-name">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
         </div>
+
         <div class="form-group row">
-            <label for="l-name" class="col-lg-3 col-md-4 col-form-label">Last Name</label>
+            @Html.LabelFor(m => m.LastName, new { @class = "col-lg-3 col-md-4 col-form-label" })
             <div class="col-lg-6 col-md-8">
-                <input type="text" class="form-control" id="l-name">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
         </div>
+
         <div class="form-group row">
-            <label for="email" class="col-lg-3 col-md-4 col-form-label">Email address</label>
+            @Html.LabelFor(m => m.Email, new { @class = "col-lg-3 col-md-4 col-form-label" })
             <div class="col-lg-6 col-md-8">
-                <input type="text" class="form-control" id="email">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
         </div>
+
         <div class="form-group row">
-            <label for="inputpassword" class="col-lg-3 col-md-4 col-form-label">Current password</label>
+            <label class="col-lg-3 col-md-4 col-form-label">Change Password</label>
             <div class="col-lg-6 col-md-8">
-                <input type="password" class="form-control" id="inputpassword">
+                <label class="switch">
+                    @Html.CheckBoxFor(m => m.UpdatePassword)
+                    <div class="slider round">
+                    </div>
+                </label>
             </div>
         </div>
+        <div id="passwordInfo" style="@(Model.UpdatePassword ? "display:block" : "display:none")">
+            <div class="form-group row">
+                @Html.LabelFor(m => m.OldPassword, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.NewPassword, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group row">
-            <label for="newpassword" class="col-lg-3 col-md-4 col-form-label">New password</label>
-            <div class="col-lg-6 col-md-8">
-                <input type="password" class="form-control" id="newpassword">
-                <button class="btn show-btn" type="button">Show</button>
+            @Html.LabelFor(m => m.BusinessType, new { @class = "col-lg-3 col-md-4 col-form-label" })
+            <div class="col-lg-6 col-md-8 input-group">
+                <label class="form-control">@Model.BusinessType</label>
+                @Html.HiddenFor(m => m.BusinessType, Model.BusinessType)
+                @if (Model.BusinessType == "User")
+                {
+                    <div class="input-group-append">
+                        <label class="label-button">
+                            @Html.CheckBoxFor(m => m.UpdateRole)
+                            <div class="input-group-text side-button form-control">
+                                <i style="vertical-align: middle;" class="fa fa-plus" aria-hidden="true"></i>
+                            </div>
+                        </label>
+                    </div>
+                }
             </div>
         </div>
+
+        <div id="roleInfo" style="@(Model.BusinessType != "User" ? "display:block" : Model.UpdateRole ? "display:block" : "display:none")">
+            @if (Model.BusinessType == "User")
+            {
+                <div class="form-group row custom-radio-group">
+                    @Html.LabelFor(m => m.NewBusinessType, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                    <div class="col-lg-6 col-md-8">
+                        <span class="custom-radio col-lg-2">
+                            @Html.RadioButtonFor(m => m.NewBusinessType, "Installer", new { @checked = "checked" }) Installer
+                        </span>
+                        <span class="custom-radio col-lg-2">
+                            @Html.RadioButtonFor(m => m.NewBusinessType, "Distributor") Distributor
+                        </span>
+                    </div>
+                </div>
+            }
+            
+            <div class="form-group row">
+                @Html.LabelFor(m => m.CompanyName, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.TaxNumber, new { @class = "col-lg-3 col-md-4 col-form-label" })
+                <div class="col-lg-6 col-md-8">
+                    @Html.TextBoxFor(m => m.TaxNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TaxNumber, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+            </div>
+        </div>
+        
         <div class="form-group row">
-            <label for="v-password" class="col-lg-3 col-md-4 col-form-label">Confirm password</label>
+            <label class="col-lg-3 col-md-4 col-form-label" for="phone"> Mobile Phone</label>
             <div class="col-lg-6 col-md-8">
-                <input type="password" class="form-control" id="c-password">
-                <button class="btn show-btn" type="button">Show</button>
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "detailPhone" })
+                <span id="phone-valid-msg-detail" class="phone-hide">✓ Valid</span>
+                <span id="phone-error-msg-detail" class="phone-hide"></span>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="birth" class="col-lg-3 col-md-4 col-form-label">Birthdate</label>
-            <div class="col-lg-6 col-md-8">
-                <input type="text" class="form-control" id="birth" placeholder="MM/DD/YYYY">
-            </div>
-        </div>
-        <div class="form-check row p-0 mt-20">
+        
+        <div class="form-check row mt-20">
             <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-4">
-                <input class="form-check-input" value="#" id="offer" type="checkbox">
-                <label class="form-check-label" for="offer">Receive offers from our partners</label>
+                @Html.CheckBoxFor(m => m.isSubscribed, new { @class = "form-check-input", @checked = @Model.isSubscribed ? "checked" : string.Empty })
+                @Html.LabelFor(m => m.isSubscribed, new { @class = "form-check-label" })
+                <label class="form-check-label"><br />@Html.DescriptionFor(m => m.isSubscribed)</label>
+
             </div>
         </div>
-        <div class="form-check row p-0 mt-20">
-            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-4">
-                <input class="form-check-input" value="#" id="subscribe" type="checkbox">
-                <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>
-            </div>
-        </div>
+        
         <div class="register-box mt-40">
-            <button type="submit" class="return-customer-btn f-right">Save</button>
+            <input type="submit" id="detailSubmit" value="Save" class="return-customer-btn f-right" />
         </div>
-    </form>
+        
+    }
+
 </div>
+
+<script src="../../Content/js/phone/intlTelInput.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#detailForm"));
+
+    })
+
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    var inputDP = document.querySelector("#detailPhone"),
+        errorMsgD = document.querySelector("#phone-error-msg-detail"),
+        validMsgD = document.querySelector("#phone-valid-msg-detail");
+
+    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    for (var i = 0; i < countryData.length; i++) {
+        var country = countryData[i];
+        country.name = country.name.replace(/.+\((.+)\)/, "$1");
+    }
+
+    var resetD = function () {
+        inputDP.classList.remove("phone-error");
+        errorMsgD.innerHTML = "";
+        errorMsgD.classList.add("phone-hide");
+        validMsgD.classList.add("phone-hide");
+    };
+
+    var itiD = window.intlTelInput(inputDP, {
+        nationalMode: true,
+        initialCountry: "TW",
+        utilsScript: "../../Content/js/phone/utils.js?1590403638580"
+    });
+
+    var validatePhoneD = function () {
+        resetD();
+        if (inputDP.value.trim()) {
+            if (itiD.isValidNumber()) {
+                validMsgD.classList.remove("phone-hide");
+            } else {
+                inputDP.classList.add("phone-error");
+                var errorCode = itiD.getValidationError();
+                if (errorCode == -99) errorCode = 0;
+                errorMsgD.innerHTML = errorMap[errorCode];
+                errorMsgD.classList.remove("phone-hide");
+                inputDP.classList.remove("valid");
+            }
+        }
+    }
+
+    inputDP.addEventListener('blur', function () {
+        validatePhoneD();
+    });
+
+    inputDP.addEventListener('change', resetD);
+    inputDP.addEventListener('keyup', resetD);
+
+    $('#UpdatePassword').change(function (e) {
+        $('#passwordInfo').slideToggle();
+
+    });
+
+    $('#UpdateRole').change(function (e) {
+        $('#roleInfo').slideToggle();
+
+    });
+
+    $(document).on('click', '#detailSubmit', {}, function (e) {
+        if (!itiD.isValidNumber() && $('#detailPhone').val() != "") {
+            debugger;
+            e.preventDefault();
+            validatePhoneD();
+            this.blur();
+        }
+    });
+
+    $('#addRoleBtn').on('click', function (e) {
+        e.preventDefault();
+        $('#roleInfo').slideToggle();
+        this.blur();
+    })
+
+
+</script>

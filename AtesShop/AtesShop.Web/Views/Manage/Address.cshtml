@@ -1,24 +1,135 @@
 ﻿@model AtesShop.Web.Models.AddressViewModel
 
-<div class="col-md-12">
-    <a class="view" href="#">Add</a>
-    <a class="view" href="#">Edit</a>
-    <a class="view-delete" href="#">Delete</a>
+@{ 
+    var count = Model.AddressList.Count;
+}
+
+<h3>Address </h3>
+
+<div class="row">
+    <div class="col-md-12 mb-40">
+        <a id="addAddress" class="address-view-button disabled" href="#">Add</a>
+        <a id="editAddress" class="address-view-button disabled" href="#">Edit</a>
+        <a id="deleteAddress" class="address-view-button-delete disabled" href="#">Delete</a>
+    </div>
+    
+    @if (Model.AddressList.Count > 0)
+    {
+        foreach (var address in Model.AddressList)
+        {
+            <label class="address-group col-md-6 mb-30">
+                <input type="radio" name="addressRadio" value="@address.Id" />
+                <div href="#" class="address-content p-10">
+                    <p>@address.FirstName @address.LastName</p>
+                    <p>@address.Line1 @address.Line2</p>
+                    <p>@address.City, @address.State @address.ZipCode</p>
+                    <p>@address.Country</p>
+                    <p>@address.Phone</p>
+                </div>
+            </label>
+        }
+    }
+    else
+    {
+        <div class="col-md-12 mb-40">No registered address.</div>
+    }
+    
 </div>
 
 
-@foreach (var address in Model.AddressList)
-{
-    <label class="address-group col-md-6 mb-10">
-        <input type="radio" name="addressRadio" value="@address.Id"/>
-        <div href="" class="address-content p-10">
-            <p>@address.FirstName @address.LastName</p>
-            <p>@address.Line1 @address.Line2</p>
-            <p>@address.City, @address.State @address.ZipCode</p>
-            <p>@address.Country</p>
-            <p>@address.Phone</p>
-        </div>
-    </label>
+
+<script>
+    $(document).ready(function () {
+        if (@count < 5) {
+            try {
+                $('#addAddress').removeClass('disabled');
+            } catch (e) { }
+        }
+    })
     
 
-}
+    $('input[name="addressRadio"]').change(function () {
+        try {
+            $('#editAddress').removeClass('disabled');
+            $('#deleteAddress').removeClass('disabled');
+        } catch (e) { }
+        
+    })
+
+    $("#addAddress").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '/Manage/AddAddress',
+            beforeSend: function () {
+                ajaxLoading('address');
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#address").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#editAddress").click(function (event) {
+        event.preventDefault();
+
+        var selected = $('input[name=addressRadio]:checked').val();
+        
+        $.ajax({
+            url: '/Manage/EditAddress',
+            data: {
+                addressId: selected
+            },
+            beforeSend: function () {
+                ajaxLoading('address');
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#address").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $("#deleteAddress").click(function (event) {
+        event.preventDefault();
+
+        var selected = $('input[name=addressRadio]:checked').val();
+
+        swal({
+            title: "Delete",
+            text: "Do you want to delete the address ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((value) => {
+            if (value) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/DeleteAddress',
+                    data: {
+                        addressId: selected
+                    },
+                    beforeSend: function () {
+                        ajaxLoading('address');
+                    }
+                })
+                .done(function (response) {
+                    //alert("Success");
+                    $("#address").html(response);
+                })
+                .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                    //alert("Fail");
+                });
+            }
+        });
+
+    });
+
+</script>

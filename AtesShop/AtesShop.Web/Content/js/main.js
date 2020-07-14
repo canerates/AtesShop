@@ -22,10 +22,10 @@
  18. Best Seller Activation
  19. Best Product Activation
  20. Blog Realted Post activation
- 21.Best Seller  Unique Activation
- 22.Preloader
- 23.Register Account
-
+ 21. Best Seller  Unique Activation
+ 22. Preloader
+ 23. Register Account
+ 24. Global 
 
 ================================================*/
 
@@ -69,6 +69,7 @@
     });
     $('#ship-box').on('click', function () {
         $('#ship-box-info').slideToggle();
+        $.validator.unobtrusive.parse("#checkoutForm");
     });
 
     /*----------------------------
@@ -538,6 +539,9 @@
         }
     });
 
+    $("[data-toggle=popover]").popover();
+
+
     //Dom Ready
     $(function () {
         removePreloader();
@@ -545,6 +549,10 @@
     });
 
 })(jQuery);
+
+/*----------------------------------------------------
+24.Global
+-----------------------------------------------------*/
 
 var updateCartIcon = function () {
     var cartProducts;
@@ -568,7 +576,7 @@ var heartAnimation = function () {
     }, 800);
 }
 
-var cartAnimation2 = function () {
+var cartAnimation = function () {
     $('.cart-counter').effect("shake", {
         times: 3,
         distance: 5
@@ -576,7 +584,8 @@ var cartAnimation2 = function () {
     updateCartIcon();
 }
 
-var cartAnimation = function (cart, imgtodrag) {
+var dragToCart = function (imgtodrag) {
+    var cart = $('.cart-counter');
 
     if (imgtodrag) {
         var imgclone = imgtodrag.clone()
@@ -615,5 +624,32 @@ var cartAnimation = function (cart, imgtodrag) {
         });
     }
 }
+try {
+    $.validator.addMethod("atleastoneuppercase", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
+    $.validator.addMethod("atleastonelowercase", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
+    $.validator.addMethod("atleastonedigit", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
+    $.validator.addMethod("atleastonespecial", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
+    $.validator.addMethod("minimumlength", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
+
+    jQuery.validator.unobtrusive.adapters.addSingleVal("atleastoneuppercase", "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonelowercase', "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonedigit', "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonespecial', "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal('minimumlength', "pattern");
+
+} catch (e) {
+
+}
+
 
 

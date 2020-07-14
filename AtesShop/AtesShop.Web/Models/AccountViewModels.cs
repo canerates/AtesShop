@@ -81,8 +81,15 @@ namespace AtesShop.Web.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         
+        [Display(Name = "Mobile Phone")]
+        public string PhoneNumber { get; set; }
+
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [MinimumLength]
+        [AtLeastOneUpperCase]
+        [AtLeastOneLowerCase]
+        [AtLeastOneDigit]
+        [AtLeastOneSpecial]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -105,6 +112,9 @@ namespace AtesShop.Web.Models
         [Display(Name = "Tax Number")]
         public string TaxNumber { get; set; }
 
+        [Display(Name = "Subscription")]
+        public bool Subscription { get; set; }
+
 
     }
 
@@ -116,7 +126,11 @@ namespace AtesShop.Web.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [MinimumLength]
+        [AtLeastOneUpperCase]
+        [AtLeastOneLowerCase]
+        [AtLeastOneDigit]
+        [AtLeastOneSpecial]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -131,9 +145,9 @@ namespace AtesShop.Web.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email address")]
         public string Email { get; set; }
     }
 }

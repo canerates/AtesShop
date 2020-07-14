@@ -33,6 +33,8 @@ namespace AtesShop.Web.ViewModels
         public List<Product> RelatedProducts { get; set; }
         public Dictionary<AttributeSection, List<ProductAttribute>> Attributes { get; set; }
         public List<Feature> ProductFeatures { get; set; }
+        public List<DocFile> SpecFiles { get; set; }
+
     }
 
     public class ProductListViewModel

@@ -18,6 +18,7 @@ namespace AtesShop.Web.Helpers
             {
                 if (product.Price != "Contact Us")
                 {
+                    culture = culture == "tr-TR" ? "en-US" : culture;
                     var priceValue = Int64.Parse(product.Price);
                     var prePriceValue = Int64.Parse(product.PrePrice);
                     product.Price = priceValue.ToString("c", new CultureInfo(culture));
@@ -31,6 +32,7 @@ namespace AtesShop.Web.Helpers
         {
             if (product.Price != "Contact Us")
             {
+                culture = culture == "tr-TR" ? "en-US" : culture;
                 var priceValue = Int64.Parse(product.Price);
                 var prePriceValue = Int64.Parse(product.PrePrice);
                 product.Price = priceValue.ToString("C", new CultureInfo(culture));

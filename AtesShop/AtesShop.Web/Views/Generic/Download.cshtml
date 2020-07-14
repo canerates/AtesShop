@@ -1,0 +1,39 @@
+﻿<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="download.html">Download</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="thumnail-desc pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="main-thumb-desc nav">
+                    <li><a class="active" data-toggle="tab" href="#documents">Documents</a></li>
+                    <li><a data-toggle="tab" href="#tools">Tools</a></li>
+                </ul>
+                <div class="tab-content thumb-content border-default">
+                    <div id="documents" class="tab-pane in active">
+                        <div id="docList" class="list-group list-group-flush">
+                            @{
+                                Html.RenderAction("DocumentList");
+                            }
+                        </div>
+                    </div>
+                    <div id="tools" class="tab-pane">
+                        <div id="toolList" class="list-group list-group-flush">
+                            @{
+                                Html.RenderAction("ToolList");
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

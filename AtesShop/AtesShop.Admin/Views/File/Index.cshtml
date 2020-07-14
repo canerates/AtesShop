@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <div class="page-header text-center">
+        <h1>Files</h1>
+    </div>
+</div>
+
+<div id="tableContainer">
+    @{
+        Html.RenderAction("FileTable");
+    }
+</div>
+
+<div id="actionContainer">
+
+</div>
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

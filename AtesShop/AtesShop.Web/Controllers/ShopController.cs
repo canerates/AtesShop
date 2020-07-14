@@ -244,6 +244,13 @@ namespace AtesShop.Web.Controllers
             double taxPrice = 0;
             double totalPriceWithTax = 0;
 
+            List<string> countries = new List<string>();
+
+            countries.Add("Taiwan");
+            countries.Add("Vietnam");
+            countries.Add("Turkey");
+            countries.Add("USA");
+
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
 
@@ -275,6 +282,8 @@ namespace AtesShop.Web.Controllers
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+
+                model.CountryList = countries;
             }
 
             if (Request.IsAuthenticated)
@@ -290,19 +299,33 @@ namespace AtesShop.Web.Controllers
         [HttpPost]
         public ActionResult Checkout(CheckoutViewModel model)
         {
-            ModelState.Remove("EmailOrUserName");
-            ModelState.Remove("Password");
+            ModelState["EmailOrUserName"].Errors.Clear();
+            ModelState["Password"].Errors.Clear();
+
+            if (model.SelectedAddress != 0)
+            {
+                ModelState["Bill.Country"].Errors.Clear();
+                ModelState["Bill.FirstName"].Errors.Clear();
+                ModelState["Bill.LastName"].Errors.Clear();
+                ModelState["Bill.Address1"].Errors.Clear();
+                ModelState["Bill.City"].Errors.Clear();
+                ModelState["Bill.State"].Errors.Clear();
+                ModelState["Bill.ZipCode"].Errors.Clear();
+                ModelState["Bill.Email"].Errors.Clear();
+                ModelState["Bill.Phone"].Errors.Clear();
+
+            }
 
             if (!ModelState.IsValid)
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
             
             if (Request.IsAuthenticated)
             {
                 var billAddress = new OrderAddress();
                 var shipAddress = new OrderAddress();
-
+                
                 if (model.SelectedAddress != 0)
                 {
                     var selectedAddress = UserService.Instance.GetUserAddress(model.SelectedAddress);

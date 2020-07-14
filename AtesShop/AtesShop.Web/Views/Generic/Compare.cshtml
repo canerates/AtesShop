@@ -12,16 +12,27 @@
     <!-- Container End -->
 </div>
 <!-- Breadcrumb End -->
-
-<div id="compareContainer">
-    @{ 
-        Html.RenderAction("CompareProducts");
-    }
+<div class="compare-product pb-40">
+    <div class="container">
+        <div id="compareContainer">
+            @{
+                Html.RenderAction("CompareProducts");
+            }
+        </div>
+    </div>
 </div>
 
 <script>
+    var focusAction = function () {
+        $('html, body').animate({
+            scrollTop: $('#compareContainer').offset().top - 200
+        }, 500);
+    }
+
     var ajaxLoading = function () {
         focusAction();
-        $("#compareContainer").html("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+        $("#compareContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
     }
+
+    
 </script>

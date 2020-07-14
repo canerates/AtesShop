@@ -141,6 +141,12 @@ namespace AtesShop.Services
                             products = sortType == 1 ? products.OrderBy(x => x.Name).ToList() : products.OrderByDescending(x => x.Name).ToList();
                             break;
                         case 3:
+                            var rates = context.Ratings.GroupBy(x => x.ProductId).Select(g => new { Key = g.Key, Value = g.Sum(s => s.Rate) }).ToList();
+                            rates = sortType == 1 ? rates.OrderBy(x => x.Value).ToList() : rates.OrderByDescending(x => x.Value).ToList();
+                            var idList = rates.Select(x => x.Key).ToList();
+                            products = products.OrderBy(x => idList.IndexOf(x.Id)).ToList();
+                            break;
+                        case 4:
                             products = sortType == 1 ? products.OrderBy(x => x.Price).ToList() : products.OrderByDescending(x => x.Price).ToList();
                             break;
                         default:
@@ -153,12 +159,15 @@ namespace AtesShop.Services
 
                 if (maximum.HasValue && minimum.HasValue)
                 {
-                    List<Product> excludedProducts = new List<Product>();
-
-                    excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
-                    foreach (var product in excludedProducts)
+                    if (maximum.Value != 0 && minimum.Value != 0)
                     {
-                        products.Remove(product);
+                        List<Product> excludedProducts = new List<Product>();
+
+                        excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
+                        foreach (var product in excludedProducts)
+                        {
+                            products.Remove(product);
+                        }
                     }
                 }
 
@@ -195,12 +204,15 @@ namespace AtesShop.Services
 
                 if (maximum.HasValue && minimum.HasValue)
                 {
-                    List<Product> excludedProducts = new List<Product>();
-
-                    excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
-                    foreach (var product in excludedProducts)
+                    if (maximum.Value != 0 && minimum.Value != 0)
                     {
-                        products.Remove(product);
+                        List<Product> excludedProducts = new List<Product>();
+
+                        excludedProducts = products.Where(x => x.Price != "Contact Us").Where(x => int.Parse(x.Price) < minimum.Value || int.Parse(x.Price) > maximum.Value).ToList();
+                        foreach (var product in excludedProducts)
+                        {
+                            products.Remove(product);
+                        }
                     }
                 }
 
@@ -238,7 +250,17 @@ namespace AtesShop.Services
                 
                 //Price
                 var keys = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
-                var price = context.Prices.Where(x => x.Key == keys.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
+                var price = new Price();
+
+                if (culture == "tr-TR")
+                {
+                    price = context.Prices.Where(x => x.Key == keys.PriceKey && x.Culture == "en-US" && x.RoleName == role).FirstOrDefault();
+                }
+                else
+                {
+                    price = context.Prices.Where(x => x.Key == keys.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
+                }
+                
                 if (price == null)
                 {
                     product.Price = "Contact Us";

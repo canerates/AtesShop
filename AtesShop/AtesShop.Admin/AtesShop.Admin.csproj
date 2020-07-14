@@ -205,6 +205,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -218,25 +219,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003100645501_initialized_admin.cs" />
-    <Compile Include="Migrations\202003100645501_initialized_admin.designer.cs">
-      <DependentUpon>202003100645501_initialized_admin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006010706376_userAddressAdded.cs" />
-    <Compile Include="Migrations\202006010706376_userAddressAdded.designer.cs">
-      <DependentUpon>202006010706376_userAddressAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006010719374_userAddressEdited.cs" />
-    <Compile Include="Migrations\202006010719374_userAddressEdited.designer.cs">
-      <DependentUpon>202006010719374_userAddressEdited.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006010819564_userAddressEdited2.cs" />
-    <Compile Include="Migrations\202006010819564_userAddressEdited2.designer.cs">
-      <DependentUpon>202006010819564_userAddressEdited2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006010847040_userAddressEdited3.cs" />
-    <Compile Include="Migrations\202006010847040_userAddressEdited3.designer.cs">
-      <DependentUpon>202006010847040_userAddressEdited3.cs</DependentUpon>
+    <Compile Include="Migrations\202007130213094_initialized.cs" />
+    <Compile Include="Migrations\202007130213094_initialized.designer.cs">
+      <DependentUpon>202007130213094_initialized.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -246,6 +231,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
+    <Compile Include="ViewModels\FileViewModels.cs" />
     <Compile Include="ViewModels\ImageViewModels.cs" />
     <Compile Include="ViewModels\MenuViewModels.cs" />
     <Compile Include="ViewModels\PriceViewModels.cs" />
@@ -4218,6 +4204,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -4306,6 +4294,11 @@
     <Content Include="Views\Specification\ATypeTable.cshtml" />
     <Content Include="Views\Specification\AValueTable.cshtml" />
     <Content Include="Views\Specification\AttributeTable.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\File\FileTable.cshtml" />
+    <Content Include="Views\File\Upload.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
+    <Content Include="Views\File\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4329,20 +4322,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003100645501_initialized_admin.resx">
-      <DependentUpon>202003100645501_initialized_admin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006010706376_userAddressAdded.resx">
-      <DependentUpon>202006010706376_userAddressAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006010719374_userAddressEdited.resx">
-      <DependentUpon>202006010719374_userAddressEdited.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006010819564_userAddressEdited2.resx">
-      <DependentUpon>202006010819564_userAddressEdited2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006010847040_userAddressEdited3.resx">
-      <DependentUpon>202006010847040_userAddressEdited3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007130213094_initialized.resx">
+      <DependentUpon>202007130213094_initialized.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -28,11 +28,23 @@ namespace AtesShop.Web
             );
 
             routes.MapRoute(
+                name: "Error2",
+                url: "Error",
+                defaults: new { controller = "Generic", action = "Error", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Error",
                 url: "Error",
                 defaults: new { controller = "Home", action = "Error", id = UrlParameter.Optional }
             );
             
+            routes.MapRoute(
+                name: "Success",
+                url: "Success",
+                defaults: new { controller = "Generic", action = "Success", id = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

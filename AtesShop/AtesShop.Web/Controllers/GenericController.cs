@@ -1,16 +1,21 @@
 ﻿using AtesShop.Entities;
 using AtesShop.Resources;
 using AtesShop.Services;
+using AtesShop.Web.Code;
 using AtesShop.Web.Helpers;
 using AtesShop.Web.ViewModels;
+using Ionic.Zip;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using static AtesShop.Web.Helpers.SharedHelper;
 
 namespace AtesShop.Web.Controllers
 {
@@ -190,5 +195,120 @@ namespace AtesShop.Web.Controllers
 
             return PartialView(model);
         }
+
+        [HttpGet]
+        public ActionResult Download()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DocumentList()
+        {
+            DocumentViewModel model = new DocumentViewModel();
+            var documents = FileService.Instance.GetFiles();
+
+            model.documents = documents;
+
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult ToolList()
+        {
+
+            return PartialView();
+        }
+
+        [NoDirectAccess]
+        [HttpGet]
+        public ActionResult Pdf(int id)
+        {
+            var pdf = FileService.Instance.GetFile(id);
+            return File(pdf.Data, pdf.ContentType);
+        }
+
+        [NoDirectAccess]
+        [HttpGet]
+        public ActionResult Zip(int id)
+        {
+            object filename = "";
+
+            switch (id)
+            {
+                case 1:
+                    filename = "IMS300_V1.03.005.T.2019-06-20-20200131T011734Z-001.zip";
+                    break;
+                case 2:
+                    filename = "MediaPlayer_ChnEng_ZD_V1.4.2.22.R.20190417_CHN.zip";
+                    break;
+                case 3:
+                    filename = "TAMobile.V.2.12.5.1912040.apk.zip";
+                    break;
+                default:
+                    break;
+            }
+            
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/App_Data/" + filename.ToString()));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename.ToString());
+            
+        }
+
+        [HttpGet]
+        public ActionResult Error(ErrorType? e)
+        {
+            InfoViewModel model = new InfoViewModel();
+            if (e.HasValue)
+            {
+                switch (e.Value)
+                {
+                    case ErrorType.invalidemail:
+                        model.Title = "Invalid Email";
+                        model.Message = "Your email is not registered or confirmed yet.";
+                        break;
+                    case ErrorType.invalidcode:
+                        model.Title = "Invalid Code";
+                        model.Message = "Code validation is expired.";
+                        break;
+                    case ErrorType.emailconfirmation:
+                        model.Title = "Confirmation Error";
+                        model.Message = "There is something wrong during confirmation, please contact with Power Active.";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Success(SuccessType s)
+        {
+            InfoViewModel model = new InfoViewModel();
+
+            switch (s)
+            {
+                case SuccessType.emailconfirmation:
+                    model.Title = "Email is confirmed";
+                    model.Message = "Thank you for confirming your email.";
+                    break;
+                case SuccessType.passwordreset:
+                    model.Title = "Sign in with new password";
+                    model.Message = "Your password has been changed. Please login with your new password.";
+                    break;
+                case SuccessType.passwordresetemailsent:
+                    model.Title = "Check your email";
+                    model.Message = "We have been sent an email to your inbox. Please check your email to reset your password.";
+                    break;
+                default:
+                    model.Title = "";
+                    model.Message = "";
+                    break;
+            }
+            
+            return View(model);
+        }
+        
     }
 }

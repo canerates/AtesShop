@@ -22,15 +22,17 @@ namespace AtesShop.Admin.Controllers
         [HttpGet]
         public ActionResult ImageTable(string search)
         {
+            ImageTableViewModel model = new ImageTableViewModel();
             var images = ImageService.Instance.GetImages();
 
             if (!string.IsNullOrEmpty(search))
             {
                 images = images.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
             }
-            
 
-            return PartialView(images);
+            model.Images = images;
+
+            return PartialView(model);
         }
 
         [HttpGet]

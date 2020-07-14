@@ -58,6 +58,10 @@
       <HintPath>..\packages\Foolproof.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -204,6 +208,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Code\Enums.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\GenericController.cs" />
@@ -219,9 +224,11 @@
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\SharedHelper.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RegexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GenericViewModels.cs" />
@@ -248,6 +255,8 @@
     <Content Include="Content\css\nivo-slider.css" />
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\owl.carousel.min.css" />
+    <Content Include="Content\css\phone\intlTelInput.css" />
+    <Content Include="Content\css\phone\intlTelInput.min.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\slick.css" />
     <Content Include="Content\css\style.css" />
@@ -294,6 +303,8 @@
     <Content Include="Content\img\brand\4.png" />
     <Content Include="Content\img\brand\5.png" />
     <Content Include="Content\img\brand\Layer-71.png" />
+    <Content Include="Content\img\flags\flags%402x.png" />
+    <Content Include="Content\img\flags\flags.png" />
     <Content Include="Content\img\footer\1.png" />
     <Content Include="Content\img\icon\1.png" />
     <Content Include="Content\img\icon\2.png" />
@@ -333,6 +344,13 @@
     <Content Include="Content\js\jquery.scrollUp.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\owl.carousel.min.js" />
+    <Content Include="Content\js\phone\data.js" />
+    <Content Include="Content\js\phone\data.min.js" />
+    <Content Include="Content\js\phone\intlTelInput-jquery.js" />
+    <Content Include="Content\js\phone\intlTelInput-jquery.min.js" />
+    <Content Include="Content\js\phone\intlTelInput.js" />
+    <Content Include="Content\js\phone\intlTelInput.min.js" />
+    <Content Include="Content\js\phone\utils.js" />
     <Content Include="Content\js\plugins.js" />
     <Content Include="Content\js\popper.js" />
     <Content Include="Content\js\slick.min.js" />
@@ -357,11 +375,15 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="App_Data\IMS300_V1.03.005.T.2019-06-20-20200131T011734Z-001.zip" />
+    <Content Include="App_Data\MediaPlayer_ChnEng_ZD_V1.4.2.22.R.20190417_CHN.zip" />
+    <Content Include="App_Data\TAMobile.V.2.12.5.1912040.apk.zip" />
     <None Include="Properties\PublishProfiles\Power Active.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -455,15 +477,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
@@ -501,10 +520,16 @@
     <Content Include="Views\Generic\Compare.cshtml" />
     <Content Include="Views\Generic\CompareProducts.cshtml" />
     <Content Include="Views\Generic\CompareSideBar.cshtml" />
+    <Content Include="Views\Manage\AddAddress.cshtml" />
+    <Content Include="Views\Manage\EditAddress.cshtml" />
+    <Content Include="Views\Manage\AccountDetails.cshtml" />
+    <Content Include="Views\Generic\Download.cshtml" />
+    <Content Include="Views\Generic\Error.cshtml" />
+    <Content Include="Views\Generic\Success.cshtml" />
+    <Content Include="Views\Generic\DocumentList.cshtml" />
+    <Content Include="Views\Generic\ToolList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content\upload\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Support\" />
@@ -515,7 +540,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtesShop.Entities\AtesShop.Entities.csproj">

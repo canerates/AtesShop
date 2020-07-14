@@ -3,148 +3,139 @@
 {
     if (Model.ProductSpecs != null && Model.ProductSpecs.Count > 0)
     {
-        <!-- Compare Page Start -->
-        <div class="compare-product pb-40">
-            <div class="container">
-                <div class="table-responsive">
-                    
-                    <table class="table text-center compare-content">
-                        <tbody>
-                            <tr>
-                                <td class="product-title">Product</td>
-                                @foreach (var product in Model.CompareProducts)
-                                {
-                                    <td class="product-description">
-                                        <div class="compare-details">
-                                            <div class="compare-detail-img">
-                                                <a href="#"><img class="primary-img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="compare-product"></a>
-                                            </div>
-                                            <div style="text-align:center;" class="compare-detail-content">
-                                                <span></span>
-                                                <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                                            </div>
-                                        </div>
-                                    </td>
-                                }
-                            </tr>
-                            <tr>
-                                <td class="product-title">Description</td>
-                                @foreach (var product in Model.CompareProducts)
-                                {
-                                    <td class="product-description">
-                                        <p>@product.Description</p>
-                                    </td>
-                                }
-                            </tr>
-                            @if (!Model.isPriceHidden)
+        <div class="table-responsive">
+            <table class="table text-center compare-content">
+                <tbody>
+                    <tr>
+                        <td class="product-title">Product</td>
+                        @foreach (var product in Model.CompareProducts)
+                        {
+                            <td class="product-description">
+                                <div class="compare-details">
+                                    <div class="compare-detail-img">
+                                        <a href="#">
+                                            <img class="primary-img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="compare-product">
+                                        </a>
+                                    </div>
+                                    <div style="text-align:center;" class="compare-detail-content">
+                                        <span></span>
+                                        <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="product-title">Description</td>
+                        @foreach (var product in Model.CompareProducts)
+                        {
+                            <td class="product-description">
+                                <p>@product.Description</p>
+                            </td>
+                        }
+                    </tr>
+                    @if (!Model.isPriceHidden)
+                    {
+                        <tr>
+                            <td class="product-title">Price</td>
+                            @foreach (var product in Model.CompareProducts)
+                            {
+                                <td class="product-description">@product.Price</td>
+                            }
+                        </tr>
+                        
+                    }
+
+                    @{ 
+                        foreach (var sec in Model.ProductSpecs)
+                        {
+                            for (int i = 0; i < sec.AttributesOfProducts.Count; i++)
                             {
                                 <tr>
-                                    <td class="product-title">Price</td>
-                                    @foreach (var product in Model.CompareProducts)
-                                    {
-                                        <td class="product-description">@product.Price</td>
-                                    }
-                                </tr>
-                                
-                            }
+                                    <td class="product-title">@sec.AttributesOfProducts[i].Where(x => x.Value.AttributeType != null).FirstOrDefault().Value.AttributeType.Name</td>
 
-                            @{ 
-                                foreach (var sec in Model.ProductSpecs)
-                                {
-                                    for (int i = 0; i < sec.AttributesOfProducts.Count; i++)
+                                    @for (int j = 0; j < sec.AttributesOfProducts[i].Count; j++)
                                     {
-                                        <tr>
-                                            <td class="product-title">@sec.AttributesOfProducts[i].Where(x => x.Value.AttributeType != null).FirstOrDefault().Value.AttributeType.Name</td>
-
-                                            @for (int j = 0; j < sec.AttributesOfProducts[i].Count; j++)
-                                            {
-                                                if (@sec.AttributesOfProducts[i][j].AttributeValue == null)
-                                                {
-                                                    <td class="product-description">-</td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="product-description">@sec.AttributesOfProducts[i][j].AttributeValue.Name</td>
-                                                }
-                                            }
-                                        </tr>
-                                    }
-                                }
-                            }
-
-                            <tr>
-                                <td class="product-title">Add to cart</td>
-                                @foreach (var product in Model.CompareProducts)
-                                {
-                                    <td class="product-description">
-                                        <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">add to cart</a>
-                                    </td>
-                                }
-                            </tr>
-                            @if (Request.IsAuthenticated)
-                            {
-                                <tr>
-                                    <td class="product-title">Add to wishlist</td>
-                                    @foreach (var product in Model.CompareProducts)
-                                    {
-                                        <td class="product-description">
-                                            <a class="compare-wishlist text-uppercase @if (product.isWished) { <text> selected </text> } " data-id="@product.Id" href="#">add to wishlist</a>
-                                        </td>
+                                        if (@sec.AttributesOfProducts[i][j].AttributeValue == null)
+                                        {
+                                            <td class="product-description">-</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="product-description">@sec.AttributesOfProducts[i][j].AttributeValue.Name</td>
+                                        }
                                     }
                                 </tr>
                             }
+                        }
+                    }
+
+                    <tr>
+                        <td class="product-title">Add to cart</td>
+                        @foreach (var product in Model.CompareProducts)
+                        {
+                            <td class="product-description">
+                                <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">add to cart</a>
+                            </td>
+                        }
+                    </tr>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <tr>
+                            <td class="product-title">Add to wishlist</td>
+                            @foreach (var product in Model.CompareProducts)
+                            {
+                                <td class="product-description">
+                                    <a class="compare-wishlist text-uppercase @if (product.isWished) { <text> selected </text> } " data-id="@product.Id" href="#">add to wishlist</a>
+                                </td>
+                            }
+                        </tr>
+                    }
 
 
-                            <tr>
-                                <td class="product-title">Delete</td>
-                                @foreach (var product in Model.CompareProducts)
-                                {
-                                    <td class="product-description"><a class="compare-remove" data-id="@product.Id" href="#"><i class="fa fa-trash-o"></i></a></td>
-                                }
-                            </tr>
-                            <tr>
-                                <td class="product-title">Rating</td>
-                                @foreach (var product in Model.CompareProducts)
-                                {
-                                    <td class="product-description">
-                                        <div class="product-rating">
-                                            @for (int i = 0; i < 5; i++)
-                                            {
-                                                if (i < product.Rate)
-                                                {
-                                                    <i class="fa fa-star"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i style="color: #444" class="fa fa-star"></i>
-                                                }
-                                            }
-                                        </div>
-                                    </td>
-                                }
-                            </tr>
+                    <tr>
+                        <td class="product-title">Delete</td>
+                        @foreach (var product in Model.CompareProducts)
+                        {
+                            <td class="product-description"><a class="compare-remove" data-id="@product.Id" href="#"><i class="fa fa-trash-o"></i></a></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="product-title">Rating</td>
+                        @foreach (var product in Model.CompareProducts)
+                        {
+                            <td class="product-description">
+                                <div class="product-rating">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < product.Rate)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i style="color: #444" class="fa fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                            </td>
+                        }
+                    </tr>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Compare Page End -->
+                </tbody>
+            </table>
+       </div>
     }
     else
     {
-        <div class="cart-main-area pb-80 pb-sm-50">
-            <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-content pb-20"><p>No products to compare.</p></div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-content pb-20"><p>No products to compare.</p></div>
-                        <div class="row">
-                            <!-- Cart Button Start -->
-                            <div class="col-lg-8 col-md-7">
-                                <div class="buttons-cart">
-                                    <a href="@Url.Action("Index", "Products")">Add to Compare</a>
-                                </div>
-                            </div>
+                    <!-- Cart Button Start -->
+                    <div class="col-lg-8 col-md-7">
+                        <div class="buttons-cart">
+                            <a href="@Url.Action("Index", "Products")">Add to Compare</a>
                         </div>
                     </div>
                 </div>
@@ -154,6 +145,22 @@
 }
 
 <script>
+
+    var Start = function () {
+        var currentCompareCookie = $.cookie('CompareProducts');
+
+        if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null) {
+            products = currentCompareCookie.split('-');
+        }
+        else {
+            return;
+        }
+
+        var currentClass = "col-lg-" + ((products.length) * 3) + "";
+        $('#compareContainer').addClass(currentClass);
+    }
+
+    window.onload = Start;
 
     $('.compare-wishlist').click(function (event) {
         event.preventDefault();
@@ -200,7 +207,7 @@
 
         $.cookie('CartProducts', products.join('-'), { path: '/' });
 
-        cartAnimation2();
+        cartAnimation();
         cartBtn.addClass('animated');
 
         $(this).blur();
@@ -237,20 +244,24 @@
 
         $.cookie('CompareProducts', filteredProducts.join('-'), { path: '/' });
 
+        var currentClass = "col-lg-" + ((filteredProducts.length + 1) * 3) + "";
+        var nextClass = "col-lg-" + (filteredProducts.length * 3) + "";
+
         $.ajax({
-            url: '@Url.Action("CompareProducts", "Generic")'
+            url: '@Url.Action("CompareProducts", "Generic")',
+            beforeSend: function () {
+                ajaxLoading();
+            }
         })
         .done(function (response) {
             $('#compareContainer').html(response);
+            $('#compareContainer').removeClass(currentClass);
+            $('#compareContainer').addClass(nextClass);
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
             //alert("Fail");
         });
-
-
     });
-
-
 
 </script>
