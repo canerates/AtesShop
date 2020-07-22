@@ -8,7 +8,7 @@
     var total = Model.Pager.TotalItems;
     var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
 
-    var itemListDesc = "Showing " + current + " - " + size + " of " + total;
+    var itemListDesc = AtesShop.Resources.Resources.Showing + " " + current + " - " + size + " of " + total;
 
     var isList = Model.IsListView == true ? 1 : 0;
 
@@ -26,20 +26,18 @@
 
 }
 
-<!-- Grid & List View End -->
+@if (Model.Products.Count != 0)
+{
 <div class="main-categorie">
-    <!-- Grid & List Main Area End -->
     <div class="tab-content fix">
         @if (!Model.IsListView)
         {
             <div id="grid-view" class="tab-pane active" style="padding:10px;">
                 <div class="row" >
-                    <!-- Single Product Start -->
                     @foreach (var product in Model.Products)
                     {
                         <div class="col-lg-4 col-sm-6">
                             <div class="single-product">
-                                <!-- Product Image Start -->
                                 <div class="pro-img">
                                     <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                         @{
@@ -47,15 +45,11 @@
                                         }
                                         @foreach (var image in product.Images)
                                         {
-                                            <img class="@(counter == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                            <img class="@(counter == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                             counter++;
                                         }
-                                        @*<img class="primary-img" src="~/Content/img/products/ip1_dome.png" alt="single-product">
-                                            <img class="secondary-img" src="~/Content/img/products/ip1_bullet.png" alt="single-product">*@
                                     </a>
                                 </div>
-                                <!-- Product Image End -->
-                                <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="product-rating">
                                         @for (int i = 0; i < 5; i++)
@@ -98,7 +92,7 @@
                                         <div class="actions-secondary">
                                             @if (!Request.IsAuthenticated)
                                             {
-                                                <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                             }
                                             else
                                             {
@@ -109,25 +103,19 @@
                                     </div>
                                     
                                 </div>
-                                <!-- Product Content End -->
                             </div>
                         </div>
-                                            }
-                    <!-- Single Product End -->
-
-
+                      }
                 </div>
             </div>
         }
         else
         {
             <div id="list-view" class="tab-pane active" style="padding:10px;">
-                <!-- Single Product Start -->
         
                 @foreach (var product in Model.Products)
                 {
                     <div class="single-product">
-                        <!-- Product Image Start -->
                         <div class="pro-img">
                             <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                 @{
@@ -135,14 +123,12 @@
                                 }
                                 @foreach (var image in product.Images)
                                 {
-                                    <img class="@(counter == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                    <img class="@(counter == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                     counter++;
                                 }
         
                             </a>
                         </div>
-                        <!-- Product Image End -->
-                        <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="product-rating">
                                 @for (int i = 0; i < 5; i++)
@@ -180,7 +166,7 @@
                                 <div class="actions-secondary">
                                     @if (!Request.IsAuthenticated)
                                     {
-                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                     }
                                     else
                                     {
@@ -191,19 +177,13 @@
                             </div>
                             
                         </div>
-                        <!-- Product Content End -->
                     </div>
-        
                 }
-                <!-- Single Product End -->
             </div>
          }
-        <!-- #grid view End -->
-        <!-- #list view End -->
     </div>
-    <!-- Grid & List Main Area End -->
 </div>
-<!--Breadcrumb and Page Show Start -->
+
 <div class="pagination-box fix">
     <ul class="blog-pagination ">
         @if (Model.Pager != null && Model.Pager.TotalPages > 1)
@@ -279,18 +259,35 @@
     </ul>
     <div id="dataFromPartial">@itemListDesc</div>
     <div class="toolbar-sorter-footer">
-        <label>show</label>
+        <label>@AtesShop.Resources.Resources.Show</label>
         <select id="sorterSelect" class="sorter" name="sorter">
             <option value="@pageSort">@pageSort</option>
             <option value="@(pageSort * 2)">@(pageSort * 2)</option>
             <option value="@(pageSort * 3)">@(pageSort * 3)</option>
         </select>
-        <span>per page</span>
+        <span>@AtesShop.Resources.Resources.PerPage</span>
     </div>
 
 </div>
 
-<!--Breadcrumb and Page Show End -->
+}
+else
+{
+    <div class="main-categorie">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 pt-40">
+                    <div class="error-text" style="text-align: center;">
+                        <p style="font-size: 17px;">@AtesShop.Resources.Resources.NoProducts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+}
+
+
 
 <script>
 
@@ -332,7 +329,6 @@
             }
         })
         .done(function (response) {
-            //alert("Success");
             $("#tableContainer").html(response);
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
@@ -360,7 +356,6 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     });
 
@@ -384,12 +379,12 @@
         if (products.length >= 4) {
 
             swal({
-                title: "Comparison limit (3).",
-                text: "Do you want to compare products now ?",
+                title: "@AtesShop.Resources.Resources.ComparisonLimit",
+                text: "@AtesShop.Resources.Resources.WantToCompare",
                 icon: "warning",
                 buttons: {
-                    confirm: {text: "Compare", className: 'sweet-warning button'},
-                    cancel: "Cancel"
+                    confirm: {text: "@AtesShop.Resources.Resources.Compare", className: 'sweet-warning button'},
+                    cancel: "@AtesShop.Resources.Resources.Cancel"
                 }
             })
             .then((value) => {
@@ -402,10 +397,10 @@
 
         else if (products.length > 0 && products[0] != categoryId) {
             swal({
-                text: "Please choose the same category for comparison.",
+                text: "@AtesShop.Resources.Resources.ChooseSameCategory",
                 icon: "warning",
                 buttons: {
-                    confirm: {text: 'Ok', className: 'sweet-warning button'}
+                    confirm: {text: '@AtesShop.Resources.Resources.Ok', className: 'sweet-warning button'}
                 }
             });
         }

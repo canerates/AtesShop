@@ -61,15 +61,6 @@ namespace AtesShop.Web.Controllers
             HomeViewModel model = new HomeViewModel();
 
             var products = ProductService.Instance.GetProducts(CultureInfo.CurrentUICulture.Name, roleName);
-
-            //foreach (var product in products)
-            //{
-            //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
-            //    //Localization
-            //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-            //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-                
-            //}
             
             products = CommonHelper.FormatCurrency(products, CultureInfo.CurrentUICulture.Name);
 
@@ -88,28 +79,19 @@ namespace AtesShop.Web.Controllers
         [HttpGet]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page. ";
-
             return View();
         }
 
         [HttpGet]
         public ActionResult Error()
         {
-            ViewBag.Message = "Page Not Found";
-
             return View();
         } 
-        
-
-        
     }
 }

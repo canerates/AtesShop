@@ -35,6 +35,8 @@ namespace AtesShop.Entities
 
         public bool isNew { get; set; }
 
+        public bool isActive { get; set; }
+
         //temp
         public bool isTopRated { get; set; }
 
@@ -54,8 +56,9 @@ namespace AtesShop.Entities
 
         [NotMapped]
         public bool isWished { get; set; }
-
-
+        
+        public virtual InventoryItem Stock { get; set; }
+        
         public virtual List<ProductAttribute> Attributes { get; set; }
         
     }

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Resources;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
@@ -34,6 +38,18 @@ namespace AtesShop.Web.Helpers
                 }
             }
         }
+
+        public class AjaxChildActionOnlyAttribute : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
+            {
+                if (!filterContext.HttpContext.Request.IsAjaxRequest() && !filterContext.IsChildAction)
+                    filterContext.Result = new RedirectToRouteResult(new
+                                   RouteValueDictionary(new { controller = "Home", action = "Error", area = "" }));
+            }
+        }
+
+
     }
     
     public static class HtmlHelperExtensions
@@ -49,4 +65,18 @@ namespace AtesShop.Web.Helpers
             return MvcHtmlString.Create(description);
         }
     }
+
+    public static class EnumExtensions
+    {
+        public static string GetDisplayDescription(this Enum enumValue)
+        {
+            return enumValue.GetType().GetMember(enumValue.ToString())
+                .FirstOrDefault()?
+                .GetCustomAttribute<DisplayAttribute>()
+                .GetDescription() ?? "unknown";
+        }
+    }
+
+
+
 }

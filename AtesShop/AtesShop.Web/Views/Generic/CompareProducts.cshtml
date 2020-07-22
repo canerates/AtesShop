@@ -14,7 +14,7 @@
                                 <div class="compare-details">
                                     <div class="compare-detail-img">
                                         <a href="#">
-                                            <img class="primary-img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="compare-product">
+                                            <img class="primary-img" src="@Url.Action( "Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="compare-product">
                                         </a>
                                     </div>
                                     <div style="text-align:center;" class="compare-detail-content">
@@ -75,7 +75,15 @@
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description">
-                                <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">add to cart</a>
+                                @if (product.Stock != null && product.Stock.Available != 0)
+                                {
+                                    <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">add to cart</a>
+                                }
+                                else
+                                {
+                                    <span style="color:red;">Out of Stock</span>
+                                }
+                                
                             </td>
                         }
                     </tr>
@@ -187,30 +195,33 @@
     $('.compare-cart').click(function (event) {
         event.preventDefault();
 
-        var cartBtn = $(this);
-
-        var currentCartCookie = $.cookie('CartProducts');
-
-        var products;
-
-        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null)
-        {
-            products = currentCartCookie.split('-');
-        }
-        else
-        {
-            products = [];
-        }
         var productId = $(this).attr('data-id');
 
-        products.push(productId);
+        if (productId != undefined) {
 
-        $.cookie('CartProducts', products.join('-'), { path: '/' });
+            var cartBtn = $(this);
 
-        cartAnimation();
-        cartBtn.addClass('animated');
+            var currentCartCookie = $.cookie('CartProducts');
 
-        $(this).blur();
+            var products;
+
+            if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+                products = currentCartCookie.split('-');
+            }
+            else {
+                products = [];
+            }
+
+
+            products.push(productId);
+
+            $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+            cartAnimation();
+            cartBtn.addClass('animated');
+
+            $(this).blur();
+        }
 
     });
 

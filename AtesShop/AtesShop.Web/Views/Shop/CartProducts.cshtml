@@ -3,35 +3,36 @@
 {
     if (Model.CartProducts != null && Model.CartProducts.Count > 0)
     {
-        <!-- Form Start -->
-
-        <!-- Table Content Start -->
         <div id="cartTable">
-            <!-- Table Content Start -->
             <div class="table-content table-responsive mb-50">
                 <table>
                     <thead>
                         <tr>
-                            <th class="product-thumbnail">Image</th>
-                            <th class="product-name">Product</th>
-                            <th class="product-price">Price</th>
-                            <th class="product-quantity">Quantity</th>
-                            <th class="product-subtotal">Total</th>
-                            <th class="product-remove">Remove</th>
+                            <th class="product-thumbnail">@AtesShop.Resources.Resources.Image</th>
+                            <th class="product-name">@AtesShop.Resources.Resources.Product</th>
+                            <th class="product-price">@AtesShop.Resources.Resources.Price</th>
+                            <th class="product-quantity">@AtesShop.Resources.Resources.Quantity</th>
+                            <th class="product-subtotal">@AtesShop.Resources.Resources.Total</th>
+                            <th class="product-remove">@AtesShop.Resources.Resources.Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var product in Model.CartProducts)
                         {
+
                             var productQuantity = Model.CartProductIdList.Where(productId => productId == product.Id).Count();
+                            if (productQuantity > product.Stock.Available)
+                            {
+                                productQuantity = product.Stock.Available;
+                            }
 
                             <tr>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                    <a href="#"><img src="@Url.Action("Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
                                 </td>
                                 <td class="product-name"><a href="#">@product.Name <br /> @product.Description</a></td>
                                 <td class="product-price"><span class="price">@product.Price</span></td>
-                                <td class="product-quantity"><input type="number" class="productQuantity" min="1" required oninput="validity.valid||(value='');" data-id="@product.Id" value="@productQuantity" /></td>
+                                <td class="product-quantity"><input type="number" class="productQuantity" min="1" max="@product.Stock.Available" required oninput="validity.valid||(value='');" data-id="@product.Id" value="@productQuantity" /></td>
                                 <td class="product-subtotal">@Model.CartProductsSubTotal[product.Id]</td>
                                 <td class="product-remove"> <a class="productRemove" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                             </tr>
@@ -41,36 +42,31 @@
                 </table>
                 <input id="cartTotalPrice" type="hidden" value="@Model.CartTotalPrice" />
             </div>
-            <!-- Table Content Start -->
         </div>
-
-        <!-- Table Content Start -->
+        
         <div class="row">
-            <!-- Cart Button Start -->
             <div class="col-lg-8 col-md-7">
                 <div class="buttons-cart">
-                    <a id="updateCartBtn" class="off-white-bg" href="" onclick="updateCart(); return false;">Update Cart</a>
-                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                    <a id="updateCartBtn" class="off-white-bg" href="" onclick="updateCart(); return false;">@AtesShop.Resources.Resources.UpdateCart</a>
+                    <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                 </div>
             </div>
-            <!-- Cart Button Start -->
-            <!-- Cart Totals Start -->
             <div class="col-lg-4 col-md-12">
                 <div class="cart_totals">
-                    <h2>Cart Totals</h2>
+                    <h2>@AtesShop.Resources.Resources.CartTotals</h2>
                     <br />
                     <table>
                         <tbody>
                             <tr class="cart-subtotal">
-                                <th>Subtotal</th>
+                                <th>@AtesShop.Resources.Resources.Subtotal</th>
                                 <td><span id="subTotalPrice" class="amount">@Model.CartTotalPrice</span></td>
                             </tr>
                             <tr class="cart-subtotal">
-                                <th>Tax (5%)</th>
+                                <th>@AtesShop.Resources.Resources.Tax (5%)</th>
                                 <td><span id="subTotalPrice" class="amount">@Model.CartTaxPrice</span></td>
                             </tr>
                             <tr class="order-total">
-                                <th>Total</th>
+                                <th>@AtesShop.Resources.Resources.Total</th>
                                 <td>
                                     <strong><span id="totalPrice" class="amount">@Model.CartTotalPriceWithTax</span></strong>
                                 </td>
@@ -78,24 +74,20 @@
                         </tbody>
                     </table>
                     <div class="wc-proceed-to-checkout">
-                        <a href="@Url.Action("Checkout", "Shop")">Proceed to Checkout</a>
+                        <a href="@Url.Action("Checkout", "Shop")">@AtesShop.Resources.Resources.ProceedToCheckout</a>
                     </div>
                 </div>
             </div>
-            <!-- Cart Totals End -->
         </div>
-        <!-- Row End -->
-
-        <!-- Form End -->
+        
     }
     else
     {
-        <div class="text-content pb-20"><p>No products in cart.</p></div>
+        <div class="text-content pb-20"><p>@AtesShop.Resources.Resources.NoProductsInCart</p></div>
         <div class="row">
-            <!-- Cart Button Start -->
             <div class="col-lg-8 col-md-7">
                 <div class="buttons-cart">
-                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                    <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                 </div>
             </div>
         </div>
@@ -103,6 +95,7 @@
 }
 
 <script>
+
     $('.productQuantity').on('change', function (event) {
         event.preventDefault();
         if ($(this).val() != null && $(this).val() != "") {
@@ -121,6 +114,7 @@
         $(this).parent().siblings('.product-quantity').children().attr('value', 0);
         updateCart();
     })
+
 </script>
 
 

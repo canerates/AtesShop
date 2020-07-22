@@ -8,23 +8,20 @@
     var isBestSellerOpened = false;
 }
 
-<!-- Slider Area Start -->
 <div class="slider-area pb-60">
     <div class="slider-wrapper theme-default  nivo2">
-        <!-- Slider Background  Image Start-->
         <div id="slider" class="nivoSlider">
             <a href="@Url.Action("Index", "Shop")"><img src="~/Content/img/slider/1.jpg" data-thumb="~/Content/img/slider/1.jpg" alt="" title="#slider-1-caption1" /></a>
             <a href="@Url.Action("Index", "Shop")"><img src="~/Content/img/slider/2.jpg" data-thumb="~/Content/img/slider/2.jpg" alt="" title="#slider-1-caption2" /></a>
         </div>
-        <!-- Slider Background  Image Start-->
         <div id="slider-1-caption1" class="nivo-html-caption nivo-caption">
             <div class="text-content-wrapper">
                 <div class="container">
                     <div class="text-content">
-                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="2s" data-wow-delay="0s">Big Sale</h4>
-                        <h1 class="title1 wow bounceInRight mb-16" data-wow-duration="2s" data-wow-delay="1s">Smart Surveillance <br>IP Camera & NVR </h1>
+                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="2s" data-wow-delay="0s">@AtesShop.Resources.Resources.BigSale</h4>
+                        <h1 class="title1 wow bounceInRight mb-16" data-wow-duration="2s" data-wow-delay="1s">@AtesShop.Resources.Resources.SmartSurveillance <br>@AtesShop.Resources.Resources.IPCameraNVR </h1>
                         <div class="banner-readmore wow bounceInUp mt-35" data-wow-duration="2s" data-wow-delay="2s">
-                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">Shop Now</a>
+                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopNow</a>
                         </div>
                     </div>
                 </div>
@@ -34,10 +31,10 @@
             <div class="text-content-wrapper">
                 <div class="container">
                     <div class="text-content slide-2">
-                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="1s" data-wow-delay="1s">Big Sale</h4>
-                        <h1 class="title1 wow flipInX  mb-16" data-wow-duration="1s" data-wow-delay="2s">Smart Surveillance <br>IP Camera & NVR </h1>
+                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="1s" data-wow-delay="1s">@AtesShop.Resources.Resources.BigSale</h4>
+                        <h1 class="title1 wow flipInX  mb-16" data-wow-duration="1s" data-wow-delay="2s">@AtesShop.Resources.Resources.SmartSurveillance <br>@AtesShop.Resources.Resources.IPCameraNVR </h1>
                         <div class="banner-readmore wow bounceInUp mt-35" data-wow-duration="1s" data-wow-delay="2s">
-                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">Shop Now</a>
+                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopNow</a>
                         </div>
                     </div>
                 </div>
@@ -45,51 +42,36 @@
         </div>
     </div>
 </div>
-<!-- Slider Area End -->
-<!-- Banner Start -->
 <div class="upper-banner banner pb-60">
     <div class="container">
         <div class="row">
-            <!-- Single Banner Start -->
             <div class="col-sm-4">
                 <div class="single-banner zoom">
                     <a href="#"><img src="~/Content/img/banner/ipc2.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <!-- Single Banner End -->
-            <!-- Single Banner Start -->
             <div class="col-sm-4">
                 <div class="single-banner zoom">
                     <a href="#"><img src="~/Content/img/banner/nvr2.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <!-- Single Banner End -->
-            <!-- Single Banner Start -->
             <div class="col-sm-4">
                 <div class="single-banner zoom">
                     <a href="#"><img src="~/Content/img/banner/sp2.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <!-- Single Banner End -->
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Banner End -->
-<!-- Best Products Start -->
 <div class="best-seller-product pb-30">
     <div class="container">
         <div class="group-title">
-            <h2>Smart Surveillance</h2>
+            <h2>@AtesShop.Resources.Resources.SmartSurveillance</h2>
         </div>
-        <!-- Best Product Activation Start -->
         <div class="hand-tool-active owl-carousel">
-            <!-- Single Product Start -->
             @foreach (var product in Model.BestSellerProducts)
             {
                 <div class="single-product">
-                    <!-- Product Image Start -->
                     <div class="pro-img">
                         <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                             @{
@@ -97,13 +79,11 @@
                             }
                             @foreach (var image in product.Images)
                             {
-                                <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                 flag++;
                             }
                         </a>
                     </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
                     <div class="pro-content">
                         <div class="product-rating">
                             @for (int i = 0; i < 5; i++)
@@ -143,63 +123,41 @@
                         {
                             <div class="pro-actions">
                                 <div class="actions-secondary">
-                                    <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                    <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                 </div>
                             </div>
                         }
 
-                        @*<div class="pro-actions">
-                            <div class="actions-secondary">
-                                <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
-                            </div>
-                        </div>*@
                     </div>
-                    <!-- Product Content End -->
                 </div>
             }
-            <!-- Single Product End -->
         </div>
-        <!-- Best Product Activation End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Best Product End -->
-<!-- Banner Start -->
 <div class="upper-banner banner pb-60">
     <div class="container">
         <div class="row">
-            <!-- Single Banner Start -->
             <div class="col-sm-6">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/1.png" alt="slider-banner"></a>
+                    <a href="#"><img src="~/Content/img/banner/set8.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <!-- Single Banner End -->
-            <!-- Single Banner Start -->
             <div class="col-sm-6">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/2.png" alt="slider-banner"></a>
+                    <a href="#"><img src="~/Content/img/banner/set16.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <!-- Single Banner End -->
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Banner End -->
-<!-- New Products Start -->
 <div class="new-products pb-60">
     <div class="container">
         <div class="row">
             <div class="col-xl-3 col-lg-4 order-2">
                 <div class="side-product-list">
                     <div class="group-title">
-                        <h2>Top Products</h2>
+                        <h2>@AtesShop.Resources.Resources.TopProducts</h2>
                     </div>
-                    <!-- Deal Pro Activation Start -->
                     <div class="slider-right-content side-product-list-active owl-carousel">
                         
                         
@@ -211,14 +169,11 @@
                                 isNewProductsOpened = true;
                             }
                             <div class="single-product">
-                                <!-- Product Image Start -->
                                 <div class="pro-img">
                                     <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
-                                        <img class="img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="product-image">
+                                        <img class="img" src="@Url.Action( "Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="product-image">
                                     </a>
                                 </div>
-                                <!-- Product Image End -->
-                                <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="product-rating">
                                         @for (int i = 0; i < 5; i++)
@@ -239,7 +194,7 @@
                                         if (product.isDiscount)
                                         {
                                             <div class="mt-10">
-                                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                                <p><span class="price">@product.Price</span></p>
                                             </div>
                                         }
                                         else
@@ -251,10 +206,9 @@
                                     }
                                     else
                                     {
-                                        <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                        <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                     }
                                 </div>
-                                <!-- Product Content End -->
                             </div>
                             if(newProductsCounter % 5 == 4)
                             {
@@ -269,29 +223,23 @@
                         }
 
                     </div>
-                    <!-- Deal Pro Activation End -->
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8  order-lg-2">
-                <!-- New Pro Content End -->
                 <div class="new-pro-content">
                     <div class="pro-tab-title border-line">
-                        <!-- Featured Product List Item Start -->
                         <ul class=" nav product-list product-tab-list mb-30">
-                            <li><a class="active" data-toggle="tab" href="#new-arrival">New Arrivals</a></li>
-                            <li><a data-toggle="tab" href="#featured">Featured</a></li>
-                            <li><a data-toggle="tab" href="#toprated">Top Rated</a></li>
+                            <li><a class="active" data-toggle="tab" href="#new-arrival">@AtesShop.Resources.Resources.NewArrivals</a></li>
+                            <li><a data-toggle="tab" href="#featured">@AtesShop.Resources.Resources.Featured</a></li>
+                            <li><a data-toggle="tab" href="#toprated">@AtesShop.Resources.Resources.TopRated</a></li>
                         </ul>
-                        <!-- Featured Product List Item End -->
                     </div>
                     <div class="tab-content product-tab-content jump">
                         <div id="new-arrival" class="tab-pane active">
-                            <!-- New Products Activation Start -->
                             <div class="new-pro-active owl-carousel">
                                 @foreach (var product in Model.NewProducts)
                                 {
                                     <div class="single-product">
-                                        <!-- Product Image Start -->
                                         <div class="pro-img">
                                             <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                                 @{
@@ -299,13 +247,11 @@
                                                 }
                                                 @foreach (var image in product.Images)
                                                 {
-                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                                     flag++;
                                                 }
                                             </a>
                                         </div>
-                                        <!-- Product Image End -->
-                                        <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
                                                 @for (int i = 0; i < 5; i++)
@@ -346,34 +292,23 @@
                                             {
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
-                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                                     </div>
                                                 </div>
                                             }
 
-                                            @*<div class="pro-actions">
-                                                <div class="actions-secondary">
-                                                    <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                                    <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
-                                                </div>
-                                            </div>*@
                                         </div>
-                                        <!-- Product Content End -->
                                     </div>
                                 }
                                 
                             </div>
-                            <!-- New Products Activation End -->
                         </div>
 
                         <div id="featured" class="tab-pane">
-                            <!-- New Products Activation Start -->
                             <div class="new-pro-active owl-carousel">
                                 @foreach (var product in Model.FeaturedProducts)
                                 {
                                     <div class="single-product">
-                                        <!-- Product Image Start -->
                                         <div class="pro-img">
                                             <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                                 @{
@@ -381,13 +316,11 @@
                                                 }
                                                 @foreach (var image in product.Images)
                                                 {
-                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                                     flag++;
                                                 }
                                             </a>
                                         </div>
-                                        <!-- Product Image End -->
-                                        <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
                                                 @for (int i = 0; i < 5; i++)
@@ -426,34 +359,22 @@
                                             {
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
-                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                                     </div>
                                                 </div>
                                             }
 
-                                            @*<div class="pro-actions">
-                                                <div class="actions-secondary">
-                                                    <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                                    <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
-                                                </div>
-                                            </div>*@
                                         </div>
-                                        <!-- Product Content End -->
                                     </div>
-                                                    }
+                                  }
 
                             </div>
-                            <!-- New Products Activation End -->
                         </div>
-                        <!-- New Products End -->
                         <div id="toprated" class="tab-pane">
-                            <!-- New Products Activation Start -->
                             <div class="new-pro-active owl-carousel">
                                 @foreach (var product in Model.TopRatedProducts)
                                 {
                                     <div class="single-product">
-                                        <!-- Product Image Start -->
                                         <div class="pro-img">
                                             <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                                 @{
@@ -461,13 +382,11 @@
                                                 }
                                                 @foreach (var image in product.Images)
                                                 {
-                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Products", new { id = image.Id })" alt="single-product">
+                                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                                     flag++;
                                                 }
                                             </a>
                                         </div>
-                                        <!-- Product Image End -->
-                                        <!-- Product Content Start -->
                                         <div class="pro-content">
                                             <div class="product-rating">
                                                 @for (int i = 0; i < 5; i++)
@@ -507,44 +426,29 @@
                                             {
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
-                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                                     </div>
                                                 </div>
                                             }
 
-                                            @*<div class="pro-actions">
-                                                <div class="actions-secondary">
-                                                    <a href="#" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                                    <a class="add-cart" href="#" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
-                                                </div>
-                                            </div>*@
                                         </div>
-                                        <!-- Product Content End -->
                                     </div>
                                  }
                             </div>
-                            <!-- New Products Activation End -->
                         </div>
                     </div>
-                    <!-- Tab-Content End -->
                     <div class="single-banner zoom mt-30 ">
                         <a href="#"><img src="~/Content/img/banner/tab-banner.jpg" alt="slider-banner"></a>
                     </div>
                 </div>
-                <!-- New Pro Content End -->
             </div>
         </div>
 
     </div>
-    <!-- Container End -->
 </div>
-<!-- New Products End -->
-<!-- Company Policy Start -->
 <div class="company-policy pb-60 pb-sm-25">
     <div class="container">
         <div class="row">
-            <!-- Single Policy Start -->
             <div class="col-lg-3 col-sm-6">
                 <div class="single-policy">
                     <div class="icone-img">
@@ -556,8 +460,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Policy End -->
-            <!-- Single Policy Start -->
             <div class="col-lg-3 col-sm-6">
                 <div class="single-policy">
                     <div class="icone-img">
@@ -569,8 +471,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Policy End -->
-            <!-- Single Policy Start -->
             <div class="col-lg-3 col-sm-6">
                 <div class="single-policy">
                     <div class="icone-img">
@@ -582,8 +482,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Policy End -->
-            <!-- Single Policy Start -->
             <div class="col-lg-3 col-sm-6">
                 <div class="single-policy">
                     <div class="icone-img">
@@ -595,20 +493,15 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Policy End -->
         </div>
     </div>
 </div>
-<!-- Company Policy End -->
-<!-- Best Products Start -->
 <div class="best-seller-product pb-50 pb-sm-40">
     <div class="container">
         <div class="group-title">
-            <h2>Best Seller Products</h2>
+            <h2>@AtesShop.Resources.Resources.BestSellerProducts</h2>
         </div>
-        <!-- Best Product Activation Start -->
         <div class="best-seller-pro-active  owl-carousel slider-right-content">
-            <!-- Double Product Start -->
             
             @foreach (var product in Model.BestSellerProducts)
             {
@@ -618,14 +511,11 @@
                     isBestSellerOpened = true;
                 }
                 <div class="single-product">
-                    <!-- Product Image Start -->
                     <div class="pro-img">
                         <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
-                            <img class="img" src="@Url.Action( "Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="product-image">
+                            <img class="img" src="@Url.Action( "Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="product-image">
                         </a>
                     </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
                     <div class="pro-content">
                         <div class="product-rating">
                             @for (int i = 0; i < 5; i++)
@@ -645,7 +535,7 @@
                         {
                             if (product.isDiscount)
                             {
-                                <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
+                                <p><span class="price">@product.Price</span></p>
                             }
                             else
                             {
@@ -654,11 +544,10 @@
                         }
                         else
                         {
-                            <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                            <a class="price" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                         }
 
                     </div>
-                    <!-- Product Content End -->
                 </div>
                 if(bestSellerCounter % 2 == 1)
                 {
@@ -672,21 +561,15 @@
                 @:</div>
             }
         </div>
-        <!-- Best Product Activation End -->
     </div>
-    <!-- Container End -->
 </div>
 
-<!-- Best Product End -->
-<!-- Blog Page Start -->
 <div class="blog-area pb-60">
     <div class="container">
         <div class="group-title">
-            <h2>Smart Functions</h2>
+            <h2>@AtesShop.Resources.Resources.SmartFunctions</h2>
         </div>
-        <!-- Popular Categorie Activation Start -->
         <div class="blog-active owl-carousel">
-            <!-- Single Blog Start -->
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="#"><img height="240" width="370" src="~/Content/img/blog/tw.jpg" alt="blog-image"></a>
@@ -704,8 +587,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Blog End -->
-            <!-- Single Blog Start -->
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="#"><img height="240" width="370" src="~/Content/img/blog/fd2.png" alt="blog-image"></a>
@@ -723,8 +604,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Blog End -->
-            <!-- Single Blog Start -->
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="#"><img height="240" width="370" src="~/Content/img/blog/ri.jpg" alt="blog-image"></a>
@@ -742,8 +621,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Blog End -->
-            <!-- Single Blog Start -->
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="#"><img height="240" width="370" src="~/Content/img/blog/is1-1.png" alt="blog-image"></a>
@@ -761,8 +638,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Single Blog End -->
-            <!-- Single Blog Start -->
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="#"><img height="240" width="370" src="~/Content/img/blog/sc1.png" alt="blog-image"></a>
@@ -782,49 +657,5 @@
             </div>
             
         </div>
-        <!-- Popular Categorie Activation End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Blog Page End -->
-<!-- Brand Logo Start -->
-@*<div class="brand-area pb-60">
-    <div class="container">
-        <!-- Brand Banner Start -->
-        <div class="brand-banner owl-carousel">
-            <div class="single-brand">
-                <a href="#"><img class="img" src="~/Content/img/brand/1.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/2.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/3.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/4.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/5.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img class="img" src="~/Content/img/brand/1.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/2.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/3.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/4.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="~/Content/img/brand/5.png" alt="brand-image"></a>
-            </div>
-            
-        </div>
-        <!-- Brand Banner End -->
-    </div>
-</div>*@
-<!-- Brand Logo End -->

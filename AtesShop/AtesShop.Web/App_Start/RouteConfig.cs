@@ -14,7 +14,7 @@ namespace AtesShop.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.LowercaseUrls = true;
-            
+
             routes.MapRoute(
                 name: "About",
                 url: "About",
@@ -38,11 +38,23 @@ namespace AtesShop.Web
                 url: "Error",
                 defaults: new { controller = "Home", action = "Error", id = UrlParameter.Optional }
             );
-            
+
             routes.MapRoute(
                 name: "Success",
                 url: "Success",
                 defaults: new { controller = "Generic", action = "Success", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Products",
+                url: "Products/List/{categoryId}",
+                defaults: new { controller = "Products", action = "Index", categoryId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Shop",
+                url: "Shop/List/{categoryId}",
+                defaults: new { controller = "Shop", action = "Index", categoryId = UrlParameter.Optional }
             );
 
             routes.MapRoute(

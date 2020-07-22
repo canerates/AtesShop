@@ -38,6 +38,8 @@ namespace AtesShop.Web.ViewModels
         public List<Product> RelatedProducts { get; set; }
         public Dictionary<AttributeSection, List<ProductAttribute>> Attributes { get; set; }
         public List<Feature> ProductFeatures { get; set; }
+        public List<DocFile> SpecFiles { get; set; }
+        public InventoryItem Stock { get; set; }
 
     }
     
@@ -82,15 +84,15 @@ namespace AtesShop.Web.ViewModels
 
         // Account: Login Parameters
         [Required]
-        [Display(Name = "Username or E-mail")]
+        [Display(Name = "UsernameOrEmail", ResourceType = typeof(Resources.Resources))]
         public string EmailOrUserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Resources))]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "RememberMe", ResourceType = typeof(Resources.Resources))]
         public bool RememberMe { get; set; }
 
     }
@@ -129,36 +131,42 @@ namespace AtesShop.Web.ViewModels
 
     public class ShipViewModel
     {
-        
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "FirstNameRequired")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "LastNameRequired")]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
         
 
         public string CompanyName { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "EmailRequired")]
         [EmailAddress]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
-
-        [RequiredIf("isShipDifferent", true)]
+        
+        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
         public string Phone { get; set; }
-
-        //[RequiredIf("isShipDifferent", true)]
+        
+        [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "StateCountyRequired")]
+        [Display(Name = "StateCounty", ResourceType = typeof(Resources.Resources))]
         public string State { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "TownCityRequired")]
+        [Display(Name = "TownCity", ResourceType = typeof(Resources.Resources))]
         public string City { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PostcodeZipRequired")]
+        [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 
-        [RequiredIf("isShipDifferent", true)]
+        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "AddressRequired")]
+        [Display(Name = "Address", ResourceType = typeof(Resources.Resources))]
         public string Address1 { get; set; }
         
         public string Address2 { get; set; }
@@ -169,9 +177,11 @@ namespace AtesShop.Web.ViewModels
     public class BillViewModel
     {
         [Required]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
         [Required]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
         
 
@@ -179,24 +189,30 @@ namespace AtesShop.Web.ViewModels
 
         [Required]
         [EmailAddress]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
         public string Phone { get; set; }
-
-        //[Required]
+        
+        [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
 
         [Required]
+        [Display(Name = "StateCounty", ResourceType = typeof(Resources.Resources))]
         public string State { get; set; }
 
         [Required]
+        [Display(Name = "TownCity", ResourceType = typeof(Resources.Resources))]
         public string City { get; set; }
 
         [Required]
+        [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 
         [Required]
+        [Display(Name = "Address", ResourceType = typeof(Resources.Resources))]
         public string Address1 { get; set; }
         
 

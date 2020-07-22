@@ -69,6 +69,7 @@
     <Compile Include="DocFile.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="InventoryItem.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderAddress.cs" />

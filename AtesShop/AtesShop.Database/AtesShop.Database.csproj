@@ -58,6 +58,14 @@
     <Compile Include="Migrations\202007130214018_initialized.designer.cs">
       <DependentUpon>202007130214018_initialized.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007140906311_isActiveProductPropAdded.cs" />
+    <Compile Include="Migrations\202007140906311_isActiveProductPropAdded.designer.cs">
+      <DependentUpon>202007140906311_isActiveProductPropAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007160242506_inventoryAdd.cs" />
+    <Compile Include="Migrations\202007160242506_inventoryAdd.designer.cs">
+      <DependentUpon>202007160242506_inventoryAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +84,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007130214018_initialized.resx">
       <DependentUpon>202007130214018_initialized.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007140906311_isActiveProductPropAdded.resx">
+      <DependentUpon>202007140906311_isActiveProductPropAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007160242506_inventoryAdd.resx">
+      <DependentUpon>202007160242506_inventoryAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

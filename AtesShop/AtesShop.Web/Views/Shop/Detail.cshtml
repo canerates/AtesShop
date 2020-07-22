@@ -9,51 +9,42 @@
         idList = CompareProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
         idList.RemoveAt(0);
     }
+
+    bool isSpecFilesEmpty = Model.SpecFiles == null ? true : false;
+
+    var stock = Model.Stock != null ? Model.Stock.Available : 1;
 }
 
-<!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
-                <li><a href="@Url.Action( "Index", "Shop")">@AtesShop.Resources.Resources.ShopT1O3</a></li>
+                <li><a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopT1O3</a></li>
                 <li class="active"><a href="@Url.Action("Detail", "Shop")">@Model.Name</a></li>
             </ul>
         </div>
     </div>
-    <!-- Container End -->
 </div>
-<!-- Breadcrumb End -->
-<!-- Product Thumbnail Start -->
 <div class="main-product-thumbnail pb-60">
     <div class="container">
         <div class="row">
-            <!-- Main Thumbnail Image Start -->
             <div class="col-lg-5">
-                <!-- Thumbnail Large Image start -->
                 <div class="tab-content">
                     @{
                         var i = 1;
                         foreach (var image in Model.ProductImages)
                         {
-                            <div id="thumb@(i)" class="tab-pane @if (i==1) { <text>active</text>} ">
-                                <a data-fancybox="images" href="@Url.Action( "Image", "Products", new { id = image.Id })">
-                                    <img src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="product-view">
+                            <div id="thumb@(i)" class="tab-pane @if (i == 1) { <text>active</text>} ">
+                                <a data-fancybox="images" href="@Url.Action("Image", "Generic", new { id = image.Id })">
+                                    <img src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="product-view">
                                 </a>
                             </div>
                             i++;
                         }
                     }
-                    @*<div id="thumb1" class="tab-pane active">
-                            <a data-fancybox="images" href="~/Content/img/products/ip1_bullet.png"><img src="~/Content/img/products/ip1_bullet.png" alt="product-view"></a>
-                        </div>
-                        <div id="thumb2" class="tab-pane">
-                            <a data-fancybox="images" href="~/Content/img/products/ip1_dome.png"><img src="~/Content/img/products/ip1_dome.png" alt="product-view"></a>
-                        </div>*@
+                    
                 </div>
-                <!-- Thumbnail Large Image End -->
-                <!-- Thumbnail Image End -->
                 <div class="product-thumbnail">
                     <div class="thumb-menu nav">
                         @{
@@ -61,18 +52,15 @@
                             foreach (var image in Model.ProductImages)
                             {
                                 <a data-toggle="tab" href="#thumb@(j)" @if (j == 1) { <text>class="active"</text> }>
-                                    <img src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="product-thumbnail" />
+                                    <img src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="product-thumbnail" />
                                 </a>
-                                    j++;
-                                    if (j == 5) { break; }
+                                j++;
+                                if (j == 5) { break; }
                             }
                         }
                     </div>
                 </div>
-                <!-- Thumbnail image end -->
             </div>
-            <!-- Main Thumbnail Image End -->
-            <!-- Thumbnail Description Start -->
             <div class="col-lg-7">
                 <div class="thubnail-desc fix">
                     <h3 class="product-header">@Model.Name</h3>
@@ -91,10 +79,7 @@
                                 }
                             }
                         </div>
-                        @*<div class="rating-feedback f-left">
-                            <a href="#">(1 review)</a>
-                            <a href="#">add to your review</a>
-                        </div>*@
+                        
                     </div>
                     <div class="pro-price mb-10">
                         @if (Model.IsDiscount)
@@ -106,14 +91,24 @@
                             <p><span class="price">@Model.Price</span></p>
                         }
                     </div>
-                    @*<div class="pro-ref mb-15">
-                        <p><span class="in-stock">IN STOCK</span><span class="sku">50</span></p>
-                    </div>*@
-                    @if (Model.Price != "Contact Us")
+                    @if (Model.Stock != null && Model.Stock.Available != 0)
                     {
-                        <div class="box-quantity">
-                            <input class="number" id="numeric" type="number" min="1" value="1">
-                            <a class="add-cart-qty" href="#" data-id="@Model.Id">add to cart</a>
+                        <div class="pro-ref mb-15">
+                            <p><span class="in-stock">@AtesShop.Resources.Resources.InStock</span><span class="sku">@Model.Stock.Available</span></p>
+                        </div>
+
+                        if (Model.Price != "Contact Us")
+                        {
+                            <div class="box-quantity">
+                                <input class="number" id="numeric" type="number" min="1" max="@Model.Stock.Available" value="1">
+                                <a class="add-cart-qty" href="#" data-id="@Model.Id">@AtesShop.Resources.Resources.AddToCart</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="pro-ref mb-15">
+                            <p><span class="in-stock">@AtesShop.Resources.Resources.NoStock</span></p>
                         </div>
                     }
                     
@@ -124,7 +119,7 @@
                                 <li><a class="add-wishlist @if (Model.IsWished) {<text>selected</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
                             }
                             
-                            <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                            <li><a class="add-compare @if (idList.Contains(Model.Id)) { <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">@AtesShop.Resources.Resources.AddToCompare</a></li>
                             <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                         </ul>
                     </div>
@@ -141,23 +136,20 @@
 
                 </div>
             </div>
-            <!-- Thumbnail Description End -->
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Product Thumbnail End -->
-<!-- Product Thumbnail Description Start -->
 <div class="thumnail-desc pb-60">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <ul class="main-thumb-desc nav">
-                    <li><a class="active" data-toggle="tab" href="#dtail">Details</a></li>
-                    <li><a data-toggle="tab" href="#review">Reviews 1</a></li>
+                    <li><a class="active" data-toggle="tab" href="#dtail">@AtesShop.Resources.Resources.Specifications</a></li>
+                    @if (!isSpecFilesEmpty)
+                    {
+                        <li><a data-toggle="tab" href="#documents">@AtesShop.Resources.Resources.Documents</a></li>
+                    }
                 </ul>
-                <!-- Product Thumbnail Tab Content Start -->
                 <div class="tab-content thumb-content border-default">
                     <div id="dtail" class="tab-pane in active">
                         <table style="font-size:14px; width:100%;border-spacing:0px;table-layout:fixed;word-wrap:break-word;">
@@ -181,131 +173,32 @@
 
                         </table>
                     </div>
-                    <div id="review" class="tab-pane">
-                        <!-- Reviews Start -->
-                        <div class="review">
-                            <div class="group-title">
-                                <h2>customer review</h2>
+                    @if (!isSpecFilesEmpty)
+                    {
+                        <div id="documents" class="tab-pane">
+                            <div class="list-group list-group-flush">
+                                @foreach (var doc in Model.SpecFiles)
+                                {
+                                    <a href="@Url.Action("Pdf", "Generic", new { id = doc.Id})" class="list-group-item list-group-item-action">@doc.Name</a>
+                                }
                             </div>
-                            <h4 class="review-mini-title">Caner Ates</h4>
-                            <ul class="review-list">
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>Quality</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Caner Ates</label>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>price</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Review by Caner Ates</label>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>value</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <label>Posted on 1/1/20</label>
-                                </li>
-                                <!-- Single Review List End -->
-                            </ul>
                         </div>
-                        <!-- Reviews End -->
-                        <!-- Reviews Start -->
-                        <div class="review border-default universal-padding mt-30">
-                            <h2 class="review-title mb-30">You're reviewing: <br><span>PA-GS-P482500-S</span></h2>
-                            <p class="review-mini-title">your rating</p>
-                            <ul class="review-list">
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>Quality</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>price</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                                <!-- Single Review List Start -->
-                                <li>
-                                    <span>value</span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </li>
-                                <!-- Single Review List End -->
-                            </ul>
-                            <!-- Reviews Field Start -->
-                            <div class="riview-field mt-40">
-                                <form autocomplete="off" action="#">
-                                    <div class="form-group">
-                                        <label class="req" for="sure-name">Nickname</label>
-                                        <input type="text" class="form-control" id="sure-name" required="required">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="req" for="subject">Summary</label>
-                                        <input type="text" class="form-control" id="subject" required="required">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="req" for="comments">Review</label>
-                                        <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
-                                    </div>
-                                    <button type="submit" disabled class="btn-submit">Submit Review</button>
-                                </form>
-                            </div>
-                            <!-- Reviews Field Start -->
-                        </div>
-                        <!-- Reviews End -->
-                    </div>
+                    }
                 </div>
-                <!-- Product Thumbnail Tab Content End -->
             </div>
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Product Thumbnail Description End -->
-<!-- Realted Product Start -->
 <div class="related-product pb-30">
     <div class="container">
         <div class="related-box">
             <div class="group-title">
-                <h2>related product</h2>
+                <h2>@AtesShop.Resources.Resources.RelatedProducts</h2>
             </div>
-            <!-- Realted Product Activation Start -->
             <div class="new-upsell-pro owl-carousel">
-                <!-- Single Product Start -->
                 @foreach (var product in Model.RelatedProducts)
                 {
                     <div class="single-product">
-                        <!-- Product Image Start -->
                         <div class="pro-img">
                             <a href="@Url.Action("Detail", "Shop", new { id = product.Id })">
                                 @{
@@ -313,13 +206,11 @@
                                 }
                                 @foreach (var image in product.Images)
                                 {
-                                    <img class="@(flag==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="single-product">
+                                    <img class="@(flag == 1 ? "primary-img" : "secondary-img")" src="@Url.Action("Image", "Generic", new { id = image.Id })" alt="single-product">
                                     flag++;
                                 }
                             </a>
                         </div>
-                        <!-- Product Image End -->
-                        <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="product-rating">
                                 @for (int k = 0; k < 5; k++)
@@ -353,25 +244,33 @@
                                         <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                     }
                                     
-                                    <a class="add-cart" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
-                                    <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                    @if (product.Stock != null)
+                                    {
+                                        if (product.Stock.Available != 0)
+                                        {
+                                            <a class="add-cart" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Cart">@AtesShop.Resources.Resources.AddToCart</a>
+                                        }
+                                    }
+
+                                    <a class="add-compare @if (idList.Contains(product.Id)) { <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                 </div>
                             </div>
+
+                            @if (product.Stock == null || product.Stock.Available == 0)
+                            {
+                                <span class="sticker-sold">@AtesShop.Resources.Resources.NoStock</span>
+                            }
+
                         </div>
-                        <!-- Product Content End -->
-                        @*<span class="sticker-new">-32%</span>*@
                     </div>
                                     }
-                <!-- Single Product End -->
             </div>
-            <!-- Realted Product Activation End -->
         </div>
     </div>
 </div>
-<!-- Realted Product End -->
 
 <script>
-    
+
 
     $('.add-cart').click(function (event) {
         event.preventDefault();
@@ -431,9 +330,13 @@
     });
 
     $('#numeric').bind('keyup mouseup change', function () {
+        var available = @stock;
         var value = $(this).val();
         if (!($.isNumeric(value)) || value < 1) {
             $(this).val(1);
+        }
+        if (value > available) {
+            $(this).val(available);
         }
     });
 
@@ -455,7 +358,6 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     });
 
@@ -480,12 +382,12 @@
         if (products.length >= 4) {
 
             swal({
-                title: "Comparison limit (3).",
-                text: "Do you want to compare products now ?",
+                title: "@AtesShop.Resources.Resources.ComparisonLimit",
+                text: "@AtesShop.Resources.Resources.WantToCompare",
                 icon: "warning",
                 buttons: {
-                    confirm: {text: "Compare", className: 'sweet-warning button'},
-                    cancel: "Cancel"
+                    confirm: {text: "@AtesShop.Resources.Resources.Compare", className: 'sweet-warning button'},
+                    cancel: "@AtesShop.Resources.Resources.Cancel"
                 }
             })
             .then((value) => {
@@ -498,10 +400,10 @@
 
         else if (products.length > 0 && products[0] != categoryId) {
             swal({
-                text: "Please choose the same category for comparison.",
+                text: "@AtesShop.Resources.Resources.ChooseSameCategory",
                 icon: "warning",
                 buttons: {
-                    confirm: {text: 'Ok', className: 'sweet-warning button'}
+                    confirm: {text: '@AtesShop.Resources.Resources.Ok', className: 'sweet-warning button'}
                 }
             });
         }

@@ -83,11 +83,18 @@ namespace AtesShop.Web.Controllers
         [Authorize]
         public void AddToWishlist(int productId)
         {
-            var newWish = new Wishlist();
-            newWish.Product = ProductService.Instance.GetProduct(productId);
-            newWish.UserId = Guid.Parse(User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            var current = UserService.Instance.GetWishlist(userId, productId);
 
-            UserService.Instance.SaveWishlist(newWish);
+            if (current == null)
+            {
+                var newWish = new Wishlist();
+                newWish.Product = ProductService.Instance.GetProduct(productId);
+                newWish.UserId = Guid.Parse(userId);
+
+                UserService.Instance.SaveWishlist(newWish);
+            }
+            
         }
 
         [Authorize]
@@ -253,6 +260,13 @@ namespace AtesShop.Web.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/App_Data/" + filename.ToString()));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename.ToString());
             
+        }
+
+        [HttpGet]
+        public ActionResult Image(int id)
+        {
+            var image = ImageService.Instance.GetImgFile(id);
+            return File(image.Data, image.ContentType);
         }
 
         [HttpGet]

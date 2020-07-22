@@ -1,6 +1,7 @@
 ﻿using AtesShop.Entities;
 using AtesShop.Resources;
 using AtesShop.Services;
+using AtesShop.Web.Code;
 using AtesShop.Web.Helpers;
 using AtesShop.Web.Models;
 using AtesShop.Web.ViewModels;
@@ -70,7 +71,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
-        [NoDirectAccess]
+        [AjaxChildActionOnly]
         public ActionResult ProductList(string search, int? categoryId, int? pageNo, int? minimumPrice, int? maximumPrice, int? sortId, int? sortType, int? pageSize, bool isList)
         {
 
@@ -89,17 +90,7 @@ namespace AtesShop.Web.Controllers
 
             if (categoryId.HasValue && categoryId != 0) model.CategoryId = categoryId.Value;
             else model.CategoryId = 0;
-
-            //foreach (var product in model.Products)
-            //{
-            //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
-
-            //    //Localization
-            //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-            //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-
-
-            //}
+            
             model.Products = CommonHelper.FormatCurrency(model.Products, CultureInfo.CurrentUICulture.Name);
             if (Request.IsAuthenticated)
             {
@@ -144,6 +135,13 @@ namespace AtesShop.Web.Controllers
                 model.IsWished = product.isWished;
                 model.ProductImages = product.Images;
                 model.Rate = product.Rate;
+                model.Stock = product.Stock;
+
+                if (product.FileIdList != null)
+                {
+                    List<int> idList = product.FileIdList.Split(',').Select(int.Parse).ToList();
+                    model.SpecFiles = FileService.Instance.GetFiles().Where(x => idList.Contains(x.Id)).ToList();
+                }
 
                 var attributes = AttributeService.Instance.GetProductAttributes(product.Id);
 
@@ -177,16 +175,6 @@ namespace AtesShop.Web.Controllers
                     model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
                 }
                 
-                //foreach (var prdct in model.RelatedProducts)
-                //{
-                //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(prdct.Id);
-
-                //    //Localization
-                //    prdct.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                //    prdct.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-
-                //}
-
                 return View(model);
             }
             else { return HttpNotFound(); }
@@ -215,6 +203,7 @@ namespace AtesShop.Web.Controllers
             {
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = model.CartProducts.Where(x => x.Stock != null || x.Stock.Available != 0).ToList();
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
                 taxPrice = (0.05) * totalPrice;
                 totalPriceWithTax = totalPrice + taxPrice;
@@ -246,10 +235,10 @@ namespace AtesShop.Web.Controllers
 
             List<string> countries = new List<string>();
 
-            countries.Add("Taiwan");
-            countries.Add("Vietnam");
-            countries.Add("Turkey");
-            countries.Add("USA");
+            countries.Add(Resources.Resources.Taiwan);
+            countries.Add(Resources.Resources.Vietnam);
+            countries.Add(Resources.Resources.Turkey);
+            countries.Add(Resources.Resources.USA);
 
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
@@ -302,19 +291,18 @@ namespace AtesShop.Web.Controllers
             ModelState["EmailOrUserName"].Errors.Clear();
             ModelState["Password"].Errors.Clear();
 
-            if (model.SelectedAddress != 0)
-            {
-                ModelState["Bill.Country"].Errors.Clear();
-                ModelState["Bill.FirstName"].Errors.Clear();
-                ModelState["Bill.LastName"].Errors.Clear();
-                ModelState["Bill.Address1"].Errors.Clear();
-                ModelState["Bill.City"].Errors.Clear();
-                ModelState["Bill.State"].Errors.Clear();
-                ModelState["Bill.ZipCode"].Errors.Clear();
-                ModelState["Bill.Email"].Errors.Clear();
-                ModelState["Bill.Phone"].Errors.Clear();
+            //if (model.SelectedAddress != 0)
+            //{
+            //    ModelState["Bill.FirstName"].Errors.Clear();
+            //    ModelState["Bill.LastName"].Errors.Clear();
+            //    ModelState["Bill.Address1"].Errors.Clear();
+            //    ModelState["Bill.City"].Errors.Clear();
+            //    ModelState["Bill.State"].Errors.Clear();
+            //    ModelState["Bill.ZipCode"].Errors.Clear();
+            //    ModelState["Bill.Email"].Errors.Clear();
+            //    ModelState["Bill.Phone"].Errors.Clear();
 
-            }
+            //}
 
             if (!ModelState.IsValid)
             {
@@ -378,7 +366,7 @@ namespace AtesShop.Web.Controllers
                 newOrder.BillingAddress = billAddress;
                 newOrder.ShippingAddress = shipAddress;
                 newOrder.Date = DateTime.Now;
-                newOrder.Status = "Pending..";
+                newOrder.Status = OrderStatus.Pending.ToString();
                 newOrder.TotalPrice = model.CartTotalPriceWithTax;
                 newOrder.UserId = User.Identity.GetUserId();
                 newOrder.PaymentType = "Not Confirmed.";
@@ -462,13 +450,24 @@ namespace AtesShop.Web.Controllers
                     newOrderItem.Quantity = qty.productQuantity;
 
                     OrderService.Instance.SaveOrderItem(newOrderItem);
+
+                    var inventory = InventoryService.Instance.GetInventory(qty.productId);
+
+                    inventory.Allocation = inventory.Allocation + qty.productQuantity;
+                    inventory.Available = inventory.Available - qty.productQuantity;
+
+                    InventoryService.Instance.UpdateInventory(inventory);
                 }
-
-                
-
-
             }
-            
+
+            if (Request.Cookies["CartProducts"] != null)
+            {
+                String cookieName = Request.Cookies["CartProducts"].Name;
+                HttpCookie cartCookie = new HttpCookie(cookieName);
+                cartCookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cartCookie);
+            }
+
             return RedirectToAction("Success");
         }
         

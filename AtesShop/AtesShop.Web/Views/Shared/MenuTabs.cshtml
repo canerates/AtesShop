@@ -14,7 +14,7 @@
                         if (main.Name == AtesShop.Resources.Resources.ProductsT1O2)
                         {
                             <li>
-                                <a href="@Url.Action(main.ActionName, main.ControllerName, new { id = string.Empty })">@main.Name<i class="fa fa-angle-down"></i></a>
+                                <a href="@Url.Action(main.ActionName, main.ControllerName , new { categoryId = string.Empty })">@main.Name<i class="fa fa-angle-down"></i></a>
                                 <ul class="ht-dropdown dropdown-style-two">
                                     @foreach (var sub in main.SubMenus)
                                     {

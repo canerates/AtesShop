@@ -71,15 +71,15 @@
                         <!-- Header Top left Start -->
                         <div class="col-lg-4 col-md-12 d-center">
                             <div class="header-top-left">
-                                <img src="~/Content/img/icon/call.png" alt="">Call Us : +886 2 8990 3339
+                                <img src="~/Content/img/icon/call.png" alt="">@AtesShop.Resources.Resources.CallUs : +886 2 8990 3339
                             </div>
                         </div>
                         <!-- Header Top left End -->
                         <!-- Search Box Start -->
                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                             <div class="search-box-view">
-                                <form id="searchForm" action="@Url.Action("Index", "Products")">
-                                    <input id="searchKey" type="text" class="email" placeholder="Search Your Product" name="search">
+                                <form id="searchForm" action="@Url.Action("Index", "Products" , new { categoryId = string.Empty })">
+                                    <input id="searchKey" type="text" class="email" placeholder="@AtesShop.Resources.Resources.SearchYourProduct" name="search">
                                     <button type="submit" class="submit"></button>
                                 </form>
                             </div>
@@ -158,14 +158,14 @@
                             <div class="newsletter text-center">
                                 <div class="main-news-desc">
                                     <div class="news-desc">
-                                        <h3>Sign Up For Newsletters</h3>
-                                        <p>Get e-mail updates about our latest shop and special offers.</p>
+                                        <h3>@AtesShop.Resources.Resources.SignUpForNewsletter</h3>
+                                        <p>@AtesShop.Resources.Resources.GetEmailUpdates</p>
                                     </div>
                                 </div>
                                 <div class="newsletter-box">
                                     <form action="#">
-                                        <input class="subscribe" placeholder="Enter your email address" name="email" id="subscribe" type="text">
-                                        <button type="submit" class="submit">subscribe</button>
+                                        <input class="subscribe" placeholder="@AtesShop.Resources.Resources.EnterYourEmailAddress" name="email" id="subscribe" type="text">
+                                        <button type="submit" class="submit">@AtesShop.Resources.Resources.Subscribe</button>
                                     </form>
                                 </div>
                             </div>

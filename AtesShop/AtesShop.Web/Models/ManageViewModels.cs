@@ -111,45 +111,45 @@ namespace AtesShop.Web.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
         
-        [Display(Name = "Company Name")]
+        [Display(Name = "CompanyName", ResourceType = typeof(Resources.Resources))]
         public string CompanyName { get; set; }
 
         [Required]
-        [Display(Name = "Address")]
+        [Display(Name = "Address", ResourceType = typeof(Resources.Resources))]
         public string Line1 { get; set; }
         
         [Display(Name = " ")]
         public string Line2 { get; set; }
 
         [Required]
-        [Display(Name = "Town / City")]
+        [Display(Name = "TownCity", ResourceType = typeof(Resources.Resources))]
         public string City { get; set; }
 
         [Required]
-        [Display(Name = "State / County")]
+        [Display(Name = "StateCounty", ResourceType = typeof(Resources.Resources))]
         public string State { get; set; }
 
         [Required]
-        [Display(Name = "Country")]
+        [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
 
         [Required]
-        [Display(Name = "Postcode / Zip")]
+        [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 
         [Required]
-        [Display(Name = "Email Address")]
+        [Display(Name = "EmailAddress", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Mobile Phone")]
+        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
         public string PhoneNumber { get; set; }
 
         public List<string> CountryList { get; set; }

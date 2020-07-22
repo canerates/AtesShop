@@ -87,7 +87,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var product = context.Products.Find(productId);
+                var product = context.Products.Where(x => x.isActive && x.Id == productId).Include(x => x.Stock).FirstOrDefault();
                 return FormatProductInfo(product, culture, role);
             }
         }
@@ -96,7 +96,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Include(x => x.Category).ToList();
+                var products = context.Products.Where(x => x.isActive).Include(x => x.Category).Include(x => x.Stock).ToList();
                 return FormatProductsInfo(products, culture, role);
             }
         }
@@ -105,7 +105,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => x.Category.Id == categoryId).Include(x => x.Category).ToList();
+                var products = context.Products.Where(x => x.isActive && x.Category.Id == categoryId).Include(x => x.Category).Include(x => x.Stock).ToList();
                 return FormatProductsInfo(products, culture, role);
             }
         }
@@ -114,7 +114,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => productIdList.Contains(x.Id)).ToList();
+                var products = context.Products.Where(x => x.isActive && productIdList.Contains(x.Id)).Include(x => x.Stock).ToList();
                 return FormatProductsInfo(products, culture, role);
             }
         }
@@ -123,38 +123,13 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.ToList();
-
+                var products = context.Products.Where(x => x.isActive).Include(x => x.Stock).ToList();
+                
                 if (categoryId.HasValue)
                 {
                     products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
                 }
-
-                if (sortId.HasValue && sortType.HasValue)
-                {
-                    switch (sortId.Value)
-                    {
-                        case 1:
-                            products = sortType == 1 ? products.OrderBy(x => x.Id).ToList() : products.OrderByDescending(x => x.Id).ToList();
-                            break;
-                        case 2:
-                            products = sortType == 1 ? products.OrderBy(x => x.Name).ToList() : products.OrderByDescending(x => x.Name).ToList();
-                            break;
-                        case 3:
-                            var rates = context.Ratings.GroupBy(x => x.ProductId).Select(g => new { Key = g.Key, Value = g.Sum(s => s.Rate) }).ToList();
-                            rates = sortType == 1 ? rates.OrderBy(x => x.Value).ToList() : rates.OrderByDescending(x => x.Value).ToList();
-                            var idList = rates.Select(x => x.Key).ToList();
-                            products = products.OrderBy(x => idList.IndexOf(x.Id)).ToList();
-                            break;
-                        case 4:
-                            products = sortType == 1 ? products.OrderBy(x => x.Price).ToList() : products.OrderByDescending(x => x.Price).ToList();
-                            break;
-                        default:
-                            products = sortType == 1 ? products.OrderBy(x => x.Id).ToList() : products.OrderByDescending(x => x.Id).ToList();
-                            break;
-                    }
-                }
-
+                
                 products = FormatProductsInfo(products, culture, role);
 
                 if (maximum.HasValue && minimum.HasValue)
@@ -176,7 +151,31 @@ namespace AtesShop.Services
                     products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower()) || x.Description.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
 
-                return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+                products = products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+
+                if (sortId.HasValue && sortType.HasValue)
+                {
+                    switch (sortId.Value)
+                    {
+                        case 1:
+                            products = sortType == 1 ? products.OrderBy(x => x.Id).ToList() : products.OrderByDescending(x => x.Id).ToList();
+                            break;
+                        case 2:
+                            products = sortType == 1 ? products.OrderBy(x => x.Name).ToList() : products.OrderByDescending(x => x.Name).ToList();
+                            break;
+                        case 3:
+                            products = sortType == 1 ? products.OrderBy(x => x.Rate).ToList() : products.OrderByDescending(x => x.Rate).ToList();
+                            break;
+                        case 4:
+                            products = sortType == 1 ? products.OrderBy(x => x.Price).ToList() : products.OrderByDescending(x => x.Price).ToList();
+                            break;
+                        default:
+                            products = sortType == 1 ? products.OrderBy(x => x.Id).ToList() : products.OrderByDescending(x => x.Id).ToList();
+                            break;
+                    }
+                }
+
+                return products;
 
             }
         }
@@ -185,7 +184,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                return context.Products.Count();
+                return context.Products.Where(x => x.isActive).Count();
             }
         }
         
@@ -193,7 +192,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.ToList();
+                var products = context.Products.Where(x => x.isActive).ToList();
 
                 if (categoryId.HasValue)
                 {

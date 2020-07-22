@@ -9,10 +9,9 @@
         
     <ul class="ht-dropdown">
         <li>
-            @*@Html.ActionLink("My Account", "Index", "Manage")*@
-            <a href="@Url.Action("Index", "Manage")">My Account</a>
+            <a href="@Url.Action("Index", "Manage")">@AtesShop.Resources.Resources.MyAccount</a>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@AtesShop.Resources.Resources.LogOut</a></li>
     </ul>
     }
 }
@@ -20,8 +19,8 @@ else
 {   
     <a href="@Url.Action("Index", "Manage")"><i class="fa fa-user-o"></i></a>
     <ul class="ht-dropdown">
-        <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
-        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+        <li><a href="@Url.Action("Login", "Account")">@AtesShop.Resources.Resources.SignIn</a></li>
+        <li><a href="@Url.Action("Register", "Account")">@AtesShop.Resources.Resources.Register</a></li>
         
     </ul>
 }

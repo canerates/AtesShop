@@ -7,7 +7,7 @@ namespace AtesShop.Web.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
     }
 
@@ -55,7 +55,7 @@ namespace AtesShop.Web.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Resources))]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -66,19 +66,19 @@ namespace AtesShop.Web.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "User Name")]
+        [Display(Name = "Username", ResourceType = typeof(Resources.Resources))]
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
         
         [Display(Name = "Mobile Phone")]
@@ -91,38 +91,36 @@ namespace AtesShop.Web.Models
         [AtLeastOneDigit]
         [AtLeastOneSpecial]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Resources))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Resources))]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         [Display(Name = "Business Type")]
         public string BusinessType { get; set; }
 
-        [RequiredIfNot("BusinessType", "User", ErrorMessage = "Company Name must be filled.")]
+        [RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "CompanyNameRequired")]
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
-        //[RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "HomeT1O1")]
-        [RequiredIfNot("BusinessType", "User", ErrorMessage = "Tax Number must be filled.")]
+        [RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "TaxNumberRequired")]
         [Display(Name = "Tax Number")]
         public string TaxNumber { get; set; }
 
         [Display(Name = "Subscription")]
         public bool Subscription { get; set; }
-
-
+        
     }
 
     public class ResetPasswordViewModel
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
 
         [Required]
@@ -132,12 +130,12 @@ namespace AtesShop.Web.Models
         [AtLeastOneDigit]
         [AtLeastOneSpecial]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Resources))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Resources))]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -145,9 +143,9 @@ namespace AtesShop.Web.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required(ErrorMessage = "Email address is required.")]
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email address")]
+        [Display(Name = "EmailAddress", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
     }
 }

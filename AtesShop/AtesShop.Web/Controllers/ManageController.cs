@@ -10,6 +10,8 @@ using AtesShop.Web.Models;
 using AtesShop.Services;
 using AtesShop.Entities;
 using System.Collections.Generic;
+using AtesShop.Web.Code;
+using AtesShop.Web.Helpers;
 
 namespace AtesShop.Web.Controllers
 {
@@ -78,9 +80,7 @@ namespace AtesShop.Web.Controllers
             
             var userId = User.Identity.GetUserId();
             var user = UserManager.FindById(userId);
-            var orders = OrderService.Instance.GetOrders();
             
-
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -357,6 +357,14 @@ namespace AtesShop.Web.Controllers
         {
             OrdersViewModel model = new OrdersViewModel();
             var orders = OrderService.Instance.GetOrders();
+
+            foreach (var order in orders)
+            {
+                OrderStatus status = (OrderStatus)Enum.Parse(typeof(OrderStatus), order.Status);
+                order.Status = status.GetDisplayDescription();
+            }
+
+
             model.Orders = orders;
 
             return PartialView(model);
@@ -398,10 +406,10 @@ namespace AtesShop.Web.Controllers
 
             List<string> countries = new List<string>();
 
-            countries.Add("Taiwan");
-            countries.Add("Vietnam");
-            countries.Add("Turkey");
-            countries.Add("USA");
+            countries.Add(Resources.Resources.Taiwan);
+            countries.Add(Resources.Resources.Vietnam);
+            countries.Add(Resources.Resources.Turkey);
+            countries.Add(Resources.Resources.USA);
 
             model.CountryList = countries;
 
@@ -414,11 +422,6 @@ namespace AtesShop.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (model.Submit == "Back")
-                {
-                    return RedirectToAction("Address");
-                }
-
                 var newAddress = new UserAddress();
                 newAddress.Country = model.Country;
                 newAddress.FirstName = model.FirstName;
@@ -460,10 +463,10 @@ namespace AtesShop.Web.Controllers
 
             List<string> countries = new List<string>();
 
-            countries.Add("Taiwan");
-            countries.Add("Vietnam");
-            countries.Add("Turkey");
-            countries.Add("USA");
+            countries.Add(Resources.Resources.Taiwan);
+            countries.Add(Resources.Resources.Vietnam);
+            countries.Add(Resources.Resources.Turkey);
+            countries.Add(Resources.Resources.USA);
 
             model.CountryList = countries;
 

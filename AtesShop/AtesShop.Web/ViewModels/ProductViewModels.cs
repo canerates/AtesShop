@@ -29,6 +29,7 @@ namespace AtesShop.Web.ViewModels
         public bool IsDiscount { get; set; }
         public int CategoryId { get; set; }
         public bool IsWished { get; set; }
+        public InventoryItem Stock { get; set; }
         public List<Image> ProductImages { get; set; }
         public List<Product> RelatedProducts { get; set; }
         public Dictionary<AttributeSection, List<ProductAttribute>> Attributes { get; set; }

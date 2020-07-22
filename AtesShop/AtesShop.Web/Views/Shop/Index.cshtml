@@ -8,7 +8,6 @@
     var searchKey = Model.SearchKey == null ? null : Model.SearchKey.ToString();
 
 }
-<!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
@@ -18,35 +17,32 @@
             </ul>
         </div>
     </div>
-    <!-- Container End -->
 </div>
-<!-- Breadcrumb End -->
-<!-- Shop Page Start -->
 <div class="main-shop-page pb-60">
     <div class="container">
-        <!-- Row End -->
         <div class="row">
-            <!-- Sidebar Shopping Option Start -->
             <div class="col-lg-3  order-2">
                 <div class="sidebar white-bg">
                     <div class="single-sidebar">
                         <div class="group-title">
-                            <h2>categories</h2>
+                            <h2>@AtesShop.Resources.Resources.Categories</h2>
                         </div>
                         <ul>
-                            <li><a href="@Url.Action("Index", "Shop", new { categoryId = string.Empty })">All (@Model.ProductCount)</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new { categoryId = string.Empty })">@AtesShop.Resources.Resources.All (@Model.ProductCount)</a></li>
 
                             @foreach (var category in Model.Categories)
                             {
-
-                                <li><a href="@Url.Action("Index", "Shop", new { categoryId = category.Id })">@category.Name (@category.Products.Count)</a></li>
+                                if (category.Products.Count != 0)
+                                {
+                                    <li><a href="@Url.Action("Index", "Shop", new { categoryId = category.Id })">@category.Name (@category.Products.Count)</a></li>
+                                }
                             }
                         </ul>
                     </div>
 
                     <div class="single-sidebar">
                         <div class="group-title">
-                            <h2>price</h2>
+                            <h2>@AtesShop.Resources.Resources.Price</h2>
                         </div>
                         <form action="javascript:getData()">
                             <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
@@ -55,7 +51,7 @@
                             <input id="minPrice" class="amount" type="number" min="0" oninput="validity.valid||(value='');">
                             <input id="maxPrice" style="float: right;" class="amount" type="number" min="0" oninput="validity.valid||(value='');">
                             <div style="display:inline-block; width:100%;">
-                                <button class="btn" id="price-range-submit">Apply</button>
+                                <button class="btn" id="price-range-submit">@AtesShop.Resources.Resources.Apply</button>
                             </div>
                         </form>
                     </div>
@@ -77,8 +73,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Sidebar Shopping Option End -->
-            <!-- Product Categorie List Start -->
             <div class="col-lg-9 order-lg-2">
                 <div class="grid-list-top border-default universal-padding fix mb-30">
                     <div class="grid-list-view f-left">
@@ -86,23 +80,20 @@
                             <li><a class="active" data-toggle="tab" href="#" onclick="switchView(false)"><i class="fa fa-th"></i></a></li>
                             <li><a data-toggle="tab" href="#" onclick="switchView(true)"><i class="fa fa-list-ul"></i></a></li>
                             
-                            @*<li><span id="item-list-description" class="grid-item-list"></span></li>*@
                         </ul>
                     </div>
-                    <!-- Toolbar Short Area Start -->
                     <div class="main-toolbar-sorter f-right">
                         <div class="toolbar-sorter">
-                            <label>sort by</label>
+                            <label>@AtesShop.Resources.Resources.SortBy</label>
                             <select id="ddlSort" class="sorter" name="sorter">
-                                <option id="1" value="Default" selected="selected">Default</option>
-                                <option id="2" value="Name">Name</option>
-                                <option id="3" value="Rate">Rate</option>
-                                <option id="4" value="Price">Price</option>
+                                <option id="1" value="Default" selected="selected">@AtesShop.Resources.Resources.Default</option>
+                                <option id="2" value="Name">@AtesShop.Resources.Resources.Name</option>
+                                <option id="3" value="Rate">@AtesShop.Resources.Resources.Rate</option>
+                                <option id="4" value="Price">@AtesShop.Resources.Resources.Price</option>
                             </select>
                             <span><a data-toggle="tab" href="#" onclick="switchSort();"><i id="sortTypeSymbol" class="fa fa-arrow-up"></i></a></span>
                         </div>
                     </div>
-                    <!-- Toolbar Short Area End -->
                 </div>
                 <div id="tableContainer"> 
                     @{
@@ -110,13 +101,9 @@
                     }
                 </div>
             </div>
-            <!-- product Categorie List End -->
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Shop Page End -->
 
 <script>
 
@@ -139,8 +126,6 @@
             $("#minPrice").val(minimumPrice);
             $("#maxPrice").val(maximumPrice);
 
-            //clearTimeout(callTimeout);
-            //callTimeout = setTimeout(getData, 500);
         }
     });
 
@@ -246,12 +231,10 @@
             }
         })
         .done(function (response) {
-            //alert("Success");
             $("#tableContainer").html(response);
             
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     }
 
@@ -266,7 +249,6 @@
         
         })
         .done(function (response) {
-            //alert("Success");
             $("#wishSideBar").html(response);
 
             $('.best-seller-pro-two')
@@ -291,7 +273,6 @@
             })
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     }
 
@@ -301,7 +282,6 @@
 
         })
         .done(function (response) {
-            //alert("Success");
             $("#compareSideBar").html(response);
 
             $('.best-seller-pro-two')
@@ -326,7 +306,6 @@
             })
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     }
 

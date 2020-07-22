@@ -14,7 +14,6 @@
 
 }
 
-<!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
@@ -25,37 +24,24 @@
             </ul>
         </div>
     </div>
-    <!-- Container End -->
 </div>
-<!-- Breadcrumb End -->
-<!-- Product Thumbnail Start -->
 <div class="main-product-thumbnail pb-60">
     <div class="container">
         <div class="row">
-            <!-- Main Thumbnail Image Start -->
             <div class="col-lg-5">
-                <!-- Thumbnail Large Image start -->
                 <div class="tab-content">
                     @{
                         var i = 1;
                         foreach (var image in Model.ProductImages)
                         {
                             <div id="thumb@(i)" class="tab-pane @if (i==1) { <text>active</text>} ">
-                                <a data-fancybox="images" href="@Url.Action( "Image", "Products", new { id = image.Id })">
-                                <img src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="product-view"></a>
+                                <a data-fancybox="images" href="@Url.Action( "Image", "Generic", new { id = image.Id })">
+                                <img src="@Url.Action( "Image", "Generic", new { id = image.Id })" alt="product-view"></a>
                             </div>
                             i++;
                         }
                     }
-                    @*<div id="thumb1" class="tab-pane active">
-                        <a data-fancybox="images" href="~/Content/img/products/ip1_bullet.png"><img src="~/Content/img/products/ip1_bullet.png" alt="product-view"></a>
-                    </div>
-                    <div id="thumb2" class="tab-pane">
-                        <a data-fancybox="images" href="~/Content/img/products/ip1_dome.png"><img src="~/Content/img/products/ip1_dome.png" alt="product-view"></a>
-                    </div>*@
                 </div>
-                <!-- Thumbnail Large Image End -->
-                <!-- Thumbnail Image End -->
                 <div class="product-thumbnail">
                     <div class="thumb-menu nav">
                         @{
@@ -63,7 +49,7 @@
                             foreach (var image in Model.ProductImages)
                             {
                                 <a data-toggle="tab" href="#thumb@(j)" @if (j == 1) { <text> class="active" </text>  }>
-                                    <img src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="product-thumbnail" />
+                                    <img src="@Url.Action( "Image", "Generic", new { id = image.Id })" alt="product-thumbnail" />
                                 </a>
                                 j++;
                                 if (j == 5) { break; }
@@ -71,10 +57,7 @@
                         }
                     </div>
                 </div>
-                <!-- Thumbnail image end -->
             </div>
-            <!-- Main Thumbnail Image End -->
-            <!-- Thumbnail Description Start -->
             <div class="col-lg-7">
                 <div class="thubnail-desc fix">
                     <h3 class="product-header">@Model.Name</h3>
@@ -111,7 +94,7 @@
                             <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
                                 <ul class="list-inline">
                                     <li><a class="add-wishlist @if (Model.IsWished) {<text>selected</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
-                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">@AtesShop.Resources.Resources.AddToCompare</a></li>
                                     <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                                 </ul>
                             </div>
@@ -121,8 +104,8 @@
                         {
                             <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
                                 <ul class="list-inline">
-                                    <li><a href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a></li>
-                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">Add to Compare</a></li>
+                                    <li><a href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a></li>
+                                    <li><a class="add-compare @if (idList.Contains(Model.Id)){ <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">@AtesShop.Resources.Resources.AddToCompare</a></li>
                                     <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                                 </ul>
                             </div>
@@ -137,46 +120,23 @@
                             </ul>
                             
                         </div>
-
-                         @*<div class="pro-ref mb-15">
-                                 <p><span class="in-stock">IN STOCK</span><span class="sku">50</span></p>
-                             </div>
-                             <div class="box-quantity">
-                                 <form action="#">
-                                     <input class="number" id="numeric" type="number" min="1" value="1">
-                                     <a class="add-cart" href="#">add to cart</a>
-                                 </form>
-                             </div>*@
-                         @*<div class="product-link">
-                                 <ul class="list-inline">
-                                     <li><a href="#">Add to Wish List</a></li>
-                                     <li><a href="#">Add to compare</a></li>
-                                     <li><a href="#">Email</a></li>
-                                 </ul>
-                             </div>*@
                          
                 </div>
             </div>
-            <!-- Thumbnail Description End -->
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Product Thumbnail End -->
-<!-- Product Thumbnail Description Start -->
 <div class="thumnail-desc pb-60">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <ul class="main-thumb-desc nav">
-                    <li><a class="active" data-toggle="tab" href="#dtail">Specifications</a></li>
+                    <li><a class="active" data-toggle="tab" href="#dtail">@AtesShop.Resources.Resources.Specifications</a></li>
                     @if (!isSpecFilesEmpty)
                     {
-                        <li><a data-toggle="tab" href="#documents">Documents</a></li>
+                        <li><a data-toggle="tab" href="#documents">@AtesShop.Resources.Resources.Documents</a></li>
                     }
                 </ul>
-                <!-- Product Thumbnail Tab Content Start -->
                 <div class="tab-content thumb-content border-default">
                     <div id="dtail" class="tab-pane in active">
                         <table style="font-size:14px; width:100%;border-spacing:0px;table-layout:fixed;word-wrap:break-word;">
@@ -195,10 +155,8 @@
                                         </tr>
                                     }
                                 }
-
                             </tbody>
                         </table>
-                        
                     </div>
                     @if (!isSpecFilesEmpty)
                     {
@@ -212,28 +170,20 @@
                         </div>
                     }
                 </div>
-                <!-- Product Thumbnail Tab Content End -->
             </div>
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Container End -->
 </div>
-<!-- Product Thumbnail Description End -->
-<!-- Realted Product Start -->
 <div class="related-product pb-30">
     <div class="container">
         <div class="related-box">
             <div class="group-title">
-                <h2>related product</h2>
+                <h2>@AtesShop.Resources.Resources.RelatedProducts</h2>
             </div>
-            <!-- Realted Product Activation Start -->
             <div class="new-upsell-pro owl-carousel">
-                <!-- Single Product Start -->
                 @foreach (var product in Model.RelatedProducts)
                 {
                     <div class="single-product">
-                        <!-- Product Image Start -->
                         <div class="pro-img">
                             <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
                                 @{
@@ -241,13 +191,11 @@
                                 }
                                 @foreach (var image in product.Images)
                                 {
-                                    <img class="@(flag==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Products", new { id = image.Id })" alt="single-product">
+                                    <img class="@(flag==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Generic", new { id = image.Id })" alt="single-product">
                                     flag++;
                                 }
                             </a>
                         </div>
-                        <!-- Product Image End -->
-                        <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="product-rating">
                                 @for (int k = 0; k < 5; k++)
@@ -282,7 +230,7 @@
                                 <div class="actions-secondary">
                                     @if (!Request.IsAuthenticated)
                                     {
-                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">Check Price</a>
+                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
                                     }
                                     else
                                     {
@@ -293,17 +241,12 @@
                             </div>
                             
                         </div>
-                        <!-- Product Content End -->
-                        @*<span class="sticker-new">-32%</span>*@
                     </div>
                 }
-                <!-- Single Product End -->
             </div>
-            <!-- Realted Product Activation End -->
         </div>
     </div>
 </div>
-<!-- Realted Product End -->
 
 <script>
     
@@ -326,7 +269,6 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     });
 
@@ -351,8 +293,8 @@
         if (products.length >= 4) {
 
             swal({
-                title: "Comparison limit (3).",
-                text: "Do you want to compare products now ?",
+                title: "@AtesShop.Resources.Resources.ComparisonLimit",
+                text: "@AtesShop.Resources.Resources.WantToCompare",
                 icon: "warning",
                 buttons: {
                     confirm: {text: "Compare", className: 'sweet-warning button'},
@@ -369,7 +311,7 @@
 
         else if (products.length > 0 && products[0] != categoryId) {
             swal({
-                text: "Please choose the same category for comparison.",
+                text: "@AtesShop.Resources.Resources.ChooseSameCategory",
                 icon: "warning",
                 buttons: {
                     confirm: {text: 'Ok', className: 'sweet-warning button'}

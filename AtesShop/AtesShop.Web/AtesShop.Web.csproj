@@ -214,6 +214,7 @@
     <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -278,6 +279,8 @@
     <Content Include="Content\img\banner\nvr.jpg" />
     <Content Include="Content\img\banner\nvr2.jpg" />
     <Content Include="Content\img\banner\pattern.png" />
+    <Content Include="Content\img\banner\set16.jpg" />
+    <Content Include="Content\img\banner\set8.jpg" />
     <Content Include="Content\img\banner\sp.jpg" />
     <Content Include="Content\img\banner\sp2.jpg" />
     <Content Include="Content\img\banner\tab-banner.jpg" />
@@ -531,6 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Offer\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Support\" />
   </ItemGroup>

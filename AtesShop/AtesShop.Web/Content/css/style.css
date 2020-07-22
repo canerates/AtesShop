@@ -983,6 +983,23 @@ ul.ht-dropdown.dropdown-style-two li {
     z-index: 9;
 }
 
+.sticker-sold {
+    background: #ff0000;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 25px;
+    height: 26px;
+    width: 75px;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 9;
+}
+
 .sticker-sale {
     background: #31a2e2;
 }
@@ -2531,6 +2548,13 @@ a.shipping-calculator-button:hover {
     width: 240px;
 }
 
+.cart-main-area.wish-list td.product-add-to-cart a.disabled {
+    color: #fff;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
 /*----------------------------------------*/
 /* 13. Checkout CSS
 /*----------------------------------------*/
@@ -2719,7 +2743,7 @@ p.checkout-coupon input[type="submit"] {
 
 .country-select label span.required,
 .checkout-form-list label span.required {
-    color: #8FBA22
+    color: red;
 }
 
 .country-select select {
@@ -3913,6 +3937,12 @@ input.phone-error {
     border-color: #8FBA22;
     background: #555;
     color: #fff;
+}
+
+.product-description .compare-cart.disabled {
+    color: #fff;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .product-description .compare-wishlist {

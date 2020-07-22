@@ -146,7 +146,7 @@ namespace AtesShop.Services
 
                 if (categoryId.HasValue)
                 {
-                    var products = context.Products.Where(x => x.CategoryId == categoryId.Value).ToList();
+                    var products = context.Products.Where(x => x.isActive && x.CategoryId == categoryId.Value).ToList();
 
                     foreach (var product in products)
                     {
@@ -181,7 +181,7 @@ namespace AtesShop.Services
 
                 if (categoryId.HasValue)
                 {
-                    var products = context.Products.Where(x => x.CategoryId == categoryId.Value).ToList();
+                    var products = context.Products.Where(x => x.isActive && x.CategoryId == categoryId.Value).ToList();
 
                     foreach (var product in products)
                     {

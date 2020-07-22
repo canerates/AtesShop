@@ -51,6 +51,17 @@ namespace AtesShop.Web.Controllers
         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(int? categoryId, string search)
         {
+
+            if (categoryId.HasValue)
+            {
+                var category = CategoryService.Instance.GetCategory(categoryId.Value);
+                if (category == null)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+
+
             string roleName;
             
             if (User.Identity.IsAuthenticated)
@@ -81,7 +92,7 @@ namespace AtesShop.Web.Controllers
         }
         
         [HttpGet]
-        [NoDirectAccess]
+        [AjaxChildActionOnly]
         public ActionResult ProductList(string search, int? categoryId, int? pageNo, int? minimumPrice, int? maximumPrice, int? sortId, int? sortType, int? pageSize, bool isList)
         {
             string roleName;
@@ -112,15 +123,6 @@ namespace AtesShop.Web.Controllers
 
             if (categoryId.HasValue && categoryId != 0) model.CategoryId = categoryId.Value;
             else model.CategoryId = 0;
-
-            //foreach (var product in model.Products)
-            //{
-            //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
-
-            //    //Localization
-            //    product.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-            //    product.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-            //}
             
             model.Products = CommonHelper.FormatCurrency(model.Products, CultureInfo.CurrentUICulture.Name);
 
@@ -182,6 +184,7 @@ namespace AtesShop.Web.Controllers
                 model.IsWished = product.isWished;
                 model.ProductImages = product.Images;
                 model.Rate = product.Rate;
+                model.Stock = product.Stock;
 
                 if (product.FileIdList != null)
                 {
@@ -220,25 +223,10 @@ namespace AtesShop.Web.Controllers
                     var userId = User.Identity.GetUserId();
                     model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
                 }
-
-                //foreach (var prdct in model.RelatedProducts)
-                //{
-                //    var keys = ResourceKeyService.Instance.GetProductKeySetByProduct(prdct.Id);
-
-                //    //Localization
-                //    prdct.Name = resourceProvider.GetResource(keys.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                //    prdct.Description = resourceProvider.GetResource(keys.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-
-                //}
+                
             }
             return View(model);
         }
-
-        [HttpGet]
-        public ActionResult Image(int id)
-        {
-            var image = ImageService.Instance.GetImgFile(id);
-            return File(image.Data, image.ContentType);
-        }
+        
     }
 }

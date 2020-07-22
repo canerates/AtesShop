@@ -4,13 +4,13 @@
     var count = Model.AddressList.Count;
 }
 
-<h3>Address </h3>
+<h3>@AtesShop.Resources.Resources.Addresses</h3>
 
 <div class="row">
     <div class="col-md-12 mb-40">
-        <a id="addAddress" class="address-view-button disabled" href="#">Add</a>
-        <a id="editAddress" class="address-view-button disabled" href="#">Edit</a>
-        <a id="deleteAddress" class="address-view-button-delete disabled" href="#">Delete</a>
+        <a id="addAddress" class="address-view-button disabled" href="#">@AtesShop.Resources.Resources.Add</a>
+        <a id="editAddress" class="address-view-button disabled" href="#">@AtesShop.Resources.Resources.Edit</a>
+        <a id="deleteAddress" class="address-view-button-delete disabled" href="#">@AtesShop.Resources.Resources.Delete</a>
     </div>
     
     @if (Model.AddressList.Count > 0)
@@ -31,7 +31,7 @@
     }
     else
     {
-        <div class="col-md-12 mb-40">No registered address.</div>
+        <div class="col-md-12 mb-40">@AtesShop.Resources.Resources.NoAddress</div>
     }
     
 </div>
@@ -65,11 +65,9 @@
             }
         })
         .done(function (response) {
-            //alert("Success");
             $("#address").html(response);
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     });
 
@@ -77,23 +75,22 @@
         event.preventDefault();
 
         var selected = $('input[name=addressRadio]:checked').val();
-        
-        $.ajax({
-            url: '/Manage/EditAddress',
-            data: {
-                addressId: selected
-            },
-            beforeSend: function () {
-                ajaxLoading('address');
-            }
-        })
-        .done(function (response) {
-            //alert("Success");
-            $("#address").html(response);
-        })
-        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
-        });
+        if (selected != undefined) {
+            $.ajax({
+                url: '/Manage/EditAddress',
+                data: {
+                    addressId: selected
+                },
+                beforeSend: function () {
+                    ajaxLoading('address');
+                }
+            })
+            .done(function (response) {
+                $("#address").html(response);
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            });
+        }
     });
 
     $("#deleteAddress").click(function (event) {
@@ -101,35 +98,34 @@
 
         var selected = $('input[name=addressRadio]:checked').val();
 
-        swal({
-            title: "Delete",
-            text: "Do you want to delete the address ?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true
-        })
-        .then((value) => {
-            if (value) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Manage/DeleteAddress',
-                    data: {
-                        addressId: selected
-                    },
-                    beforeSend: function () {
-                        ajaxLoading('address');
-                    }
-                })
-                .done(function (response) {
-                    //alert("Success");
-                    $("#address").html(response);
-                })
-                .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-                    //alert("Fail");
-                });
-            }
-        });
-
+        if (selected != undefined) {
+            swal({
+                title: "@AtesShop.Resources.Resources.Delete",
+                text: "@AtesShop.Resources.Resources.DeleteAddressQ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+            .then((value) => {
+                if (value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Manage/DeleteAddress',
+                        data: {
+                            addressId: selected
+                        },
+                        beforeSend: function () {
+                            ajaxLoading('address');
+                        }
+                    })
+                    .done(function (response) {
+                        $("#address").html(response);
+                    })
+                    .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                    });
+                }
+            });
+        }
     });
 
 </script>

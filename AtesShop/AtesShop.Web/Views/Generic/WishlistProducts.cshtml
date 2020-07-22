@@ -25,12 +25,21 @@
                             <tr>
                                 <td class="product-remove"> <a class="productRemove" data-id="@product.Id" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                                 <td class="product-thumbnail">
-                                    <a href="@Url.Action("Detail", "Shop", new { id = product.Id})"><img src="@Url.Action("Image", "Products", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                    <a href="@Url.Action("Detail", "Shop", new { id = product.Id})"><img src="@Url.Action("Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
                                 </td>
                                 <td class="product-name"><a href="@Url.Action("Detail", "Shop", new { id = product.Id})">@product.Name <br /> @product.Description</a></td>
                                 <td class="product-price"><span class="price">@product.Price</span></td>
-                                <td class="product-stock-status"><span>in stock</span></td>
-                                <td class="product-add-to-cart"><a class="productAddToCart" data-id="@product.Id" href="#">add to cart</a></td>
+                                @if (product.Stock != null && product.Stock.Available != 0)
+                                {
+                                    <td class="product-stock-status"><span>in stock</span></td>
+                                    <td class="product-add-to-cart"><a class="productAddToCart" data-id="@product.Id" href="#">add to cart</a></td>
+                                }
+                                else
+                                {
+                                    <td class="product-stock-status"><span style="color:red;">out of stock</span></td>
+                                    <td class="product-add-to-cart"><a class="disabled" href="#">add to cart</a></td>
+                                }
+
                             </tr>
                         }
                     </tbody>

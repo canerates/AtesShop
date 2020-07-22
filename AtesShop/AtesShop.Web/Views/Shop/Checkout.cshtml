@@ -8,42 +8,30 @@
 
 @if (Model != null)
 {
-
-    <!-- Breadcrumb Start -->
     <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
         <div class="container">
             <div class="breadcrumb">
                 <ul>
-                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                    <li><a href="@Url.Action("Index", "Shop")">Shop</a></li>
-                    <li><a href="@Url.Action("Cart", "Shop")">Cart</a></li>
-                    <li class="active"><a href="@Url.Action("Checkout", "Shop")">Checkout</a></li>
+                    <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                    <li><a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.Shop</a></li>
+                    <li><a href="@Url.Action("Cart", "Shop")">@AtesShop.Resources.Resources.Cart</a></li>
+                    <li class="active"><a href="@Url.Action("Checkout", "Shop")">@AtesShop.Resources.Resources.Checkout</a></li>
                 </ul>
             </div>
         </div>
-        <!-- Container End -->
     </div>
-        <!-- Breadcrumb End -->
-
-
+    
     if (Model.CartProducts != null && Model.CartProducts.Count > 0)
     {
-
-        <!-- coupon-area start -->
+        
         <div class="coupon-area">
             <div class="container">
-                <!-- Section Title Start -->
-                <div class="section-title mb-20">
-                    <h2>checkout</h2>
-                </div>
-                <!-- Section Title Start End -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="coupon-accordion">
                             @if (!Request.IsAuthenticated)
                             {
-	                        	 <!-- ACCORDION START -->
-                                <h3>Returning customer? <span id="showlogin">Click here to login</span></h3>
+                                <h3>@AtesShop.Resources.Resources.ReturningCustomerQ <span>&nbsp;</span><span id="showlogin"> @AtesShop.Resources.Resources.ClickHereToLogin</span></h3>
                                 <div id="checkout-login" class="coupon-content">
                                     <div class="coupon-info">
 
@@ -53,7 +41,7 @@
                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                             <p class="form-row-first">
-                                                <label>Username or E-mail <span class="required">*</span></label>
+                                                <label>@AtesShop.Resources.Resources.UsernameOrEmail <span class="required">*</span></label>
                                                 @Html.TextBoxFor(m => m.EmailOrUserName, new { @id = "email"})
                                                 @Html.ValidationMessageFor(m => m.EmailOrUserName, "", new { @class = "text-danger" })
                                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -61,50 +49,34 @@
                                             </p>
 
                                             <p class="form-row-last">
-                                                <label>Password <span class="required">*</span></label>
+                                                <label>@AtesShop.Resources.Resources.Password <span class="required">*</span></label>
                                                 @Html.PasswordFor(m => m.Password, new { @id = "pwd"})
                                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                                             </p>
                                             <p class="form-row">
-                                                <input type="submit" value="Login" />
+                                                <input type="submit" value="@AtesShop.Resources.Resources.Login" />
                                                 <label>
-                                                    <input type="checkbox" />
-                                                    Remember me
+                                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                                    @AtesShop.Resources.Resources.RememberMe
                                                 </label>
                                             </p>
                                             
-                                            <p class="lost-password">@Html.ActionLink("Lost your password?", "ForgotPassword", "Account")</p>
+                                            <p class="lost-password">
+                                                <a href="@Url.Action("ForgotPassword", "Account")">@AtesShop.Resources.Resources.LostYourPassword</a>
+                                            </p>
                                         }
                                     </div>
                                 </div>
-
-                            <!-- ACCORDION END -->
+                                
                             }
 	                        
-
-
-                            <!-- ACCORDION START -->
-                            <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
-                            <div id="checkout_coupon" class="coupon-checkout-content">
-                                <div class="coupon-info">
-                                    <form action="#">
-                                        <p class="checkout-coupon">
-                                            <input type="text" class="code" placeholder="Coupon code" />
-                                            <input type="submit" value="Apply Coupon" />
-                                        </p>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- ACCORDION END -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- coupon-area end -->
-        <!-- checkout-area start -->
         <div class="checkout-area pt-30  pb-60">
             <div class="container">
 
@@ -113,47 +85,46 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     
-
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="checkbox-form">
 
-                                <h3>Billing Details</h3>
+                                <h3>@AtesShop.Resources.Resources.BillingDetail</h3>
                                 
                                     @if (!Request.IsAuthenticated)
                                     {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="country-select mb-30">
-                                                    <label>Country <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.Country <span class="required">*</span></label>
                                                     @Html.DropDownListFor(m => m.Bill.Country, new SelectList(Model.CountryList))
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list">
-                                                    <label>First Name <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.FirstName <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName" })
                                                     @Html.ValidationMessageFor(m => m.Bill.FirstName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Last Name <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.LastName <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName" })
                                                     @Html.ValidationMessageFor(m => m.Bill.LastName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Company Name</label>
+                                                    <label>@AtesShop.Resources.Resources.CompanyName</label>
                                                     @Html.TextBoxFor(m => m.Bill.CompanyName, new { @id = "billCompanyName" })
                                                     @Html.ValidationMessageFor(m => m.Bill.CompanyName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list">
-                                                    <label>Address <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.Address <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.Address1, new { @id = "billAddressLine1" })
                                                     @Html.ValidationMessageFor(m => m.Bill.Address1, "", new { @class = "text-danger" })
                                                 </div>
@@ -166,28 +137,28 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Town / City <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.TownCity <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.City, new { @id = "billAddressCity" })
                                                     @Html.ValidationMessageFor(m => m.Bill.City, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>State / County <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.StateCounty <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.State, new { @id = "billAddressState" })
                                                     @Html.ValidationMessageFor(m => m.Bill.State, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Postcode / Zip <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
                                                     @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Email Address <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.EmailAddress <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
                                                     @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
                                                 </div>
@@ -196,10 +167,10 @@
 
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Phone  <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.MobilePhone  <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
                                                     @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
-                                                    <span id="phone-valid-msg-ba" class="phone-hide">✓ Valid</span>
+                                                    <span id="phone-valid-msg-ba" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                     <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                 </div>
                                             </div>
@@ -230,7 +201,6 @@
                                                 </div>
                                             </div>*@
                                         </div>
-                                        
                                     }
                                     else
                                     {
@@ -250,7 +220,6 @@
                                                         @Html.RadioButtonFor(m => m.SelectedAddress, address.Id)
                                                       }
                                                       
-                                                      @*<input type="radio" name="addressRadio" value="@address.Id" @if (i==0) { <text> checked= "checked" </text>} />*@
                                                       <div href="" class="address-content p-10">
                                                           <p>@address.FirstName @address.LastName</p>
                                                           <p>@address.Line1 @address.Line2</p>
@@ -262,42 +231,41 @@
                                                   i++;
                                               }
                                               </div>
-                                              
                                         }
                                         else
                                         {
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="country-select mb-30">
-                                                        <label>Country <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.Country <span class="required">*</span></label>
                                                         @Html.DropDownListFor(m => m.Bill.Country, new SelectList(Model.CountryList), new { @class = "form-control" })
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list">
-                                                        <label>First Name <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.FirstName <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName" })
                                                         @Html.ValidationMessageFor(m => m.Bill.FirstName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Last Name <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.LastName <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName" })
                                                         @Html.ValidationMessageFor(m => m.Bill.LastName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Company Name</label>
+                                                        <label>@AtesShop.Resources.Resources.CompanyName</label>
                                                         @Html.TextBoxFor(m => m.Bill.CompanyName, new { @id = "billCompanyName" })
                                                         @Html.ValidationMessageFor(m => m.Bill.CompanyName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list">
-                                                        <label>Address <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.Address <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.Address1, new { @id = "billAddressLine1" })
                                                         @Html.ValidationMessageFor(m => m.Bill.Address1, "", new { @class = "text-danger" })
                                                     </div>
@@ -310,38 +278,38 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Town / City <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.TownCity <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.City, new { @id = "billAddressCity" })
                                                         @Html.ValidationMessageFor(m => m.Bill.City, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>State / County <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.StateCounty <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.State, new { @id = "billAddressState" })
                                                         @Html.ValidationMessageFor(m => m.Bill.State, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Postcode / Zip <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
                                                         @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Email Address <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.EmailAddress <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
                                                         @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>Phone  <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.MobilePhone  <span class="required">*</span></label>
                                                         @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
                                                         @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
-                                                        <span id="phone-valid-msg-ba" class="phone-hide">✓ Valid</span>
+                                                        <span id="phone-valid-msg-ba" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                         <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                     </div>
                                                 </div>
@@ -349,11 +317,10 @@
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list create-acc mb-30">
                                                         @Html.CheckBoxFor(m => m.Bill.SaveAddress, new { @id = "sbox" })
-                                                        <label>Save in Address book</label>
+                                                        <label>@AtesShop.Resources.Resources.SaveAddress</label>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         }
 
                                      }
@@ -361,43 +328,42 @@
                                 <div class="different-address">
                                     <div class="ship-different-title">
                                         <h3>
-                                            <label>Ship to a different address?</label>
+                                            <label>@AtesShop.Resources.Resources.ShipDifferent</label>
                                             @Html.CheckBoxFor(m => m.Ship.isShipDifferent, new { @id = "ship-box" })
-                                            @*<input id="ship-box" name="DifferentAddress" type="checkbox" />*@
                                         </h3>
                                     </div>
                                     <div id="ship-box-info">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="country-select mb-30">
-                                                    <label>Country <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.Country <span class="required">*</span></label>
                                                     @Html.DropDownListFor(m => m.Ship.Country, new SelectList(Model.CountryList), new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>First Name <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.FirstName <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.FirstName, new { @id = "shipFirstName" })
                                                     @Html.ValidationMessageFor(m => m.Ship.FirstName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Last Name <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.LastName <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.LastName, new { @id = "shipLastName" })
                                                     @Html.ValidationMessageFor(m => m.Ship.LastName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Company Name</label>
+                                                    <label>@AtesShop.Resources.Resources.CompanyName</label>
                                                     @Html.TextBoxFor(m => m.Ship.CompanyName, new { @id = "shipCompanyName" })
                                                     @Html.ValidationMessageFor(m => m.Ship.CompanyName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Address <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.Address <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.Address1, new { @id = "shipAddressLine1" })
                                                     @Html.ValidationMessageFor(m => m.Ship.Address1, "", new { @class = "text-danger" })
                                                 </div>
@@ -410,38 +376,38 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Town / City <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.TownCity <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.City, new { @id = "shipAddressCity" })
                                                     @Html.ValidationMessageFor(m => m.Ship.City, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>State / County <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.StateCounty <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.State, new { @id = "shipAddressState" })
                                                     @Html.ValidationMessageFor(m => m.Ship.State, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Postcode / Zip <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
                                                     @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Email Address <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.EmailAddress <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.Email, new { @id = "shipEmail" })
                                                     @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>Phone  <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.MobilePhone <span class="required">*</span></label>
                                                     @Html.TextBoxFor(m => m.Ship.Phone, new { @class = "form-control", @id = "shipAddressPhone" })
                                                     @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
-                                                    <span id="phone-valid-msg-sa" class="phone-hide">✓ Valid</span>
+                                                    <span id="phone-valid-msg-sa" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                     <span id="phone-error-msg-sa" class="phone-hide"></span>
                                                 </div>
                                             </div>
@@ -449,13 +415,11 @@
                                     </div>
                                     <div class="order-notes">
                                         <div class="checkout-form-list">
-                                            <label>Order Notes</label>
-                                            @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = "Notes about your order, e.g. special notes for delivery." })
+                                            <label>@AtesShop.Resources.Resources.OrderNotes</label>
+                                            @Html.TextAreaFor(m => m.OrderNote, new { @id = "checkout-mess", @cols = "30", @rows = "10", @placeholder = AtesShop.Resources.Resources.OrderNotesDescription })
                                         </div>
                                     </div>
                                 </div>
-                                     
-                                     
                             </div>
 
                         </div>
@@ -469,14 +433,14 @@
                             @Html.HiddenFor(m => m.CartTotalPriceWithTax)
 
                             <div class="your-order">
-                                <h3>Your order</h3>
+                                <h3>@AtesShop.Resources.Resources.YourOrder</h3>
                                 <div class="your-order-table table-responsive">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th colspan="1" class="product-name">Product</th>
-                                                <th colspan="1" class="product-quantity">Quantity</th>
-                                                <th colspan="1" class="product-total">Total</th>
+                                                <th colspan="1" class="product-name">@AtesShop.Resources.Resources.Product</th>
+                                                <th colspan="1" class="product-quantity">@AtesShop.Resources.Resources.Quantity</th>
+                                                <th colspan="1" class="product-total">@AtesShop.Resources.Resources.Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -497,17 +461,17 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="cart-subtotal">
-                                                <th colspan="1">Cart Subtotal</th>
+                                                <th colspan="1">@AtesShop.Resources.Resources.CartSubtotal</th>
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTotalPrice</span></td>
                                             </tr>
                                             <tr class="cart-subtotal">
-                                                <th colspan="1">Tax (5%)</th>
+                                                <th colspan="1">@AtesShop.Resources.Resources.Tax</th>
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTaxPrice</span></td>
                                             </tr>
                                             <tr class="order-total">
-                                                <th colspan="1">Order Total</th>
+                                                <th colspan="1">@AtesShop.Resources.Resources.OrderTotal</th>
                                                 <td></td>
                                                 <td>
                                                     <strong><span class="amount">@Model.CartTotalPriceWithTax</span></strong>
@@ -519,7 +483,7 @@
                                 <div class="payment-method">
                                     <div class="payment-accordion">
                                         <div class="order-button-payment">
-                                            <input id="placeOrder" type="submit" value="Place Order" />
+                                            <input id="placeOrder" type="submit" value= "@AtesShop.Resources.Resources.PlaceOrder" />
                                         </div>
                                     </div>
                                 </div>
@@ -529,18 +493,16 @@
                 }
             </div>
         </div>
-        <!-- checkout-area end -->
     }
     else
     {
         <div class="checkout-area pb-60">
             <div class="container">
-                <div class="text-content pb-20"><p>No products in cart.</p></div>
+                <div class="text-content pb-20"><p>@AtesShop.Resources.Resources.NoProductsInCart</p></div>
                 <div class="row">
-                    <!-- Cart Button Start -->
                     <div class="col-lg-8 col-md-7">
                         <div class="buttons-cart">
-                            <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                            <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                         </div>
                     </div>
                 </div>
@@ -568,15 +530,13 @@ else
         $.validator.unobtrusive.parse("#checkoutForm");
     });
 
-
-
     //$('#placeOrder').click(function () {
     //    $.cookie('CartProducts', "", { path: '/' });
     //})
 
     var countryData = window.intlTelInputGlobals.getCountryData();
     
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    var errorMap = [@AtesShop.Resources.Resources.InvalidNumber, @AtesShop.Resources.Resources.InvalidCountryCode, @AtesShop.Resources.Resources.TooShort, @AtesShop.Resources.Resources.TooLong, @AtesShop.Resources.Resources.InvalidNumber];
 
     for (var i = 0; i < countryData.length; i++) {
         var country = countryData[i];

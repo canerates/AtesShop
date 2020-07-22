@@ -5,21 +5,17 @@
     var activeTab = ViewBag.ActiveTab.ToString().ToLower();
 }
 
-<!-- Breadcrumb Start -->
 <div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
-                <li class="active"><a href="@Url.Action("Index", "Manage")">Account</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Manage")">@AtesShop.Resources.Resources.Account</a></li>
             </ul>
         </div>
     </div>
-    <!-- Container End -->
 </div>
-<!-- Breadcrumb End -->
 
-<!-- My Account Page Start Here -->
 <div class="my-account white-bg pb-60">
     <div class="container">
         <div class="account-dashboard">
@@ -27,66 +23,64 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col-lg-3 col-md-6">
                         <div class="d-single-info">
-                            <p class="user-name">Hello <span>@Model.FullName</span></p>
+                            <p class="user-name">@AtesShop.Resources.Resources.Hello <span>&nbsp;</span> <span>@Model.FullName</span></p>
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm1", @class = "navbar-right" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <p>(not @Model.FullName  <a href="javascript:document.getElementById('logoutForm1').submit()">logout</a>)</p>
+                                <p>(@AtesShop.Resources.Resources.Not <span>&nbsp;</span> @Model.FullName <span>&nbsp;</span> <a href="javascript:document.getElementById('logoutForm1').submit()">@AtesShop.Resources.Resources.LogOut</a>)</p>
                             }
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-single-info">
-                            <p>Need Assistance? Customer service at.</p>
+                            <p>@AtesShop.Resources.Resources.NeedAssistance <span> &nbsp;</span> @AtesShop.Resources.Resources.CustomerService</p>
                             <p>admin@poweractive.com</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-single-info">
-                            <p>E-mail them at </p>
+                            <p>@AtesShop.Resources.Resources.EmailThem </p>
                             <p>support@poweractive.com</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="d-single-info text-center">
-                            <a class="view-cart" href="@Url.Action("Cart", "Shop")"><i class="fa fa-cart-plus" aria-hidden="true"></i>view cart</a>
+                            <a class="view-cart" href="@Url.Action("Cart", "Shop")"><i class="fa fa-cart-plus" aria-hidden="true"></i>@AtesShop.Resources.Resources.ViewCart</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-2">
-                    <!-- Nav tabs -->
                     <ul class="nav flex-column dashboard-list" role="tablist">
-                        <li><a id="dashboard-tab" class="active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
-                        <li><a id="orders-tab" data-toggle="tab" href="#orders">Orders</a></li>
-                        <li><a id="downloads-tab" data-toggle="tab" href="#downloads">Downloads</a></li>
-                        <li><a id="addresses-tab" data-toggle="tab" href="#address">Addresses</a></li>
-                        <li><a id="details-tab" data-toggle="tab" href="#account-details">Account details</a></li>
+                        <li><a id="dashboard-tab" class="active" data-toggle="tab" href="#dashboard">@AtesShop.Resources.Resources.Dashboard</a></li>
+                        <li><a id="orders-tab" data-toggle="tab" href="#orders">@AtesShop.Resources.Resources.Orders</a></li>
+                        @*<li><a id="downloads-tab" data-toggle="tab" href="#downloads">@AtesShop.Resources.Resources.Download</a></li>*@
+                        <li><a id="addresses-tab" data-toggle="tab" href="#address">@AtesShop.Resources.Resources.Addresses</a></li>
+                        <li><a id="details-tab" data-toggle="tab" href="#account-details">@AtesShop.Resources.Resources.AccountDetails</a></li>
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm2", @class = "navbar-right" }))
                         {
                         @Html.AntiForgeryToken()
-                            <li><a href="javascript:document.getElementById('logoutForm2').submit()">logout</a></li>
+                            <li><a href="javascript:document.getElementById('logoutForm2').submit()">@AtesShop.Resources.Resources.LogOut</a></li>
                         }
                     </ul>
                 </div>
                 <div class="col-lg-10">
-                    <!-- Tab panes -->
                     <div id="contentBlock" class="tab-content dashboard-content mt-all-40">
                         <div id="dashboard" class="tab-pane active">
-                            <h3>Dashboard </h3>
-                            <p>From your account dashboard. you can easily check & view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
+                            <h3>@AtesShop.Resources.Resources.Dashboard </h3>
+                            <p>@AtesShop.Resources.Resources.DashboardInfo</p>
                         </div>
                         <div id="orders" class="tab-pane fade">
                         @{ 
                             Html.RenderAction("Orders");
                         }
                         </div>
-                        <div id="downloads" class="tab-pane fade">
+                        @*<div id="downloads" class="tab-pane fade">
                         @{
                             Html.RenderAction("Downloads");
                         }
-                        </div>
+                        </div>*@
                         <div id="address" class="tab-pane">
                             
                         @{
@@ -105,82 +99,6 @@
         </div>
     </div>
 </div>
-<!-- My Account Page End Here -->
-
-
-<p class="text-success">@ViewBag.StatusMessage</p>
-@*<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        
-         
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-        </dd>
-    </dl>
-</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
