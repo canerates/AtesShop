@@ -6,23 +6,19 @@
     {
         <div class="single-sidebar">
             <div class="group-title">
-                <h2>My Wish List</h2>
+                <h2>@AtesShop.Resources.Resources.MyWishlist</h2>
             </div>
             <div class="best-seller-pro-two compare-pro best-seller-pro-two owl-carousel">
 
                 @foreach (var product in Model.WishlistProducts)
                 {
                     <div class="best-seller-multi-product">
-                        <!-- Single Product Start -->
                         <div class="single-product">
-                            <!-- Product Image Start -->
                             <div class="pro-img">
                                 <a href="@Url.Action("Wishlist", "Generic")">
                                     <img class="primary-img" src="@Url.Action( "Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="single-product">
                                 </a>
                             </div>
-                            <!-- Product Image End -->
-                            <!-- Product Content Start -->
                             <div class="pro-content">
                                 <h4><a href="@Url.Action("Wishlist", "Generic")">@product.Name <br /> @product.Description</a></h4>
                                 <div class="product-rating">
@@ -54,9 +50,7 @@
                                     }
                                 }
                             </div>
-                            <!-- Product Content End -->
                         </div>
-                        <!-- Single Product End -->
                     </div>
                 }
 

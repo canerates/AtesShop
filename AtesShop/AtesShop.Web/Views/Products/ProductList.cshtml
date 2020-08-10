@@ -332,7 +332,7 @@ else
             $("#tableContainer").html(response);
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            alert("Fail");
+            
         });
 
     });
@@ -361,11 +361,17 @@ else
 
     $('.add-compare').click(function (event) {
         event.preventDefault();
+
         var compareBtn = $(this);
         var productId = compareBtn.attr('data-id');
         var categoryId = compareBtn.attr('data-cat-id');
 
         var currentCompareCookie = $.cookie('CompareProducts');
+
+        //if (compareBtn.hasClass("selected")) {
+        //    alert("asdsa");
+        //}
+        
 
         if (currentCompareCookie != undefined && currentCompareCookie != "" && currentCompareCookie != null)
         {

@@ -1,6 +1,6 @@
 ﻿@model AtesShop.Web.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = AtesShop.Resources.Resources.Register;
 }
 
 <!-- Breadcrumb Start -->
@@ -9,7 +9,7 @@
         <div class="breadcrumb">
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
-                <li class="active"><a href="@Url.Action("Register", "Account")">Register</a></li>
+                <li class="active"><a href="@Url.Action("Register", "Account")">@AtesShop.Resources.Resources.Register</a></li>
             </ul>
         </div>
     </div>
@@ -22,8 +22,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="register-title">
-                    <h3 class="mb-10">REGISTER ACCOUNT</h3>
-                    <p class="mb-10">If you already have an account with us, please login at the login page.</p>
+                    <h3 class="mb-10">@AtesShop.Resources.Resources.RegisterAccount</h3>
+                    <p class="mb-10">@AtesShop.Resources.Resources.HaveAccount</p>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <fieldset>
-                        <legend>Your Personal Details</legend>
+                        <legend>@AtesShop.Resources.Resources.YourPersonalDetails</legend>
 
                         <div class="form-group pb-10">
                             <div class="col-sm-10">
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-sm-10">
                                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "phone" })
-                                <span id="phone-valid-msg" class="phone-hide">✓ Valid</span>
+                                <span id="phone-valid-msg" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                 <span id="phone-error-msg" class="phone-hide"></span>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 <div class="col-sm-6">
 
                     <fieldset>
-                        <legend>@AtesShop.Resources.Resources.YourPassword <a id="pwdHint" tabindex="0" href="#" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li>Password must be at least 6 characters long.</li><li>Password must have at least one non letter or digit character.</li><li>Password must have at least one digit ('0'-'9')</li><li>Password must have at least one uppercase ('A'-'Z').</li></ul>"><i class="fa fa-info-circle" aria-hidden="true"></i></a></legend>
+                        <legend>@AtesShop.Resources.Resources.YourPassword <a id="pwdHint" tabindex="0" href="#" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li>@AtesShop.Resources.Resources.PasswordSixCharactersLong</li><li>@AtesShop.Resources.Resources.PasswordNonLetterOrDigit</li><li>@AtesShop.Resources.Resources.PasswordAtLeastOneDigit</li><li>@AtesShop.Resources.Resources.PasswordAtLeastOneUppercase</li></ul>"><i class="fa fa-info-circle" aria-hidden="true"></i></a></legend>
                         <div class="form-group pb-10">
                             <div class="col-sm-10">
                                 @Html.LabelFor(m => m.Password, new { @class = "control-label" }) <label class="control-label"><span class="require">*</span></label>
@@ -102,20 +102,17 @@
                         </div>
                     </fieldset>
                     <fieldset class="business-input">
-                        <legend>Your Business</legend>
+                        <legend>@AtesShop.Resources.Resources.YourBusiness</legend>
                         <div class="form-group pb-10">
                             <div class="custom-radio-group col-sm-10">
                                 <label class="radio-inline">
-                                    @Html.RadioButtonFor(m => m.BusinessType, "User", new { @checked = "checked" })
-                                    @*<input type="radio" name="business" value="User" checked="checked">*@ User
+                                    @Html.RadioButtonFor(m => m.BusinessType, "User", new { @checked = "checked" }) @AtesShop.Resources.Resources.User
                                 </label>
                                 <label class="radio-inline">
-                                    @Html.RadioButtonFor(m => m.BusinessType, "Installer")
-                                    @*<input type="radio" name="business" value="Installer">*@ Installer
+                                    @Html.RadioButtonFor(m => m.BusinessType, "Installer") @AtesShop.Resources.Resources.Installer
                                 </label>
                                 <label class="radio-inline">
-                                    @Html.RadioButtonFor(m => m.BusinessType, "Distributor")
-                                    @*<input type="radio" name="business" value="Distributor">*@ Distributor
+                                    @Html.RadioButtonFor(m => m.BusinessType, "Distributor") @AtesShop.Resources.Resources.Distributor
                                 </label>
                             </div>
                         </div>
@@ -123,7 +120,7 @@
                             <div class="form-group  pb-10">
                                 <div class="col-sm-10">
                                     @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <label class="control-label"><span class="require">*</span></label>
-                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @id = "companyName", @placeholder = "Company Name" })
+                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @id = "companyName", @placeholder = AtesShop.Resources.Resources.CompanyName })
                                     @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -131,7 +128,7 @@
                             <div class="form-group  pb-10">
                                 <div class="col-sm-10">
                                     @Html.LabelFor(m => m.TaxNumber, new { @class = "control-label" }) <label class="control-label"><span class="require">*</span></label>
-                                    @Html.TextBoxFor(m => m.TaxNumber, new { @class = "form-control", @id = "companyNumber", @placeholder = "Tax Number" })
+                                    @Html.TextBoxFor(m => m.TaxNumber, new { @class = "form-control", @id = "companyNumber", @placeholder = AtesShop.Resources.Resources.TaxNumber })
                                     @Html.ValidationMessageFor(m => m.TaxNumber, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -193,7 +190,7 @@
         errorMsg = document.querySelector("#phone-error-msg"),
         validMsg = document.querySelector("#phone-valid-msg");
 
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    var errorMap = ["@AtesShop.Resources.Resources.InvalidNumber", "@AtesShop.Resources.Resources.InvalidCountryCode", "@AtesShop.Resources.Resources.TooShort", "@AtesShop.Resources.Resources.TooLong", "@AtesShop.Resources.Resources.InvalidNumber"];
 
     for (var i = 0; i < countryData.length; i++) {
         var country = countryData[i];

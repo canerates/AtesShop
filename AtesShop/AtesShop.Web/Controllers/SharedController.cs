@@ -23,7 +23,7 @@ namespace AtesShop.Web.Controllers
         public ActionResult MenuTabs()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = MenuService.Instance.GetMainMenuList();
+            model.MainMenuList = MenuService.Instance.GetMainMenuList(CultureInfo.CurrentUICulture.Name);
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
@@ -41,7 +41,7 @@ namespace AtesShop.Web.Controllers
         public ActionResult MobileMenu()
         {
             MenuViewModel model = new MenuViewModel();
-            model.MainMenuList = MenuService.Instance.GetMainMenuList();
+            model.MainMenuList = MenuService.Instance.GetMainMenuList(CultureInfo.CurrentUICulture.Name);
             foreach (var main in model.MainMenuList)
             {
                 main.Name = resourceProvider.GetResource(main.ResourceKey, CultureInfo.CurrentUICulture.Name) as string;
@@ -136,5 +136,6 @@ namespace AtesShop.Web.Controllers
 
             return PartialView(model);
         }
+        
     }
 }

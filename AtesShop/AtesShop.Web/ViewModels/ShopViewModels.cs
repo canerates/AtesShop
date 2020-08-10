@@ -146,10 +146,10 @@ namespace AtesShop.Web.ViewModels
         [EmailAddress]
         [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
-        
+
         [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
-        public string Phone { get; set; }
-        
+        public string PhoneNumber { get; set; }
+
         [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
 
@@ -194,8 +194,8 @@ namespace AtesShop.Web.ViewModels
 
         [Required]
         [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
-        public string Phone { get; set; }
-        
+        public string PhoneNumber { get; set; }
+
         [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
 

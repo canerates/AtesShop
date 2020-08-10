@@ -145,6 +145,7 @@ namespace AtesShop.Web.Models
         public string ZipCode { get; set; }
 
         [Required]
+        [EmailAddress]
         [Display(Name = "EmailAddress", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
 
@@ -161,30 +162,30 @@ namespace AtesShop.Web.Models
 
     public class DetailsViewModel
     {
-        [Display(Name = "Social title")]
+        [Display(Name = "SocialTitle", ResourceType = typeof(Resources.Resources))]
         public string Gender { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         public string Email { get; set; }
         
-        [Display(Name = "Mobile Phone")]
+        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
         public string PhoneNumber { get; set; }
         
         public bool UpdatePassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "CurrentPassword", ResourceType = typeof(Resources.Resources))]
         public string OldPassword { get; set; }
         
         [Required]
@@ -194,30 +195,30 @@ namespace AtesShop.Web.Models
         [AtLeastOneDigit]
         [AtLeastOneSpecial]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "NewPassword", ResourceType = typeof(Resources.Resources))]
         public string NewPassword { get; set; }
         
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "ConfirmNewPassword", ResourceType = typeof(Resources.Resources))]
+        [Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
 
         public bool UpdateRole { get; set; }
 
         [Required]
-        [Display(Name = "New Business Type")]
+        [Display(Name = "NewBusinessType", ResourceType = typeof(Resources.Resources))]
         public string NewBusinessType { get; set; }
         
         [Required]
-        [Display(Name = "Business Type")]
+        [Display(Name = "BusinessType", ResourceType = typeof(Resources.Resources))]
         public string BusinessType { get; set; }
 
         [Required]
-        [Display(Name = "Company Name")]
+        [Display(Name = "CompanyName", ResourceType = typeof(Resources.Resources))]
         public string CompanyName { get; set; }
 
         [Required]
-        [Display(Name = "Tax Number")]
+        [Display(Name = "TaxNumber", ResourceType = typeof(Resources.Resources))]
         public string TaxNumber { get; set; }
 
 
@@ -229,7 +230,7 @@ namespace AtesShop.Web.Models
         [Display(Name = "Receive offers from our partners")]
         public bool isOffer { get; set; }
         
-        [Display(Name = "Sign up for our newsletter", Description = "Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..")]
+        [Display(Name = "SignUpOurNews", ResourceType = typeof(Resources.Resources))]
         public bool isSubscribed { get; set; }
     }
 

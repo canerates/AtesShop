@@ -1,0 +1,142 @@
+﻿@model OfferPackageViewModel
+
+<div class="table-content table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th class="product-thumbnail">@AtesShop.Resources.Resources.Image</th>
+                <th class="product-name">@AtesShop.Resources.Resources.Product</th>
+                <th class="product-description">@AtesShop.Resources.Resources.Details</th>
+                <th class="product-quantity">@AtesShop.Resources.Resources.Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var element in Model.PackageItems)
+            {
+                <tr>
+                    <td class="product-thumbnail">
+                        @if (element.isVisible)
+                        {
+                            <a href="@Url.Action("Detail", "Products", new { id = element.ProductSetItem.ItemProductID })"><img src="@Url.Action("Image", "Generic", new { id = element.ImageId })" alt="package-image" /></a>
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("Image", "Generic", new { id = element.ImageId })" alt="package-image" />
+                        }
+
+                    </td>
+                    <td class="product-name">
+                        @if (element.isVisible)
+                        {
+                            <a href="@Url.Action("Detail", "Products", new { id = element.ProductSetItem.ItemProductID })">@element.ProductSetItem.ItemProductName </a>
+                        }
+                        else
+                        {
+                            @element.ProductSetItem.ItemProductName
+                        }
+                    </td>
+                    <td class="product-description">@element.ProductSetItem.ItemProductDescription</td>
+                    <td class="product-quantity">@element.ProductSetItem.ItemProductQuantity</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" class="product-subtotal"><div style="font-size: 15px; float: right;">@AtesShop.Resources.Resources.SubTotalProducts</div></td>
+                <td colspan="1" class="product-price">@Model.SubTotal</td>
+            </tr>
+            @foreach (var item in Model.Extras)
+            {
+                if (item.isIncluded)
+                {
+                    <tr>
+                        <td colspan="3" class="product-subtotal"><div class=".inc-items" data-id="@item.Id" data-pro-id="@item.ProductSetId" style="font-size: 15px; float: right;">@item.Name</div></td>
+                        <td colspan="1" class="product-price">@item.Price</td>
+                    </tr>
+                }
+            }
+
+            <tr>
+                <td colspan="3" class="product-subtotal"><div style="font-size: 15px; float: right;">@AtesShop.Resources.Resources.Total</div></td>
+                <td colspan="1" class="product-price" data-id="@Model.SetId">@Model.Total</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="table-content table-responsive">
+    <table>
+        <tbody>
+            @foreach (var element in Model.Extras)
+            {
+                <tr>
+                    @if (element.isIncluded)
+                    {
+                        <td colspan="1" class="product-thumbnail" style="padding: 0px;"><a href="#" class="add-to-package selected" data-id="@element.Id" data-pro-id="@element.ProductSetId">-</a></td>
+                    }
+                    else
+                    {
+                        <td colspan="1" class="product-thumbnail" style="padding: 0px;"><a href="#" class="add-to-package" data-id="@element.Id" data-pro-id="@element.ProductSetId">+</a></td>
+                    }
+                    <td colspan="1" class="product-name">@element.Name</td>
+                    <td colspan="1" class="product-description">@element.Description</td>
+                    <td class="product-price">@element.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    $('.add-to-package').click(function (event) {
+        event.preventDefault();
+        var addBtn = $(this);
+        var optProdId = addBtn.attr('data-id');
+        var setId = addBtn.attr('data-pro-id');
+        var optItemList = [];
+
+        var incItemsLength = $('.incItems').length;
+        for (var i = 0; i < incItemsLength; i++) {
+            var id = $('.incItems').children().eq(i).attr('data-id');
+            optItemList.push(id);
+        }
+        if (addBtn.hasClass('selected')) {
+            var index = optItemList.indexOf(optProdId);
+            optItemList.splice(index, 1);
+        }
+        else {
+            optItemList.push(optProdId);
+        }
+
+        $.ajax({
+            url: '@Url.Action("PackageProducts", "Offer")',
+            data: {
+                productId: setId,
+                incItems: optItemList.join('-')
+            }
+        })
+        .done(function (response) {
+            $('.package-info[data-id="' + setId + '"]').html(response);
+            var newTotal = $('.product-price[data-id="' + setId +'"]').html();
+            $('.price[data-id="' + setId + '"]').html(newTotal);
+            if (addBtn.hasClass('selected')) {
+                $('.install-service[data-id="' + setId + '"]').val('0');
+            }
+            else {
+                $('.install-service[data-id="' + setId + '"]').val('1');
+            }
+
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+        });
+    });
+
+
+
+
+</script>
+
+
+
+
+

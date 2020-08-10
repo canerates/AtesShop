@@ -1,6 +1,6 @@
-﻿
+﻿@model ContactViewModel
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = AtesShop.Resources.Resources.ContactUsT2O2;
 }
 
 <div class="container ptb-30">
@@ -10,47 +10,65 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h3>Contact Us</h3>
-                <p class="text-capitalize mb-40">Power Active Smart Surveillance</p>
-                <form id="contact-form" class="contact-form" action="" method="post">
+                <h3>@AtesShop.Resources.Resources.ContactUs</h3>
+                <p class="text-capitalize mb-40">@AtesShop.Resources.Resources.PASmartSurveillance</p>
+                @using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { @id = "contact-form", @class = "form-horizontal", role = "form" }))
+                {
                     <div class="address-wrapper">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="form-group col-md-12 mb-20">
                                 <div class="address-fname">
-                                    <input type="text" name="name" placeholder="Name">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "fname", @placeholder = AtesShop.Resources.Resources.Name })
+                                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="form-group col-md-6 mb-20">
                                 <div class="address-email">
-                                    <input type="email" name="email" placeholder="Email">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @placeholder = AtesShop.Resources.Resources.Email })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="form-group col-md-6 mb-20">
                                 <div class="address-web">
-                                    <input type="text" name="website" placeholder="Website">
+                                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @id = "website", @placeholder = AtesShop.Resources.Resources.Website })
+                                    @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="col-sm-12">
+
+                            <div class="form-group col-sm-12 mb-20">
                                 <div class="address-subject">
-                                    <input type="text" name="subject" placeholder="Subject">
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "subject", @placeholder = AtesShop.Resources.Resources.Subject })
+                                    @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="col-sm-12">
+
+                            <div class="form-group col-sm-12 mb-20">
                                 <div class="address-textarea">
-                                    <textarea name="message" placeholder="Write your message"></textarea>
+                                    @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @id = "message", @placeholder = AtesShop.Resources.Resources.WriteYourMessage })
+                                    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <p class="form-message ml-15"></p>
                     <div class="col-xs-12 footer-content mail-content">
                         <div class="send-email">
-                            <input type="submit" disabled value="Submit" class="submit">
+                            <input type="submit" value="@AtesShop.Resources.Resources.Submit" class="submit">
                         </div>
                     </div>
-                </form>
+                }
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="../../Client_Scripts/MvcFoolproofJQueryValidation.js" type="text/javascript"></script>
+<script src="../../Client_Scripts/mvcfoolproof.unobtrusive.js" type="text/javascript"></script>
 

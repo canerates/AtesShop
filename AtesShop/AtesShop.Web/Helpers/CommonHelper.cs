@@ -41,6 +41,23 @@ namespace AtesShop.Web.Helpers
             return product;
         }
 
+        internal static string FormatCurrency(string price, string culture)
+        {
+            var formatPrice = "";
+
+            if (price != "Contact Us")
+            {
+                culture = culture == "tr-TR" ? "en-US" : culture;
+                var priceValue = Int64.Parse(price);
+                formatPrice = priceValue.ToString("C", new CultureInfo(culture));
+            }
+            else
+            {
+                formatPrice = "Contact Us";
+            }
+            return formatPrice;
+        }
+
         internal static List<Product> WishlistCheck(List<Product> products, string userId)
         {
             var wishlist = UserService.Instance.GetAllWishlistForUser(userId);

@@ -143,11 +143,12 @@ namespace AtesShop.Services
 
         #region Web
 
-        public List<MainMenu> GetMainMenuList()
+        public List<MainMenu> GetMainMenuList(string culture)
         {
             using (var context = new ASContext())
             {
                 return context.MainMenus
+                    .Where(x => x.Culture == culture)
                     .Include(x => x.SubMenus)
                     .OrderBy(x => x.OrderId)
                     .ToList();

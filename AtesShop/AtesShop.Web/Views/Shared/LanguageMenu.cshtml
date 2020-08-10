@@ -2,7 +2,7 @@
 @model LangMenuViewModel
 <!-- Language Start -->
 <li>
-    <a href="#">@Model.SelectedLanguage <i class="fa fa-angle-down"></i></a>
+    <a href="#"><i class="fa fa-globe" aria-hidden="true"></i> @AtesShop.Resources.Resources.Language</a>
     <ul class="ht-dropdown">
         @foreach (var lang in Model.Languages)
         {
@@ -13,7 +13,7 @@
 <!-- Language End -->
 <!-- Currency Start -->
 <li>
-    <a href="#">@Model.SelectedCurrency @*<i class="fa fa-angle-down"></i>*@</a>
+    <a>@Model.SelectedLanguage  ( @Model.SelectedCurrency ) @*<i class="fa fa-angle-down"></i>*@</a>
     @*<ul class="ht-dropdown">
             <li><a href="#">USD</a></li>
             <li><a href="#">GBP</a></li>

@@ -1,7 +1,7 @@
 ﻿@model CheckoutViewModel
 
 @{ 
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = AtesShop.Resources.Resources.Checkout;
     bool isAddressExist = Model.UserAddressList == null || Model.UserAddressList.Count ==  0 ? false : true;
 
 }
@@ -165,11 +165,10 @@
                                             </div>
 
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>@AtesShop.Resources.Resources.MobilePhone  <span class="required">*</span></label>
-                                                    @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
-                                                    @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => m.Bill.PhoneNumber, new { @class = "form-control", @id = "billAddressPhone" })
                                                     <span id="phone-valid-msg-ba" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                     <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                 </div>
@@ -304,11 +303,10 @@
                                                         @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>@AtesShop.Resources.Resources.MobilePhone  <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.Phone, new { @class = "form-control", @id = "billAddressPhone" })
-                                                        @Html.ValidationMessageFor(m => m.Bill.Phone, "", new { @class = "text-danger" })
+                                                        @Html.TextBoxFor(m => m.Bill.PhoneNumber, new { @class = "form-control", @id = "billAddressPhone" })
                                                         <span id="phone-valid-msg-ba" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                         <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                     </div>
@@ -402,11 +400,10 @@
                                                     @Html.ValidationMessageFor(m => m.Ship.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="checkout-form-list mb-30">
                                                     <label>@AtesShop.Resources.Resources.MobilePhone <span class="required">*</span></label>
-                                                    @Html.TextBoxFor(m => m.Ship.Phone, new { @class = "form-control", @id = "shipAddressPhone" })
-                                                    @Html.ValidationMessageFor(m => m.Ship.Phone, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => m.Ship.PhoneNumber, new { @class = "form-control", @id = "shipAddressPhone" })
                                                     <span id="phone-valid-msg-sa" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                     <span id="phone-error-msg-sa" class="phone-hide"></span>
                                                 </div>
@@ -530,13 +527,10 @@ else
         $.validator.unobtrusive.parse("#checkoutForm");
     });
 
-    //$('#placeOrder').click(function () {
-    //    $.cookie('CartProducts', "", { path: '/' });
-    //})
 
     var countryData = window.intlTelInputGlobals.getCountryData();
     
-    var errorMap = [@AtesShop.Resources.Resources.InvalidNumber, @AtesShop.Resources.Resources.InvalidCountryCode, @AtesShop.Resources.Resources.TooShort, @AtesShop.Resources.Resources.TooLong, @AtesShop.Resources.Resources.InvalidNumber];
+    var errorMap = ["@AtesShop.Resources.Resources.InvalidNumber", "@AtesShop.Resources.Resources.InvalidCountryCode", "@AtesShop.Resources.Resources.TooShort", "@AtesShop.Resources.Resources.TooLong", "@AtesShop.Resources.Resources.InvalidNumber"];
 
     for (var i = 0; i < countryData.length; i++) {
         var country = countryData[i];

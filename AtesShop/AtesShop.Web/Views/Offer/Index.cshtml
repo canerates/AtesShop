@@ -1,0 +1,175 @@
+﻿@model List<ProductSetsViewModel>
+
+@{
+    ViewBag.Title = AtesShop.Resources.Resources.SpecialOffers;
+}
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Offer")">@AtesShop.Resources.Resources.SpecialOffers</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+ <!-- Blog Area Start -->
+<div class="blog-page pb-60">
+    <div class="container">
+        <!-- Row End -->
+        <div class="row">
+
+            <div id="special-offers" class="col-lg-12">
+                @if (Model != null && Model.Count != 0)
+                {
+                    foreach (var el in Model)
+                    {
+                            <div class="single-product">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="pro-img zoom">
+                                        <a href="#">
+                                            <img class="primary-img" src="@Url.Action("Image", "Generic", new { id = el.Product.Images.FirstOrDefault().Id })" alt="single-product">
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="thubnail-desc fix">
+                                        <h3 class="product-header">@el.Product.Name</h3>
+                                        <div class="rating-summary fix mb-10 mt-10">
+                                            <div class="rating f-left">
+                                                @for (int k = 0; k < 5; k++)
+                                                {
+                                                    if (k < el.Product.Rate)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                    }
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <div class="pro-price mb-10">
+                                            @if (el.Product.isDiscount)
+                                            {
+                                                <p><span class="price">@el.Product.Price</span><del class="prev-price">@el.Product.PrePrice</del></p>
+                                            }
+                                            else
+                                            {
+                                                <p><span class="price" data-id="@el.Product.Id">@el.Product.Price</span></p>
+                                            }
+                                        </div>
+
+
+                                        @if (el.Product.Stock != null && el.Product.Stock.Available != 0)
+                                        {
+                                            if (el.Product.Price != "Contact Us")
+                                            {
+                                                <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
+                                                    <ul class="list-inline">
+
+                                                        @if (Culture == "zh-TW")
+                                                        {
+                                                            <li><a class="add-cart" href="#" data-id="@el.Product.Id" data-ex-id="@el.ProductExtra.Id">@AtesShop.Resources.Resources.AddToCart</a>
+                                                                <input class="install-service" type="hidden" value="0" data-id="@el.Product.Id" />
+                                                            </li>
+                                                            
+                                                        }
+                                                        <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="pro-ref mb-15">
+                                                <p><span class="in-stock">@AtesShop.Resources.Resources.NoStock</span></p>
+                                            </div>
+
+                                            <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
+                                                <ul class="list-inline">
+
+                                                    <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="showPackage mt-20" data-id="@el.Product.Id">@AtesShop.Resources.Resources.PackageDetails <i class="fa fa-angle-down"></i></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="package-info col-lg-12" data-id="@el.Product.Id" style="display:none">
+                                    @{
+                                        Html.RenderAction("PackageProducts", "Offer", new { productId = el.Product.Id });
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Blog Area End -->
+
+@if (Culture == "zh-TW")
+{
+    <script>
+    $('.add-cart').click(function (event) {
+        event.preventDefault();
+
+        var products;
+        var currentCartCookie = $.cookie('CartProducts');
+
+        if (currentCartCookie != undefined && currentCartCookie != "" && currentCartCookie != null) {
+            products = currentCartCookie.split('-');
+        }
+        else {
+            products = [];
+        }
+        
+
+        var productId = 0;
+
+        var is = $(".install-service[data-id='"+ $(this).attr('data-id') +"']");
+
+        if (is.val() == 0) {
+            productId = $(this).attr('data-id');
+        }
+        else {
+            productId = $(this).attr('data-ex-id');
+        }
+
+        products.push(productId);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        var imgtodrag = $(this).parents().eq(5).children().eq(0).find("img");
+
+        dragToCart(imgtodrag);
+
+        $(this).blur();
+
+    });
+    </script>
+}
+
+
+
+
+

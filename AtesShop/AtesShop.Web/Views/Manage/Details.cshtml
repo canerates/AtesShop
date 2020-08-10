@@ -2,7 +2,7 @@
 
 @using AtesShop.Web.Helpers
 
-<h3>Account details </h3>
+<h3>@AtesShop.Resources.Resources.AccountDetails </h3>
 <div class="register-form login-form clearfix">
 
     @using (Ajax.BeginForm("Details", "Manage", new AjaxOptions { OnBegin = "ajaxLoading('details')", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "details" }, new { @class = "form-horizontal", @id = "detailForm", role = "form" }))
@@ -27,10 +27,10 @@
             @Html.LabelFor(m => m.Gender, new { @class = "col-lg-3 col-md-4 col-form-label" })
             <div class="col-lg-6 col-md-8">
                 <span class="custom-radio">
-                    @Html.RadioButtonFor(m => m.Gender, "Mr.", Model.Gender == "Mr." ? "checked" : string.Empty) Mr.
+                    @Html.RadioButtonFor(m => m.Gender, "Mr.", Model.Gender == "Mr." ? "checked" : string.Empty) @AtesShop.Resources.Resources.Mr
                 </span>
                 <span class="custom-radio">
-                    @Html.RadioButtonFor(m => m.Gender, "Mrs.", Model.Gender == "Mrs." ? "checked" : string.Empty) Mrs.
+                    @Html.RadioButtonFor(m => m.Gender, "Mrs.", Model.Gender == "Mrs." ? "checked" : string.Empty) @AtesShop.Resources.Resources.Mrs
                 </span>
             </div>
         </div>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-3 col-md-4 col-form-label">Change Password</label>
+            <label class="col-lg-3 col-md-4 col-form-label">@AtesShop.Resources.Resources.ChangePassword</label>
             <div class="col-lg-6 col-md-8">
                 <label class="switch">
                     @Html.CheckBoxFor(m => m.UpdatePassword)
@@ -127,10 +127,10 @@
                     @Html.LabelFor(m => m.NewBusinessType, new { @class = "col-lg-3 col-md-4 col-form-label" })
                     <div class="col-lg-6 col-md-8">
                         <span class="custom-radio col-lg-2">
-                            @Html.RadioButtonFor(m => m.NewBusinessType, "Installer", new { @checked = "checked" }) Installer
+                            @Html.RadioButtonFor(m => m.NewBusinessType, "Installer", new { @checked = "checked" }) @AtesShop.Resources.Resources.Installer
                         </span>
                         <span class="custom-radio col-lg-2">
-                            @Html.RadioButtonFor(m => m.NewBusinessType, "Distributor") Distributor
+                            @Html.RadioButtonFor(m => m.NewBusinessType, "Distributor") @AtesShop.Resources.Resources.Distributor
                         </span>
                     </div>
                 </div>
@@ -155,10 +155,10 @@
         </div>
         
         <div class="form-group row">
-            <label class="col-lg-3 col-md-4 col-form-label" for="phone"> Mobile Phone</label>
+            <label class="col-lg-3 col-md-4 col-form-label" for="phone"> @AtesShop.Resources.Resources.MobilePhone</label>
             <div class="col-lg-6 col-md-8">
                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "detailPhone" })
-                <span id="phone-valid-msg-detail" class="phone-hide">✓ Valid</span>
+                <span id="phone-valid-msg-detail" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                 <span id="phone-error-msg-detail" class="phone-hide"></span>
             </div>
         </div>
@@ -167,13 +167,13 @@
             <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-4">
                 @Html.CheckBoxFor(m => m.isSubscribed, new { @class = "form-check-input", @checked = @Model.isSubscribed ? "checked" : string.Empty })
                 @Html.LabelFor(m => m.isSubscribed, new { @class = "form-check-label" })
-                <label class="form-check-label"><br />@Html.DescriptionFor(m => m.isSubscribed)</label>
+                <label class="form-check-label"><br />@AtesShop.Resources.Resources.SubscribeToOur</label>
 
             </div>
         </div>
         
         <div class="register-box mt-40">
-            <input type="submit" id="detailSubmit" value="Save" class="return-customer-btn f-right" />
+            <input type="submit" id="detailSubmit" value="@AtesShop.Resources.Resources.Save" class="return-customer-btn f-right" />
         </div>
         
     }
@@ -193,7 +193,7 @@
         errorMsgD = document.querySelector("#phone-error-msg-detail"),
         validMsgD = document.querySelector("#phone-valid-msg-detail");
 
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    var errorMap = ["@AtesShop.Resources.Resources.InvalidNumber", "@AtesShop.Resources.Resources.InvalidCountryCode", "@AtesShop.Resources.Resources.TooShort", "@AtesShop.Resources.Resources.TooLong", "@AtesShop.Resources.Resources.InvalidNumber"];
 
     for (var i = 0; i < countryData.length; i++) {
         var country = countryData[i];
@@ -248,7 +248,6 @@
 
     $(document).on('click', '#detailSubmit', {}, function (e) {
         if (!itiD.isValidNumber() && $('#detailPhone').val() != "") {
-            debugger;
             e.preventDefault();
             validatePhoneD();
             this.blur();

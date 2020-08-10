@@ -27,20 +27,30 @@
                             }
 
                             <tr>
-                                <td class="product-thumbnail">
-                                    <a href="#"><img src="@Url.Action("Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
-                                </td>
-                                <td class="product-name"><a href="#">@product.Name <br /> @product.Description</a></td>
+                                @if (!product.isSet)
+                                {
+                                    <td class="product-thumbnail">
+                                        <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><img src="@Url.Action("Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                    </td>
+                                    <td class="product-name"><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name <br /> @product.Description</a></td>
+                                }
+                                else
+                                {
+                                    <td class="product-thumbnail">
+                                        <a href="@Url.Action("Index", "Offer")"><img src="@Url.Action("Image", "Generic", new { id = product.Images.FirstOrDefault().Id })" alt="cart-image" /></a>
+                                    </td>
+                                    <td class="product-name"><a href="@Url.Action("Index", "Offer")">@product.Name <br /> @product.Description </a></td>
+                                }
                                 <td class="product-price"><span class="price">@product.Price</span></td>
                                 <td class="product-quantity"><input type="number" class="productQuantity" min="1" max="@product.Stock.Available" required oninput="validity.valid||(value='');" data-id="@product.Id" value="@productQuantity" /></td>
                                 <td class="product-subtotal">@Model.CartProductsSubTotal[product.Id]</td>
                                 <td class="product-remove"> <a class="productRemove" href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
                 <input id="cartTotalPrice" type="hidden" value="@Model.CartTotalPrice" />
+                <input id="cartTotalPriceWithTax" type="hidden" value="@Model.CartTotalPriceWithTax" />
             </div>
         </div>
         
@@ -79,7 +89,6 @@
                 </div>
             </div>
         </div>
-        
     }
     else
     {

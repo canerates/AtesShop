@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>@ViewBag.Title - Power Active Smart Surveillance</title>
+    <title>@ViewBag.Title - @AtesShop.Resources.Resources.PASmartSurveillance</title>
     <meta name="description" content="Default Description">
     <meta name="keywords" content="E-commerce" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,9 +31,19 @@
     <!-- bootstrap css -->
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
     <!-- default css  -->
-    <link rel="stylesheet" href="~/Content/css/default.css">
+    
     <!-- style css -->
-    <link rel="stylesheet" href="~/Content/css/style.css">
+    @if (Culture == "zh-TW")
+    {
+        <link rel="stylesheet" href="~/Content/css/default_cn.css">
+        <link rel="stylesheet" href="~/Content/css/style_cn.css">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/Content/css/default.css">
+        <link rel="stylesheet" href="~/Content/css/style.css">
+    }
+
     <!-- responsive css -->
     <link rel="stylesheet" href="~/Content/css/responsive.css">
 
@@ -45,9 +55,9 @@
     
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 
     <script src="~/Content/js/jquery-ui.min.js"></script>
 
@@ -79,7 +89,7 @@
                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                             <div class="search-box-view">
                                 <form id="searchForm" action="@Url.Action("Index", "Products" , new { categoryId = string.Empty })">
-                                    <input id="searchKey" type="text" class="email" placeholder="@AtesShop.Resources.Resources.SearchYourProduct" name="search">
+                                    <input id="searchKey" type="text" class="email" placeholder="@AtesShop.Resources.Resources.SearchYourProduct" name="search" required>
                                     <button type="submit" class="submit"></button>
                                 </form>
                             </div>
@@ -106,7 +116,7 @@
             <div class="header-bottom header-sticky">
                 <div class="container">
                     <div id="header_row" class="row">
-                        <div class="col-xl-3 col-lg-2 col-sm-5 col-5">
+                        <div class="col-xl-3 col-lg-3 col-sm-5 col-5">
                             <div class="logo">
                                 <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo/logo.png" alt="logo-image"></a>
                             </div>
@@ -129,7 +139,10 @@
                                     </li>
                                     <li><a id="wishIcon" href="@Url.Action("Wishlist", "Generic")"><i id="heartIcon" class="fa fa-heart-o"></i><span id="heartWish"><i class="fa fa-heart"></i></span></a></li>
                                     <li>
-                                        <a href="@Url.Action("Cart", "Shop")"><i class="fa fa-shopping-basket"></i><span id="cartProductQuantity" class="cart-counter">0</span></a>
+                                        @if (Culture == "zh-TW")
+                                        {
+                                            <a href="@Url.Action("Cart", "Shop")"><i class="fa fa-shopping-basket"></i><span id="cartProductQuantity" class="cart-counter">0</span></a>
+                                        }
                                         @*@{ Html.RenderAction("CartMenu", "Shared");}*@
                                     </li>
                                 </ul>
@@ -163,30 +176,28 @@
                                     </div>
                                 </div>
                                 <div class="newsletter-box">
-                                    <form action="#">
-                                        <input class="subscribe" placeholder="@AtesShop.Resources.Resources.EnterYourEmailAddress" name="email" id="subscribe" type="text">
-                                        <button type="submit" class="submit">@AtesShop.Resources.Resources.Subscribe</button>
-                                    </form>
+                                    @{ Html.RenderAction("Subscribe", "Account");}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <!-- Single Footer Start -->
-                        <div class="col-lg-4  col-md-7 col-sm-6">
+                        @*<div class="col-lg-4  col-md-7 col-sm-6">*@
+                        <div class="col-lg-12  col-md-12 col-sm-12">
                             <div class="single-footer">
-                                <h3>Contact us</h3>
+                                <h3>@AtesShop.Resources.Resources.ContactUs</h3>
                                 <div class="footer-content">
                                     <div class="loc-address">
                                         <span><i class="fa fa-map-marker"></i>5F., No.23, Wugong 6th Rd., Wugu Dist., New Taipei City 248, Taiwan (R.O.C)</span>
-                                        <span><i class="fa fa-envelope-o"></i>Mail Us : info@example.com</span>
-                                        <span><i class="fa fa-phone"></i>Phone: + 886 2 8990 3339</span>
+                                        <span><i class="fa fa-envelope-o"></i>@AtesShop.Resources.Resources.MailUs : angus@poweractive-tw.com</span>
+                                        <span><i class="fa fa-phone"></i>@AtesShop.Resources.Resources.CallUs: + 886 2 8990 3339</span>
                                     </div>
-                                    <div class="payment-mth"><a href="#"><img class="img" src="~/Content/img/footer/1.png" alt="payment-image"></a></div>
+                                    @*<div class="payment-mth"><a href="#"><img class="img" src="~/Content/img/footer/1.png" alt="payment-image"></a></div>*@
                                 </div>
                             </div>
                         </div>
-                        <!-- Single Footer Start -->
+                        @*<!-- Single Footer Start -->
                         <!-- Single Footer Start -->
                         <div class="col-lg-2  col-md-5 col-sm-6 footer-full">
                             <div class="single-footer">
@@ -254,7 +265,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Single Footer Start -->
+                        <!-- Single Footer Start -->*@
                     </div>
                     <!-- Row End -->
                 </div>
@@ -262,7 +273,7 @@
             </div>
             <!-- Footer Top End -->
             <!-- Footer Bottom Start -->
-            <div class="footer-bottom off-white-bg2">
+            @*<div class="footer-bottom off-white-bg2">
                 <div class="container">
                     <div class="footer-bottom-content">
                         <p class="copy-right-text">Copyright © <a href="@Url.Action("About","Home")">Power Active</a> All Rights Reserved.</p>
@@ -277,8 +288,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Container End -->
-            </div>
+            </div>*@
             <!-- Footer Bottom End -->
         </footer>
         <!-- Footer End -->

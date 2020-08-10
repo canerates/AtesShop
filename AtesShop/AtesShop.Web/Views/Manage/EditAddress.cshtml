@@ -106,14 +106,14 @@
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "editAddressPhone" })
                     @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger"})
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    <span id="phone-valid-msg" class="phone-hide">✓ Valid</span>
+                    <span id="phone-valid-msg" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                     <span id="phone-error-msg" class="phone-hide"></span>
                 </div>
             </div>
 
             <div class="register-box mt-40 f-right">
-                <a id="backBtn" href="#" class="return-customer-btn">Back</a>
-                <input type="submit" id="editAddressSubmit" name="SubmitButton" value="Save" class="return-customer-btn" />
+                <a id="backBtn" href="#" class="return-customer-btn">@AtesShop.Resources.Resources.Back</a>
+                <input type="submit" id="editAddressSubmit" name="SubmitButton" value="@AtesShop.Resources.Resources.Save" class="return-customer-btn" />
             </div>
         </div>
     }
@@ -136,11 +136,9 @@
             }
         })
         .done(function (response) {
-            //alert("Success");
             $("#address").html(response);
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            alert("Fail");
         });
     })
 
@@ -149,7 +147,7 @@
         errorMsg = document.querySelector("#phone-error-msg"),
         validMsg = document.querySelector("#phone-valid-msg");
 
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    var errorMap = ["@AtesShop.Resources.Resources.InvalidNumber", "@AtesShop.Resources.Resources.InvalidCountryCode", "@AtesShop.Resources.Resources.TooShort", "@AtesShop.Resources.Resources.TooLong", "@AtesShop.Resources.Resources.InvalidNumber"];
 
     for (var i = 0; i < countryData.length; i++) {
         var country = countryData[i];

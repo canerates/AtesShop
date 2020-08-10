@@ -2,7 +2,7 @@
 @using AtesShop.Web.Helpers
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = AtesShop.Resources.Resources.ProductsT1O2;
 
     var categoryId = Model.CategoryId == 0 ? "null" : Model.CategoryId.ToString();
     var searchKey = Model.SearchKey == null ? null : Model.SearchKey.ToString();
@@ -92,7 +92,7 @@
 
                     <div class="main-toolbar-sorter f-right">
                         <div class="toolbar-sorter">
-                            <label>sort by</label>
+                            <label>@AtesShop.Resources.Resources.SortBy</label>
                             <select id="ddlSort" class="sorter" name="sorter">
                                 <option id="1" value="Default" selected="selected">@AtesShop.Resources.Resources.Default</option>
                                 <option id="2" value="Name">@AtesShop.Resources.Resources.Name</option>

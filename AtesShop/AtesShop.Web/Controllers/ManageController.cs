@@ -12,6 +12,8 @@ using AtesShop.Entities;
 using System.Collections.Generic;
 using AtesShop.Web.Code;
 using AtesShop.Web.Helpers;
+using System.Configuration;
+using System.Text;
 
 namespace AtesShop.Web.Controllers
 {
@@ -20,6 +22,7 @@ namespace AtesShop.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private CustomEmailService emailService = new CustomEmailService();
 
         public ManageController()
         {
@@ -577,14 +580,20 @@ namespace AtesShop.Web.Controllers
 
                 if (model.UpdateRole)
                 {
-                    IdentityMessage message = new IdentityMessage();
-                    message.Destination = "canerates@poweractive-tw.com";
-                    message.Subject = "Role upgrade request";
-                    message.Body = "<p> Name: " + user.FirstName + " " + user.LastName + "</p> <p> Username: " + user.UserName + "</p> <p> Email: " + user.Email + "</p> <p> Phone: " + user.PhoneNumber + "</p> <p> Role request: " + model.NewBusinessType + "</p>";
+                    var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
+                    var fromAddress = model.Email.ToString();
+                    var subject2 = "Role upgrade request";
+                    var messageBody = new StringBuilder();
+                    messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName + "</p>");
+                    messageBody.Append("<p>Email: " + user.Email + "</p>");
+                    messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
+                    messageBody.Append("<p>Role request: " + model.NewBusinessType + "</p>");
+                    var message = messageBody.ToString();
 
-                    await UserManager.EmailService.SendAsync(message);
+                    await emailService.SendEmail(toAddress, fromAddress, subject2, message);
+                    
 
-                    TempData["RoleRequest"] = "New Business Type request has been made. Please contact with us for details.";
+                    TempData["RoleRequest"] = Resources.Resources.RoleRequestMailSent;
                 }
 
                 if (model.CompanyName != null && model.TaxNumber != null)
@@ -607,7 +616,7 @@ namespace AtesShop.Web.Controllers
                     if (result2.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        TempData["PasswordChangedSuccess"] = "Password has been changed succesfully.";
+                        TempData["PasswordChangedSuccess"] = Resources.Resources.PasswordChangedSuccess;
                         return PartialView("Details", model);
                     }
                     AddErrors(result2);

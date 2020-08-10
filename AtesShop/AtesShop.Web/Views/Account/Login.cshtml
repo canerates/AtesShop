@@ -1,7 +1,7 @@
 ﻿@using AtesShop.Web.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = AtesShop.Resources.Resources.Login;
 }
 
 <!-- Breadcrumb Start -->
@@ -10,7 +10,7 @@
         <div class="breadcrumb">
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
-                <li class="active"><a href="@Url.Action("Login", "Account")">Login</a></li>
+                <li class="active"><a href="@Url.Action("Login", "Account")">@AtesShop.Resources.Resources.Login</a></li>
             </ul>
         </div>
     </div>
@@ -26,9 +26,9 @@
             <div class="col-sm-6">
                 <div class="well">
                     <div class="new-customer">
-                        <h3>NEW CUSTOMER</h3>
+                        <h3>@AtesShop.Resources.Resources.NewCustomer</h3>
                         <p class="mtb-10"><strong>@AtesShop.Resources.Resources.Register</strong></p>
-                        <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made</p>
+                        <p>@AtesShop.Resources.Resources.CreateAccountDescription</p>
                         <a class="customer-btn" href="@Url.Action("Register", "Account")">@AtesShop.Resources.Resources.Continue</a>
                     </div>
                 </div>
@@ -39,8 +39,8 @@
             <div class="col-sm-6">
                 <div class="well">
                     <div class="return-customer">
-                        <h3 class="mb-10">RETURNING CUSTOMER</h3>
-                        <p class="mb-10"><strong>I am a returning customer</strong></p>
+                        <h3 class="mb-10">@AtesShop.Resources.Resources.ReturningCustomer</h3>
+                        <p class="mb-10"><strong>@AtesShop.Resources.Resources.IamReturningCustomer</strong></p>
 
                         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "loginForm", role = "form" }))
                         {
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 @Html.LabelFor(m => m.EmailOrUserName, new { @class = "control-label", @for = "email" })
-                                @Html.TextBoxFor(m => m.EmailOrUserName, new { @class = "form-control", @id = "email", @placeholder = "Enter your email address or username here..." })
+                                @Html.TextBoxFor(m => m.EmailOrUserName, new { @class = "form-control", @id = "email", @placeholder = AtesShop.Resources.Resources.EnterYourEmailOrUsername })
                                 @Html.ValidationMessageFor(m => m.EmailOrUserName, "", new { @class = "text-danger" })
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 
@@ -57,15 +57,15 @@
 
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Password, new { @class = "control-label", @for = "pwd" })
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "pwd", @placeholder = "Password" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "pwd", @placeholder = AtesShop.Resources.Resources.Password })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                 
                             </div>
-                            <p class="lost-password">@Html.ActionLink("Forgot your password?", "ForgotPassword")</p>
+                            <p class="lost-password">@Html.ActionLink(AtesShop.Resources.Resources.ForgotYourPassword, "ForgotPassword")</p>
 
                             <div class="form-group">
-                                <input type="submit" value="Login" class="return-customer-btn" />
+                                <input type="submit" value="@AtesShop.Resources.Resources.Login" class="return-customer-btn" />
                             </div>
                         }
                     </div>

@@ -46,14 +46,14 @@
             } catch (e) { }
         }
     })
-    
+
 
     $('input[name="addressRadio"]').change(function () {
         try {
             $('#editAddress').removeClass('disabled');
             $('#deleteAddress').removeClass('disabled');
         } catch (e) { }
-        
+
     })
 
     $("#addAddress").click(function (event) {
@@ -103,7 +103,10 @@
                 title: "@AtesShop.Resources.Resources.Delete",
                 text: "@AtesShop.Resources.Resources.DeleteAddressQ",
                 icon: "warning",
-                buttons: true,
+                buttons: {
+                    confirm: {text: "@AtesShop.Resources.Resources.Ok", className: 'sweet-warning button'},
+                    cancel: "@AtesShop.Resources.Resources.Cancel"
+                },
                 dangerMode: true
             })
             .then((value) => {

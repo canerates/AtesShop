@@ -14,6 +14,7 @@ using AtesShop.Web.Code;
 using System.IO;
 using System.Net.Mail;
 using System.Text;
+using System.Configuration;
 
 namespace AtesShop.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace AtesShop.Web.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
+        private CustomEmailService emailService = new CustomEmailService();
 
         public AccountController()
         {
@@ -109,7 +111,7 @@ namespace AtesShop.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", Resources.Resources.InvalidLoginAttempt);
                     return View(model);
             }
         }
@@ -195,12 +197,17 @@ namespace AtesShop.Web.Controllers
                     //Role request email
                     if (model.CompanyName != null)
                     {
-                        IdentityMessage message = new IdentityMessage();
-                        message.Destination = "canerates@poweractive-tw.com";
-                        message.Subject = "Role upgrade request";
-                        message.Body = "<p> Name: " + user.FirstName + " " + user.LastName + "</p> <p> Username: " + user.UserName + "</p> <p> Email: " + user.Email + "</p> <p> Phone: " + user.PhoneNumber + "</p> <p> Role request: " + model.BusinessType + "</p>";
+                        var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
+                        var fromAddress = model.Email.ToString();
+                        var subject2 = "Role upgrade request";
+                        var messageBody = new StringBuilder();
+                        messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName +  "</p>");
+                        messageBody.Append("<p>Email: " + user.Email + "</p>");
+                        messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
+                        messageBody.Append("<p>Role request: " + model.BusinessType + "</p>");
+                        var message = messageBody.ToString();
 
-                        await UserManager.EmailService.SendAsync(message);
+                        await emailService.SendEmail(toAddress, fromAddress, subject2, message);
                     }
                     
                     return RedirectToAction("Index", "Home");
@@ -480,11 +487,32 @@ namespace AtesShop.Web.Controllers
 
         //
         // GET: /Account/ExternalLoginFailure
+        [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginFailure()
         {
             return View();
         }
+
+        //
+        // GET: /Account/Subscribe
+        [AllowAnonymous]
+        public ActionResult Subscribe()
+        {
+            return PartialView();
+        }
+
+        //
+        // POST: /Account/Subscribe
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Subscribe(SubscriptionViewModel model)
+        {
+            
+            return new EmptyResult();
+        }
+
 
         protected override void Dispose(bool disposing)
         {

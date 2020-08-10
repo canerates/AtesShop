@@ -87,8 +87,8 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var product = context.Products.Where(x => x.isActive && x.Id == productId).Include(x => x.Stock).FirstOrDefault();
-                return FormatProductInfo(product, culture, role);
+                var product = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden && x.Id == productId).Include(x => x.Stock).FirstOrDefault();
+                return product != null ? FormatProductInfo(product, culture, role) : product;
             }
         }
 
@@ -96,8 +96,8 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => x.isActive).Include(x => x.Category).Include(x => x.Stock).ToList();
-                return FormatProductsInfo(products, culture, role);
+                var products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).Include(x => x.Category).Include(x => x.Stock).ToList();
+                return products != null ? FormatProductsInfo(products, culture, role) : products;
             }
         }
 
@@ -105,8 +105,9 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => x.isActive && x.Category.Id == categoryId).Include(x => x.Category).Include(x => x.Stock).ToList();
-                return FormatProductsInfo(products, culture, role);
+                var products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden && x.Category.Id == categoryId).Include(x => x.Category).Include(x => x.Stock).ToList();
+                return products != null ? FormatProductsInfo(products, culture, role) : products;
+                
             }
         }
 
@@ -114,8 +115,17 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
+                var products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden && productIdList.Contains(x.Id)).Include(x => x.Stock).ToList();
+                return products != null ? FormatProductsInfo(products, culture, role) : products;
+            }
+        }
+
+        public List<Product> GetProductsByIdListForCart(List<int> productIdList, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
                 var products = context.Products.Where(x => x.isActive && productIdList.Contains(x.Id)).Include(x => x.Stock).ToList();
-                return FormatProductsInfo(products, culture, role);
+                return products != null ? FormatProductsInfo(products, culture, role) : products;
             }
         }
 
@@ -123,7 +133,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => x.isActive).Include(x => x.Stock).ToList();
+                var products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).Include(x => x.Stock).ToList();
                 
                 if (categoryId.HasValue)
                 {
@@ -184,7 +194,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                return context.Products.Where(x => x.isActive).Count();
+                return context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).Count();
             }
         }
         
@@ -192,7 +202,7 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var products = context.Products.Where(x => x.isActive).ToList();
+                var products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).ToList();
 
                 if (categoryId.HasValue)
                 {
@@ -302,7 +312,59 @@ namespace AtesShop.Services
             }
             
         }
-        
+
+        public Product GetProductSet(int productId, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var product = context.Products.Where(x => x.isActive && x.isSet && x.Id == productId).Include(x => x.Stock).FirstOrDefault();
+                return product != null ? FormatProductInfo(product, culture, role) : product;
+            }
+        }
+
+        public List<Product> GetProductSets(string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var products = context.Products.Where(x => x.isActive && x.isSet).Include(x => x.Stock).ToList();
+                return products != null ? FormatProductsInfo(products, culture, role) : products;
+            }
+        }
+
+        public List<SetItem> GetProductSetItems(int productSetId)
+        {
+            using (var context = new ASContext())
+            {
+                var setItems = context.ProductSetItems.Where(x => x.ProductSetId == productSetId && !x.isOptional).ToList();
+                return setItems;
+            }
+        }
+
+        public List<SetItem> GetOptionalProductSetItems(int productSetId)
+        {
+            using (var context = new ASContext())
+            {
+                var setItems = context.ProductSetItems.Where(x => x.ProductSetId == productSetId && x.isOptional).ToList();
+                return setItems;
+            }
+        }
+
+        public Product GetProductForSet(int productId)
+        {
+            using (var context = new ASContext())
+            {
+                var product = context.Products.Where(x => x.Id == productId && x.isActive).FirstOrDefault();
+
+                if (product != null)
+                {
+                    List<int> idList = product.ImageIdList.Split(',').Select(int.Parse).ToList();
+                    product.Images = context.Images.Where(x => idList.Contains(x.Id)).ToList();
+                }
+                
+                return product;
+            }
+        }
+
         #endregion
 
     }

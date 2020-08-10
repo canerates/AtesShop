@@ -278,18 +278,20 @@ namespace AtesShop.Web.Controllers
                 switch (e.Value)
                 {
                     case ErrorType.invalidemail:
-                        model.Title = "Invalid Email";
-                        model.Message = "Your email is not registered or confirmed yet.";
+                        model.Title = Resources.Resources.InvalidEmail;
+                        model.Message = Resources.Resources.InvalidEmailInfo;
                         break;
                     case ErrorType.invalidcode:
-                        model.Title = "Invalid Code";
-                        model.Message = "Code validation is expired.";
+                        model.Title = Resources.Resources.InvalidCode;
+                        model.Message = Resources.Resources.InvalidCodeInfo;
                         break;
                     case ErrorType.emailconfirmation:
-                        model.Title = "Confirmation Error";
-                        model.Message = "There is something wrong during confirmation, please contact with Power Active.";
+                        model.Title = Resources.Resources.ConfirmationError;
+                        model.Message = Resources.Resources.ConfirmationErrorInfo;
                         break;
                     default:
+                        model.Title = "";
+                        model.Message = "";
                         break;
                 }
             }
@@ -304,16 +306,16 @@ namespace AtesShop.Web.Controllers
             switch (s)
             {
                 case SuccessType.emailconfirmation:
-                    model.Title = "Email is confirmed";
-                    model.Message = "Thank you for confirming your email.";
+                    model.Title = Resources.Resources.EmailConfirmed;
+                    model.Message = Resources.Resources.EmailConfirmationInfo;
                     break;
                 case SuccessType.passwordreset:
-                    model.Title = "Sign in with new password";
-                    model.Message = "Your password has been changed. Please login with your new password.";
+                    model.Title = Resources.Resources.SignWithNewPassword;
+                    model.Message = Resources.Resources.PasswordChangedInfo;
                     break;
                 case SuccessType.passwordresetemailsent:
-                    model.Title = "Check your email";
-                    model.Message = "We have been sent an email to your inbox. Please check your email to reset your password.";
+                    model.Title = Resources.Resources.CheckYourEmail;
+                    model.Message = Resources.Resources.EmailSentDescription;
                     break;
                 default:
                     model.Title = "";

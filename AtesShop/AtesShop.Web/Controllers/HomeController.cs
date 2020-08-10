@@ -1,13 +1,18 @@
 ﻿using AtesShop.Resources;
 using AtesShop.Services;
+using AtesShop.Web.Code;
 using AtesShop.Web.Helpers;
 using AtesShop.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +22,7 @@ namespace AtesShop.Web.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
+        private CustomEmailService emailService = new CustomEmailService();
 
         public ApplicationRoleManager RoleManager
         {
@@ -86,6 +92,30 @@ namespace AtesShop.Web.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Contact(ContactViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
+                var fromAddress = model.Email.ToString();
+                var subject = "Message from " + model.Name;
+                var messageBody = new StringBuilder();
+                messageBody.Append("<p>Name: " + model.Name + "</p>");
+                messageBody.Append("<p>Email: " + model.Email + "</p>");
+                messageBody.Append("<p>Website: " + model.Website + "</p>");
+                messageBody.Append("<p>Subject: " + model.Subject + "</p>");
+                messageBody.Append(model.Message);
+                var message = messageBody.ToString();
+
+                await emailService.SendEmail(toAddress, fromAddress, subject, message);
+
+            }
+
+            return RedirectToAction("Contact", "Home");
         }
 
         [HttpGet]

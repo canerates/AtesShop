@@ -30,6 +30,7 @@
     23. Home Three CSS
     24. Preloader
     25. Information Page CSS
+    26. Special Offers Page CSS
 
   
 -----------------------------------------------------*/
@@ -39,7 +40,6 @@
 /*----------------------------------------*/
 body {
     font-family: 'Rubik', sans-serif;
-    /*font-family: '宋体',宋体b8b体,Microsoft YaHei, Arial, sans-serif;*/
     font-weight: 400;
     color: #333;
     font-size: 14px;
@@ -164,7 +164,7 @@ body {
 
 .field-validation-error
 {
-    color: #ff0000;
+    color: #ff0000 !important;
 }
 .field-validation-valid
 {
@@ -176,6 +176,12 @@ body {
 }
 
 input.valid
+{
+    border: 1px solid #00C900 !important;
+    background: #fff !important;
+}
+
+textarea.valid
 {
     border: 1px solid #00C900 !important;
     background: #fff !important;
@@ -322,9 +328,9 @@ input#newsletter-permission {
 }
 
 .header-list-menu > li i {
-    margin-left: 4px;
-    font-size: 19px;
-    vertical-align: middle;
+    /*margin-left: 4px;*/
+    font-size: 18px;
+    /*vertical-align: middle;*/
 }
 .header-list-menu > li, .middle-menu-list > li {
     display: inline-block;
@@ -344,7 +350,7 @@ input#newsletter-permission {
 .header-list-menu > li > a, .homeo-2 .ht-dropdown.megamenu li a {
     color: #555;
     display: block;
-    font-size: 16px;
+    font-size: 15px;
     padding: 10px 27px 10px 10px;
     text-transform: capitalize;
 }
@@ -365,7 +371,7 @@ input#newsletter-permission {
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
     vertical-align: inherit;
-    font-size: 14px;
+    font-size: 18px;
     margin-left: 4px;
 }
 
@@ -432,7 +438,7 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .header-list-menu > li > ul.ht-dropdown > li > a,
 .middle-menu-list li ul.ht-dropdown li a {
-    font-size: 15px;
+    font-size: 14px;
     padding: 5px 0;
     line-height: 24px;
     display: block;
@@ -555,7 +561,7 @@ ul.ht-dropdown.dropdown-style-two li {
     background: transparent none repeat scroll 0 0;
     color: #333;
     display: block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25px;
     padding: 37px 0 37px 30px;
@@ -1000,6 +1006,48 @@ ul.ht-dropdown.dropdown-style-two li {
     z-index: 9;
 }
 
+.banner-title {
+    color: #be0b1e;
+    font-size: 0.8em;
+    font-weight: 500;
+    line-height: inherit;
+    height: auto;
+    width: auto;
+    z-index: 9;
+}
+
+.banner-text {
+    font-size: inherit;
+    font-weight: 800;
+    line-height: inherit;
+    height: auto;
+    width: 240px;
+    z-index: 9;
+}
+
+.banner-price {
+    color: #be0b1e;
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 50px;
+    height: auto;
+    width: auto;
+    z-index: 9;
+}
+
+.banner-group-text {
+    color: #363f4d;
+    font-size: 33px;
+    font-weight: 500;
+    line-height: 38px;
+    height: auto;
+    width: auto;
+    position: absolute;
+    left: 32px;
+    top: 25px;
+    z-index: 9;
+}
+
 .sticker-sale {
     background: #31a2e2;
 }
@@ -1089,10 +1137,10 @@ ul.ht-dropdown.dropdown-style-two li {
 .hand-tool-active .owl-nav div,
 .blog-active .owl-nav div,
 .best-seller-unique .owl-nav div {
-    top: -31px;
+    top: -21px;
 }
 .side-product-list-active .owl-nav div{
-    top: -26px;
+    top: -16px;
 }
 .best-selling-pro .owl-nav div,
 .new-pro-active.more-e-pro .owl-nav div {
@@ -1285,13 +1333,13 @@ ul.ht-dropdown.dropdown-style-two li {
     color: #555;
     display: inline-block;
     font-size: 16px;
-    height: 32px;
-    line-height: 32px;
+    height: 35px;
+    line-height: 35px;
     position: relative;
     text-align: center;
     -webkit-transition: all 0.15s ease 0s;
     transition: all 0.15s ease 0s;
-    width: 33px;
+    width: 35px;
 }
 .actions-secondary a.add-cart {
     width: 115px;
@@ -3699,7 +3747,7 @@ legend {
 }
 
 input.phone-error {
-  border: 1px solid #FF7C7C;
+  border: 1px solid #FF7C7C !important;
 }
 .phone-hide {
   display: none;
@@ -3751,7 +3799,7 @@ input.phone-error {
     padding: 0 15px;
     background: #f5f5f5;
     border: 1px solid #e8e8e8;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     float: left;
     color: #888;
 }
@@ -3839,6 +3887,7 @@ input.phone-error {
 .nivo2 .text-content h1 {
     font-size: 48px;
     line-height: 60px;
+    text-shadow: 2px 2px 0px #fff;
 }
 .testext_active.owl-carousel .owl-item img {
     width: auto;
@@ -3879,7 +3928,7 @@ input.phone-error {
     margin-top: 30px;
 }
 .hand-tool-active .owl-nav div{
-    top: -57px;
+    top: -47px;
 }
 /*----------------------------------------*/
 /* 20. Compare Page CSS
@@ -4678,7 +4727,7 @@ input[type="checkbox"]:checked + .slider:before {
 }
 
 /*----------------------------------------*/
-/* 26. 
+/* 25. Information Page CSS
 /*----------------------------------------*/
 
 .sweet-warning {
@@ -4715,3 +4764,124 @@ input[type="checkbox"]:checked + .slider:before {
     /*background-color:#F2F2F2;*/
 }
 
+/*----------------------------------------*/
+/* 26. Special Offers Page CSS
+/*----------------------------------------*/
+
+
+#special-offers .single-product {
+    padding: 15px 15px 15px 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(235,235,235, 0.5);
+}
+
+#special-offers .single-product:hover {
+    border: 1px solid transparent;
+    box-shadow: 0px 5px 14.25px 0.75px rgba(0, 0, 0, 0.07);
+}
+
+.showPackage {
+    cursor: pointer;
+    background-color: #e3e3e3;
+    border: 1px solid #e3e3e3;
+    color: #333;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    padding: 13px 15px;
+    font-size: 14px;
+    vertical-align: middle;
+    text-transform: capitalize;
+    display: inline-block;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    border-radius: 4px;
+}
+
+.showPackage:hover {
+    background: #8FBA22 none repeat scroll 0 0;
+    border-color: #8FBA22;
+    color: #fff;
+}
+
+.package-info .table-content {
+    padding: 10px 50px;
+}
+
+.package-info .table-content table {
+    background: #fff none repeat scroll 0 0;
+    border-color: #e5e5e5;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    text-align: center;
+    width: 100%;
+}
+
+.package-info .table-content table th {
+    border-top: medium none;
+    font-weight: normal;
+    padding: 5px 10px;
+    text-align: center;
+    text-transform: capitalize;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.package-info .table-content table th,
+.package-info .table-content table td {
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+
+.package-info .table-content table td {
+    border-top: medium none;
+    padding: 5px 10px;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.package-info .table-content table td.product-name {
+    width: 150px;
+}
+
+.package-info .table-content table td.product-description {
+    width: 500px;
+}
+
+.package-info .table-content table td.product-thumbnail {
+    width: 50px;
+}
+
+.package-info .table-content table td.product-quantity {
+    width: 25px;
+}
+
+.package-info .product-thumbnail img {
+    width: 100%;
+}
+
+.add-to-package {
+    background: #eef0f1 none repeat scroll 0 0;
+    color: #555;
+    display: inline-block;
+    font-size: 16px;
+    height: 100%;
+    line-height: 39px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: all 0.15s ease 0s;
+    transition: all 0.15s ease 0s;
+    width: 100%;
+}
+
+.add-to-package:hover {
+    background: #8FBA22 none repeat scroll 0 0;
+    color: #fff;
+}
+
+.add-to-package.selected {
+    background: #8FBA22;
+    color: #fff;
+}

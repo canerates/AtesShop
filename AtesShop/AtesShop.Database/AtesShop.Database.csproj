@@ -66,6 +66,34 @@
     <Compile Include="Migrations\202007160242506_inventoryAdd.designer.cs">
       <DependentUpon>202007160242506_inventoryAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007220139591_isSetPropAdded.cs" />
+    <Compile Include="Migrations\202007220139591_isSetPropAdded.designer.cs">
+      <DependentUpon>202007220139591_isSetPropAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007220155080_isHiddenCategoryAdded.cs" />
+    <Compile Include="Migrations\202007220155080_isHiddenCategoryAdded.designer.cs">
+      <DependentUpon>202007220155080_isHiddenCategoryAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007230149059_isHiddenAdded.cs" />
+    <Compile Include="Migrations\202007230149059_isHiddenAdded.designer.cs">
+      <DependentUpon>202007230149059_isHiddenAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007230344174_setItemsAdded.cs" />
+    <Compile Include="Migrations\202007230344174_setItemsAdded.designer.cs">
+      <DependentUpon>202007230344174_setItemsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007230502052_orderIdAddedorSet.cs" />
+    <Compile Include="Migrations\202007230502052_orderIdAddedorSet.designer.cs">
+      <DependentUpon>202007230502052_orderIdAddedorSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008030227011_menuCultureAdded.cs" />
+    <Compile Include="Migrations\202008030227011_menuCultureAdded.designer.cs">
+      <DependentUpon>202008030227011_menuCultureAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008060147570_setItemPropAdded.cs" />
+    <Compile Include="Migrations\202008060147570_setItemPropAdded.designer.cs">
+      <DependentUpon>202008060147570_setItemPropAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +118,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007160242506_inventoryAdd.resx">
       <DependentUpon>202007160242506_inventoryAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007220139591_isSetPropAdded.resx">
+      <DependentUpon>202007220139591_isSetPropAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007220155080_isHiddenCategoryAdded.resx">
+      <DependentUpon>202007220155080_isHiddenCategoryAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007230149059_isHiddenAdded.resx">
+      <DependentUpon>202007230149059_isHiddenAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007230344174_setItemsAdded.resx">
+      <DependentUpon>202007230344174_setItemsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007230502052_orderIdAddedorSet.resx">
+      <DependentUpon>202007230502052_orderIdAddedorSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008030227011_menuCultureAdded.resx">
+      <DependentUpon>202008030227011_menuCultureAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008060147570_setItemPropAdded.resx">
+      <DependentUpon>202008060147570_setItemPropAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

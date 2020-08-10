@@ -1,6 +1,6 @@
 ﻿@model HomeViewModel
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = AtesShop.Resources.Resources.HomeT1O1;
     var newProductsCounter = 0;
     var isNewProductsOpened = false;
 
@@ -18,10 +18,10 @@
             <div class="text-content-wrapper">
                 <div class="container">
                     <div class="text-content">
-                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="2s" data-wow-delay="0s">@AtesShop.Resources.Resources.BigSale</h4>
+                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="2s" data-wow-delay="0s">@AtesShop.Resources.Resources.WholeSale</h4>
                         <h1 class="title1 wow bounceInRight mb-16" data-wow-duration="2s" data-wow-delay="1s">@AtesShop.Resources.Resources.SmartSurveillance <br>@AtesShop.Resources.Resources.IPCameraNVR </h1>
                         <div class="banner-readmore wow bounceInUp mt-35" data-wow-duration="2s" data-wow-delay="2s">
-                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopNow</a>
+                            <a class="button slider-btn" href="@Url.Action("Index", "Products")">@AtesShop.Resources.Resources.ProductsT1O2</a>
                         </div>
                     </div>
                 </div>
@@ -31,10 +31,10 @@
             <div class="text-content-wrapper">
                 <div class="container">
                     <div class="text-content slide-2">
-                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="1s" data-wow-delay="1s">@AtesShop.Resources.Resources.BigSale</h4>
+                        <h4 class="title2 wow bounceInLeft mb-16" data-wow-duration="1s" data-wow-delay="1s">@AtesShop.Resources.Resources.WholeSale</h4>
                         <h1 class="title1 wow flipInX  mb-16" data-wow-duration="1s" data-wow-delay="2s">@AtesShop.Resources.Resources.SmartSurveillance <br>@AtesShop.Resources.Resources.IPCameraNVR </h1>
                         <div class="banner-readmore wow bounceInUp mt-35" data-wow-duration="1s" data-wow-delay="2s">
-                            <a class="button slider-btn" href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ShopNow</a>
+                            <a class="button slider-btn" href="@Url.Action("Index", "Products")">@AtesShop.Resources.Resources.ProductsT1O2</a>
                         </div>
                     </div>
                 </div>
@@ -45,19 +45,19 @@
 <div class="upper-banner banner pb-60">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/ipc2.jpg" alt="slider-banner"></a>
+                    <a href="#"><img src="~/Content/img/banner/banner1.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/nvr2.jpg" alt="slider-banner"></a>
+                    <a href="#"><img src="~/Content/img/banner/banner2.jpg" alt="slider-banner"></a>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6" style="text-align: center;">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/sp2.jpg" alt="slider-banner"></a>
+                    <a href="#"><img src="~/Content/img/banner/banner3.jpg" alt="slider-banner"></a>
                 </div>
             </div>
         </div>
@@ -137,14 +137,24 @@
 <div class="upper-banner banner pb-60">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/set8.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8.jpg" alt="slider-banner"></a>
+                    <div class="banner-group-text">
+                        <p class="banner-title">@AtesShop.Resources.Resources.SetBannerTitle1</p>
+                        <p class="banner-text">@AtesShop.Resources.Resources.SetBannerText1</p>
+                        <p class="banner-price">@AtesShop.Resources.Resources.SetBannerPrice1</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/set16.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8_2.jpg" alt="slider-banner"></a>
+                    <div class="banner-group-text">
+                        <p class="banner-title">@AtesShop.Resources.Resources.SetBannerTitle2</p>
+                        <p class="banner-text">@AtesShop.Resources.Resources.SetBannerText2</p>
+                        <p class="banner-price">@AtesShop.Resources.Resources.SetBannerPrice2</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -446,7 +456,7 @@
 
     </div>
 </div>
-<div class="company-policy pb-60 pb-sm-25">
+@*<div class="company-policy pb-60 pb-sm-25">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-6">
@@ -495,7 +505,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="best-seller-product pb-50 pb-sm-40">
     <div class="container">
         <div class="group-title">
@@ -564,7 +574,7 @@
     </div>
 </div>
 
-<div class="blog-area pb-60">
+@*<div class="blog-area pb-60">
     <div class="container">
         <div class="group-title">
             <h2>@AtesShop.Resources.Resources.SmartFunctions</h2>
@@ -658,4 +668,9 @@
             
         </div>
     </div>
-</div>
+</div>*@
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

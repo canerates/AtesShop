@@ -1,9 +1,13 @@
-﻿<div class="breadcrumb-area ptb-60 ptb-sm-30">
+﻿@{
+    ViewBag.Title = AtesShop.Resources.Resources.Downloads;
+}
+
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
     <div class="container">
         <div class="breadcrumb">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="download.html">Download</a></li>
+                <li><a href="index.html">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li class="active"><a href="download.html">@AtesShop.Resources.Resources.Downloads</a></li>
             </ul>
         </div>
     </div>
@@ -13,8 +17,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <ul class="main-thumb-desc nav">
-                    <li><a class="active" data-toggle="tab" href="#documents">Documents</a></li>
-                    <li><a data-toggle="tab" href="#tools">Tools</a></li>
+                    <li><a class="active" data-toggle="tab" href="#documents">@AtesShop.Resources.Resources.Documents</a></li>
+                    <li><a data-toggle="tab" href="#tools">@AtesShop.Resources.Resources.Tools</a></li>
                 </ul>
                 <div class="tab-content thumb-content border-default">
                     <div id="documents" class="tab-pane in active">

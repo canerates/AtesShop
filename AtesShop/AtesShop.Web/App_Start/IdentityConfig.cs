@@ -20,25 +20,27 @@ namespace AtesShop.Web
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
 
-            SmtpClient client = new SmtpClient();
-           
-            MailMessage mailMessage = new MailMessage();
+            using (var mailMessage = new MailMessage())
+            {
+                mailMessage.To.Add(new MailAddress(message.Destination));
+                mailMessage.Subject = message.Subject;
+                mailMessage.Body = message.Body;
 
-            mailMessage.To.Add(new MailAddress(message.Destination));
-            mailMessage.Subject = message.Subject;
-            mailMessage.Body = message.Body;
+                mailMessage.BodyEncoding = Encoding.UTF8;
+                mailMessage.SubjectEncoding = Encoding.UTF8;
+                mailMessage.IsBodyHtml = true;
 
-            mailMessage.BodyEncoding = Encoding.UTF8;
-            mailMessage.SubjectEncoding = Encoding.UTF8;
-            mailMessage.IsBodyHtml = true;
-
-            return client.SendMailAsync(mailMessage);
-                
+                using (var client = new SmtpClient())
+                {
+                    await client.SendMailAsync(mailMessage);
+                }
+            }
         }
+        
     }
 
     public class SmsService : IIdentityMessageService

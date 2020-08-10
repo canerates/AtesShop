@@ -1,6 +1,6 @@
 ﻿@model ProductDetailViewModel
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = AtesShop.Resources.Resources.Details;
 
     List<int> idList = new List<int>();
     var CompareProductsCookie = Request.Cookies["CompareProducts"];
@@ -174,79 +174,85 @@
         </div>
     </div>
 </div>
-<div class="related-product pb-30">
-    <div class="container">
-        <div class="related-box">
-            <div class="group-title">
-                <h2>@AtesShop.Resources.Resources.RelatedProducts</h2>
-            </div>
-            <div class="new-upsell-pro owl-carousel">
-                @foreach (var product in Model.RelatedProducts)
-                {
-                    <div class="single-product">
-                        <div class="pro-img">
-                            <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
-                                @{
-                                    int flag = 1;
-                                }
-                                @foreach (var image in product.Images)
-                                {
-                                    <img class="@(flag==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Generic", new { id = image.Id })" alt="single-product">
-                                    flag++;
-                                }
-                            </a>
-                        </div>
-                        <div class="pro-content">
-                            <div class="product-rating">
-                                @for (int k = 0; k < 5; k++)
-                                {
-                                    if (k < Model.Rate)
-                                    {
-                                        <i class="fa fa-star"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-star-o"></i>
-                                    }
-                                }
-                            </div>
-                            <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
-                            <div class="pro-description">
-                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
-                            </div>
-                            @if (Request.IsAuthenticated)
-                            {
-                                if (product.isDiscount)
-                                {
-                                    <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
-                                }
-                                else
-                                {
-                                    <p><span class="price">@product.Price</span></p>
-                                }
-                            }
 
-                            <div class="pro-actions">
-                                <div class="actions-secondary">
-                                    @if (!Request.IsAuthenticated)
+@if (Model.RelatedProducts.Count > 0)
+{
+    <div class="related-product pb-30">
+        <div class="container">
+            <div class="related-box">
+                <div class="group-title">
+                    <h2>@AtesShop.Resources.Resources.RelatedProducts</h2>
+                </div>
+                <div class="new-upsell-pro owl-carousel">
+                    @foreach (var product in Model.RelatedProducts)
+                {
+                        <div class="single-product">
+                            <div class="pro-img">
+                                <a href="@Url.Action("Detail", "Products", new { id = product.Id })">
+                                    @{
+                                        int flag = 1;
+                                    }
+                                    @foreach (var image in product.Images)
                                     {
-                                        <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
+                                        <img class="@(flag==1 ? "primary-img":"secondary-img")" src="@Url.Action( "Image", "Generic", new { id = image.Id })" alt="single-product">
+                                        flag++;
+                                    }
+                                </a>
+                            </div>
+                            <div class="pro-content">
+                                <div class="product-rating">
+                                    @for (int k = 0; k < 5; k++)
+                                    {
+                                        if (k < Model.Rate)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-star-o"></i>
+                                        }
+                                    }
+                                </div>
+                                <h4><a href="@Url.Action("Detail", "Products", new { id = product.Id })">@product.Name</a></h4>
+                                <div class="pro-description">
+                                    <a href="@Url.Action("Detail", "Products", new { id = product.Id })"><p>@product.Description</p></a>
+                                </div>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (product.isDiscount)
+                                    {
+                                        <p><span class="price">@product.Price</span><del class="prev-price">@product.PrePrice</del></p>
                                     }
                                     else
                                     {
-                                        <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                        <p><span class="price">@product.Price</span></p>
                                     }
-                                    <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                }
+
+                                <div class="pro-actions">
+                                    <div class="actions-secondary">
+                                        @if (!Request.IsAuthenticated)
+                                        {
+                                            <a class="add-cart" href="@Url.Action("Login", "Account")" data-toggle="tooltip">@AtesShop.Resources.Resources.CheckPrice</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                        }
+                                        <a class="add-compare @if (idList.Contains(product.Id)){ <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                    </div>
                                 </div>
+
                             </div>
-                            
                         </div>
-                    </div>
-                }
+                                        }
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+
 
 <script>
     

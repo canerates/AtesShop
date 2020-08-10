@@ -13,7 +13,7 @@ namespace AtesShop.Web.Models
         public AtLeastOneUpperCase()
             : base(@"(.*[A-Z].*)")
         {
-            ErrorMessage = "Required at least one uppercase ('A'-'Z').";
+            ErrorMessage = Resources.Resources.PasswordAtLeastOneUppercase;
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
@@ -46,7 +46,7 @@ namespace AtesShop.Web.Models
         public AtLeastOneDigit()
             : base(@"(.*\d.*)")
         {
-            ErrorMessage = "Required at least one digit ('0'-'9').";
+            ErrorMessage = Resources.Resources.PasswordAtLeastOneDigit;
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
@@ -63,7 +63,7 @@ namespace AtesShop.Web.Models
         public AtLeastOneSpecial()
             : base(@"(.*[#?!@$%^&*-].*)")
         {
-            ErrorMessage = "Required at least one non letter or digit character.";
+            ErrorMessage = Resources.Resources.PasswordNonLetterOrDigit;
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
@@ -78,9 +78,9 @@ namespace AtesShop.Web.Models
     public class MinimumLength : RegularExpressionAttribute, IClientValidatable
     {
         public MinimumLength()
-            : base(@".{8,}")
+            : base(@".{6,}")
         {
-            ErrorMessage = "Required at least 8 characters long.";
+            ErrorMessage = Resources.Resources.PasswordSixCharactersLong;
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)

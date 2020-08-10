@@ -1,5 +1,5 @@
 /*----------------------------------------*/
-/*  Normal desktop :992px.
+/*  Normal desktop :992px. col-lg
 /*----------------------------------------*/
 
 @media (min-width: 992px) and (max-width: 1200px) {
@@ -36,10 +36,26 @@
 .slider-right-content .single-product {
     padding: 13px 15px;
 }
+
+.banner-text {
+    width: 180px;
+}
+
+.banner-price {
+    line-height: 50px;
+}
+
+.banner-group-text {
+    font-size: 25px;
+    line-height: 30px;
+    left: 32px;
+    top: 20px;
+}
+
 }
 
 /*----------------------------------------*/
-/*  Tablet desktop :991px.
+/*  Tablet desktop :991px. col-md
 /*----------------------------------------*/
 @media (max-width: 991px) {
 
@@ -76,10 +92,27 @@
     text-align: center;
     padding: 10px 0;
 }
+
+.banner-text {
+    width: 150px;
+}
+
+.banner-price {
+    line-height: 50px;
+}
+
+.banner-group-text {
+    font-size: 19px;
+    line-height: 24px;
+    left: 23px;
+    top: 26px;
+}
+
+
 }
 
 /*----------------------------------------*/
-/*  Tablet desktop :768px.
+/*  Tablet desktop :768px. col-md
 /*----------------------------------------*/
 @media (min-width: 768px) and (max-width: 991px) {
  .cart-box.text-right {
@@ -247,12 +280,33 @@
 .dashboard-content #orders .table-responsive .table > tbody > tr > td {
   min-width: 130px;
 }
+
+.banner-text {
+    width: 130px;
+}
+
+.banner-price {
+    line-height: 30px;
+}
+
+.banner-group-text {
+    font-size: 18.5px;
+    line-height: 24px;
+    left: 23px;
+    top: 15px;
+}
+
+
+
 }
 
 /*----------------------------------------*/
-/*  small mobile :320px.
+/*  small mobile :320px. col-sm
 /*----------------------------------------*/
 @media (max-width: 767px) {
+.upper-banner.banner .row [class*="col"]:not(:last-child) {
+    margin-bottom: 30px;
+}
 .single-policy .icone-img {
     width: 56px;
 }
@@ -833,12 +887,32 @@ p.checkout-coupon input[type="submit"] {
     padding: 50px 0;
 }
 
+.banner-text {
+    width: 250px;
+}
+
+.banner-price {
+    line-height: 50px;
+}
+
+.banner-group-text {
+    font-size: 33px;
+    line-height: 35px;
+    left: 32px;
+    top: 50px;
+}
+
 }
 
 /*----------------------------------------*/
-/*  Large Mobile :480px.
+/*  Large Mobile :480px. col-
 /*----------------------------------------*/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+.upper-banner.banner .row [class*="col"]:not(:last-child) {
+    margin-bottom: 30px;
+}
+
 .text-content h1 {
     font-size: 26px;
     line-height: 34px;
@@ -974,9 +1048,26 @@ p.checkout-coupon input[type="submit"] {
   width: 30px;
 }
 
+.banner-text {
+    width: 230px;
 }
 
-/*=============== Mobile Device ===============*/
+.banner-price {
+    line-height: 50px;
+}
+
+.banner-group-text {
+    font-size: 31px;
+    line-height: 35px;
+    left: 32px;
+    top: 22px;
+}
+#heartWish {
+    right: -1px;
+}
+}
+
+/*=============== Mobile Device =============== col-*/
 @media (max-width: 575px) {
 .upper-banner.banner .row [class*="col"]:not(:last-child) {
     margin-bottom: 30px;
@@ -1049,4 +1140,24 @@ p.checkout-coupon input[type="submit"] {
     line-height: 34px;
     width: 56px;
 }
+
+.banner-text {
+    width: 190px;
+}
+
+.banner-price {
+    line-height: 50px;
+}
+
+.banner-group-text {
+    font-size: 28px;
+    line-height: 31px;
+    left: 32px;
+    top: 25px;
+}
+
+#heartWish {
+    right: -1px;
+}
+
 }

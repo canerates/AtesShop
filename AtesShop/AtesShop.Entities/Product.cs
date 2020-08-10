@@ -37,6 +37,10 @@ namespace AtesShop.Entities
 
         public bool isActive { get; set; }
 
+        public bool isSet { get; set; }
+
+        public bool isHidden { get; set; }
+        
         //temp
         public bool isTopRated { get; set; }
 

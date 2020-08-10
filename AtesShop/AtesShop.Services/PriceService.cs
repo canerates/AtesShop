@@ -143,11 +143,19 @@ namespace AtesShop.Services
 
                 culture = culture == "tr-TR" ? "en-US" : culture;
                 var prices = new List<Price>();
+                var products = new List<Product>();
 
                 if (categoryId.HasValue)
                 {
-                    var products = context.Products.Where(x => x.isActive && x.CategoryId == categoryId.Value).ToList();
+                    products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden &&  x.CategoryId == categoryId.Value).ToList();
+                }
+                else
+                {
+                    products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).ToList();
+                }
 
+                if (products != null && products.Count != 0)
+                {
                     foreach (var product in products)
                     {
                         var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
@@ -155,18 +163,14 @@ namespace AtesShop.Services
                         prices.Add(price);
                     }
                 }
-                else
-                {
-                    prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
-                }
-
+                
                 if (prices.Count != 0)
                 {
                     return (int)prices.Max(x => Convert.ToInt64(x.Value));
                 }
                 else
                 {
-                    return 10000;
+                    return 0;
                 }
             }
         }
@@ -178,21 +182,25 @@ namespace AtesShop.Services
 
                 culture = culture == "tr-TR" ? "en-US" : culture;
                 var prices = new List<Price>();
+                var products = new List<Product>();
 
                 if (categoryId.HasValue)
                 {
-                    var products = context.Products.Where(x => x.isActive && x.CategoryId == categoryId.Value).ToList();
+                    products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden && x.CategoryId == categoryId.Value).ToList();
+                }
+                else
+                {
+                    products = context.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).ToList();
+                }
 
+                if (products != null && products.Count != 0)
+                {
                     foreach (var product in products)
                     {
                         var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
                         var price = context.Prices.Where(x => x.Key == key.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
                         prices.Add(price);
                     }
-                }
-                else
-                {
-                    prices = context.Prices.Where(x => x.Culture == culture && x.RoleName == role).ToList();
                 }
 
                 if (prices.Count != 0)
@@ -201,8 +209,24 @@ namespace AtesShop.Services
                 }
                 else
                 {
-                    return 10;
+                    return 0;
                 }
+            }
+        }
+
+        public Price GetPriceByKeyAndCulture(string key, string culture)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Prices.Where(x => x.Key == key && x.Culture == culture).FirstOrDefault();
+            }
+        }
+
+        public Price GetPriceForUserByKeyAndCulture(string key, string culture)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Prices.Where(x => x.Key == key && x.Culture == culture && x.RoleName == "User").FirstOrDefault();
             }
         }
 

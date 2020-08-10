@@ -7,7 +7,7 @@
             <table class="table text-center compare-content">
                 <tbody>
                     <tr>
-                        <td class="product-title">Product</td>
+                        <td class="product-title">@AtesShop.Resources.Resources.Product</td>
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description">
@@ -26,7 +26,7 @@
                         }
                     </tr>
                     <tr>
-                        <td class="product-title">Description</td>
+                        <td class="product-title">@AtesShop.Resources.Resources.Description</td>
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description">
@@ -37,7 +37,7 @@
                     @if (!Model.isPriceHidden)
                     {
                         <tr>
-                            <td class="product-title">Price</td>
+                            <td class="product-title">@AtesShop.Resources.Resources.Price</td>
                             @foreach (var product in Model.CompareProducts)
                             {
                                 <td class="product-description">@product.Price</td>
@@ -71,17 +71,17 @@
                     }
 
                     <tr>
-                        <td class="product-title">Add to cart</td>
+                        <td class="product-title">@AtesShop.Resources.Resources.AddToCart</td>
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description">
                                 @if (product.Stock != null && product.Stock.Available != 0)
                                 {
-                                    <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">add to cart</a>
+                                    <a class="compare-cart text-uppercase" data-id="@product.Id" href="#">@AtesShop.Resources.Resources.AddToCart</a>
                                 }
                                 else
                                 {
-                                    <span style="color:red;">Out of Stock</span>
+                                    <span style="color:red;">@AtesShop.Resources.Resources.OutOfStock</span>
                                 }
                                 
                             </td>
@@ -90,11 +90,11 @@
                     @if (Request.IsAuthenticated)
                     {
                         <tr>
-                            <td class="product-title">Add to wishlist</td>
+                            <td class="product-title">@AtesShop.Resources.Resources.AddToWishlist</td>
                             @foreach (var product in Model.CompareProducts)
                             {
                                 <td class="product-description">
-                                    <a class="compare-wishlist text-uppercase @if (product.isWished) { <text> selected </text> } " data-id="@product.Id" href="#">add to wishlist</a>
+                                    <a class="compare-wishlist text-uppercase @if (product.isWished) { <text> selected </text> } " data-id="@product.Id" href="#">@AtesShop.Resources.Resources.AddToWishlist</a>
                                 </td>
                             }
                         </tr>
@@ -102,14 +102,14 @@
 
 
                     <tr>
-                        <td class="product-title">Delete</td>
+                        <td class="product-title">@AtesShop.Resources.Resources.Delete</td>
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description"><a class="compare-remove" data-id="@product.Id" href="#"><i class="fa fa-trash-o"></i></a></td>
                         }
                     </tr>
                     <tr>
-                        <td class="product-title">Rating</td>
+                        <td class="product-title">@AtesShop.Resources.Resources.Rating</td>
                         @foreach (var product in Model.CompareProducts)
                         {
                             <td class="product-description">
@@ -138,12 +138,12 @@
     {
         <div class="row">
             <div class="col-md-12">
-                <div class="text-content pb-20"><p>No products to compare.</p></div>
+                <div class="text-content pb-20"><p>@AtesShop.Resources.Resources.NoProductsCompare</p></div>
                 <div class="row">
                     <!-- Cart Button Start -->
                     <div class="col-lg-8 col-md-7">
                         <div class="buttons-cart">
-                            <a href="@Url.Action("Index", "Products")">Add to Compare</a>
+                            <a href="@Url.Action("Index", "Products")">@AtesShop.Resources.Resources.AddToCompare</a>
                         </div>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
+            
         });
     });
 
@@ -271,7 +271,6 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     });
 

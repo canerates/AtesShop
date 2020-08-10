@@ -1,6 +1,6 @@
 ﻿@model AtesShop.Web.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = AtesShop.Resources.Resources.Account;
 
     var activeTab = ViewBag.ActiveTab.ToString().ToLower();
 }
@@ -54,7 +54,10 @@
                 <div class="col-lg-2">
                     <ul class="nav flex-column dashboard-list" role="tablist">
                         <li><a id="dashboard-tab" class="active" data-toggle="tab" href="#dashboard">@AtesShop.Resources.Resources.Dashboard</a></li>
-                        <li><a id="orders-tab" data-toggle="tab" href="#orders">@AtesShop.Resources.Resources.Orders</a></li>
+                        @if (Culture == "zh-TW")
+                        {
+                            <li><a id="orders-tab" data-toggle="tab" href="#orders">@AtesShop.Resources.Resources.Orders</a></li>
+                        }
                         @*<li><a id="downloads-tab" data-toggle="tab" href="#downloads">@AtesShop.Resources.Resources.Download</a></li>*@
                         <li><a id="addresses-tab" data-toggle="tab" href="#address">@AtesShop.Resources.Resources.Addresses</a></li>
                         <li><a id="details-tab" data-toggle="tab" href="#account-details">@AtesShop.Resources.Resources.AccountDetails</a></li>
@@ -71,16 +74,16 @@
                             <h3>@AtesShop.Resources.Resources.Dashboard </h3>
                             <p>@AtesShop.Resources.Resources.DashboardInfo</p>
                         </div>
-                        <div id="orders" class="tab-pane fade">
-                        @{ 
-                            Html.RenderAction("Orders");
+
+                        @if (Culture == "zh-TW")
+                        {
+                            <div id="orders" class="tab-pane fade">
+                                @{
+                                    Html.RenderAction("Orders");
+                                }
+                            </div>
                         }
-                        </div>
-                        @*<div id="downloads" class="tab-pane fade">
-                        @{
-                            Html.RenderAction("Downloads");
-                        }
-                        </div>*@
+
                         <div id="address" class="tab-pane">
                             
                         @{

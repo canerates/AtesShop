@@ -1,0 +1,37 @@
+﻿@model AtesShop.Web.Models.SubscriptionViewModel
+
+
+@using (Ajax.BeginForm("Subscribe", "Account", new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "subscribe();"
+},
+                new { id = "subscriptionForm" }
+                ))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.TextBoxFor(m => m.Email, new { @id = "subscribe", @class = "subscribe", @placeholder = AtesShop.Resources.Resources.EnterYourEmailAddress })
+
+    <input type="submit" value= @AtesShop.Resources.Resources.Subscribe class="submit" />
+}
+
+
+
+<script>
+    
+    var subscribe = function () {
+
+        swal({
+            text: "@AtesShop.Resources.Resources.SubscriptionSuccess",
+            icon: "success",
+            buttons: {
+                confirm: { text: '@AtesShop.Resources.Resources.Ok', className: 'sweet-warning button' }
+            }
+        });
+
+        $('#subscribe').val("");
+        $('#subscribe').removeClass("valid");
+    }
+
+</script>

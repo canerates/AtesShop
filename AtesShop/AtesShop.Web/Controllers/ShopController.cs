@@ -202,7 +202,7 @@ namespace AtesShop.Web.Controllers
             if (CartProductsCookie != null && CartProductsCookie.Value != "")
             {
                 model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProductsByIdList(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = ProductService.Instance.GetProductsByIdListForCart(model.CartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 model.CartProducts = model.CartProducts.Where(x => x.Stock != null || x.Stock.Available != 0).ToList();
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * model.CartProductIdList.Where(productId => productId == x.Id).Count());
                 taxPrice = (0.05) * totalPrice;
@@ -247,7 +247,7 @@ namespace AtesShop.Web.Controllers
             {
                 var cartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 //model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = ProductService.Instance.GetProductsByIdList(cartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
+                model.CartProducts = ProductService.Instance.GetProductsByIdListForCart(cartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * cartProductIdList.Where(productId => productId == x.Id).Count());
                 taxPrice = (0.05) * totalPrice;
                 totalPriceWithTax = totalPrice + taxPrice;
@@ -326,7 +326,7 @@ namespace AtesShop.Web.Controllers
                 else
                 {
                     //Create bill order address
-                    billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.Phone, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
+                    billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.PhoneNumber, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
                     OrderService.Instance.SaveOrderAddress(billAddress);
 
                     //Save user adress
@@ -353,7 +353,7 @@ namespace AtesShop.Web.Controllers
                 if (model.Ship.isShipDifferent)
                 {
                     //Create ship order address
-                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.Phone, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
+                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.PhoneNumber, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
                     OrderService.Instance.SaveOrderAddress(shipAddress);
                 }
                 else
@@ -410,13 +410,13 @@ namespace AtesShop.Web.Controllers
                 var shipAddress = new OrderAddress();
 
                 //Create bill order address
-                billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.Phone, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
+                billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.PhoneNumber, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
                 OrderService.Instance.SaveOrderAddress(billAddress);
 
                 if (model.Ship.isShipDifferent)
                 {
                     //Create ship order address
-                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.Phone, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
+                    shipAddress = generateOrderAddress(model.Ship.FirstName, model.Ship.LastName, model.Ship.CompanyName, model.Ship.Email, model.Ship.PhoneNumber, model.Ship.Country, model.Ship.State, model.Ship.City, model.Ship.ZipCode, model.Ship.Address1, model.Ship.Address2);
                     OrderService.Instance.SaveOrderAddress(shipAddress);
                 }
                 else

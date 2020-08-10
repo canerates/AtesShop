@@ -50,7 +50,7 @@ namespace AtesShop.Web.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "E-mail address or Username")]
+        [Display(Name = "EmailAddressOrUsername", ResourceType = typeof(Resources.Resources))]
         public string EmailOrUserName { get; set; }
 
         [Required]
@@ -58,7 +58,7 @@ namespace AtesShop.Web.Models
         [Display(Name = "Password", ResourceType = typeof(Resources.Resources))]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "RememberMe", ResourceType = typeof(Resources.Resources))]
         public bool RememberMe { get; set; }
     }
 
@@ -81,13 +81,12 @@ namespace AtesShop.Web.Models
         [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
         
-        [Display(Name = "Mobile Phone")]
+        [Display(Name = "MobilePhone", ResourceType = typeof(Resources.Resources))]
         public string PhoneNumber { get; set; }
 
         [Required]
         [MinimumLength]
         [AtLeastOneUpperCase]
-        [AtLeastOneLowerCase]
         [AtLeastOneDigit]
         [AtLeastOneSpecial]
         [DataType(DataType.Password)]
@@ -104,11 +103,11 @@ namespace AtesShop.Web.Models
         public string BusinessType { get; set; }
 
         [RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "CompanyNameRequired")]
-        [Display(Name = "Company Name")]
+        [Display(Name = "CompanyName", ResourceType = typeof(Resources.Resources))]
         public string CompanyName { get; set; }
 
         [RequiredIfNot("BusinessType", "User", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "TaxNumberRequired")]
-        [Display(Name = "Tax Number")]
+        [Display(Name = "TaxNumber", ResourceType = typeof(Resources.Resources))]
         public string TaxNumber { get; set; }
 
         [Display(Name = "Subscription")]
@@ -142,6 +141,14 @@ namespace AtesShop.Web.Models
     }
 
     public class ForgotPasswordViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "EmailAddress", ResourceType = typeof(Resources.Resources))]
+        public string Email { get; set; }
+    }
+
+    public class SubscriptionViewModel
     {
         [Required]
         [EmailAddress]

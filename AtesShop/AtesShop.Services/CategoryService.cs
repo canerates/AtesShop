@@ -84,7 +84,11 @@ namespace AtesShop.Services
         {
             using (var context = new ASContext())
             {
-                var categories = context.Categories.Include(x => x.Products).ToList();
+                var categories = context.Categories.Where(x => !x.isHidden).Include(x => x.Products).ToList();
+                foreach (var category in categories)
+                {
+                    category.Products = category.Products.Where(x => x.isActive && !x.isSet && !x.isHidden).ToList();
+                }
                 return FormatCategoriesInfo(categories, culture);
             }
         }

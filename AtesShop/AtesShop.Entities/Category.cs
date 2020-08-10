@@ -18,5 +18,7 @@ namespace AtesShop.Entities
 
         public string ImageIdList { get; set; }
 
+        public bool isHidden { get; set; }
+        
     }
 }

@@ -541,6 +541,14 @@
 
     $("[data-toggle=popover]").popover();
 
+    /*----------------------------------------------------
+    25.Special Offers
+    -----------------------------------------------------*/
+
+    $('.showPackage').on('click', function () {
+        $(this).parents().eq(1).siblings().children().eq(0).slideToggle();
+    });
+
 
     //Dom Ready
     $(function () {

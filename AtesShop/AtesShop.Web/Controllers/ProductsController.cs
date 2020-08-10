@@ -162,69 +162,73 @@ namespace AtesShop.Web.Controllers
             var product = ProductService.Instance.GetProduct(id, CultureInfo.CurrentUICulture.Name, roleName);
 
 
-            if (product != null)
+            if (product == null)
             {
-                product = CommonHelper.FormatCurrency(product, CultureInfo.CurrentUICulture.Name);
-
-                if (Request.IsAuthenticated)
-                {
-                    var userId = User.Identity.GetUserId();
-                    product = CommonHelper.WishlistCheck(product, userId);
-                }
-
-                var key = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
-
-                model.Id = product.Id;
-                model.Name = resourceProvider.GetResource(key.NameKey, CultureInfo.CurrentUICulture.Name) as string;
-                model.Description = resourceProvider.GetResource(key.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
-                model.Price = product.Price;
-                model.PrePrice = product.PrePrice;
-                model.IsDiscount = product.isDiscount;
-                model.CategoryId = product.CategoryId;
-                model.IsWished = product.isWished;
-                model.ProductImages = product.Images;
-                model.Rate = product.Rate;
-                model.Stock = product.Stock;
-
-                if (product.FileIdList != null)
-                {
-                    List<int> idList = product.FileIdList.Split(',').Select(int.Parse).ToList();
-                    model.SpecFiles = FileService.Instance.GetFiles().Where(x => idList.Contains(x.Id)).ToList();
-                }
-
-                var attributes = AttributeService.Instance.GetProductAttributes(product.Id);
-
-                foreach (var attr in attributes)
-                {
-                    attr.Key.Name = resourceProvider.GetResource("ASection" + attr.Key.AttributeSectionId, CultureInfo.CurrentUICulture.Name) as string;
-                    foreach (var val in attr.Value)
-                    {
-                        val.AttributeType.Name = resourceProvider.GetResource("AType" + val.AttributeTypeId, CultureInfo.CurrentUICulture.Name) as string;
-                        val.AttributeValue.Name = resourceProvider.GetResource("AValue" + val.AttributeValueId, CultureInfo.CurrentUICulture.Name) as string;
-                    }
-                }
-
-                model.Attributes = attributes;
-
-                var features = FeatureService.Instance.GetProductFeatures(product.Id);
-
-                foreach (var feature in features)
-                {
-                    feature.FeatureValue = resourceProvider.GetResource("Feature" + feature.FeatureId, CultureInfo.CurrentUICulture.Name) as string;
-                }
-
-                model.ProductFeatures = features;
-                                
-                model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, roleName).Where(p => p.Id != id).ToList();
-                model.RelatedProducts = CommonHelper.FormatCurrency(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
-
-                if (Request.IsAuthenticated)
-                {
-                    var userId = User.Identity.GetUserId();
-                    model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
-                }
-                
+                return RedirectToAction("Error", "Home");
             }
+
+            product = CommonHelper.FormatCurrency(product, CultureInfo.CurrentUICulture.Name);
+
+            if (Request.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                product = CommonHelper.WishlistCheck(product, userId);
+            }
+
+            var key = ResourceKeyService.Instance.GetProductKeySetByProduct(product.Id);
+
+            model.Id = product.Id;
+            model.Name = resourceProvider.GetResource(key.NameKey, CultureInfo.CurrentUICulture.Name) as string;
+            model.Description = resourceProvider.GetResource(key.DescriptionKey, CultureInfo.CurrentUICulture.Name) as string;
+            model.Price = product.Price;
+            model.PrePrice = product.PrePrice;
+            model.IsDiscount = product.isDiscount;
+            model.CategoryId = product.CategoryId;
+            model.IsWished = product.isWished;
+            model.ProductImages = product.Images;
+            model.Rate = product.Rate;
+            model.Stock = product.Stock;
+
+            if (product.FileIdList != null)
+            {
+                List<int> idList = product.FileIdList.Split(',').Select(int.Parse).ToList();
+                model.SpecFiles = FileService.Instance.GetFiles().Where(x => idList.Contains(x.Id)).ToList();
+            }
+
+            var attributes = AttributeService.Instance.GetProductAttributes(product.Id);
+
+            foreach (var attr in attributes)
+            {
+                attr.Key.Name = resourceProvider.GetResource("ASection" + attr.Key.AttributeSectionId, CultureInfo.CurrentUICulture.Name) as string;
+                foreach (var val in attr.Value)
+                {
+                    val.AttributeType.Name = resourceProvider.GetResource("AType" + val.AttributeTypeId, CultureInfo.CurrentUICulture.Name) as string;
+                    val.AttributeValue.Name = resourceProvider.GetResource("AValue" + val.AttributeValueId, CultureInfo.CurrentUICulture.Name) as string;
+                }
+            }
+
+            model.Attributes = attributes;
+
+            var features = FeatureService.Instance.GetProductFeatures(product.Id);
+
+            foreach (var feature in features)
+            {
+                feature.FeatureValue = resourceProvider.GetResource("Feature" + feature.FeatureId, CultureInfo.CurrentUICulture.Name) as string;
+            }
+
+            model.ProductFeatures = features;
+                            
+            model.RelatedProducts = ProductService.Instance.GetProductsByCategory(product.CategoryId, CultureInfo.CurrentUICulture.Name, roleName).Where(p => p.Id != id).ToList();
+            model.RelatedProducts = CommonHelper.FormatCurrency(model.RelatedProducts, CultureInfo.CurrentUICulture.Name);
+
+            if (Request.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                model.RelatedProducts = CommonHelper.WishlistCheck(model.RelatedProducts, userId);
+            }
+                
+            
+            
             return View(model);
         }
         

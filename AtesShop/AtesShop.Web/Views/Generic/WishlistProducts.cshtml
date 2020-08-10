@@ -5,17 +5,16 @@
     if (Model.WishlistProducts != null && Model.WishlistProducts.Count > 0)
     {
         <form action="#">
-            <!-- Table Content Start -->
             <div class="table-content table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th class="product-remove">Remove</th>
-                            <th class="product-thumbnail">Image</th>
-                            <th class="product-name">Product</th>
-                            <th class="product-price">Unit Price</th>
-                            <th class="product-quantity">Stock Status</th>
-                            <th class="product-subtotal">add to cart</th>
+                            <th class="product-remove"></th>
+                            <th class="product-thumbnail">@AtesShop.Resources.Resources.Image</th>
+                            <th class="product-name">@AtesShop.Resources.Resources.Product</th>
+                            <th class="product-price">@AtesShop.Resources.Resources.UnitPrice</th>
+                            <th class="product-quantity">@AtesShop.Resources.Resources.StockStatus</th>
+                            <th class="product-subtotal">@AtesShop.Resources.Resources.Cart</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,13 +30,13 @@
                                 <td class="product-price"><span class="price">@product.Price</span></td>
                                 @if (product.Stock != null && product.Stock.Available != 0)
                                 {
-                                    <td class="product-stock-status"><span>in stock</span></td>
-                                    <td class="product-add-to-cart"><a class="productAddToCart" data-id="@product.Id" href="#">add to cart</a></td>
+                                    <td class="product-stock-status"><span>@AtesShop.Resources.Resources.InStock</span></td>
+                                    <td class="product-add-to-cart"><a class="productAddToCart" data-id="@product.Id" href="#">@AtesShop.Resources.Resources.AddToCart</a></td>
                                 }
                                 else
                                 {
-                                    <td class="product-stock-status"><span style="color:red;">out of stock</span></td>
-                                    <td class="product-add-to-cart"><a class="disabled" href="#">add to cart</a></td>
+                                    <td class="product-stock-status"><span style="color:red;">@AtesShop.Resources.Resources.OutOfStock</span></td>
+                                    <td class="product-add-to-cart"><a class="disabled" href="#">@AtesShop.Resources.Resources.AddToCart</a></td>
                                 }
 
                             </tr>
@@ -45,18 +44,17 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Table Content Start -->
         </form>
     }
     else
     {
         <div class="text-content pb-20">
-            <p>No products in wishlist.</p>
+            <p>@AtesShop.Resources.Resources.NoProductsWishlist</p>
         </div>
         <div class="row">
             <div class="col-lg-8 col-md-7">
                 <div class="buttons-cart">
-                    <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                    <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                 </div>
             </div>
         </div>
@@ -85,12 +83,10 @@
             
         })
        .done(function (response) {
-           //alert("Success");
            reloadWishlistProducts();
            el.data('requestRunning', false);
        })
        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-           //alert("Fail");
        });
     });
 
@@ -99,11 +95,9 @@
             url: '@Url.Action("WishlistProducts", "Generic")'
         })
         .done(function (response) {
-            //alert("Success");
             $("#wishlistContainer").html(response);
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
         });
     }
 
@@ -138,11 +132,9 @@
             }
         })
        .done(function (response) {
-           //alert("Success");
            reloadWishlistProducts();
        })
        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-           //alert("Fail");
        });
     });
 
