@@ -1,18 +1,40 @@
-﻿@{
+﻿@model OrderSuccessViewModel
+
+@{
     ViewBag.Title = AtesShop.Resources.Resources.Success;
 }
 
 
 <div class="cart-main-area pb-80 pb-sm-50">
     <div class="container">
-        <div class="row mt-30">
+        <div class="row mt-50">
             <div class="col-md-12">
-                <div class="text-content pb-20"><p>Order succesfull.</p></div>
+                <div class="text-content pb-20">
+                    <p>@AtesShop.Resources.Resources.OrderSuccess</p>
+                    <p>@AtesShop.Resources.Resources.YourOrderId <span>@Model.OrderId</span>.</p>
+                    <p>@AtesShop.Resources.Resources.OrderSuccessPaymentInfo</p>
+                    <p>@AtesShop.Resources.Resources.OrderSuccessShipmentInfo</p>
+                    <p>@AtesShop.Resources.Resources.OrderSuccessTransferDeadline</p>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <p>@AtesShop.Resources.Resources.OrderSuccessRegisteredProgress</p>
+                    }
+                    else
+                    {
+                        <p>@AtesShop.Resources.Resources.OrderSuccessUnregisteredProgress</p>
+                    }
+                    <p>@AtesShop.Resources.Resources.OrderSuccessContactUs</p>
+
+                </div>
                 <div class="row">
                     <!-- Cart Button Start -->
                     <div class="col-lg-8 col-md-7">
                         <div class="buttons-cart">
-                            <a href="@Url.Action("Index", "Shop")">Continue Shopping</a>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <a href="@Url.Action("Index", "Manage")">My Account</a>
+                            }
+                            <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                         </div>
                     </div>
                 </div>

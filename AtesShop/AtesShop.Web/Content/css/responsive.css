@@ -52,6 +52,33 @@
     top: 20px;
 }
 
+.agreement-text h1 {
+    font-size: 20px;
+    line-height: 22px;
+    padding: 0 10px;
+
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 20px;
+    line-height: 34px;
+    left: 30px;
+    top: 30px;
+}
+
+
 }
 
 /*----------------------------------------*/
@@ -108,6 +135,46 @@
     top: 26px;
 }
 
+.agreement-text h1 {
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 10px;
+
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 28px;
+    line-height: 34px;
+    left: 0px;
+    top: 0px;
+}
+
+.first-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
+
+.second-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
 
 }
 
@@ -296,7 +363,46 @@
     top: 15px;
 }
 
+.agreement-text h1 {
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 10px;
 
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 28px;
+    line-height: 34px;
+    left: 0px;
+    top: 0px;
+}
+
+.first-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
+
+.second-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
 
 }
 
@@ -902,6 +1008,47 @@ p.checkout-coupon input[type="submit"] {
     top: 50px;
 }
 
+.agreement-text h1 {
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 10px;
+
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 28px;
+    line-height: 34px;
+    left: 0px;
+    top: 0px;
+}
+
+.first-banner-text {
+    font-size: 38px;
+    top: 63px;
+    left: 32px;
+    position: absolute;
+}
+
+.second-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
+
 }
 
 /*----------------------------------------*/
@@ -1065,6 +1212,50 @@ p.checkout-coupon input[type="submit"] {
 #heartWish {
     right: -1px;
 }
+
+.agreement-text h1 {
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 10px;
+
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 28px;
+    line-height: 34px;
+    left: 0px;
+    top: 0px;
+}
+
+.first-banner-text {
+    font-size: 38px;
+    top: 63px;
+    left: 32px;
+    position: absolute;
+}
+
+.second-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position: absolute;
+}
+
+
+
 }
 
 /*=============== Mobile Device =============== col-*/
@@ -1159,5 +1350,47 @@ p.checkout-coupon input[type="submit"] {
 #heartWish {
     right: -1px;
 }
+
+.agreement-text h1 {
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 10px;
+
+}
+
+.agreement-text h2 {
+    padding: 0 10px;
+}
+
+.agreement-text > p {
+    padding: 0 10px;
+}
+
+.agreement-text > ul {
+    padding: 0 30px;
+}
+
+.triple-banner-group-text {
+    font-size: 28px;
+    line-height: 34px;
+    left: 0px;
+    top: 0px;
+}
+
+.first-banner-text {
+    font-size: 38px;
+    top: 63px;
+    left: 32px;
+    position:absolute;
+}
+
+.second-banner-text {
+    font-size: 18px;
+    top: 20px;
+    left: 12px;
+    position:absolute;
+}
+
 
 }

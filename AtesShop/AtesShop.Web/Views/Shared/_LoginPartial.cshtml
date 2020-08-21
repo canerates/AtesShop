@@ -11,6 +11,12 @@
         <li>
             <a href="@Url.Action("Index", "Manage")">@AtesShop.Resources.Resources.MyAccount</a>
         </li>
+        @if (User.IsInRole("Admin"))
+        {
+            <li>
+                <a href="@Url.Action("Index", "Order")">@AtesShop.Resources.Resources.Orders</a>
+            </li>
+        }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">@AtesShop.Resources.Resources.LogOut</a></li>
     </ul>
     }

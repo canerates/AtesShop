@@ -365,6 +365,15 @@ namespace AtesShop.Services
             }
         }
 
+        public Product GetProductForOrderList(int productId, string culture, string role)
+        {
+            using (var context = new ASContext())
+            {
+                var product = context.Products.Where(x => x.isActive && x.Id == productId).Include(x => x.Stock).FirstOrDefault();
+                return product != null ? FormatProductInfo(product, culture, role) : product;
+            }
+        }
+
         #endregion
 
     }

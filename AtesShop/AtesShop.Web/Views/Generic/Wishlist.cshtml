@@ -37,12 +37,12 @@
     var focusAction = function () {
         $('html, body').animate({
             scrollTop: $('#wishlistContainer').offset().top - 250
-        }, 500);
+        }, 700);
     }
 
     var ajaxLoading = function () {
-        focusAction();
         $("#wishlistContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+        focusAction();
     }
 
 </script>

@@ -15,6 +15,9 @@ namespace AtesShop.Entities
         public string ContentType { get; set; }
 
         public byte[] Data { get; set; }
-        
+
+        public int DocType { get; set; }
+
+
     }
 }

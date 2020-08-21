@@ -66,7 +66,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N2MXXXB-I </summary>
+        /// <summary> PA-SC-N2M36B0-I </summary>
         public static string ProductName1 {
                get {
                    return resourceProvider.GetResource("ProductName1", CultureInfo.CurrentUICulture.Name) as string;
@@ -80,7 +80,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N2MXXXD-I </summary>
+        /// <summary> PA-SC-N2M36D0-I </summary>
         public static string ProductName2 {
                get {
                    return resourceProvider.GetResource("ProductName2", CultureInfo.CurrentUICulture.Name) as string;
@@ -94,7 +94,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N2MXXXB-IW </summary>
+        /// <summary> PA-SC-N2M40B0-IW </summary>
         public static string ProductName3 {
                get {
                    return resourceProvider.GetResource("ProductName3", CultureInfo.CurrentUICulture.Name) as string;
@@ -108,7 +108,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N2MXXXD-IW </summary>
+        /// <summary> PA-SC-N2M40D0-IW </summary>
         public static string ProductName4 {
                get {
                    return resourceProvider.GetResource("ProductName4", CultureInfo.CurrentUICulture.Name) as string;
@@ -122,7 +122,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N4MXXXB-IW </summary>
+        /// <summary> PA-SC-N4M40B0-IW </summary>
         public static string ProductName5 {
                get {
                    return resourceProvider.GetResource("ProductName5", CultureInfo.CurrentUICulture.Name) as string;
@@ -136,7 +136,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N4MXXXD-IW </summary>
+        /// <summary> PA-SC-N4M40D0-IW </summary>
         public static string ProductName6 {
                get {
                    return resourceProvider.GetResource("ProductName6", CultureInfo.CurrentUICulture.Name) as string;
@@ -150,7 +150,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N2MXXXP-I </summary>
+        /// <summary> PA-SC-N2M36P0-IP </summary>
         public static string ProductName7 {
                get {
                    return resourceProvider.GetResource("ProductName7", CultureInfo.CurrentUICulture.Name) as string;
@@ -164,7 +164,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> PA-SC-N4MXXXP-IW </summary>
+        /// <summary> PA-SC-N4M40P0-IWP </summary>
         public static string ProductName8 {
                get {
                    return resourceProvider.GetResource("ProductName8", CultureInfo.CurrentUICulture.Name) as string;
@@ -227,7 +227,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> Support </summary>
+        /// <summary> Download </summary>
         public static string SupportT1O4 {
                get {
                    return resourceProvider.GetResource("SupportT1O4", CultureInfo.CurrentUICulture.Name) as string;
@@ -2348,7 +2348,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> Register Account </summary>
+        /// <summary> REGISTER ACCOUNT </summary>
         public static string RegisterAccount {
                get {
                    return resourceProvider.GetResource("RegisterAccount", CultureInfo.CurrentUICulture.Name) as string;
@@ -2481,7 +2481,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> New Customer </summary>
+        /// <summary> NEW CUSTOMER </summary>
         public static string NewCustomer {
                get {
                    return resourceProvider.GetResource("NewCustomer", CultureInfo.CurrentUICulture.Name) as string;
@@ -2495,7 +2495,7 @@ namespace AtesShop.Resources {
                }
             }
             
-        /// <summary> Returning Customer </summary>
+        /// <summary> RETURNING CUSTOMER </summary>
         public static string ReturningCustomer {
                get {
                    return resourceProvider.GetResource("ReturningCustomer", CultureInfo.CurrentUICulture.Name) as string;
@@ -3110,1250 +3110,1341 @@ namespace AtesShop.Resources {
                    return resourceProvider.GetResource("Country", CultureInfo.CurrentUICulture.Name) as string;
                }
             }
-
+            
         /// <summary> Company Name is required. </summary>
-        public static string CompanyNameRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("CompanyNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string CompanyNameRequired {
+               get {
+                   return resourceProvider.GetResource("CompanyNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Tax Number is required. </summary>
-        public static string TaxNumberRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("TaxNumberRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string TaxNumberRequired {
+               get {
+                   return resourceProvider.GetResource("TaxNumberRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> First Name is required. </summary>
-        public static string FirstNameRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("FirstNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string FirstNameRequired {
+               get {
+                   return resourceProvider.GetResource("FirstNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Last Name is required. </summary>
-        public static string LastNameRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("LastNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string LastNameRequired {
+               get {
+                   return resourceProvider.GetResource("LastNameRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Email is required. </summary>
-        public static string EmailRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("EmailRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string EmailRequired {
+               get {
+                   return resourceProvider.GetResource("EmailRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> State / County is required. </summary>
-        public static string StateCountyRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("StateCountyRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string StateCountyRequired {
+               get {
+                   return resourceProvider.GetResource("StateCountyRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Town / City is required. </summary>
-        public static string TownCityRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("TownCityRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string TownCityRequired {
+               get {
+                   return resourceProvider.GetResource("TownCityRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Postcode / Zip is required. </summary>
-        public static string PostcodeZipRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("PostcodeZipRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string PostcodeZipRequired {
+               get {
+                   return resourceProvider.GetResource("PostcodeZipRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Address is required. </summary>
-        public static string AddressRequired
-        {
-            get
-            {
-                return resourceProvider.GetResource("AddressRequired", CultureInfo.CurrentUICulture.Name) as string;
+        public static string AddressRequired {
+               get {
+                   return resourceProvider.GetResource("AddressRequired", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Save in Address book. </summary>
-        public static string SaveAddress
-        {
-            get
-            {
-                return resourceProvider.GetResource("SaveAddress", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Save in Address book </summary>
+        public static string SaveAddress {
+               get {
+                   return resourceProvider.GetResource("SaveAddress", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Taiwan </summary>
-        public static string Taiwan
-        {
-            get
-            {
-                return resourceProvider.GetResource("Taiwan", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Taiwan {
+               get {
+                   return resourceProvider.GetResource("Taiwan", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Vietnam </summary>
-        public static string Vietnam
-        {
-            get
-            {
-                return resourceProvider.GetResource("Vietnam", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Vietnam {
+               get {
+                   return resourceProvider.GetResource("Vietnam", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Turkey </summary>
-        public static string Turkey
-        {
-            get
-            {
-                return resourceProvider.GetResource("Turkey", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Turkey {
+               get {
+                   return resourceProvider.GetResource("Turkey", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> USA </summary>
-        public static string USA
-        {
-            get
-            {
-                return resourceProvider.GetResource("USA", CultureInfo.CurrentUICulture.Name) as string;
+        public static string USA {
+               get {
+                   return resourceProvider.GetResource("USA", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Account </summary>
-        public static string Account
-        {
-            get
-            {
-                return resourceProvider.GetResource("Account", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Account {
+               get {
+                   return resourceProvider.GetResource("Account", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Hello </summary>
-        public static string Hello
-        {
-            get
-            {
-                return resourceProvider.GetResource("Hello", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Hello {
+               get {
+                   return resourceProvider.GetResource("Hello", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Not </summary>
-        public static string Not
-        {
-            get
-            {
-                return resourceProvider.GetResource("Not", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Not {
+               get {
+                   return resourceProvider.GetResource("Not", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Need Assistance? </summary>
-        public static string NeedAssistance
-        {
-            get
-            {
-                return resourceProvider.GetResource("NeedAssistance", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NeedAssistance {
+               get {
+                   return resourceProvider.GetResource("NeedAssistance", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Customer Service At. </summary>
-        public static string CustomerService
-        {
-            get
-            {
-                return resourceProvider.GetResource("CustomerService", CultureInfo.CurrentUICulture.Name) as string;
+        public static string CustomerService {
+               get {
+                   return resourceProvider.GetResource("CustomerService", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Email Them At. </summary>
-        public static string EmailThem
-        {
-            get
-            {
-                return resourceProvider.GetResource("EmailThem", CultureInfo.CurrentUICulture.Name) as string;
+        public static string EmailThem {
+               get {
+                   return resourceProvider.GetResource("EmailThem", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> View Cart </summary>
-        public static string ViewCart
-        {
-            get
-            {
-                return resourceProvider.GetResource("ViewCart", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ViewCart {
+               get {
+                   return resourceProvider.GetResource("ViewCart", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Dashboard </summary>
-        public static string Dashboard
-        {
-            get
-            {
-                return resourceProvider.GetResource("Dashboard", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Dashboard {
+               get {
+                   return resourceProvider.GetResource("Dashboard", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Orders </summary>
-        public static string Orders
-        {
-            get
-            {
-                return resourceProvider.GetResource("Orders", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Orders {
+               get {
+                   return resourceProvider.GetResource("Orders", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Downloads </summary>
-        public static string Downloads
-        {
-            get
-            {
-                return resourceProvider.GetResource("Downloads", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Downloads {
+               get {
+                   return resourceProvider.GetResource("Downloads", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Addresses </summary>
-        public static string Addresses
-        {
-            get
-            {
-                return resourceProvider.GetResource("Addresses", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Addresses {
+               get {
+                   return resourceProvider.GetResource("Addresses", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Account Details </summary>
-        public static string AccountDetails
-        {
-            get
-            {
-                return resourceProvider.GetResource("AccountDetails", CultureInfo.CurrentUICulture.Name) as string;
+        public static string AccountDetails {
+               get {
+                   return resourceProvider.GetResource("AccountDetails", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Order </summary>
-        public static string Order
-        {
-            get
-            {
-                return resourceProvider.GetResource("Order", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Order {
+               get {
+                   return resourceProvider.GetResource("Order", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Date </summary>
-        public static string Date
-        {
-            get
-            {
-                return resourceProvider.GetResource("Date", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Date {
+               get {
+                   return resourceProvider.GetResource("Date", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Status </summary>
-        public static string Status
-        {
-            get
-            {
-                return resourceProvider.GetResource("Status", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Status {
+               get {
+                   return resourceProvider.GetResource("Status", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Actions </summary>
-        public static string Actions
-        {
-            get
-            {
-                return resourceProvider.GetResource("Actions", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Actions {
+               get {
+                   return resourceProvider.GetResource("Actions", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> View </summary>
-        public static string View
-        {
-            get
-            {
-                return resourceProvider.GetResource("View", CultureInfo.CurrentUICulture.Name) as string;
+        public static string View {
+               get {
+                   return resourceProvider.GetResource("View", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Expires </summary>
-        public static string Expires
-        {
-            get
-            {
-                return resourceProvider.GetResource("Expires", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Expires {
+               get {
+                   return resourceProvider.GetResource("Expires", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Download </summary>
-        public static string Download
-        {
-            get
-            {
-                return resourceProvider.GetResource("Download", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Download {
+               get {
+                   return resourceProvider.GetResource("Download", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Click Here To Download Your File </summary>
-        public static string ClickToDownload
-        {
-            get
-            {
-                return resourceProvider.GetResource("ClickToDownload", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ClickToDownload {
+               get {
+                   return resourceProvider.GetResource("ClickToDownload", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Date </summary>
-        public static string Add
-        {
-            get
-            {
-                return resourceProvider.GetResource("Add", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Add </summary>
+        public static string Add {
+               get {
+                   return resourceProvider.GetResource("Add", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Edit </summary>
-        public static string Edit
-        {
-            get
-            {
-                return resourceProvider.GetResource("Edit", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Edit {
+               get {
+                   return resourceProvider.GetResource("Edit", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Delete </summary>
-        public static string Delete
-        {
-            get
-            {
-                return resourceProvider.GetResource("Delete", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Delete {
+               get {
+                   return resourceProvider.GetResource("Delete", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Social title </summary>
-        public static string SocialTitle
-        {
-            get
-            {
-                return resourceProvider.GetResource("SocialTitle", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SocialTitle {
+               get {
+                   return resourceProvider.GetResource("SocialTitle", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Change password </summary>
-        public static string ChangePassword
-        {
-            get
-            {
-                return resourceProvider.GetResource("ChangePassword", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ChangePassword {
+               get {
+                   return resourceProvider.GetResource("ChangePassword", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Current password </summary>
-        public static string CurrentPassword
-        {
-            get
-            {
-                return resourceProvider.GetResource("CurrentPassword", CultureInfo.CurrentUICulture.Name) as string;
+        public static string CurrentPassword {
+               get {
+                   return resourceProvider.GetResource("CurrentPassword", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> New password </summary>
-        public static string NewPassword
-        {
-            get
-            {
-                return resourceProvider.GetResource("NewPassword", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NewPassword {
+               get {
+                   return resourceProvider.GetResource("NewPassword", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Confirm new password </summary>
-        public static string ConfirmNewPassword
-        {
-            get
-            {
-                return resourceProvider.GetResource("ConfirmNewPassword", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ConfirmNewPassword {
+               get {
+                   return resourceProvider.GetResource("ConfirmNewPassword", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Business Type </summary>
-        public static string BusinessType
-        {
-            get
-            {
-                return resourceProvider.GetResource("BusinessType", CultureInfo.CurrentUICulture.Name) as string;
+        public static string BusinessType {
+               get {
+                   return resourceProvider.GetResource("BusinessType", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> New Business Type </summary>
-        public static string NewBusinessType
-        {
-            get
-            {
-                return resourceProvider.GetResource("NewBusinessType", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NewBusinessType {
+               get {
+                   return resourceProvider.GetResource("NewBusinessType", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Sign up for our newsletter </summary>
-        public static string SignUpOurNews
-        {
-            get
-            {
-                return resourceProvider.GetResource("SignUpOurNews", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SignUpOurNews {
+               get {
+                   return resourceProvider.GetResource("SignUpOurNews", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers.. </summary>
-        public static string SubscribeToOur
-        {
-            get
-            {
-                return resourceProvider.GetResource("SubscribeToOur", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SubscribeToOur {
+               get {
+                   return resourceProvider.GetResource("SubscribeToOur", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Save </summary>
-        public static string Save
-        {
-            get
-            {
-                return resourceProvider.GetResource("Save", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Save {
+               get {
+                   return resourceProvider.GetResource("Save", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Back </summary>
-        public static string Back
-        {
-            get
-            {
-                return resourceProvider.GetResource("Back", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Back {
+               get {
+                   return resourceProvider.GetResource("Back", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> From Your Account Dashboard. You Can Easily Check & View Your Recent Orders, Manage Your Shipping And Billing Addresses And Edit Your Password And Account Details. </summary>
-        public static string DashboardInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("DashboardInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string DashboardInfo {
+               get {
+                   return resourceProvider.GetResource("DashboardInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> No orders. </summary>
-        public static string NoOrders
-        {
-            get
-            {
-                return resourceProvider.GetResource("NoOrders", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NoOrders {
+               get {
+                   return resourceProvider.GetResource("NoOrders", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Pending </summary>
-        public static string Pending
-        {
-            get
-            {
-                return resourceProvider.GetResource("Pending", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Pending {
+               get {
+                   return resourceProvider.GetResource("Pending", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> In Process </summary>
-        public static string InProcess
-        {
-            get
-            {
-                return resourceProvider.GetResource("InProcess", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InProcess {
+               get {
+                   return resourceProvider.GetResource("InProcess", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Shipped </summary>
-        public static string Shipped
-        {
-            get
-            {
-                return resourceProvider.GetResource("Shipped", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Shipped {
+               get {
+                   return resourceProvider.GetResource("Shipped", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Delivered </summary>
-        public static string Delivered
-        {
-            get
-            {
-                return resourceProvider.GetResource("Delivered", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Delivered {
+               get {
+                   return resourceProvider.GetResource("Delivered", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Completed </summary>
-        public static string Completed
-        {
-            get
-            {
-                return resourceProvider.GetResource("Completed", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Completed {
+               get {
+                   return resourceProvider.GetResource("Completed", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Cancelled </summary>
-        public static string Cancelled
-        {
-            get
-            {
-                return resourceProvider.GetResource("Cancelled", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Cancelled {
+               get {
+                   return resourceProvider.GetResource("Cancelled", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> No registered address. </summary>
-        public static string NoAddress
-        {
-            get
-            {
-                return resourceProvider.GetResource("NoAddress", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NoAddress {
+               get {
+                   return resourceProvider.GetResource("NoAddress", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Do you want to delete the selected address? </summary>
-        public static string DeleteAddressQ
-        {
-            get
-            {
-                return resourceProvider.GetResource("DeleteAddressQ", CultureInfo.CurrentUICulture.Name) as string;
+        public static string DeleteAddressQ {
+               get {
+                   return resourceProvider.GetResource("DeleteAddressQ", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> New Address </summary>
-        public static string NewAddress
-        {
-            get
-            {
-                return resourceProvider.GetResource("NewAddress", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NewAddress {
+               get {
+                   return resourceProvider.GetResource("NewAddress", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Edit Address </summary>
-        public static string EditAddress
-        {
-            get
-            {
-                return resourceProvider.GetResource("EditAddress", CultureInfo.CurrentUICulture.Name) as string;
+        public static string EditAddress {
+               get {
+                   return resourceProvider.GetResource("EditAddress", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName2
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName2", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Set </summary>
+        public static string CategoryName5 {
+               get {
+                   return resourceProvider.GetResource("CategoryName5", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc2
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc2", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Set </summary>
+        public static string CategoryDesc5 {
+               get {
+                   return resourceProvider.GetResource("CategoryDesc5", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName3
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName3", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 8 Channel WDR Surveillance Set </summary>
+        public static string ProductName16 {
+               get {
+                   return resourceProvider.GetResource("ProductName16", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc3
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc3", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 4 * N2M36D0-I, 2 * N2M40B0-IW, 1 * N2M28D0-IA, 1 * N2M36P0-I, 1 * N080000 </summary>
+        public static string ProductDesc16 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc16", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName21
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName21", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Offers </summary>
+        public static string OffersT1O4 {
+               get {
+                   return resourceProvider.GetResource("OffersT1O4", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc21
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc21", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 8 Channel Economic Surveillance Set </summary>
+        public static string ProductName17 {
+               get {
+                   return resourceProvider.GetResource("ProductName17", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName7
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName7", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 6 * N2M36D0-I, 2 * N2M36B0-I, 1 * N080000 </summary>
+        public static string ProductDesc17 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc17", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc7
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc7", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 8CH POE Switch </summary>
+        public static string ProductName18 {
+               get {
+                   return resourceProvider.GetResource("ProductName18", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName9
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName9", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 8CH POE Switch </summary>
+        public static string ProductDesc18 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc18", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc9
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc9", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> POE Splitter </summary>
+        public static string ProductName19 {
+               get {
+                   return resourceProvider.GetResource("ProductName19", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName20
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName20", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> POE Splitter </summary>
+        public static string ProductDesc19 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc19", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc20
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc20", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Seagate 4TB HDD </summary>
+        public static string ProductName20 {
+               get {
+                   return resourceProvider.GetResource("ProductName20", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName18
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName18", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Seagate 4TB HDD </summary>
+        public static string ProductDesc20 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc20", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc18
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc18", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> PA-SC-N2M28D0-IAP </summary>
+        public static string ProductName21 {
+               get {
+                   return resourceProvider.GetResource("ProductName21", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemName19
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemName19", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Power Active 2MP Economic IP Camera with Audio </summary>
+        public static string ProductDesc21 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc21", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc19
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc19", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Audio </summary>
+        public static string ASection24 {
+               get {
+                   return resourceProvider.GetResource("ASection24", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SetItemDesc1
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetItemDesc1", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Audio </summary>
+        public static string AType87 {
+               get {
+                   return resourceProvider.GetResource("AType87", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string InstallationFee
-        {
-            get
-            {
-                return resourceProvider.GetResource("InstallationFee", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 30 meter </summary>
+        public static string AValue121 {
+               get {
+                   return resourceProvider.GetResource("AValue121", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary>  </summary>
-        public static string SubTotalProducts
-        {
-            get
-            {
-                return resourceProvider.GetResource("SubTotalProducts", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> 3.6 mm (2.8 mm / 6 mm optional) </summary>
+        public static string AValue122 {
+               get {
+                   return resourceProvider.GetResource("AValue122", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
+        /// <summary> Dome Model: 127mm × 96mm </summary>
+        public static string AValue123 {
+               get {
+                   return resourceProvider.GetResource("AValue123", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SC-N2M36D0-I) Power Active 2MP Economic IP Dome Camera </summary>
+        public static string SetItemName2 {
+               get {
+                   return resourceProvider.GetResource("SetItemName2", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 2M Pixel , Two stream H.265/ H.264High Profile/Main Profile/Base Line Profile AES/AWB/2D DNR/3D DNR/DWDR TCP/IP；UDP；HTTP；IGMP ；ICMP；DHCP；RTP/RTSP；DNS；DDNS；FTP；NTP；PPPOE；UPNP；SMTP；SNMP </summary>
+        public static string SetItemDesc2 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc2", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SC-N2M40B0-IW) Power Active 2MP WDR IP Bullet Camera </summary>
+        public static string SetItemName3 {
+               get {
+                   return resourceProvider.GetResource("SetItemName3", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 2M Pixel , Three stream H.265/ H.264High Profile/Main Profile/Base Line Profile/ MJPEG AES/AWB/2D DNR/3D DNR/WDR Smart Function: Tripwire；Regional invasion；Items stolen；Items move；Density Detection；Number Stat；Through the fence ；Wandering detection ；Retrograde motion detection ；Face CaptureTCP/IP；UDP；HTTP；IGMP ；ICMP；DHCP；RTP/RTSP；DNS；DDNS；FTP；NTP；PPPOE；UPNP；SMTP；SNMP </summary>
+        public static string SetItemDesc3 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc3", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SC-N2M28D0-IA)  Power Active 2MP Economic IP Camera with Audio </summary>
+        public static string SetItemName21 {
+               get {
+                   return resourceProvider.GetResource("SetItemName21", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 2M Pixel , Two stream AudioH.265/ H.264High Profile/Main Profile/Base Line ProfileAES/AWB/2D DNR/3D DNR/DWDRTCP/IP；UDP；HTTP；IGMP ；ICMP；DHCP；RTP/RTSP；DNS；DDNS；FTP；NTP；PPPOE；UPNP；SMTP；SNMP </summary>
+        public static string SetItemDesc21 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc21", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SC-N2MM36P0-I) Power Active 2MP Economic Mini PT IP Dome Camera </summary>
+        public static string SetItemName7 {
+               get {
+                   return resourceProvider.GetResource("SetItemName7", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 2M Pixel , Two streamH.265/ H.264High Profile/Main Profile/Base Line ProfileAES/AWB/2D DNR/3D DNR/DWDRTCP/IP；UDP；HTTP；IGMP ；ICMP；DHCP；RTP/RTSP；DNS；DDNS；FTP；NTP；PPPOE；UPNP；SMTP；SNMPPan :355⁰ / Speed: 0 ~ 25 degrees per second   ;  Tile: 0 ~ 90⁰ / Speed: 0 ~ 20 degrees per second </summary>
+        public static string SetItemDesc7 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc7", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SR-N080000) Power Active 8CH NVR (E-version) </summary>
+        public static string SetItemName9 {
+               get {
+                   return resourceProvider.GetResource("SetItemName9", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Max 8 Channel 6.0MP IPC input, ONVIF SPEC 2.6, Input Bandwidth:64M; 1 Channel Face Detection or 2 Channel Intrusion Detection; Max 8 Channel synchronous playback; One 1000M Ethernet Port; one HDMI interface, Support 4K HD output; 2 SATA HDD interface,  P2P, APP Alarm Push; Support 1*3.0 USB </summary>
+        public static string SetItemDesc9 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc9", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Seagate 4TB HDD </summary>
+        public static string SetItemName20 {
+               get {
+                   return resourceProvider.GetResource("SetItemName20", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Seagate SkyHawk 4TB 3.5" HDD (ST4000VX007) </summary>
+        public static string SetItemDesc20 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc20", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 8CH POE Switch </summary>
+        public static string SetItemName18 {
+               get {
+                   return resourceProvider.GetResource("SetItemName18", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 8+2 port POE SwitchIEEE802.3、IEEE802.3u、IEEE802.3x、IEEE802.3af/at </summary>
+        public static string SetItemDesc18 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc18", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> POE Splitter </summary>
+        public static string SetItemName19 {
+               get {
+                   return resourceProvider.GetResource("SetItemName19", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> PoE Splitter , PoE Splitter Adapter IEEE 802.3af Compliant 10/100Mbps, DC 12V / 1-2A Output for IP Camera </summary>
+        public static string SetItemDesc19 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc19", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> (PA-SC-N2M36B0-I) Power Active 2MP Economic IP Bullet Camera </summary>
+        public static string SetItemName1 {
+               get {
+                   return resourceProvider.GetResource("SetItemName1", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 2M Pixel , Two streamH.265/ H.264High Profile/Main Profile/Base Line ProfileAES/AWB/2D DNR/3D DNR/DWDRTCP/IP；UDP；HTTP；IGMP ；ICMP；DHCP；RTP/RTSP；DNS；DDNS；FTP；NTP；PPPOE；UPNP；SMTP；SNMP </summary>
+        public static string SetItemDesc1 {
+               get {
+                   return resourceProvider.GetResource("SetItemDesc1", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Installation Fee </summary>
+        public static string InstallationFee {
+               get {
+                   return resourceProvider.GetResource("InstallationFee", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Subtotal (Products) </summary>
+        public static string SubTotalProducts {
+               get {
+                   return resourceProvider.GetResource("SubTotalProducts", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
         /// <summary> Details </summary>
-        public static string Details
-        {
-            get
-            {
-                return resourceProvider.GetResource("Details", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Details {
+               get {
+                   return resourceProvider.GetResource("Details", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Package Details </summary>
-        public static string PackageDetails
-        {
-            get
-            {
-                return resourceProvider.GetResource("PackageDetails", CultureInfo.CurrentUICulture.Name) as string;
+        public static string PackageDetails {
+               get {
+                   return resourceProvider.GetResource("PackageDetails", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> 8 Channel </summary>
-        public static string SetBannerTitle1
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerTitle1", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SetBannerTitle1 {
+               get {
+                   return resourceProvider.GetResource("SetBannerTitle1", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> 16 Channel </summary>
-        public static string SetBannerTitle2
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerTitle2", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Basic Surveillance Set </summary>
+        public static string SetBannerText1 {
+               get {
+                   return resourceProvider.GetResource("SetBannerText1", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
+        /// <summary> $560 </summary>
+        public static string SetBannerPrice1 {
+               get {
+                   return resourceProvider.GetResource("SetBannerPrice1", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 8 Channel </summary>
+        public static string SetBannerTitle2 {
+               get {
+                   return resourceProvider.GetResource("SetBannerTitle2", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
         /// <summary> Smart Surveillance Set </summary>
-        public static string SetBannerText1
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerText1", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SetBannerText2 {
+               get {
+                   return resourceProvider.GetResource("SetBannerText2", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Smart Surveillance Set </summary>
-        public static string SetBannerText2
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerText2", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> $733 </summary>
+        public static string SetBannerPrice2 {
+               get {
+                   return resourceProvider.GetResource("SetBannerPrice2", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> $584.00 </summary>
-        public static string SetBannerPrice1
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerPrice1", CultureInfo.CurrentUICulture.Name) as string;
-            }
-        }
-
-        /// <summary> $1,167.00 </summary>
-        public static string SetBannerPrice2
-        {
-            get
-            {
-                return resourceProvider.GetResource("SetBannerPrice2", CultureInfo.CurrentUICulture.Name) as string;
-            }
-        }
-
+            
         /// <summary> Invalid login attempt. </summary>
-        public static string InvalidLoginAttempt
-        {
-            get
-            {
-                return resourceProvider.GetResource("InvalidLoginAttempt", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InvalidLoginAttempt {
+               get {
+                   return resourceProvider.GetResource("InvalidLoginAttempt", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Email is confirmed </summary>
-        public static string EmailConfirmed
-        {
-            get
-            {
-                return resourceProvider.GetResource("EmailConfirmed", CultureInfo.CurrentUICulture.Name) as string;
+        public static string EmailConfirmed {
+               get {
+                   return resourceProvider.GetResource("EmailConfirmed", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Thank you for confirming your email. </summary>
-        public static string EmailConfirmationInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("EmailConfirmationInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string EmailConfirmationInfo {
+               get {
+                   return resourceProvider.GetResource("EmailConfirmationInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Sign in with new password </summary>
-        public static string SignWithNewPassword
-        {
-            get
-            {
-                return resourceProvider.GetResource("SignWithNewPassword", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SignWithNewPassword {
+               get {
+                   return resourceProvider.GetResource("SignWithNewPassword", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Your password has been changed. Please login with your new password. </summary>
-        public static string PasswordChangedInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("PasswordChangedInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string PasswordChangedInfo {
+               get {
+                   return resourceProvider.GetResource("PasswordChangedInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Invalid Email </summary>
-        public static string InvalidEmail
-        {
-            get
-            {
-                return resourceProvider.GetResource("InvalidEmail", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InvalidEmail {
+               get {
+                   return resourceProvider.GetResource("InvalidEmail", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Your email is not registered or confirmed yet. </summary>
-        public static string InvalidEmailInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("InvalidEmailInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InvalidEmailInfo {
+               get {
+                   return resourceProvider.GetResource("InvalidEmailInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Invalid Code </summary>
-        public static string InvalidCode
-        {
-            get
-            {
-                return resourceProvider.GetResource("InvalidCode", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InvalidCode {
+               get {
+                   return resourceProvider.GetResource("InvalidCode", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Code validation is expired. </summary>
-        public static string InvalidCodeInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("InvalidCodeInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string InvalidCodeInfo {
+               get {
+                   return resourceProvider.GetResource("InvalidCodeInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Confirmation Error </summary>
-        public static string ConfirmationError
-        {
-            get
-            {
-                return resourceProvider.GetResource("ConfirmationError", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ConfirmationError {
+               get {
+                   return resourceProvider.GetResource("ConfirmationError", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> There is something wrong during confirmation, please contact us. </summary>
-        public static string ConfirmationErrorInfo
-        {
-            get
-            {
-                return resourceProvider.GetResource("ConfirmationErrorInfo", CultureInfo.CurrentUICulture.Name) as string;
+        public static string ConfirmationErrorInfo {
+               get {
+                   return resourceProvider.GetResource("ConfirmationErrorInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Unit Price </summary>
-        public static string UnitPrice
-        {
-            get
-            {
-                return resourceProvider.GetResource("UnitPrice", CultureInfo.CurrentUICulture.Name) as string;
+        public static string UnitPrice {
+               get {
+                   return resourceProvider.GetResource("UnitPrice", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Stock Status </summary>
-        public static string StockStatus
-        {
-            get
-            {
-                return resourceProvider.GetResource("StockStatus", CultureInfo.CurrentUICulture.Name) as string;
+        public static string StockStatus {
+               get {
+                   return resourceProvider.GetResource("StockStatus", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> No products in wishlist. </summary>
-        public static string NoProductsWishlist
-        {
-            get
-            {
-                return resourceProvider.GetResource("NoProductsWishlist", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NoProductsWishlist {
+               get {
+                   return resourceProvider.GetResource("NoProductsWishlist", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Compare Products </summary>
-        public static string CompareProducts
-        {
-            get
-            {
-                return resourceProvider.GetResource("CompareProducts", CultureInfo.CurrentUICulture.Name) as string;
+        public static string CompareProducts {
+               get {
+                   return resourceProvider.GetResource("CompareProducts", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> My Wishlist </summary>
-        public static string MyWishlist
-        {
-            get
-            {
-                return resourceProvider.GetResource("MyWishlist", CultureInfo.CurrentUICulture.Name) as string;
+        public static string MyWishlist {
+               get {
+                   return resourceProvider.GetResource("MyWishlist", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Description </summary>
-        public static string Description
-        {
-            get
-            {
-                return resourceProvider.GetResource("Description", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Description {
+               get {
+                   return resourceProvider.GetResource("Description", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Rating </summary>
-        public static string Rating
-        {
-            get
-            {
-                return resourceProvider.GetResource("Rating", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Rating {
+               get {
+                   return resourceProvider.GetResource("Rating", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> No products to compare. </summary>
-        public static string NoProductsCompare
-        {
-            get
-            {
-                return resourceProvider.GetResource("NoProductsCompare", CultureInfo.CurrentUICulture.Name) as string;
+        public static string NoProductsCompare {
+               get {
+                   return resourceProvider.GetResource("NoProductsCompare", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Tools </summary>
-        public static string Tools
-        {
-            get
-            {
-                return resourceProvider.GetResource("Tools", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Tools {
+               get {
+                   return resourceProvider.GetResource("Tools", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Power Active Smart Surveillance </summary>
-        public static string PASmartSurveillance
-        {
-            get
-            {
-                return resourceProvider.GetResource("PASmartSurveillance", CultureInfo.CurrentUICulture.Name) as string;
+        public static string PASmartSurveillance {
+               get {
+                   return resourceProvider.GetResource("PASmartSurveillance", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Website </summary>
-        public static string Website
-        {
-            get
-            {
-                return resourceProvider.GetResource("Website", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Website {
+               get {
+                   return resourceProvider.GetResource("Website", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Subject </summary>
-        public static string Subject
-        {
-            get
-            {
-                return resourceProvider.GetResource("Subject", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Subject {
+               get {
+                   return resourceProvider.GetResource("Subject", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Write your message </summary>
-        public static string WriteYourMessage
-        {
-            get
-            {
-                return resourceProvider.GetResource("WriteYourMessage", CultureInfo.CurrentUICulture.Name) as string;
+        public static string WriteYourMessage {
+               get {
+                   return resourceProvider.GetResource("WriteYourMessage", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Submit </summary>
-        public static string Submit
-        {
-            get
-            {
-                return resourceProvider.GetResource("Submit", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Submit {
+               get {
+                   return resourceProvider.GetResource("Submit", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Power Active Smart Surveillance is a new brand for the surveillance market. We focus on end user’s application and system security especially in network application. </summary>
-        public static string PowerActiveAboutText
-        {
-            get
-            {
-                return resourceProvider.GetResource("PowerActiveAboutText", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Power Active Smart Surveillance is a new brand for the surveillance market. We focus on end user’s application and system security especially in network application.We know what you want and what you need, all we done is focus on your request. </summary>
+        public static string PowerActiveAboutText {
+               get {
+                   return resourceProvider.GetResource("PowerActiveAboutText", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> POWER ACTIVE SMART SURVEILLANCE </summary>
-        public static string PowerActiveAboutTitle
-        {
-            get
-            {
-                return resourceProvider.GetResource("PowerActiveAboutTitle", CultureInfo.CurrentUICulture.Name) as string;
+        public static string PowerActiveAboutTitle {
+               get {
+                   return resourceProvider.GetResource("PowerActiveAboutTitle", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Message </summary>
-        public static string Message
-        {
-            get
-            {
-                return resourceProvider.GetResource("Message", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Message {
+               get {
+                   return resourceProvider.GetResource("Message", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Password has been changed succesfully. </summary>
-        public static string PasswordChangedSuccess
-        {
-            get
-            {
-                return resourceProvider.GetResource("PasswordChangedSuccess", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Password has been changed successfully. </summary>
+        public static string PasswordChangedSuccess {
+               get {
+                   return resourceProvider.GetResource("PasswordChangedSuccess", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> New Business Type request has been made. Please contact with us for details. </summary>
-        public static string RoleRequestMailSent
-        {
-            get
-            {
-                return resourceProvider.GetResource("RoleRequestMailSent", CultureInfo.CurrentUICulture.Name) as string;
+        public static string RoleRequestMailSent {
+               get {
+                   return resourceProvider.GetResource("RoleRequestMailSent", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Mail Us </summary>
-        public static string MailUs
-        {
-            get
-            {
-                return resourceProvider.GetResource("MailUs", CultureInfo.CurrentUICulture.Name) as string;
+        public static string MailUs {
+               get {
+                   return resourceProvider.GetResource("MailUs", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Special Offers </summary>
-        public static string SpecialOffers
-        {
-            get
-            {
-                return resourceProvider.GetResource("SpecialOffers", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SpecialOffers {
+               get {
+                   return resourceProvider.GetResource("SpecialOffers", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Subscription is successful! </summary>
-        public static string SubscriptionSuccess
-        {
-            get
-            {
-                return resourceProvider.GetResource("SubscriptionSuccess", CultureInfo.CurrentUICulture.Name) as string;
+        public static string SubscriptionSuccess {
+               get {
+                   return resourceProvider.GetResource("SubscriptionSuccess", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Whole Sale </summary>
-        public static string WholeSale
-        {
-            get
-            {
-                return resourceProvider.GetResource("WholeSale", CultureInfo.CurrentUICulture.Name) as string;
+        public static string WholeSale {
+               get {
+                   return resourceProvider.GetResource("WholeSale", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Mr. </summary>
-        public static string Mr
-        {
-            get
-            {
-                return resourceProvider.GetResource("Mr", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Mr {
+               get {
+                   return resourceProvider.GetResource("Mr", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Mrs. </summary>
-        public static string Mrs
-        {
-            get
-            {
-                return resourceProvider.GetResource("Mrs", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Mrs {
+               get {
+                   return resourceProvider.GetResource("Mrs", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Language </summary>
-        public static string Language
-        {
-            get
-            {
-                return resourceProvider.GetResource("Language", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Language {
+               get {
+                   return resourceProvider.GetResource("Language", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Error </summary>
-        public static string Error
-        {
-            get
-            {
-                return resourceProvider.GetResource("Error", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Error {
+               get {
+                   return resourceProvider.GetResource("Error", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
         /// <summary> Success </summary>
-        public static string Success
-        {
-            get
-            {
-                return resourceProvider.GetResource("Success", CultureInfo.CurrentUICulture.Name) as string;
+        public static string Success {
+               get {
+                   return resourceProvider.GetResource("Success", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Success </summary>
-        public static string PageNotFound
-        {
-            get
-            {
-                return resourceProvider.GetResource("PageNotFound", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Opps! PAGE NOT BE FOUND </summary>
+        public static string PageNotFound {
+               get {
+                   return resourceProvider.GetResource("PageNotFound", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
-        /// <summary> Success </summary>
-        public static string Error404
-        {
-            get
-            {
-                return resourceProvider.GetResource("Error404", CultureInfo.CurrentUICulture.Name) as string;
+            
+        /// <summary> Sorry but the page you are looking for does not exist, have been removed, name changed or is temporarily unavailable. </summary>
+        public static string Error404 {
+               get {
+                   return resourceProvider.GetResource("Error404", CultureInfo.CurrentUICulture.Name) as string;
+               }
             }
-        }
-
+            
+        /// <summary> Bullet Model: 63.0mm × 63.0mm × 166.0mm </summary>
+        public static string AValue124 {
+               get {
+                   return resourceProvider.GetResource("AValue124", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Dome Model: 93.2mm × 93.2mm × 66.5mm </summary>
+        public static string AValue125 {
+               get {
+                   return resourceProvider.GetResource("AValue125", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
         /// <summary> Installation Service </summary>
-        public static string ProductName22
+        public static string ProductName22 {
+               get {
+                   return resourceProvider.GetResource("ProductName22", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Basic installation, no decoration, indoor within 20 square meters </summary>
+        public static string ProductDesc22 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc22", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 8 Channel WDR Surveillance Set (+ Installation Service) </summary>
+        public static string ProductName23 {
+               get {
+                   return resourceProvider.GetResource("ProductName23", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 4 * N2M36D0-I, 2 * N2M40B0-IW, 1 * N2M28D0-IA, 1 * N2M36P0-I, 1 * N080000, Installation Service </summary>
+        public static string ProductDesc23 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc23", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 8 Channel Economic Surveillance Set (+ Installation Service) </summary>
+        public static string ProductName24 {
+               get {
+                   return resourceProvider.GetResource("ProductName24", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 6 * N2M36D0-I, 2 * N2M36B0-I, 1 * N080000, Installation Service </summary>
+        public static string ProductDesc24 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc24", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> PA-SC-N4M28D0-IWAP </summary>
+        public static string ProductName25 {
+               get {
+                   return resourceProvider.GetResource("ProductName25", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Power Active 4MP WDR IP Camera with Audio </summary>
+        public static string ProductDesc25 {
+               get {
+                   return resourceProvider.GetResource("ProductDesc25", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> User Manuals </summary>
+        public static string UserManuals {
+               get {
+                   return resourceProvider.GetResource("UserManuals", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> <h1>Privacy Policy for Power Active Co. Ltd.</h1><p>At Power Active Smart Surveillance, accessible from www.poweractivesmartsurveillance.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Power Active Smart Surveillance and how we use it.</p><p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.</p><p>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in Power Active Smart Surveillance. This policy is not applicable to any information collected offline or via channels other than this website.</p><h2>Consent</h2><p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p><h2>Information we collect</h2><p>The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.</p><p>If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.</p><p>When you register for an Account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.</p><h2>How we use your information</h2><p>We use the information we collect in various ways, including to:</p><ul> <li>Provide, operate, and maintain our webste</li> <li>Improve, personalize, and expand our webste</li> <li>Understand and analyze how you use our webste</li> <li>Develop new products, services, features, and functionality</li> <li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the webste, and for marketing and promotional purposes</li> <li>Send you emails</li> <li>Find and prevent fraud</li></ul><h2>Log Files</h2><p>Power Active Smart Surveillance follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</p><h2>Cookies and Web Beacons</h2><p>Like any other website, Power Active Smart Surveillance uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p><p>For more general information on cookies, please read <a href="https://www.cookieconsent.com/what-are-cookies/">"What Are Cookies"</a>.</p><h2>Advertising Partners Privacy Policies</h2><P>You may consult this list to find the Privacy Policy for each of the advertising partners of Power Active Smart Surveillance.</P><p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Power Active Smart Surveillance, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p><p>Note that Power Active Smart Surveillance has no access to or control over these cookies that are used by third-party advertisers.</p><h2>Third Party Privacy Policies</h2><p>Power Active Smart Surveillance's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. </p><p>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites.</p><h2>CCPA Privacy Rights (Do Not Sell My Personal Information)</h2><p>Under the CCPA, among other rights, California consumers have the right to:</p><p>Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.</p><p>Request that a business delete any personal data about the consumer that a business has collected.</p><p>Request that a business that sells a consumer's personal data, not sell the consumer's personal data.</p><p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p><h2>GDPR Data Protection Rights</h2><p>We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:</p><p>The right to access – You have the right to request copies of your personal data. We may charge you a small fee for this service.</p><p>The right to rectification – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.</p><p>The right to erasure – You have the right to request that we erase your personal data, under certain conditions.</p><p>The right to restrict processing – You have the right to request that we restrict the processing of your personal data, under certain conditions.</p><p>The right to object to processing – You have the right to object to our processing of your personal data, under certain conditions.</p><p>The right to data portability – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</p><p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p><h2>Children's Information</h2><p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p><p>Power Active Smart Surveillance does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p> </summary>
+        public static string PrivacyPolicyText {
+               get {
+                   return resourceProvider.GetResource("PrivacyPolicyText", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> By creating an account, you agree to Power Active's </summary>
+        public static string PrivacyPolicyAgreePart1 {
+               get {
+                   return resourceProvider.GetResource("PrivacyPolicyAgreePart1", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary>   </summary>
+        public static string PrivacyPolicyAgreePart2 {
+               get {
+                   return resourceProvider.GetResource("PrivacyPolicyAgreePart2", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Privacy Policy </summary>
+        public static string PrivacyPolicy {
+               get {
+                   return resourceProvider.GetResource("PrivacyPolicy", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Direct Bank Transfer </summary>
+        public static string DirectBankTransfer {
+               get {
+                   return resourceProvider.GetResource("DirectBankTransfer", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account. </summary>
+        public static string DirectBankTransferInfo {
+               get {
+                   return resourceProvider.GetResource("DirectBankTransferInfo", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Account Name (same as company name) </summary>
+        public static string BankAccountName {
+               get {
+                   return resourceProvider.GetResource("BankAccountName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Bank Name </summary>
+        public static string BankName {
+               get {
+                   return resourceProvider.GetResource("BankName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Branch Name </summary>
+        public static string BankBranchName {
+               get {
+                   return resourceProvider.GetResource("BankBranchName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> Bank Account Number </summary>
+        public static string BankAccountNumber {
+               get {
+                   return resourceProvider.GetResource("BankAccountNumber", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 勤力合實業股份有限公司 </summary>
+        public static string PABankAccountName {
+               get {
+                   return resourceProvider.GetResource("PABankAccountName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 玉山銀行 </summary>
+        public static string PABankName {
+               get {
+                   return resourceProvider.GetResource("PABankName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 五股分行 </summary>
+        public static string PABankBranchName {
+               get {
+                   return resourceProvider.GetResource("PABankBranchName", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+            
+        /// <summary> 0543-940-013886 </summary>
+        public static string PABankAccountNumber {
+               get {
+                   return resourceProvider.GetResource("PABankAccountNumber", CultureInfo.CurrentUICulture.Name) as string;
+               }
+            }
+
+        /// <summary> Order is succesful ! </summary>
+        public static string OrderSuccess
         {
             get
             {
-                return resourceProvider.GetResource("ProductName22", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccess", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductDesc22
+        /// <summary> Your Order ID is </summary>
+        public static string YourOrderId
         {
             get
             {
-                return resourceProvider.GetResource("ProductDesc22", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("YourOrderId", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductName21
+        /// <summary> Please use your Order ID as the payment reference. </summary>
+        public static string OrderSuccessPaymentInfo
         {
             get
             {
-                return resourceProvider.GetResource("ProductName21", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccessPaymentInfo", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductDesc21
+        /// <summary> Your order won't be shipped until the funds have cleared in our account. </summary>
+        public static string OrderSuccessShipmentInfo
         {
             get
             {
-                return resourceProvider.GetResource("ProductDesc21", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccessShipmentInfo", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductName20
+        /// <summary> You can check your order progress from "My Account" section. </summary>
+        public static string OrderSuccessRegisteredProgress
         {
             get
             {
-                return resourceProvider.GetResource("ProductName20", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccessRegisteredProgress", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductDesc20
+        /// <summary> Your order progress will be sent to your email address. </summary>
+        public static string OrderSuccessUnregisteredProgress
         {
             get
             {
-                return resourceProvider.GetResource("ProductDesc20", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccessUnregisteredProgress", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductName19
+        /// <summary> In need of more information about your order progress, you can also call or email us from the "Contact Us" section. </summary>
+        public static string OrderSuccessContactUs
         {
             get
             {
-                return resourceProvider.GetResource("ProductName19", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderSuccessContactUs", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductDesc19
+        /// <summary> Accessories </summary>
+        public static string AccessoriesT2O4
         {
             get
             {
-                return resourceProvider.GetResource("ProductDesc19", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("AccessoriesT2O4", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductName18
+        /// <summary> Shipment Fee </summary>
+        public static string ShipmentFee
         {
             get
             {
-                return resourceProvider.GetResource("ProductName18", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("ShipmentFee", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
-        /// <summary> Installation Service </summary>
-        public static string ProductDesc18
+        /// <summary> Order Id </summary>
+        public static string OrderId
         {
             get
             {
-                return resourceProvider.GetResource("ProductDesc18", CultureInfo.CurrentUICulture.Name) as string;
+                return resourceProvider.GetResource("OrderId", CultureInfo.CurrentUICulture.Name) as string;
             }
         }
 
+        /// <summary> Tracking Id </summary>
+        public static string TrackingId
+        {
+            get
+            {
+                return resourceProvider.GetResource("TrackingId", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
 
+        /// <summary> Transfer should be completed in 3 days, otherwise the order will be cancelled. </summary>
+        public static string OrderSuccessTransferDeadline
+        {
+            get
+            {
+                return resourceProvider.GetResource("OrderSuccessTransferDeadline", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Waiting For Payment  </summary>
+        public static string WaitingForPayment
+        {
+            get
+            {
+                return resourceProvider.GetResource("WaitingForPayment", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
 
     }        
 }

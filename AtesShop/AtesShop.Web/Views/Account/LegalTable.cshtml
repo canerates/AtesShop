@@ -1,0 +1,103 @@
+﻿@model List<AtesShop.Web.Models.ResourceKeyViewModel>
+@{
+    ViewBag.Title = "Legal Table";
+}
+
+
+<div class="container ">
+    <form class="form-inline" method="post">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" id="newBtn">Add</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-info" id="searchBtn"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+        <div class="form-group">
+            <input id="searchTxt" class="form-control" name="search" placeholder="Enter key" />
+        </div>
+    </form>
+</div>
+<br />
+<div class="container" id="tableContainer">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Resource Key</th>
+                <th>Actions</th>
+                <th>Culture (Lang.)</th>
+                <th>Resource Value</th>
+                <th>Translate Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="4"></td></tr>
+            @foreach (var elem in Model)
+            {
+                for (int i = 0; i < elem.ResourceCount; i++)
+                {
+                    <tr>
+                        @if (i == 0)
+                        {
+                            <td rowspan="@elem.ResourceCount">@elem.ResourceKey</td>
+                            <td rowspan="@elem.ResourceCount">
+                                <div class="btn-group">
+                                    <button type="button" class="addTranslationBtn btn btn-success" data-id="@elem.Resources[i].Id">Add T.</button>
+                                </div>
+                            </td>
+                        }
+
+                        <td>@elem.Resources[i].Culture</td>
+                        <td>@elem.Resources[i].Value</td>
+                        <td>
+                            <div class="btn-group-vertical">
+                                <button type="button" class="editBtn btn btn-primary" data-id="@elem.Resources[i].Id">Edit</button>
+                                <button type="button" @if (elem.Resources[i].Culture == "en-us") { <text> disabled</text> } class="deleteBtn btn btn-danger" data-id="@elem.Resources[i].Id">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr><td colspan="4"></td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Account/LegalTable',
+            data: {
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+    $(".editBtn").click(function () {
+        $.ajax({
+            url: '/Account/LegalEdit',
+            data: {
+                ID: $(this).attr("data-id")
+            }
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+
+</script>
+
+

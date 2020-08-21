@@ -1,35 +1,94 @@
-﻿@model AtesShop.Web.Models.OrdersViewModel
+﻿@model List<AtesShop.Web.Models.OrdersViewModel>
 
 <h3>@AtesShop.Resources.Resources.Orders</h3>
-@if (Model.Orders.Count == 0)
+@if (Model.Count == 0)
 {
     <div>@AtesShop.Resources.Resources.NoOrders</div>
 }
 else
 {
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" style="text-align:center;">
             <thead>
                 <tr>
-                    <th>@AtesShop.Resources.Resources.Order</th>
+                    <th>@AtesShop.Resources.Resources.OrderId</th>
                     <th>@AtesShop.Resources.Resources.Date</th>
                     <th>@AtesShop.Resources.Resources.Status</th>
                     <th>@AtesShop.Resources.Resources.Total</th>
-                    <th>@AtesShop.Resources.Resources.Actions</th>
+                    <th>@AtesShop.Resources.Resources.TrackingId</th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.Orders.Count; i++)
+                @for (int i = 0; i < Model.Count; i++)
                 {
+                    var targetRow = "#orderProducts" + i;
+                    var targetId = "orderProducts" + i;
+                    <tr data-toggle="collapse" data-target = "@targetRow" class="accordion-toggle" style="cursor:pointer;"  >
+                        <td>@Model[i].Order.OrderId</td>
+                        <td>@Model[i].Order.Date.ToString("MMM dd, yyyy")</td>
+                        <td>@Model[i].Order.Status</td>
+                        <td>@Model[i].Order.TotalPrice</td>
+                        @if (Model[i].Order.TrackingId == null)
+	                    {
+	                        <td>-</td>
+                        }
+                        else
+                        {
+                            <td>@Model[i].Order.TrackingId</td>
+                        }
+                    </tr>
                     <tr>
-                        <td>@(i + 1)</td>
-                        <td>@Model.Orders[i].Date.ToString("MMM dd, yyyy")</td>
-                        <td>@Model.Orders[i].Status</td>
-                        <td>@Model.Orders[i].TotalPrice</td>
-                        <td><a class="view" href="#">@AtesShop.Resources.Resources.View</a></td>
+                        <td colspan="5" class="hidden-row">
+                            <div id="@targetId" class="accordion-body collapse order-package-info">
+                                <div class="table-content table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product-thumbnail">@AtesShop.Resources.Resources.Image</th>
+                                                <th class="product-name">@AtesShop.Resources.Resources.Product</th>
+                                                <th class="product-quantity">@AtesShop.Resources.Resources.Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model[i].OrderItems)
+                                            {
+                                                <tr>
+                                                    @if (!item.Product.isSet)
+                                                    {
+                                                        <td class="product-thumbnail">
+                                                            <img src="@Url.Action("Image", "Generic", new { id = item.Product.Images.FirstOrDefault().Id })" alt="cart-image" />
+                                                        </td>
+                                                        <td class="product-name">@item.Product.Name | @item.Product.Description</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="product-thumbnail">
+                                                            <img src="@Url.Action("Image", "Generic", new { id = item.Product.Images.FirstOrDefault().Id })" alt="cart-image" />
+                                                        </td>
+                                                        <td class="product-name">@item.Product.Name <br /> @item.Product.Description</td>
+                                                    }
+                                                    <td class="product-quantity">@item.Quantity</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 }
+
+<script>
+    $('.accordian-body').on('show.bs.collapse', function () {
+        $(this).closest("table")
+            .find(".collapse.in")
+            .not(this)
+            .collapse('toggle')
+    })
+    
+</script>

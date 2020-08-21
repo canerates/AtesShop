@@ -87,7 +87,8 @@ h6 {
     font-style: normal;
     margin: 0;
     color: #363f4d;
-    font-family: "Rubik",sans-serif;
+    font-family: "Microsoft JhengHei";
+    /*font-family: "Rubik",sans-serif;*/
 }
 h1 a,
 h2 a,
@@ -126,7 +127,8 @@ p {
     font-weight: 400;
     line-height: 26px;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Microsoft JhengHei";
+    /*font-family: 'Open Sans', sans-serif;*/
 }
 b, strong {
   font-weight: 500;
@@ -555,7 +557,8 @@ option {
     border: 0 solid #626262;
     font-size: 14px;
     padding: 5px 0 5px 10px;
-    font-family: 'Rubik', sans-serif !important;
+    font-family: "Microsoft JhengHei";
+    /*font-family: 'Rubik', sans-serif !important;*/
 }
 input:focus {
     background: #fff;

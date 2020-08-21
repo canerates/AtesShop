@@ -64,11 +64,11 @@ namespace AtesShop.Web.Controllers
             Dictionary<string, string> currencies = new Dictionary<string, string>();
 
             languages.Add("en-us", "English");
-            languages.Add("tr-tr", "Türkçe");
+            //languages.Add("tr-tr", "Türkçe");
             languages.Add("zh-tw", "中文");
 
             currencies.Add("en-us", "USD");
-            currencies.Add("tr-tr", "TRY");
+            //currencies.Add("tr-tr", "TRY");
             currencies.Add("zh-tw", "NTD");
 
             model.Languages = languages;

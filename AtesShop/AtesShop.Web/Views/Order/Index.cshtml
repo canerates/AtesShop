@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = AtesShop.Resources.Resources.Orders;
+    
+}
+
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Order")">@AtesShop.Resources.Resources.Orders</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="my-account white-bg pb-60">
+    <div id="orderContainer" class="container">
+        <div class="row no-gutters align-items-center">
+            <div id="orderView" class="col-lg-12">
+                @{
+                    Html.RenderAction("OrderList");
+                }
+            </div>
+        </div>
+    </div>
+</div>

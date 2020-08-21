@@ -86,6 +86,24 @@ namespace AtesShop.Services
             }
         }
 
+        public List<DocFile> GetSpecFiles()
+        {
+            using (var context = new ASContext())
+            {
+                var type = 1; // Specification
+                return context.DocFiles.Where(x => x.DocType == type).ToList();
+            }
+        }
+
+        public List<DocFile> GetManualFiles()
+        {
+            using (var context = new ASContext())
+            {
+                var type = 2; // Manuals
+                return context.DocFiles.Where(x => x.DocType == type).ToList();
+            }
+        }
+
         #endregion
     }
 }

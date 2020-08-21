@@ -27,19 +27,22 @@ namespace AtesShop.Web.Code
         [Display(Description = "Pending", ResourceType = typeof(AtesShop.Resources.Resources))]
         Pending = 1,
 
-        [Display(Description = "InProcess", ResourceType = typeof(AtesShop.Resources.Resources))]
-        InProcess = 2,
+        [Display(Description = "WaitingForPayment", ResourceType = typeof(AtesShop.Resources.Resources))]
+        WaitingForPayment = 2,
 
+        [Display(Description = "InProcess", ResourceType = typeof(AtesShop.Resources.Resources))]
+        InProcess = 3,
+        
         [Display(Description = "Shipped", ResourceType = typeof(AtesShop.Resources.Resources))]
-        Shipped = 3,
+        Shipped = 4,
 
         [Display(Description = "Delivered", ResourceType = typeof(AtesShop.Resources.Resources))]
-        Delivered = 4,
+        Delivered = 5,
 
         [Display(Description = "Completed", ResourceType = typeof(AtesShop.Resources.Resources))]
-        Completed = 5,
+        Completed = 6,
 
         [Display(Description = "Cancelled", ResourceType = typeof(AtesShop.Resources.Resources))]
-        Cancelled = 6
+        Cancelled = 7
     }
 }

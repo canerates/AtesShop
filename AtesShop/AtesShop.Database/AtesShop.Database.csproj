@@ -94,6 +94,18 @@
     <Compile Include="Migrations\202008060147570_setItemPropAdded.designer.cs">
       <DependentUpon>202008060147570_setItemPropAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008110852136_docTypeAdded.cs" />
+    <Compile Include="Migrations\202008110852136_docTypeAdded.designer.cs">
+      <DependentUpon>202008110852136_docTypeAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008140122581_orderPropUpdated.cs" />
+    <Compile Include="Migrations\202008140122581_orderPropUpdated.designer.cs">
+      <DependentUpon>202008140122581_orderPropUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008140954465_orderIdSeed.cs" />
+    <Compile Include="Migrations\202008140954465_orderIdSeed.designer.cs">
+      <DependentUpon>202008140954465_orderIdSeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +151,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008060147570_setItemPropAdded.resx">
       <DependentUpon>202008060147570_setItemPropAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008110852136_docTypeAdded.resx">
+      <DependentUpon>202008110852136_docTypeAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008140122581_orderPropUpdated.resx">
+      <DependentUpon>202008140122581_orderPropUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008140954465_orderIdSeed.resx">
+      <DependentUpon>202008140954465_orderIdSeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

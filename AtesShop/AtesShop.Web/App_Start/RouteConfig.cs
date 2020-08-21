@@ -58,6 +58,12 @@ namespace AtesShop.Web
             );
 
             routes.MapRoute(
+                name: "ShopSuccess",
+                url: "Shop/Success/{orderId}",
+                defaults: new { controller = "Shop", action = "Success", orderId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

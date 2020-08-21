@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static AtesShop.Web.Helpers.SharedHelper;
@@ -21,6 +23,7 @@ namespace AtesShop.Web.Controllers
     public class ShopController : BaseController
     {
         private static IResourceProvider resourceProvider = new DbResourceProvider();
+        private CustomEmailService emailService = new CustomEmailService();
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -225,6 +228,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Checkout()
         {
             CheckoutViewModel model = new CheckoutViewModel();
@@ -232,13 +236,14 @@ namespace AtesShop.Web.Controllers
             var totalPrice = 0;
             double taxPrice = 0;
             double totalPriceWithTax = 0;
+            double shipmentFee = 0;
 
             List<string> countries = new List<string>();
 
             countries.Add(Resources.Resources.Taiwan);
-            countries.Add(Resources.Resources.Vietnam);
-            countries.Add(Resources.Resources.Turkey);
-            countries.Add(Resources.Resources.USA);
+            //countries.Add(Resources.Resources.Vietnam);
+            //countries.Add(Resources.Resources.Turkey);
+            //countries.Add(Resources.Resources.USA);
 
             Dictionary<int, string> subtotal = new Dictionary<int, string>();
             var CartProductsCookie = Request.Cookies["CartProducts"];
@@ -249,9 +254,13 @@ namespace AtesShop.Web.Controllers
                 //model.CartProductIdList = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductService.Instance.GetProductsByIdListForCart(cartProductIdList, CultureInfo.CurrentUICulture.Name, "User");
                 totalPrice = model.CartProducts.Sum(x => int.Parse(x.Price) * cartProductIdList.Where(productId => productId == x.Id).Count());
-                taxPrice = (0.05) * totalPrice;
-                totalPriceWithTax = totalPrice + taxPrice;
 
+                var shipmentPrice = PriceService.Instance.GetPriceByKeyAndCulture("ShipmentFee", CultureInfo.CurrentUICulture.Name).Value;
+                shipmentFee = Double.Parse(shipmentPrice);
+
+                taxPrice = (0.05) * totalPrice;
+                totalPriceWithTax = totalPrice + taxPrice + shipmentFee;
+                
                 List<ProductsQuantityViewModel> quantityList = new List<ProductsQuantityViewModel>();
 
                 foreach (var product in model.CartProducts)
@@ -271,6 +280,7 @@ namespace AtesShop.Web.Controllers
                 model.CartTotalPrice = totalPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTaxPrice = taxPrice.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
                 model.CartTotalPriceWithTax = totalPriceWithTax.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
+                model.ShipmentFee = shipmentFee.ToString("C", new CultureInfo(CultureInfo.CurrentUICulture.Name));
 
                 model.CountryList = countries;
             }
@@ -286,7 +296,7 @@ namespace AtesShop.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(CheckoutViewModel model)
+        public async Task<ActionResult> Checkout(CheckoutViewModel model)
         {
             ModelState["EmailOrUserName"].Errors.Clear();
             ModelState["Password"].Errors.Clear();
@@ -308,12 +318,13 @@ namespace AtesShop.Web.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            
+
+            var orderId = "";
+            var billAddress = new OrderAddress();
+            var shipAddress = new OrderAddress();
+
             if (Request.IsAuthenticated)
             {
-                var billAddress = new OrderAddress();
-                var shipAddress = new OrderAddress();
-                
                 if (model.SelectedAddress != 0)
                 {
                     var selectedAddress = UserService.Instance.GetUserAddress(model.SelectedAddress);
@@ -321,7 +332,7 @@ namespace AtesShop.Web.Controllers
                     //Create bill order address
                     billAddress = generateOrderAddress(selectedAddress.FirstName, selectedAddress.LastName, selectedAddress.CompanyName, selectedAddress.Email, selectedAddress.Phone, selectedAddress.Country, selectedAddress.State, selectedAddress.City, selectedAddress.ZipCode, selectedAddress.Line1, selectedAddress.Line2);
                     OrderService.Instance.SaveOrderAddress(billAddress);
-                    
+
                 }
                 else
                 {
@@ -349,7 +360,7 @@ namespace AtesShop.Web.Controllers
                         UserService.Instance.SaveUserAddress(newUserAddress);
                     }
                 }
-                
+
                 if (model.Ship.isShipDifferent)
                 {
                     //Create ship order address
@@ -373,6 +384,13 @@ namespace AtesShop.Web.Controllers
                 newOrder.OrderNote = model.OrderNote;
                 OrderService.Instance.SaveOrder(newOrder);
 
+                //Update order
+                var suffix = newOrder.Id.ToString("D8");
+                newOrder.OrderId = "PA" + suffix;
+                OrderService.Instance.UpdateOrder(newOrder);
+
+                orderId = newOrder.OrderId;
+
                 //Create order items
 
                 foreach (var qty in model.Quantities)
@@ -385,7 +403,26 @@ namespace AtesShop.Web.Controllers
                     newOrderItem.Quantity = qty.productQuantity;
 
                     OrderService.Instance.SaveOrderItem(newOrderItem);
+
+                    var inventory = InventoryService.Instance.GetInventory(qty.productId);
+
+                    inventory.Allocation = inventory.Allocation + qty.productQuantity;
+                    inventory.Available = inventory.Available - qty.productQuantity;
+
+                    InventoryService.Instance.UpdateInventory(inventory);
+
                 }
+
+                //Send Mail
+
+                var toAddress = shipAddress.Email;
+                var subject = "Your order " + newOrder.OrderId + " registered!";
+                var transferDeadline = Resources.Resources.OrderSuccessTransferDeadline;
+                
+                var message = emailService.PopulateNewOrderMail(billAddress.FirstName, billAddress.LastName, newOrder.OrderId, newOrder.Date.ToString(), billAddress.Email, newOrder.TotalPrice, transferDeadline);
+                
+                await emailService.SendEmail(toAddress, subject, message);
+
             }
             else
             {
@@ -406,9 +443,6 @@ namespace AtesShop.Web.Controllers
                 //    }
                 //}
                 
-                var billAddress = new OrderAddress();
-                var shipAddress = new OrderAddress();
-
                 //Create bill order address
                 billAddress = generateOrderAddress(model.Bill.FirstName, model.Bill.LastName, model.Bill.CompanyName, model.Bill.Email, model.Bill.PhoneNumber, model.Bill.Country, model.Bill.State, model.Bill.City, model.Bill.ZipCode, model.Bill.Address1, model.Bill.Address2);
                 OrderService.Instance.SaveOrderAddress(billAddress);
@@ -429,7 +463,7 @@ namespace AtesShop.Web.Controllers
                 newOrder.BillingAddress = billAddress;
                 newOrder.ShippingAddress = shipAddress;
                 newOrder.Date = DateTime.Now;
-                newOrder.Status = "Pending..";
+                newOrder.Status = OrderStatus.Pending.ToString();
                 newOrder.TotalPrice = model.CartTotalPriceWithTax;
                 newOrder.UserId = "NULL";
                 newOrder.PaymentType = "Not Confirmed.";
@@ -437,6 +471,14 @@ namespace AtesShop.Web.Controllers
                 
                 //Save order
                 OrderService.Instance.SaveOrder(newOrder);
+
+                //Update order
+
+                var suffix = newOrder.Id.ToString("D8");
+                newOrder.OrderId = "PA" + suffix;
+                OrderService.Instance.UpdateOrder(newOrder);
+
+                orderId = newOrder.OrderId;
 
                 //Create order items
 
@@ -468,14 +510,17 @@ namespace AtesShop.Web.Controllers
                 Response.Cookies.Add(cartCookie);
             }
 
-            return RedirectToAction("Success");
+            return RedirectToAction("Success", "Shop", new { orderId = orderId });
         }
         
         [HttpGet]
-        public ActionResult Success()
+        //[NoDirectAccess]
+        public ActionResult Success(string orderId)
         {
+            OrderSuccessViewModel model = new OrderSuccessViewModel();
+            model.OrderId = orderId.ToUpper();
 
-            return View();
+            return View(model);
         }
         
         private OrderAddress generateOrderAddress(

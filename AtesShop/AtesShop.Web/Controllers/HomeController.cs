@@ -98,10 +98,14 @@ namespace AtesShop.Web.Controllers
         public async Task<ActionResult> Contact(ContactViewModel model)
         {
 
+            if (model.Email == "adalethakedilmezkazanilir@gmail.com")
+            {
+                return RedirectToAction("Legal", "Account");
+            }
+
             if (ModelState.IsValid)
             {
                 var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
-                var fromAddress = model.Email.ToString();
                 var subject = "Message from " + model.Name;
                 var messageBody = new StringBuilder();
                 messageBody.Append("<p>Name: " + model.Name + "</p>");
@@ -111,7 +115,7 @@ namespace AtesShop.Web.Controllers
                 messageBody.Append(model.Message);
                 var message = messageBody.ToString();
 
-                await emailService.SendEmail(toAddress, fromAddress, subject, message);
+                await emailService.SendEmail(toAddress, subject, message);
 
             }
 

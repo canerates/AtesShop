@@ -93,7 +93,15 @@ namespace AtesShop.Web.Models
 
     public class OrdersViewModel
     {
-        public List<Order> Orders { get; set; }
+        public Order Order { get; set; }
+        public List<OrderItemViewModel> OrderItems { get; set; }
+    }
+
+    public class OrderItemViewModel
+    {
+        public int Quantity { get; set; }
+        public Product Product { get; set; }
+
     }
 
     public class DownloadsViewModel

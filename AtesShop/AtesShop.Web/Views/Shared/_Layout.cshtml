@@ -37,11 +37,15 @@
     {
         <link rel="stylesheet" href="~/Content/css/default_cn.css">
         <link rel="stylesheet" href="~/Content/css/style_cn.css">
+        <!-- responsive css -->
+        <link rel="stylesheet" href="~/Content/css/responsive.css">
     }
     else
     {
         <link rel="stylesheet" href="~/Content/css/default.css">
         <link rel="stylesheet" href="~/Content/css/style.css">
+        <!-- responsive css -->
+        <link rel="stylesheet" href="~/Content/css/responsive.css">
     }
 
     <!-- responsive css -->
@@ -52,12 +56,15 @@
 
     <!-- modernizr js -->
     <script src="~/Content/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!-- data tables-->
+    <!-- mobile menu css -->
+    <link rel="stylesheet" href="~/Content/DataTables/css/jquery.dataTables.min.css">
     
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
 
     <script src="~/Content/js/jquery-ui.min.js"></script>
 
@@ -126,7 +133,7 @@
                         @{ Html.RenderAction("MenuTabs", "Shared");}
                         <!-- Search Box End -->
                         <!-- Cartt Box Start -->
-                        <div class="col-lg-3 col-sm-7 col-7">
+                        <div class="col-lg-2 col-sm-7 col-7">
                             <div class="cart-box text-right">
                                 <ul>
                                     <li>
@@ -327,6 +334,8 @@
     <script src="~/Content/js/main.js"></script>
 
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

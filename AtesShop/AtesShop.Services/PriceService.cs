@@ -160,7 +160,11 @@ namespace AtesShop.Services
                     {
                         var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
                         var price = context.Prices.Where(x => x.Key == key.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
-                        prices.Add(price);
+                        if (price != null)
+                        {
+                            prices.Add(price);
+                        }
+                        
                     }
                 }
                 
@@ -199,7 +203,10 @@ namespace AtesShop.Services
                     {
                         var key = context.ProductKeys.Where(x => x.ProductId == product.Id).FirstOrDefault();
                         var price = context.Prices.Where(x => x.Key == key.PriceKey && x.Culture == culture && x.RoleName == role).FirstOrDefault();
-                        prices.Add(price);
+                        if (price != null)
+                        {
+                            prices.Add(price);
+                        }
                     }
                 }
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using static AtesShop.Web.ViewModels.OrderViewModels;
 
 namespace AtesShop.Web.ViewModels
 {
@@ -66,6 +65,7 @@ namespace AtesShop.Web.ViewModels
         public string CartTotalPrice { get; set; }
         public string CartTaxPrice { get; set; }
         public string CartTotalPriceWithTax { get; set; }
+        public string ShipmentFee { get; set; }
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
 
         public ApplicationUser User { get; set; }
@@ -226,6 +226,12 @@ namespace AtesShop.Web.ViewModels
     {
         public int productId { get; set; }
         public int productQuantity { get; set; }
+    }
+
+    public class OrderSuccessViewModel
+    {
+        public string OrderId { get; set; }
+
     }
 
 }

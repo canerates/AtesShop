@@ -208,14 +208,24 @@ namespace AtesShop.Web.Controllers
         {
             return View();
         }
-
+        
         [HttpGet]
-        public ActionResult DocumentList()
+        public ActionResult SpecList()
         {
             DocumentViewModel model = new DocumentViewModel();
-            var documents = FileService.Instance.GetFiles();
+            var specs = FileService.Instance.GetSpecFiles();
 
-            model.documents = documents;
+            model.documents = specs;
+
+            return PartialView(model);
+        }
+
+        public ActionResult ManualList()
+        {
+            DocumentViewModel model = new DocumentViewModel();
+            var manuals = FileService.Instance.GetManualFiles();
+
+            model.documents = manuals;
 
             return PartialView(model);
         }

@@ -24,6 +24,10 @@ namespace AtesShop.Web.Helpers
                     product.Price = priceValue.ToString("c", new CultureInfo(culture));
                     product.PrePrice = prePriceValue.ToString("c", new CultureInfo(culture));
                 }
+                else
+                {
+                    product.Price = Resources.Resources.ContactUs;
+                }
             }
             return products;
         }
@@ -37,6 +41,10 @@ namespace AtesShop.Web.Helpers
                 var prePriceValue = Int64.Parse(product.PrePrice);
                 product.Price = priceValue.ToString("C", new CultureInfo(culture));
                 product.PrePrice = prePriceValue.ToString("C", new CultureInfo(culture));
+            }
+            else
+            {
+                product.Price = Resources.Resources.ContactUs;
             }
             return product;
         }
@@ -53,7 +61,7 @@ namespace AtesShop.Web.Helpers
             }
             else
             {
-                formatPrice = "Contact Us";
+                formatPrice = Resources.Resources.ContactUs;
             }
             return formatPrice;
         }

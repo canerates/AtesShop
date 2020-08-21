@@ -1,0 +1,6 @@
+﻿@model DocumentViewModel
+
+@foreach (var doc in Model.documents)
+{
+    <a href="@Url.Action("Pdf", "Generic", new { id = doc.Id})" class="list-group-item list-group-item-action">@doc.Name</a>
+}

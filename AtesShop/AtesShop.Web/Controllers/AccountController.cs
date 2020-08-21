@@ -15,6 +15,11 @@ using System.IO;
 using System.Net.Mail;
 using System.Text;
 using System.Configuration;
+using AtesShop.Web.Helpers;
+using static AtesShop.Web.Helpers.SharedHelper;
+using System.Collections.Generic;
+using AtesShop.Services;
+using System.Web.Hosting;
 
 namespace AtesShop.Web.Controllers
 {
@@ -25,16 +30,18 @@ namespace AtesShop.Web.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
         private CustomEmailService emailService = new CustomEmailService();
+        private HostingEnvironment _env;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager, HostingEnvironment env)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             RoleManager = roleManager;
+            _env = env;
         }
 
         public ApplicationSignInManager SignInManager
@@ -188,9 +195,10 @@ namespace AtesShop.Web.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-
+                    
                     var subject = "Confirm your Power Active email";
-                    var body = "<p> Hi " + user.FirstName + " " + user.LastName + ",</p><p> Please confirm your Power Active account by clicking the link below. </p><p> <a href=\"" + callbackUrl + "\"> Yes, confirm my account </a> </p>";
+                    
+                    var body = emailService.PopulateNewAccountMail(user.FirstName, user.LastName, user.UserName, user.Email, callbackUrl);
 
                     await UserManager.SendEmailAsync(user.Id, subject, body);
 
@@ -198,7 +206,7 @@ namespace AtesShop.Web.Controllers
                     if (model.CompanyName != null)
                     {
                         var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
-                        var fromAddress = model.Email.ToString();
+                        //var fromAddress = model.Email.ToString();
                         var subject2 = "Role upgrade request";
                         var messageBody = new StringBuilder();
                         messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName +  "</p>");
@@ -207,7 +215,7 @@ namespace AtesShop.Web.Controllers
                         messageBody.Append("<p>Role request: " + model.BusinessType + "</p>");
                         var message = messageBody.ToString();
 
-                        await emailService.SendEmail(toAddress, fromAddress, subject2, message);
+                        await emailService.SendEmail(toAddress, subject2, message);
                     }
                     
                     return RedirectToAction("Index", "Home");
@@ -285,8 +293,9 @@ namespace AtesShop.Web.Controllers
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                var subject = "Reset your Power Active password";
-                var body = "<p> Hi " + user.FirstName + " " + user.LastName + ",</p><p> Please reset your password by clicking the link below. </p><p> <a href=\"" + callbackUrl + "\"> Yes, reset my password </a> </p>" ;
+                var subject = "Reset your Power Active Password";
+                //var body = "<p> Hi " + user.FirstName + " " + user.LastName + ",</p><p> Please reset your password by clicking the link below. </p><p> <a href=\"" + callbackUrl + "\"> Yes, reset my password </a> </p>" ;
+                var body = emailService.PopulateResetPasswordMail(user.FirstName, user.LastName, callbackUrl);
                 
                 await UserManager.SendEmailAsync(user.Id, subject, body);
                 return RedirectToAction("Success", "Generic", new { s = SuccessType.passwordresetemailsent });
@@ -511,6 +520,69 @@ namespace AtesShop.Web.Controllers
         {
             
             return new EmptyResult();
+            
+        }
+
+        [HttpGet]
+        [NoDirectAccess]
+        [CustomAuthorizeAttribute]
+        public ActionResult Legal()
+        {
+            return View();
+        }
+
+        public ActionResult LegalTable(string search)
+        {
+            List<ResourceKeyViewModel> model = new List<ResourceKeyViewModel>();
+            var resourceKeys = ResourceService.Instance.GetResourceDistinctKeys();
+
+            foreach (var key in resourceKeys)
+            {
+                ResourceKeyViewModel elem = new ResourceKeyViewModel();
+                elem.ResourceKey = key;
+                elem.ResourceCount = ResourceService.Instance.GetResourcesCountByKey(key);
+
+                var resources = ResourceService.Instance.GetResourcesByKey(key);
+
+                elem.Resources = resources;
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    resources = resources.Where(r => r.Value != null && r.Value.ToLower().Contains(search.ToLower())).ToList();
+                }
+
+                if (resources.Count != 0)
+                {
+                    model.Add(elem);
+                }
+            }
+
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult LegalEdit(int id)
+        {
+            ResourceViewModel model = new ResourceViewModel();
+            var currentResource = ResourceService.Instance.GetResourceById(id);
+
+            model.Id = id;
+            model.Key = currentResource.Key;
+            model.Culture = currentResource.Culture;
+            model.Value = currentResource.Value;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult LegalEdit(ResourceViewModel model)
+        {
+            var currentResource = ResourceService.Instance.GetResourceById(model.Id);
+            currentResource.Value = model.Value;
+
+            ResourceService.Instance.UpdateResource(currentResource);
+
+            return RedirectToAction("LegalTable");
         }
 
 

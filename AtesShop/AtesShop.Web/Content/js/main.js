@@ -77,10 +77,10 @@
     -----------------------------*/
     $('#slider').nivoSlider({
         effect: 'random',
-        animSpeed: 300,
-        pauseTime: 5000,
+        animSpeed: 500,
+        pauseTime: 8000,
         directionNav: false,
-        manualAdvance: true,
+        manualAdvance: false,
         controlNavThumbs: false,
         pauseOnHover: true,
         controlNav: true,
@@ -548,7 +548,6 @@
     $('.showPackage').on('click', function () {
         $(this).parents().eq(1).siblings().children().eq(0).slideToggle();
     });
-
 
     //Dom Ready
     $(function () {

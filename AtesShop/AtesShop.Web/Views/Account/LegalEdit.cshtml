@@ -1,0 +1,69 @@
+﻿
+@model AtesShop.Web.Models.ResourceViewModel
+@{
+    ViewBag.Title = "Edit Legal";
+}
+<div class="container">
+    <div class="page-header">
+        <h2>Edit Resource</h2>
+    </div>
+</div>
+
+
+<div class="container">
+    <form id="editResource" class="form-horizontal">
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Resource Key</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Key" value="@Model.Key" readonly />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Culture (Lang.)</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Culture" value="@Model.Culture" readonly />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Resource Value</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="Value" value="@Model.Value" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="updateBtn" class="btn btn-success" type="button">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    $("#updateBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Account/LegalEdit',
+            data: $("#editResource").serialize()
+        })
+        .done(function (response) {
+            //alert("Success");
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            //alert("Fail");
+        });
+    });
+
+</script>

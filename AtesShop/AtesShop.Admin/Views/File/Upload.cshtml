@@ -47,6 +47,7 @@
     document.getElementById('fileUpload').addEventListener('change', handleFileSelect, false);
 
     $("#saveBtn").click(function () {
+        debugger;
         var formData = new FormData();
         var docFile = document.getElementById("fileUpload").files[0];
         var fileName = $('#fileName').val();
@@ -72,11 +73,12 @@
 
         })
         .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-            //alert("Fail");
+            alert("Fail");
         });
     });
 
     function handleFileSelect(evt) {
+        debugger;
         var files = evt.target.files; // FileList object
 
         // Loop through the FileList and render image files as thumbnails.

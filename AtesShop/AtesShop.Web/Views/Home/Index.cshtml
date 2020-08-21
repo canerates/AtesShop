@@ -47,17 +47,26 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/banner1.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Products", new { categoryId = 1 })"><img src="~/Content/img/banner/banner1.jpg" alt="slider-banner"></a>
+                    <div class="triple-banner-group-text">
+                        <p class="first-banner-text wow bounceInLeft" data-wow-duration="1s" data-wow-delay="1s">@AtesShop.Resources.Resources.IPCameraT2O1</p>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/banner2.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Products", new { categoryId = 2 })"><img src="~/Content/img/banner/banner2.jpg" alt="slider-banner"></a>
+                    <div class="triple-banner-group-text">
+                        <p class="second-banner-text wow bounceInUp" data-wow-duration="1s" data-wow-delay="2s">@AtesShop.Resources.Resources.NVRDeviceT2O2</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6" style="text-align: center;">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
                 <div class="single-banner zoom">
-                    <a href="#"><img src="~/Content/img/banner/banner3.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Products", new { categoryId = 4 })"><img src="~/Content/img/banner/banner3.jpg" alt="slider-banner"></a>
+                    <div class="triple-banner-group-text">
+                        <p class="second-banner-text wow bounceInRight" data-wow-duration="1s" data-wow-delay="3s">@AtesShop.Resources.Resources.AccessoriesT2O4</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +148,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="single-banner zoom">
-                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8_2.jpg" alt="slider-banner"></a>
                     <div class="banner-group-text">
                         <p class="banner-title">@AtesShop.Resources.Resources.SetBannerTitle1</p>
                         <p class="banner-text">@AtesShop.Resources.Resources.SetBannerText1</p>
@@ -149,7 +158,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="single-banner zoom">
-                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8_2.jpg" alt="slider-banner"></a>
+                    <a href="@Url.Action("Index", "Offer")"><img src="~/Content/img/banner/set8.jpg" alt="slider-banner"></a>
                     <div class="banner-group-text">
                         <p class="banner-title">@AtesShop.Resources.Resources.SetBannerTitle2</p>
                         <p class="banner-text">@AtesShop.Resources.Resources.SetBannerText2</p>

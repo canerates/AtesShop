@@ -54,7 +54,7 @@ namespace AtesShop.Web.Controllers
 
             if (categoryId.HasValue)
             {
-                var category = CategoryService.Instance.GetCategory(categoryId.Value);
+                var category = CategoryService.Instance.GetActiveCategory(categoryId.Value);
                 if (category == null)
                 {
                     return RedirectToAction("Error", "Home");

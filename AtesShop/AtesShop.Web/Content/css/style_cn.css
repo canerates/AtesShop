@@ -31,7 +31,8 @@
     24. Preloader
     25. Information Page CSS
     26. Special Offers Page CSS
-
+    27. Agreement CSS
+    28. Order Data Table CSS
   
 -----------------------------------------------------*/
 
@@ -838,7 +839,8 @@ ul.ht-dropdown.dropdown-style-two li {
     background: #000;
 }
 .text-content h4{
-    font-family: Lily Script One;
+    /*font-family: Lily Script One;*/
+    font-family: "Microsoft JhengHei";
     font-size: 30px;
 }
 /* -- slider nav css -- */
@@ -1052,6 +1054,40 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .sticker-sale {
     background: #31a2e2;
+}
+
+.triple-banner-group-text {
+    color: #ebebeb;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 34px;
+    height: auto;
+    width: auto;
+    position: absolute;
+    left: 22px;
+    top: 35px;
+    z-index: 9;
+}
+
+.single-banner:hover .triple-banner-group-text {
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running headShake;
+    animation: 1000ms ease-in-out 0s normal none 1 running tada;
+}
+
+.first-banner-text {
+    font-size: inherit;
+    line-height: inherit;
+    height: auto;
+    width: 240px;
+    z-index: 9;
+}
+
+.second-banner-text {
+    font-size: inherit;
+    line-height: inherit;
+    height: auto;
+    width: 240px;
+    z-index: 9;
 }
 
 .new-pro-active .owl-nav div, .side-product-list-active .owl-nav div, 
@@ -1358,16 +1394,22 @@ ul.ht-dropdown.dropdown-style-two li {
     color: #fff;
 }
 
-.actions-secondary a.add-wishlist.selected, .actions-secondary a.add-compare.selected{
-    background: #8FBA22;
-    color: #fff;
-    pointer-events: none;
-    cursor: default;
+.actions-secondary a.add-wishlist.active{
+    color: #d00000;
 }
 
-.actions-secondary a.add-wishlist.animated, .actions-secondary a.add-compare.animated{
+.actions-secondary a.add-compare.active{
+    color: #00ae23;
+}
+
+.actions-secondary a.add-wishlist.selected, .actions-secondary a.add-compare.selected{
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
     animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
+}
+
+.actions-secondary a.add-wishlist.deselected, .actions-secondary a.add-compare.deselected{
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running headShake;
+    animation: 800ms ease-in-out 0s normal none 1 running headShake;
 }
 
 .actions-secondary a {
@@ -2078,7 +2120,8 @@ ul.ht-dropdown.dropdown-style-two li {
     background-color: #e3e3e3;
     border: 1px solid #e3e3e3;
     color: #333;
-    font-family: 'Rubik', sans-serif;
+    font-family: "Microsoft JhengHei";
+    /*font-family: 'Rubik', sans-serif;*/
     font-weight: 400;
     padding: 13px 15px;
     font-size: 14px;
@@ -2096,30 +2139,32 @@ ul.ht-dropdown.dropdown-style-two li {
     color: #fff;
 }
 
-.product-link a.add-wishlist.selected {
-    background: #8FBA22 none repeat scroll 0 0;
-    border-color: #8FBA22;
-    color: #fff;
-    pointer-events: none;
-    cursor: default;
+.product-link a.add-wishlist.active {
+    color: #d00000;
 }
 
-.product-link a.add-wishlist.animated{
+.product-link a.add-wishlist.selected{
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
     animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
 }
 
-.product-link a.add-compare.selected {
-    background: #8FBA22 none repeat scroll 0 0;
-    border-color: #8FBA22;
-    color: #fff;
-    pointer-events: none;
-    cursor: default;
+.product-link a.add-wishlist.deselected {
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running headShake;
+    animation: 800ms ease-in-out 0s normal none 1 running headShake;
 }
 
-.product-link a.add-compare.animated{
+.product-link a.add-compare.active {
+     color: #00ae23;
+}
+
+.product-link a.add-compare.selected{
     -webkit-animation: 300ms ease-in-out 0s normal none 1 running rubberBand;
     animation: 800ms ease-in-out 0s normal none 1 running rubberBand;
+}
+
+.product-link a.add-compare.deselected{
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running headShake;
+    animation: 800ms ease-in-out 0s normal none 1 running headShake;
 }
 
 .feature-section {
@@ -4593,6 +4638,70 @@ input[type="checkbox"]:checked + .slider:before {
     display: none;
 }
 
+.order-package-info .table-content {
+    padding: 10px 10px;
+}
+
+.order-package-info .table-content table {
+    background: #fff none repeat scroll 0 0;
+    border-color: #e5e5e5;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    border-spacing: 0px;
+    text-align: center;
+    width: 100%;
+}
+
+.order-package-info .table-content table th {
+    border-top: medium none;
+    font-weight: normal;
+    padding: 0px 0px;
+    text-align: center;
+    text-transform: capitalize;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.order-package-info .table-content table th,
+.order-package-info .table-content table td {
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    padding-bottom: 0px;
+}
+
+.order-package-info .table-content table td {
+    border-top: medium none;
+    padding: 0px 0px;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.order-package-info .table-content table td.product-name {
+    width: 250px;
+}
+
+.order-package-info .table-content table td.product-price {
+    width: 50px;
+}
+
+.order-package-info .table-content table td.product-description {
+    width: 500px;
+}
+
+.order-package-info .table-content table td.product-thumbnail {
+    width: 51px;
+}
+
+.order-package-info .table-content table td.product-quantity {
+    width: 25px;
+}
+
+.order-package-info .product-thumbnail img {
+    width: 50%;
+}
+
 /*----------------------------------------*/
 /* 23. Home Three CSS
 /*----------------------------------------*/
@@ -4787,7 +4896,8 @@ input[type="checkbox"]:checked + .slider:before {
     background-color: #e3e3e3;
     border: 1px solid #e3e3e3;
     color: #333;
-    font-family: 'Rubik', sans-serif;
+    font-family: "Microsoft JhengHei";
+    /*font-family: 'Rubik', sans-serif;*/
     font-weight: 400;
     padding: 13px 15px;
     font-size: 14px;
@@ -4886,4 +4996,104 @@ input[type="checkbox"]:checked + .slider:before {
 .add-to-package.selected {
     background: #8FBA22;
     color: #fff;
+}
+
+/*----------------------------------------*/
+/* 27. Agreements CSS
+/*----------------------------------------*/
+
+.agreement-text h1 {
+    color: #8FBA22;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0px;
+    line-height: 26px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    padding: 0 100px;
+
+}
+
+.agreement-text h2 {
+    color: #4c4c4c;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 0 100px;
+}
+
+.agreement-text > p {
+    color: #4c4c4c;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 24px;
+    margin-bottom: 10px;
+    padding: 0 100px;
+}
+
+.agreement-text > ul {
+    color: #4c4c4c;
+    list-style-type: disc;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 24px;
+    margin-bottom: 30px;
+    padding: 0 120px;
+}
+
+.agreement-text > ul > li {
+    color: #4c4c4c;
+    list-style: disc;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+/*----------------------------------------*/
+/* 28. Data Table CSS
+/*----------------------------------------*/
+
+#orderContainer select {
+    height: auto;
+    width: auto;
+}
+
+#orderContainer input {
+    transition: none;
+    -webkit-appearance:none;
+    line-height:normal !important;
+    
+}
+
+#orderContainer input[type=search]{
+    border: 1px solid black;
+}
+
+#orderButton {
+    border-radius: .15rem;
+    font-size: 1rem;
+    padding: .275rem .75rem;
+    height: 2rem;
+    line-height: 1.5;
+}
+
+#editOrder fieldset {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+#editOrder legend {
+    padding: 2px 0px 10px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#editOrder label {
+    font-size: 15px;
+    font-weight: 500;
 }

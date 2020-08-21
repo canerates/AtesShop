@@ -1,0 +1,333 @@
+﻿@model SingleOrderInfoViewModel
+
+<div class="col-lg-12 dashboard-content">
+    <h3>Order Details </h3>
+
+    <form id="editOrder" class="form-horizontal">
+        <div class="row">
+            <div class="col-lg-6">
+                <fieldset>
+                    <legend>Order Info</legend>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Order Number</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="OrderNumber" value="@Model.Order.OrderId" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Order Date</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="OrderDate" value="@Model.Order.Date" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Order Total</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="OrderTotal" value="@Model.Order.TotalPrice" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Order Status</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="OrderStatus" value="@Model.Order.Status" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Tracking Id</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="TrackingId" value="@Model.Order.TrackingId" readonly />
+                        </div>
+                    </div>
+               </fieldset>
+            </div>
+
+            <div class="col-lg-6">
+                <fieldset>
+                    <legend>Customer Info</legend>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Customer Name</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="CustomerName" value="@Model.CustomerName" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Customer Username</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="CustomerName" value="@Model.CustomerUserName" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Customer Email</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="CustomerEmail" value="@Model.CustomerEmail" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Customer Phone</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="CustomerPhone" value="@Model.CustomerPhone" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Customer Role</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="CustomerRole" value="@Model.CustomerRole" readonly />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <fieldset>
+                    <legend>Billing Address</legend>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Country</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillCountry" value="@Model.BillingAddress.Country" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">First Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillFirstName" value="@Model.BillingAddress.FirstName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Last Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillLastName" value="@Model.BillingAddress.LastName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Company Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillCompanyName" value="@Model.BillingAddress.CompanyName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Address</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillAddressLine1" value="@Model.BillingAddress.Line1" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label"></label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillAddressLine2" value="@Model.BillingAddress.Line2" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Town / City</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillTownCity" value="@Model.BillingAddress.City" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">State / County</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillStateCounty" value="@Model.BillingAddress.State" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Postcode / Zip</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillZipCode" value="@Model.BillingAddress.ZipCode" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Email Address</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillEmail" value="@Model.BillingAddress.Email" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Mobile Phone</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="BillMobilePhone" value="@Model.BillingAddress.Phone" readonly />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-lg-6">
+                <fieldset>
+                    <legend>Shipping Address</legend>
+
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Country</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipCountry" value="@Model.ShippingAddress.Country" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">First Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipFirstName" value="@Model.ShippingAddress.FirstName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Last Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipLastName" value="@Model.ShippingAddress.LastName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Company Name</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipCompanyName" value="@Model.ShippingAddress.CompanyName" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Address</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipAddressLine1" value="@Model.ShippingAddress.Line1" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label"></label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipAddressLine2" value="@Model.ShippingAddress.Line2" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Town / City</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipTownCity" value="@Model.ShippingAddress.City" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">State / County</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipStateCounty" value="@Model.ShippingAddress.State" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Postcode / Zip</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipZipCode" value="@Model.ShippingAddress.ZipCode" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Email Address</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipEmail" value="@Model.ShippingAddress.Email" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Mobile Phone</label>
+                        <div class="col-lg-7 ">
+                            <input class="form-control" name="ShipMobilePhone" value="@Model.ShippingAddress.Phone" readonly />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset>
+                    <legend>Order Extra</legend>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Order Note</label>
+                        <div class="col-lg-6 ">
+                            <textarea class="form-control" name="OrderNotes" value="@Model.Order.OrderNote" readonly />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset>
+                    <legend>Products</legend>
+                </fieldset>
+                <div class="order-package-info">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">@AtesShop.Resources.Resources.Image</th>
+                                    <th class="product-name">@AtesShop.Resources.Resources.Product</th>
+                                    <th class="product-quantity">@AtesShop.Resources.Resources.Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderItems)
+                                {
+                                    <tr>
+                                        @if (!item.Product.isSet)
+                                        {
+                                            <td class="product-thumbnail">
+                                                <img src="@Url.Action("Image", "Generic", new { id = item.Product.Images.FirstOrDefault().Id })" alt="cart-image" />
+                                            </td>
+                                            <td class="product-name">@item.Product.Name | @item.Product.Description</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="product-thumbnail">
+                                                <img src="@Url.Action("Image", "Generic", new { id = item.Product.Images.FirstOrDefault().Id })" alt="cart-image" />
+                                            </td>
+                                            <td class="product-name">@item.Product.Name <br /> @item.Product.Description</td>
+                                        }
+                                        <td class="product-quantity">@item.Quantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-lg-12 col-md-12">
+                <div class="register-box mt-40 f-right">
+                    <a id="backBtn" href="#" class="return-customer-btn">@AtesShop.Resources.Resources.Back</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#backBtn').click(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '@Url.Action("OrderList", "Order")'
+        })
+        .done(function (response) {
+            $("#orderView").html(response);
+        })
+        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+        });
+    })
+
+
+</script>

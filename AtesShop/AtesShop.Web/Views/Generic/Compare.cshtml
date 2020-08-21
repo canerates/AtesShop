@@ -6,7 +6,7 @@
     <div class="container">
         <div class="breadcrumb">
             <ul>
-                <li><a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
+                <li><a href="@Url.Action("Index", "Home")">@AtesShop.Resources.Resources.HomeT1O1</a></li>
                 <li class="active"><a href="@Url.Action("Compare", "Generic")">@AtesShop.Resources.Resources.Compare</a></li>
             </ul>
         </div>
@@ -32,7 +32,6 @@
     }
 
     var ajaxLoading = function () {
-        focusAction();
         $("#compareContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
     }
 

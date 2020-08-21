@@ -14,6 +14,7 @@ using AtesShop.Web.Code;
 using AtesShop.Web.Helpers;
 using System.Configuration;
 using System.Text;
+using System.Globalization;
 
 namespace AtesShop.Web.Controllers
 {
@@ -358,18 +359,43 @@ namespace AtesShop.Web.Controllers
         [HttpGet]
         public ActionResult Orders()
         {
-            OrdersViewModel model = new OrdersViewModel();
-            var orders = OrderService.Instance.GetOrders();
+            List<OrdersViewModel> model = new List<OrdersViewModel>();
 
-            foreach (var order in orders)
+            var userId = User.Identity.GetUserId();
+            
+
+            if (userId != null)
             {
-                OrderStatus status = (OrderStatus)Enum.Parse(typeof(OrderStatus), order.Status);
-                order.Status = status.GetDisplayDescription();
+                var orders = OrderService.Instance.GetOrdersByUser(userId);
+                
+                foreach (var order in orders)
+                {
+                    OrdersViewModel orderVM = new OrdersViewModel();
+
+                    OrderStatus status = (OrderStatus)Enum.Parse(typeof(OrderStatus), order.Status);
+                    order.Status = status.GetDisplayDescription();
+
+                    orderVM.Order = order;
+
+                    List<OrderItemViewModel> orderItemVM = new List<OrderItemViewModel>();
+
+                    var orderItems = OrderService.Instance.GetOrderItems(order.Id);
+                    
+                    foreach (var item in orderItems)
+                    {
+                        OrderItemViewModel element = new OrderItemViewModel();
+
+                        var product = ProductService.Instance.GetProductForOrderList(item.ProductId, CultureInfo.CurrentUICulture.Name, "User");
+                        element.Product = CommonHelper.FormatCurrency(product, CultureInfo.CurrentUICulture.Name);
+                        element.Quantity = item.Quantity;
+                        orderItemVM.Add(element);
+                    }
+                    orderVM.OrderItems = orderItemVM;
+
+                    model.Add(orderVM);
+                }
             }
-
-
-            model.Orders = orders;
-
+            
             return PartialView(model);
         }
         
@@ -410,9 +436,9 @@ namespace AtesShop.Web.Controllers
             List<string> countries = new List<string>();
 
             countries.Add(Resources.Resources.Taiwan);
-            countries.Add(Resources.Resources.Vietnam);
-            countries.Add(Resources.Resources.Turkey);
-            countries.Add(Resources.Resources.USA);
+            //countries.Add(Resources.Resources.Vietnam);
+            //countries.Add(Resources.Resources.Turkey);
+            //countries.Add(Resources.Resources.USA);
 
             model.CountryList = countries;
 
@@ -467,9 +493,9 @@ namespace AtesShop.Web.Controllers
             List<string> countries = new List<string>();
 
             countries.Add(Resources.Resources.Taiwan);
-            countries.Add(Resources.Resources.Vietnam);
-            countries.Add(Resources.Resources.Turkey);
-            countries.Add(Resources.Resources.USA);
+            //countries.Add(Resources.Resources.Vietnam);
+            //countries.Add(Resources.Resources.Turkey);
+            //countries.Add(Resources.Resources.USA);
 
             model.CountryList = countries;
 
@@ -581,16 +607,18 @@ namespace AtesShop.Web.Controllers
                 if (model.UpdateRole)
                 {
                     var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
-                    var fromAddress = model.Email.ToString();
                     var subject2 = "Role upgrade request";
-                    var messageBody = new StringBuilder();
-                    messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName + "</p>");
-                    messageBody.Append("<p>Email: " + user.Email + "</p>");
-                    messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
-                    messageBody.Append("<p>Role request: " + model.NewBusinessType + "</p>");
-                    var message = messageBody.ToString();
 
-                    await emailService.SendEmail(toAddress, fromAddress, subject2, message);
+                    var message = emailService.PopulateNewAccountMail(user.FirstName, user.LastName, user.UserName, user.Email, user.FirstName);
+
+                    //var messageBody = new StringBuilder();
+                    //messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName + "</p>");
+                    //messageBody.Append("<p>Email: " + user.Email + "</p>");
+                    //messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
+                    //messageBody.Append("<p>Role request: " + model.NewBusinessType + "</p>");
+                    //var message = messageBody.ToString();
+
+                    await emailService.SendEmail(toAddress, subject2, message);
                     
 
                     TempData["RoleRequest"] = Resources.Resources.RoleRequestMailSent;

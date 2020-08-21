@@ -1,4 +1,5 @@
-﻿using Foolproof;
+﻿using AtesShop.Entities;
+using Foolproof;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -113,6 +114,22 @@ namespace AtesShop.Web.Models
         [Display(Name = "Subscription")]
         public bool Subscription { get; set; }
         
+    }
+
+    public class ResourceKeyViewModel
+    {
+        public string ResourceKey { get; set; }
+        public List<Resource> Resources { get; set; }
+        public int ResourceCount { get; set; }
+
+    }
+
+    public class ResourceViewModel
+    {
+        public int Id { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
+        public string Culture { get; set; }
     }
 
     public class ResetPasswordViewModel

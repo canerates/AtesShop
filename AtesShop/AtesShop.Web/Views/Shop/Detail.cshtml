@@ -116,10 +116,10 @@
                         <ul class="list-inline">
                             @if (Request.IsAuthenticated)
                             {
-                                <li><a class="add-wishlist @if (Model.IsWished) {<text>selected</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
+                                <li><a class="add-wishlist @if (Model.IsWished) {<text>active</text> }" href="#" data-id="@Model.Id"><i class="fa fa-heart"></i></a></li>
                             }
                             
-                            <li><a class="add-compare @if (idList.Contains(Model.Id)) { <text>selected</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">@AtesShop.Resources.Resources.AddToCompare</a></li>
+                            <li><a class="add-compare @if (idList.Contains(Model.Id)) { <text>active</text> }" href="#" data-id="@Model.Id" data-cat-id="@Model.CategoryId" data-toggle="tooltip" title="Add to Compare">@AtesShop.Resources.Resources.AddToCompare</a></li>
                             <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i></a></li>
                         </ul>
                     </div>
@@ -244,7 +244,7 @@
                                     <div class="actions-secondary">
                                         @if (Request.IsAuthenticated)
                                         {
-                                            <a class="add-wishlist @if (product.isWished) {<text>selected</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                            <a class="add-wishlist @if (product.isWished) {<text>active</text> }" href="#" data-id="@product.Id" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                         }
 
                                         @if (product.Stock != null)
@@ -255,7 +255,7 @@
                                             }
                                         }
 
-                                        <a class="add-compare @if (idList.Contains(product.Id)) { <text>selected</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
+                                        <a class="add-compare @if (idList.Contains(product.Id)) { <text>active</text> }" href="#" data-id="@product.Id" data-cat-id="@product.CategoryId" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-signal"></i></a>
                                     </div>
                                 </div>
 
@@ -346,33 +346,54 @@
         }
     });
 
-    $('.add-wishlist').click(function () {
+    $('.add-wishlist').click(function (event) {
         event.preventDefault();
         var wishBtn = $(this);
         var productId = wishBtn.attr('data-id');
 
-        $.ajax({
-            url: '@Url.Action("AddToWishlist", "Generic")',
-            data: {
-                productId: productId
-            }
-        })
-        .done(function (response) {
-            wishBtn.addClass('selected');
-            wishBtn.addClass('animated');
-            heartAnimation();
+        if (wishBtn.hasClass("active")) {
+            $.ajax({
+                url: '@Url.Action("RemoveFromWishlist", "Generic")',
+                data: {
+                    productId: productId
+                }
+            })
+            .done(function (response) {
+                wishBtn.removeClass('selected');
+                wishBtn.removeClass('active');
+                wishBtn.addClass('deselected');
+                heartAnimation();
 
-        })
-        .fail(function (XMLHttpRequest, testStatus, errorThrown) {
-        });
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            });
+        }
+        else {
+            $.ajax({
+                url: '@Url.Action("AddToWishlist", "Generic")',
+                data: {
+                    productId: productId
+                }
+            })
+            .done(function (response) {
+                wishBtn.removeClass('deselected');
+                wishBtn.addClass('selected');
+                wishBtn.addClass('active');
+                heartAnimation();
+
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            });
+        }
     });
 
     $('.add-compare').click(function (event) {
+
         event.preventDefault();
+
         var compareBtn = $(this);
         var productId = compareBtn.attr('data-id');
         var categoryId = compareBtn.attr('data-cat-id');
-        var products;
 
         var currentCompareCookie = $.cookie('CompareProducts');
 
@@ -385,42 +406,58 @@
             products = [];
         }
 
-        if (products.length >= 4) {
+        if (compareBtn.hasClass("active")) {
+            var proList = products.slice(1);
+            if (products.length > 0 && jQuery.inArray(productId, proList) > -1) {
+                var index = proList.indexOf(productId);
+                products.splice(index + 1, 1);
 
-            swal({
-                title: "@AtesShop.Resources.Resources.ComparisonLimit",
-                text: "@AtesShop.Resources.Resources.WantToCompare",
-                icon: "warning",
-                buttons: {
-                    confirm: {text: "@AtesShop.Resources.Resources.Compare", className: 'sweet-warning button'},
-                    cancel: "@AtesShop.Resources.Resources.Cancel"
-                }
-            })
-            .then((value) => {
-                if (value) {
-                    var url = "@Url.Action("Compare", "Generic")";
-                    window.location.href = url;
-                }
-            });
-        }
-
-        else if (products.length > 0 && products[0] != categoryId) {
-            swal({
-                text: "@AtesShop.Resources.Resources.ChooseSameCategory",
-                icon: "warning",
-                buttons: {
-                    confirm: {text: '@AtesShop.Resources.Resources.Ok', className: 'sweet-warning button'}
-                }
-            });
+                $.cookie('CompareProducts', products.join('-'), { path: '/' });
+                compareBtn.removeClass('selected');
+                compareBtn.removeClass('active');
+                compareBtn.addClass('deselected');
+            }
         }
         else {
-            if (products.length == 0) {
-                products.push(categoryId);
+
+            if (products.length >= 4) {
+
+                swal({
+                    title: "@AtesShop.Resources.Resources.ComparisonLimit",
+                    text: "@AtesShop.Resources.Resources.WantToCompare",
+                    icon: "warning",
+                    buttons: {
+                        confirm: {text: "@AtesShop.Resources.Resources.Compare", className: 'sweet-warning button'},
+                        cancel: "@AtesShop.Resources.Resources.Cancel"
+                    }
+                })
+                .then((value) => {
+                    if (value) {
+                        var url = "@Url.Action("Compare", "Generic")";
+                        window.location.href = url;
+                    }
+                });
             }
-            products.push(productId);
-            $.cookie('CompareProducts', products.join('-'), { path: '/' });
-            compareBtn.addClass('selected');
-            compareBtn.addClass('animated');
+
+            else if (products.length > 0 && products[0] != categoryId) {
+                swal({
+                    text: "@AtesShop.Resources.Resources.ChooseSameCategory",
+                    icon: "warning",
+                    buttons: {
+                        confirm: {text: '@AtesShop.Resources.Resources.Ok', className: 'sweet-warning button'}
+                    }
+                });
+            }
+            else {
+                if (products.length == 0) {
+                    products.push(categoryId);
+                }
+                products.push(productId);
+                $.cookie('CompareProducts', products.join('-'), { path: '/' });
+                compareBtn.addClass('selected');
+                compareBtn.addClass('active');
+                compareBtn.removeClass('deselected');
+            }
         }
     });
 

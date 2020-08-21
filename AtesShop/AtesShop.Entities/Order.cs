@@ -33,6 +33,10 @@ namespace AtesShop.Entities
 
         public string OrderNote { get; set; }
 
+        public string TrackingId { get; set; }
+
+        public string OrderId { get; set; }
+        
         public virtual List<OrderItem> OrderItems { get; set; }
         
     }

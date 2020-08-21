@@ -127,6 +127,15 @@ namespace AtesShop.Services
             }
         }
         
+        public Category GetActiveCategory(int id)
+        {
+            using (var context = new ASContext())
+            {
+                return context.Categories.Where(x => x.Id == id && !x.isHidden).FirstOrDefault();
+            }
+        }
+
+
         #endregion
     }
 }

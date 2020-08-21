@@ -1,0 +1,149 @@
+﻿@model OrderListViewModel 
+
+@if (Model.Orders.Count == 0)
+{
+    <div>@AtesShop.Resources.Resources.NoOrders</div>
+}
+else
+{
+    <div class="mb-30">
+        <div class="btn-group">
+            <button id="orderInfoButton" disabled type="button" class="btn btn-info order-buttons">Info</button>
+        </div>
+        <div class="btn-group">
+            <button id="orderEditButton" disabled type="button" class="btn btn-primary order-buttons">Edit</button>
+        </div>
+    </div>
+    
+    
+
+
+    <div class="table-content table-responsive">
+        <table id="orderTable" class="table" style="text-align:center;">
+            <thead>
+                <tr>
+                    <th>@AtesShop.Resources.Resources.OrderId</th>
+                    <th>@AtesShop.Resources.Resources.Date</th>
+                    <th>@AtesShop.Resources.Resources.Total</th>
+                    <th>@AtesShop.Resources.Resources.Name</th>
+                    <th>@AtesShop.Resources.Resources.Email</th>
+                    <th>@AtesShop.Resources.Resources.Status</th>
+                    <th>@AtesShop.Resources.Resources.TrackingId</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    Html.RenderAction("OrderItem", new { id = order.Id });
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th>@AtesShop.Resources.Resources.OrderId</th>
+                    <th>@AtesShop.Resources.Resources.Date</th>
+                    <th>@AtesShop.Resources.Resources.Total</th>
+                    <th>@AtesShop.Resources.Resources.Name</th>
+                    <th>@AtesShop.Resources.Resources.Email</th>
+                    <th>@AtesShop.Resources.Resources.Status</th>
+                    <th>@AtesShop.Resources.Resources.TrackingId</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+}
+
+<script>
+    var selectedRowIndex = 0;
+
+    $(document).ready(function () {
+        var orderTable = $('#orderTable').DataTable({
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            },
+            columns: [
+                { 'data': 'Order Id' },
+                { 'data': 'Date' },
+                { 'data': 'Total' },
+                { 'data': 'Name' },
+                { 'data': 'Email' },
+                { 'data': 'Status' },
+                { 'data': 'Tracking Id' }
+            ],
+            select: true,
+            buttons: ['edit']
+        });
+
+        $('#orderTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $('#orderInfoButton').prop('disabled', true);
+                $('#orderEditButton').prop('disabled', true);
+            }
+            else {
+                orderTable.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                $('#orderInfoButton').prop('disabled', false);
+                $('#orderEditButton').prop('disabled', false);
+                selectedRowIndex = $(this).attr('id');
+            }
+        });
+
+    });
+
+    $('#orderInfoButton').click(function () {
+        if (selectedRowIndex != 0) {
+            $.ajax({
+                url: '/Order/OrderItemInfo',
+                data: {
+                    id: selectedRowIndex
+                }
+            })
+            .done(function (response) {
+                //alert("Success");
+                $("#orderView").html(response);
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                //alert("Fail");
+            });
+            }
+    });
+
+    $('#orderEditButton').click(function () {
+        if (selectedRowIndex != 0) {
+            $.ajax({
+                url: '/Order/OrderItemEdit',
+                data: {
+                    id: selectedRowIndex
+                }
+            })
+            .done(function (response) {
+                //alert("Success");
+                $("#orderView").html(response);
+            })
+            .fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                //alert("Fail");
+            });
+        }
+    });
+    
+
+</script>

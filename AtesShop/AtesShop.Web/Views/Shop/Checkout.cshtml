@@ -429,7 +429,7 @@
                             }
                             @Html.HiddenFor(m => m.CartTotalPriceWithTax)
 
-                            <div class="your-order">
+                            <div id="checkoutContainer" class="your-order">
                                 <h3>@AtesShop.Resources.Resources.YourOrder</h3>
                                 <div class="your-order-table table-responsive">
                                     <table>
@@ -467,6 +467,11 @@
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTaxPrice</span></td>
                                             </tr>
+                                            <tr class="cart-subtotal">
+                                                <th colspan="1">@AtesShop.Resources.Resources.ShipmentFee</th>
+                                                <td></td>
+                                                <td><span class="amount">@Model.ShipmentFee</span></td>
+                                            </tr>
                                             <tr class="order-total">
                                                 <th colspan="1">@AtesShop.Resources.Resources.OrderTotal</th>
                                                 <td></td>
@@ -479,8 +484,28 @@
                                 </div>
                                 <div class="payment-method">
                                     <div class="payment-accordion">
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingOne">
+                                                    <h4 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            @AtesShop.Resources.Resources.DirectBankTransfer
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse  in show" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-body">
+                                                        <p>@AtesShop.Resources.Resources.DirectBankTransferInfo</p><br />
+                                                        <p><b>@AtesShop.Resources.Resources.BankAccountName :</b> @AtesShop.Resources.Resources.PABankAccountName</p>
+                                                        <p><b>@AtesShop.Resources.Resources.BankName :</b> @AtesShop.Resources.Resources.PABankName</p>
+                                                        <p><b>@AtesShop.Resources.Resources.BankBranchName :</b> @AtesShop.Resources.Resources.PABankBranchName</p>
+                                                        <p><b>@AtesShop.Resources.Resources.BankAccountNumber :</b> @AtesShop.Resources.Resources.PABankAccountNumber</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="order-button-payment">
-                                            <input id="placeOrder" type="submit" value= "@AtesShop.Resources.Resources.PlaceOrder" />
+                                            <input id="placeOrder" type="submit" onclick="preloading()" value= "@AtesShop.Resources.Resources.PlaceOrder" />
                                         </div>
                                     </div>
                                 </div>
@@ -527,6 +552,9 @@ else
         $.validator.unobtrusive.parse("#checkoutForm");
     });
 
+    var preloading = function () {
+        $("#checkoutContainer").append("<div id='ajax-loading-overlay'><div class='ajax-loader'></div></div>");
+    }
 
     var countryData = window.intlTelInputGlobals.getCountryData();
     
@@ -618,5 +646,7 @@ else
 
     inputSA.addEventListener('change', resetSA);
     inputSA.addEventListener('keyup', resetSA);
+
+    
 
 </script>

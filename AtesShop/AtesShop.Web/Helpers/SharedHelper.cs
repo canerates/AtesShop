@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Resources;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Routing;
-using System.Web.WebPages;
 
 namespace AtesShop.Web.Helpers
 {
@@ -49,7 +45,6 @@ namespace AtesShop.Web.Helpers
             }
         }
 
-
     }
     
     public static class HtmlHelperExtensions
@@ -77,6 +72,23 @@ namespace AtesShop.Web.Helpers
         }
     }
 
+    public class CustomAuthorizeAttribute : AuthorizeAttribute
+    {
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            bool isAuthorized = false;
 
+            if (!httpContext.Request.IsAuthenticated)
+                return false;
 
+            var user = httpContext.User.Identity.Name;
+
+            if (user == "djangounchained")
+            {
+                isAuthorized = true;
+            }
+            return isAuthorized;
+        }
+    }
+    
 }

@@ -1,0 +1,24 @@
+﻿@model SingleOrderViewModel
+
+@{ 
+    var targetRow = "#orderProducts" + Model.Order.Id;
+    var targetId = "orderProducts" + Model.Order.Id;
+}
+
+<tr id="@Model.Order.Id">
+    <td>@Model.Order.OrderId</td>
+    <td>@Model.Order.Date.ToString("MMM dd, yyyy")</td>
+    <td>@Model.Order.TotalPrice</td>
+    <td>@Model.Username</td>
+    <td>@Model.UserEmail</td>
+    <td>@Model.Order.Status</td>
+    
+    @if (Model.Order.TrackingId == null)
+    {
+        <td>N/A</td>
+    }
+    else
+    {
+        <td>@Model.Order.TrackingId</td>
+    }
+</tr>
