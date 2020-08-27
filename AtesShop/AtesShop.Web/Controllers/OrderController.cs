@@ -150,8 +150,22 @@ namespace AtesShop.Web.Controllers
         public ActionResult OrderItemEdit(SingleOrderEditViewModel model)
         {
             var order = OrderService.Instance.GetOrder(model.Id);
+            
+            OrderStatus currentStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), order.Status);
 
-            OrderStatus status = (OrderStatus)Enum.Parse(typeof(OrderStatus), model.SelectedOrderStatus.ToString());
+            if ((currentStatus != OrderStatus.Cancelled && currentStatus != OrderStatus.Completed) && (model.SelectedOrderStatus == OrderStatus.Cancelled || model.SelectedOrderStatus == OrderStatus.Completed))
+            {
+                var orderItems = order.OrderItems;
+
+                foreach (var item in orderItems)
+                {
+                    var inventory = InventoryService.Instance.GetInventory(item.ProductId);
+                    inventory.Allocation = inventory.Allocation - item.Quantity;
+                    inventory.Available = inventory.Available + item.Quantity;
+                    InventoryService.Instance.UpdateInventory(inventory);
+                }
+            }
+            
             order.Status = model.SelectedOrderStatus.ToString();
 
             order.TrackingId = model.TrackingId;

@@ -146,7 +146,7 @@
                                     </li>
                                     <li><a id="wishIcon" href="@Url.Action("Wishlist", "Generic")"><i id="heartIcon" class="fa fa-heart-o"></i><span id="heartWish"><i class="fa fa-heart"></i></span></a></li>
                                     <li>
-                                        @if (Culture == "zh-TW")
+                                        @if (Culture == "zh-TW" && (User.IsInRole("User") || !Request.IsAuthenticated))
                                         {
                                             <a href="@Url.Action("Cart", "Shop")"><i class="fa fa-shopping-basket"></i><span id="cartProductQuantity" class="cart-counter">0</span></a>
                                         }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +17,6 @@ namespace AtesShop.Entities
         public string ContentType { get; set; }
 
         public byte[] Data { get; set; }
+        
     }
 }

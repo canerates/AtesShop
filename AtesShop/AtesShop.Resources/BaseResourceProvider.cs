@@ -14,7 +14,7 @@ namespace AtesShop.Resources
 
         public BaseResourceProvider()
         {
-            Cache = false ;
+            Cache = true ;
         }
 
         protected bool Cache { get; set; }

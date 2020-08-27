@@ -40,7 +40,10 @@
                     }
                     else
                     {
-                        <li><a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a></li>
+                        if (!Request.IsAuthenticated || !(main.Name == AtesShop.Resources.Resources.ShopT1O3 && !User.IsInRole("User")))
+                        {
+                            <li><a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a></li>
+                        }
                     }
 
                 }

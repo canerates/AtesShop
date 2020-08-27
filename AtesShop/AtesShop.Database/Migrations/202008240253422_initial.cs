@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialized : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -42,6 +42,7 @@
                         Name = c.String(),
                         Description = c.String(),
                         ImageIdList = c.String(),
+                        isHidden = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -60,6 +61,9 @@
                         isDiscount = c.Boolean(nullable: false),
                         isFeatured = c.Boolean(nullable: false),
                         isNew = c.Boolean(nullable: false),
+                        isActive = c.Boolean(nullable: false),
+                        isSet = c.Boolean(nullable: false),
+                        isHidden = c.Boolean(nullable: false),
                         isTopRated = c.Boolean(nullable: false),
                         isBestSeller = c.Boolean(nullable: false),
                     })
@@ -102,6 +106,19 @@
                 .Index(t => t.ProductId);
             
             CreateTable(
+                "dbo.Inventory",
+                c => new
+                    {
+                        ProductId = c.Int(nullable: false),
+                        Total = c.Int(nullable: false),
+                        Available = c.Int(nullable: false),
+                        Allocation = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ProductId)
+                .ForeignKey("dbo.Products", t => t.ProductId)
+                .Index(t => t.ProductId);
+            
+            CreateTable(
                 "dbo.CategoryKeys",
                 c => new
                     {
@@ -122,6 +139,7 @@
                         Name = c.String(),
                         ContentType = c.String(),
                         Data = c.Binary(),
+                        DocType = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -155,6 +173,7 @@
                         ControllerName = c.String(),
                         OrderId = c.Int(nullable: false),
                         ResourceKey = c.String(),
+                        Culture = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -222,6 +241,8 @@
                         PaymentType = c.String(),
                         TotalPrice = c.String(),
                         OrderNote = c.String(),
+                        TrackingId = c.String(),
+                        OrderId = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.OrderAddresses", t => t.BillingAddressId, cascadeDelete: true)
@@ -273,6 +294,23 @@
                 .Index(t => t.ProductId);
             
             CreateTable(
+                "dbo.ProductSetItems",
+                c => new
+                    {
+                        ItemId = c.Int(nullable: false, identity: true),
+                        ProductSetId = c.Int(nullable: false),
+                        ItemProductID = c.Int(nullable: false),
+                        ItemProductName = c.String(),
+                        ItemProductDescription = c.String(),
+                        ItemProductQuantity = c.Int(nullable: false),
+                        OrderId = c.Int(nullable: false),
+                        isOptional = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.ItemId)
+                .ForeignKey("dbo.Products", t => t.ProductSetId, cascadeDelete: true)
+                .Index(t => t.ProductSetId);
+            
+            CreateTable(
                 "dbo.Resources",
                 c => new
                     {
@@ -320,6 +358,7 @@
         public override void Down()
         {
             DropForeignKey("dbo.Wishlists", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.ProductSetItems", "ProductSetId", "dbo.Products");
             DropForeignKey("dbo.ProductKeys", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductFeatures", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductFeatures", "FeatureId", "dbo.Features");
@@ -329,6 +368,7 @@
             DropForeignKey("dbo.Orders", "BillingAddressId", "dbo.OrderAddresses");
             DropForeignKey("dbo.SubMenus", "MainMenuId", "dbo.MainMenus");
             DropForeignKey("dbo.CategoryKeys", "CategoryId", "dbo.Categories");
+            DropForeignKey("dbo.Inventory", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Ratings", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.ProductAttributes", "ProductId", "dbo.Products");
@@ -336,6 +376,7 @@
             DropForeignKey("dbo.ProductAttributes", "AttributeTypeId", "dbo.AttributeTypes");
             DropForeignKey("dbo.ProductAttributes", "AttributeSectionId", "dbo.AttributeSections");
             DropIndex("dbo.Wishlists", "IX_UserIdAndProductId");
+            DropIndex("dbo.ProductSetItems", new[] { "ProductSetId" });
             DropIndex("dbo.ProductKeys", new[] { "ProductId" });
             DropIndex("dbo.ProductFeatures", new[] { "ProductId" });
             DropIndex("dbo.ProductFeatures", new[] { "FeatureId" });
@@ -345,6 +386,7 @@
             DropIndex("dbo.OrderItems", new[] { "OrderId" });
             DropIndex("dbo.SubMenus", new[] { "MainMenuId" });
             DropIndex("dbo.CategoryKeys", new[] { "CategoryId" });
+            DropIndex("dbo.Inventory", new[] { "ProductId" });
             DropIndex("dbo.Ratings", new[] { "ProductId" });
             DropIndex("dbo.ProductAttributes", new[] { "AttributeValueId" });
             DropIndex("dbo.ProductAttributes", new[] { "AttributeTypeId" });
@@ -354,6 +396,7 @@
             DropTable("dbo.Wishlists");
             DropTable("dbo.UserAddresses");
             DropTable("dbo.Resources");
+            DropTable("dbo.ProductSetItems");
             DropTable("dbo.ProductKeys");
             DropTable("dbo.ProductFeatures");
             DropTable("dbo.Prices");
@@ -366,6 +409,7 @@
             DropTable("dbo.Features");
             DropTable("dbo.DocFiles");
             DropTable("dbo.CategoryKeys");
+            DropTable("dbo.Inventory");
             DropTable("dbo.Ratings");
             DropTable("dbo.ProductAttributes");
             DropTable("dbo.Products");

@@ -20,6 +20,7 @@ using static AtesShop.Web.Helpers.SharedHelper;
 namespace AtesShop.Web.Controllers
 {
 
+    [NoDirectAccess]
     public class ShopController : BaseController
     {
         private static IResourceProvider resourceProvider = new DbResourceProvider();

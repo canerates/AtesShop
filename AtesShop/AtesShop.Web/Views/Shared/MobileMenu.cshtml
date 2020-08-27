@@ -9,7 +9,7 @@
                 {
                     if (main.SubMenus.Count != 0)
                     {
-                        if (main.Name == "Products")
+                        if (main.Name == AtesShop.Resources.Resources.ProductsT1O2)
                         {
                             <li>
                                 <a href="@Url.Action(main.ActionName, main.ControllerName, new { id = string.Empty })">@main.Name</a>
@@ -38,7 +38,10 @@
                     }
                     else
                     {
-                        <li><a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a></li>
+                        if (!Request.IsAuthenticated || !(main.Name == AtesShop.Resources.Resources.ShopT1O3 && !User.IsInRole("User")))
+                        {
+                            <li><a href="@Url.Action(main.ActionName, main.ControllerName)">@main.Name</a></li>
+                        }
                     }
                 }
 

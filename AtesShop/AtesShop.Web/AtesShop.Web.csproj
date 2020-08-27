@@ -53,6 +53,10 @@
       <HintPath>..\packages\DataTables.AspNet.Mvc5.2.0.2\lib\net45\DataTables.AspNet.Mvc5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -264,6 +268,7 @@
     <Content Include="App_Data\email\images\products\9_0.png" />
     <Content Include="App_Data\email\order_mail_for_admin.html" />
     <Content Include="App_Data\email\test.html" />
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Client_Scripts\mvcfoolproof.unobtrusive.js" />
     <Content Include="Client_Scripts\mvcfoolproof.unobtrusive.min.js" />
     <Content Include="Client_Scripts\MvcFoolproofJQueryValidation.js" />
@@ -471,58 +476,23 @@
     <Content Include="Content\img\banner\sp.jpg" />
     <Content Include="Content\img\banner\sp2.jpg" />
     <Content Include="Content\img\banner\tab-banner.jpg" />
-    <Content Include="Content\img\blog\1.jpg" />
-    <Content Include="Content\img\blog\2.jpg" />
-    <Content Include="Content\img\blog\3.jpg" />
-    <Content Include="Content\img\blog\4.jpg" />
-    <Content Include="Content\img\blog\5.jpg" />
-    <Content Include="Content\img\blog\6.jpg" />
-    <Content Include="Content\img\blog\7.jpg" />
-    <Content Include="Content\img\blog\8.jpg" />
-    <Content Include="Content\img\blog\9.jpg" />
-    <Content Include="Content\img\blog\details.jpg" />
     <Content Include="Content\img\blog\fd2.png" />
     <Content Include="Content\img\blog\is1-1.png" />
     <Content Include="Content\img\blog\ri.jpg" />
     <Content Include="Content\img\blog\sc1.png" />
     <Content Include="Content\img\blog\tw.jpg" />
     <Content Include="Content\img\blog\user.jpg" />
-    <Content Include="Content\img\brand\1.png" />
-    <Content Include="Content\img\brand\2.png" />
-    <Content Include="Content\img\brand\3.png" />
-    <Content Include="Content\img\brand\4.png" />
-    <Content Include="Content\img\brand\5.png" />
-    <Content Include="Content\img\brand\Layer-71.png" />
     <Content Include="Content\img\flags\flags%402x.png" />
     <Content Include="Content\img\flags\flags.png" />
-    <Content Include="Content\img\footer\1.png" />
-    <Content Include="Content\img\icon\1.png" />
-    <Content Include="Content\img\icon\2.png" />
-    <Content Include="Content\img\icon\3.png" />
-    <Content Include="Content\img\icon\4.png" />
     <Content Include="Content\img\icon\call.png" />
     <Content Include="Content\img\icon\favicon.png" />
     <Content Include="Content\img\icon\loader.gif" />
     <Content Include="Content\img\logo\logo.png" />
-    <Content Include="Content\img\menu\1.jpg" />
-    <Content Include="Content\img\menu\2.jpg" />
-    <Content Include="Content\img\products\1.jpg" />
-    <Content Include="Content\img\products\2.jpg" />
-    <Content Include="Content\img\products\3.jpg" />
-    <Content Include="Content\img\products\4.jpg" />
-    <Content Include="Content\img\products\5.jpg" />
-    <Content Include="Content\img\products\6.jpg" />
-    <Content Include="Content\img\products\7.jpg" />
-    <Content Include="Content\img\products\8.jpg" />
-    <Content Include="Content\img\products\9.jpg" />
     <Content Include="Content\img\products\ip1_bullet.png" />
     <Content Include="Content\img\products\ip1_dome.png" />
     <Content Include="Content\img\products\nvr1.png" />
     <Content Include="Content\img\slider\1.jpg" />
     <Content Include="Content\img\slider\2.jpg" />
-    <Content Include="Content\img\testmonial\1.png" />
-    <Content Include="Content\img\testmonial\2.png" />
-    <Content Include="Content\img\testmonial\3.png" />
     <Content Include="Content\js\ajax-mail.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jquery-ui.min.js" />
@@ -810,8 +780,13 @@
     <Content Include="Views\Order\OrderList.cshtml" />
     <Content Include="Views\Order\OrderItemInfo.cshtml" />
     <Content Include="Views\Order\OrderItemEdit.cshtml" />
+    <Content Include="Views\Account\Role.cshtml" />
+    <Content Include="Views\Account\RoleTable.cshtml" />
+    <Content Include="Views\Account\RoleEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\img\footer\" />
+    <Folder Include="Content\img\menu\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Support\" />
   </ItemGroup>

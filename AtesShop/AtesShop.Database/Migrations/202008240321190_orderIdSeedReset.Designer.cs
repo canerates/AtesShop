@@ -7,13 +7,13 @@ namespace AtesShop.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class menuCultureAdded : IMigrationMetadata
+    public sealed partial class orderIdSeedReset : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(menuCultureAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(orderIdSeedReset));
         
         string IMigrationMetadata.Id
         {
-            get { return "202008030227011_menuCultureAdded"; }
+            get { return "202008240321190_orderIdSeedReset"; }
         }
         
         string IMigrationMetadata.Source

@@ -32,7 +32,7 @@
                         <div class="buttons-cart">
                             @if (Request.IsAuthenticated)
                             {
-                                <a href="@Url.Action("Index", "Manage")">My Account</a>
+                                <a href="@Url.Action("Index", "Manage")">@AtesShop.Resources.Resources.MyAccount</a>
                             }
                             <a href="@Url.Action("Index", "Shop")">@AtesShop.Resources.Resources.ContinueShopping</a>
                         </div>

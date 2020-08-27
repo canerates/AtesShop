@@ -3,16 +3,15 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class isHiddenAdded : DbMigration
+    public partial class orderIdSeedReset : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Products", "isHidden", c => c.Boolean(nullable: false));
+            Sql("DBCC CHECKIDENT ('Orders', RESEED, 2456)");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Products", "isHidden");
         }
     }
 }

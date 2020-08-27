@@ -199,7 +199,6 @@ namespace AtesShop.Web.Models
         [Required]
         [MinimumLength]
         [AtLeastOneUpperCase]
-        [AtLeastOneLowerCase]
         [AtLeastOneDigit]
         [AtLeastOneSpecial]
         [DataType(DataType.Password)]

@@ -76,7 +76,7 @@
                                                 <div class="product-link" style="border-top: 0px; margin-top: 10px; padding-top: 10px;">
                                                     <ul class="list-inline">
 
-                                                        @if (Culture == "zh-TW")
+                                                        @if (Culture == "zh-TW" && (!Request.IsAuthenticated || User.IsInRole("User")))
                                                         {
                                                             <li><a class="add-cart" href="#" data-id="@el.Product.Id" data-ex-id="@el.ProductExtra.Id">@AtesShop.Resources.Resources.AddToCart</a>
                                                                 <input class="install-service" type="hidden" value="0" data-id="@el.Product.Id" />
@@ -127,7 +127,7 @@
 </div>
 <!-- Blog Area End -->
 
-@if (Culture == "zh-TW")
+@if (Culture == "zh-TW" && (!Request.IsAuthenticated || User.IsInRole("User")))
 {
     <script>
     $('.add-cart').click(function (event) {

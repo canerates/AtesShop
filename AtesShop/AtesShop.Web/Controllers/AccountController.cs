@@ -221,10 +221,10 @@ namespace AtesShop.Web.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
+                return View(model);
             }
-
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Error", "Home");
         }
 
         //
@@ -302,7 +302,8 @@ namespace AtesShop.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model); //CHECKAGAIN
+            //return View(model); //CHECKAGAIN
+            return RedirectToAction("Error", "Home");
         }
         
         //
@@ -583,6 +584,90 @@ namespace AtesShop.Web.Controllers
             ResourceService.Instance.UpdateResource(currentResource);
 
             return RedirectToAction("LegalTable");
+        }
+
+        [HttpGet]
+        [NoDirectAccess]
+        [CustomAuthorizeAttribute]
+        public ActionResult Role()
+        {
+            return View();
+        }
+
+        public ActionResult RoleTable(string search)
+        {
+            List<UserViewModel> model = new List<UserViewModel>();
+
+            foreach (var user in UserManager.Users)
+            {
+                UserViewModel elem = new UserViewModel();
+                elem.Id = user.Id;
+                elem.UserName = user.UserName;
+                elem.FirstName = user.FirstName;
+                elem.LastName = user.LastName;
+                elem.Email = user.Email;
+                model.Add(elem);
+            }
+
+            foreach (var user in model)
+            {
+                user.RoleNames = UserManager.GetRoles(user.Id).ToList();
+            }
+
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult RoleEdit(string userName)
+        {
+            EditUserViewModel model = new EditUserViewModel();
+
+            var user = UserManager.FindByName(userName);
+
+            model.UserName = user.UserName;
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.SelectedRoles = UserManager.GetRoles(user.Id).ToList();
+
+            var availableRoles = RoleManager.Roles.ToList();
+
+            List<string> roles = new List<string>();
+            foreach (var role in availableRoles)
+            {
+                roles.Add(role.Name);
+            }
+
+            model.AvailableRoles = roles;
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult RoleEdit(EditUserViewModel model)
+        {
+            var user = UserManager.FindByName(model.UserName);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+
+
+            var oldRoles = UserManager.GetRoles(user.Id).ToList();
+
+            foreach (var role in oldRoles)
+            {
+                UserManager.RemoveFromRole(user.Id, role);
+            }
+
+            foreach (var selected in model.SelectedRoles)
+            {
+                UserManager.AddToRole(user.Id, selected);
+            }
+
+            UserManager.Update(user);
+
+            return RedirectToAction("RoleTable");
         }
 
 

@@ -609,14 +609,12 @@ namespace AtesShop.Web.Controllers
                     var toAddress = ConfigurationManager.AppSettings["PAEditorEmail"];
                     var subject2 = "Role upgrade request";
 
-                    var message = emailService.PopulateNewAccountMail(user.FirstName, user.LastName, user.UserName, user.Email, user.FirstName);
-
-                    //var messageBody = new StringBuilder();
-                    //messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName + "</p>");
-                    //messageBody.Append("<p>Email: " + user.Email + "</p>");
-                    //messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
-                    //messageBody.Append("<p>Role request: " + model.NewBusinessType + "</p>");
-                    //var message = messageBody.ToString();
+                    var messageBody = new StringBuilder();
+                    messageBody.Append("<p>Name: " + user.FirstName + " " + user.LastName + "</p>");
+                    messageBody.Append("<p>Email: " + user.Email + "</p>");
+                    messageBody.Append("<p>Phone: " + user.PhoneNumber + "</p>");
+                    messageBody.Append("<p>Role request: " + model.NewBusinessType + "</p>");
+                    var message = messageBody.ToString();
 
                     await emailService.SendEmail(toAddress, subject2, message);
                     
