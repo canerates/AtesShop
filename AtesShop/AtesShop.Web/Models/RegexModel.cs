@@ -92,5 +92,22 @@ namespace AtesShop.Web.Models
         }
     }
 
-    
+    public class OnlyAlphanumeric : RegularExpressionAttribute, IClientValidatable
+    {
+        public OnlyAlphanumeric()
+            : base(@"^[a-zA-Z0-9]*$")
+        {
+            ErrorMessage = Resources.Resources.UsernameContainLettersOrDigits;
+        }
+
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            yield return new ModelClientValidationRegexRule(this.ErrorMessage, this.Pattern)
+            {
+                ValidationType = "onlyalphanumeric"
+            };
+        }
+    }
+
+
 }

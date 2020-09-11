@@ -647,12 +647,16 @@ try {
     $.validator.addMethod("minimumlength", function (value, element, regexp) {
         var re = new RegExp(regexp); return re.test(value);
     });
+    $.validator.addMethod("onlyalphanumeric", function (value, element, regexp) {
+        var re = new RegExp(regexp); return re.test(value);
+    });
 
     jQuery.validator.unobtrusive.adapters.addSingleVal("atleastoneuppercase", "pattern");
-    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonelowercase', "pattern");
-    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonedigit', "pattern");
-    jQuery.validator.unobtrusive.adapters.addSingleVal('atleastonespecial', "pattern");
-    jQuery.validator.unobtrusive.adapters.addSingleVal('minimumlength', "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal("atleastonelowercase", "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal("atleastonedigit", "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal("atleastonespecial", "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal("minimumlength", "pattern");
+    jQuery.validator.unobtrusive.adapters.addSingleVal("onlyalphanumeric", "pattern");
 
 } catch (e) {
 

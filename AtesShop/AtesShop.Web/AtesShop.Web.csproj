@@ -266,7 +266,6 @@
     <Content Include="App_Data\email\images\products\7_0.png" />
     <Content Include="App_Data\email\images\products\8_0.png" />
     <Content Include="App_Data\email\images\products\9_0.png" />
-    <Content Include="App_Data\email\order_mail_for_admin.html" />
     <Content Include="App_Data\email\test.html" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Client_Scripts\mvcfoolproof.unobtrusive.js" />

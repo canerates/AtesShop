@@ -50,7 +50,7 @@
                     </tbody>
                 </table>
                 <input id="cartTotalPrice" type="hidden" value="@Model.CartTotalPrice" />
-                <input id="cartTotalPriceWithTax" type="hidden" value="@Model.CartTotalPriceWithTax" />
+                @*<input id="cartTotalPriceWithTax" type="hidden" value="@Model.CartTotalPriceWithTax" />*@
             </div>
         </div>
         
@@ -67,18 +67,18 @@
                     <br />
                     <table>
                         <tbody>
-                            <tr class="cart-subtotal">
+                            @*<tr class="cart-subtotal">
                                 <th>@AtesShop.Resources.Resources.Subtotal</th>
                                 <td><span id="subTotalPrice" class="amount">@Model.CartTotalPrice</span></td>
-                            </tr>
-                            <tr class="cart-subtotal">
+                            </tr>*@
+                            @*<tr class="cart-subtotal">
                                 <th>@AtesShop.Resources.Resources.Tax (5%)</th>
                                 <td><span id="subTotalPrice" class="amount">@Model.CartTaxPrice</span></td>
-                            </tr>
+                            </tr>*@
                             <tr class="order-total">
                                 <th>@AtesShop.Resources.Resources.Total</th>
                                 <td>
-                                    <strong><span id="totalPrice" class="amount">@Model.CartTotalPriceWithTax</span></strong>
+                                    <strong><span id="totalPrice" class="amount">@Model.CartTotalPrice</span></strong>
                                 </td>
                             </tr>
                         </tbody>

@@ -4446,5 +4446,231 @@ namespace AtesShop.Resources {
             }
         }
 
+        /// <summary> User name must contain only letters or digits.  </summary>
+        public static string UsernameContainLettersOrDigits
+        {
+            get
+            {
+                return resourceProvider.GetResource("UsernameContainLettersOrDigits", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> {0} {1}  </summary>
+        public static string PersonFullNameFormat
+        {
+            get
+            {
+                return resourceProvider.GetResource("PersonFullNameFormat", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> New Account Registered!  </summary>
+        public static string CreateAccountMailTitle
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountMailTitle", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Dear {0} {1},  </summary>
+        public static string CreateAccountMailReceiver
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountMailReceiver", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> You successfully created your Customer Acoount, please confirm your Power Active Account by clicking the link below.  </summary>
+        public static string CreateAccountMailFirstP
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountMailFirstP", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Email: {0}  </summary>
+        public static string CreateAccountUserEmailInfo
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountUserEmailInfo", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Username: {0} </summary>
+        public static string CreateAccountUserNameInfo
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountUserNameInfo", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Confirm My Email  </summary>
+        public static string CreateAccountButtonInfo
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountButtonInfo", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> If you have any question, please,  </summary>
+        public static string CreateAccountMailFooter
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountMailFooter", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Contact Us  </summary>
+        public static string CreateAccountMailFooterLinkText
+        {
+            get
+            {
+                return resourceProvider.GetResource("CreateAccountMailFooterLinkText", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Your Order! </summary>
+        public static string NewOrderMailTitle
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailTitle", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Dear {0} {1}, </summary>
+        public static string NewOrderMailReceiver
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailReceiver", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Your Order Number {0} registered! Please use your Order Number as the payment reference. Your order won't be shipped until the funds have cleared in our account.  </summary>
+        public static string NewOrderMailFirstP
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailFirstP", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Transfer should be completed in 3 days, otherwise the order will be cancelled.  </summary>
+        public static string NewOrderMailSecondP
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailSecondP", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Check Order Status  </summary>
+        public static string NewOrderMailButtonInfo
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailButtonInfo", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> If you have any questions, please,   </summary>
+        public static string NewOrderMailFooter
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailFooter", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Contact Us  </summary>
+        public static string NewOrderMailFooterLinkText
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailFooterLinkText", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Bank Information  </summary>
+        public static string NewOrderMailBankInformation
+        {
+            get
+            {
+                return resourceProvider.GetResource("NewOrderMailBankInformation", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Order Date </summary>
+        public static string OrderDate
+        {
+            get
+            {
+                return resourceProvider.GetResource("OrderDate", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Reset your Power Active Password </summary>
+        public static string ResetPasswordMailTitle
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailTitle", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Dear {0} {1}, </summary>
+        public static string ResetPasswordMailReceiver
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailReceiver", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> You receive this mail because you required a new password. Please reset your password with the following link. If you didn't make this request, please ignore this mail. </summary>
+        public static string ResetPasswordMailFirstP
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailFirstP", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Reset My Password </summary>
+        public static string ResetPasswordMailButtonInfo
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailButtonInfo", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> If you have any questions, please,  </summary>
+        public static string ResetPasswordMailFooter
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailFooter", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+        /// <summary> Contact Us </summary>
+        public static string ResetPasswordMailFooterLinkText
+        {
+            get
+            {
+                return resourceProvider.GetResource("ResetPasswordMailFooterLinkText", CultureInfo.CurrentUICulture.Name) as string;
+            }
+        }
+
+
     }        
 }

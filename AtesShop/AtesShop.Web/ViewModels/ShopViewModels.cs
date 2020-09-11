@@ -63,8 +63,9 @@ namespace AtesShop.Web.ViewModels
         public List<ProductsQuantityViewModel> Quantities { get; set; }
 
         public string CartTotalPrice { get; set; }
-        public string CartTaxPrice { get; set; }
-        public string CartTotalPriceWithTax { get; set; }
+        //public string CartTaxPrice { get; set; }
+        //public string CartTotalPriceWithTax { get; set; }
+        public string CartTotalPriceWithShipment { get; set; }
         public string ShipmentFee { get; set; }
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
 
@@ -102,8 +103,8 @@ namespace AtesShop.Web.ViewModels
         public List<Product> CartProducts { get; set; }
         public List<int> CartProductIdList { get; set; }
         public string CartTotalPrice { get; set; }
-        public string CartTaxPrice { get; set; }
-        public string CartTotalPriceWithTax { get; set; }
+        //public string CartTaxPrice { get; set; }
+        //public string CartTotalPriceWithTax { get; set; }
         
         public Dictionary<int, string> CartProductsSubTotal { get; set; }
         
@@ -161,7 +162,7 @@ namespace AtesShop.Web.ViewModels
         [Display(Name = "TownCity", ResourceType = typeof(Resources.Resources))]
         public string City { get; set; }
 
-        [RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PostcodeZipRequired")]
+        //[RequiredIf("isShipDifferent", true, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PostcodeZipRequired")]
         [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 
@@ -207,7 +208,7 @@ namespace AtesShop.Web.ViewModels
         [Display(Name = "TownCity", ResourceType = typeof(Resources.Resources))]
         public string City { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 

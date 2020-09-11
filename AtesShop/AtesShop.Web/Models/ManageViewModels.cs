@@ -147,8 +147,7 @@ namespace AtesShop.Web.Models
         [Required]
         [Display(Name = "Country", ResourceType = typeof(Resources.Resources))]
         public string Country { get; set; }
-
-        [Required]
+        
         [Display(Name = "PostcodeZip", ResourceType = typeof(Resources.Resources))]
         public string ZipCode { get; set; }
 

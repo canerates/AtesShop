@@ -151,7 +151,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.PostcodeZip</label>
                                                     @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
                                                     @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
@@ -244,14 +244,14 @@
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list">
                                                         <label>@AtesShop.Resources.Resources.FirstName <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName" })
+                                                        @Html.TextBoxFor(m => m.Bill.FirstName, new { @id = "billFirstName", @Value = Model.User.FirstName })
                                                         @Html.ValidationMessageFor(m => m.Bill.FirstName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>@AtesShop.Resources.Resources.LastName <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName" })
+                                                        @Html.TextBoxFor(m => m.Bill.LastName, new { @id = "billLastName", @Value = Model.User.LastName })
                                                         @Html.ValidationMessageFor(m => m.Bill.LastName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -291,7 +291,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-list mb-30">
-                                                        <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
+                                                        <label>@AtesShop.Resources.Resources.PostcodeZip</label>
                                                         @Html.TextBoxFor(m => m.Bill.ZipCode, new { @id = "billAddressZipCode" })
                                                         @Html.ValidationMessageFor(m => m.Bill.ZipCode, "", new { @class = "text-danger" })
                                                     </div>
@@ -299,14 +299,14 @@
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>@AtesShop.Resources.Resources.EmailAddress <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail" })
+                                                        @Html.TextBoxFor(m => m.Bill.Email, new { @id = "billEmail", @Value = Model.User.Email })
                                                         @Html.ValidationMessageFor(m => m.Bill.Email, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-list mb-30">
                                                         <label>@AtesShop.Resources.Resources.MobilePhone  <span class="required">*</span></label>
-                                                        @Html.TextBoxFor(m => m.Bill.PhoneNumber, new { @class = "form-control", @id = "billAddressPhone" })
+                                                        @Html.TextBoxFor(m => m.Bill.PhoneNumber, new { @class = "form-control", @id = "billAddressPhone", @Value = Model.User.PhoneNumber })
                                                         <span id="phone-valid-msg-ba" class="phone-hide">✓ @AtesShop.Resources.Resources.Valid</span>
                                                         <span id="phone-error-msg-ba" class="phone-hide"></span>
                                                     </div>
@@ -388,7 +388,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="checkout-form-list mb-30">
-                                                    <label>@AtesShop.Resources.Resources.PostcodeZip <span class="required">*</span></label>
+                                                    <label>@AtesShop.Resources.Resources.PostcodeZip</label>
                                                     @Html.TextBoxFor(m => m.Ship.ZipCode, new { @id = "shipAddressZipCode" })
                                                     @Html.ValidationMessageFor(m => m.Ship.ZipCode, "", new { @class = "text-danger" })
                                                 </div>
@@ -427,7 +427,7 @@
                                 @Html.HiddenFor(m => m.Quantities[i].productId)
                                 @Html.HiddenFor(m => m.Quantities[i].productQuantity)
                             }
-                            @Html.HiddenFor(m => m.CartTotalPriceWithTax)
+                            @Html.HiddenFor(m => m.CartTotalPriceWithShipment)
 
                             <div id="checkoutContainer" class="your-order">
                                 <h3>@AtesShop.Resources.Resources.YourOrder</h3>
@@ -462,11 +462,11 @@
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTotalPrice</span></td>
                                             </tr>
-                                            <tr class="cart-subtotal">
+                                            @*<tr class="cart-subtotal">
                                                 <th colspan="1">@AtesShop.Resources.Resources.Tax</th>
                                                 <td></td>
                                                 <td><span class="amount">@Model.CartTaxPrice</span></td>
-                                            </tr>
+                                            </tr>*@
                                             <tr class="cart-subtotal">
                                                 <th colspan="1">@AtesShop.Resources.Resources.ShipmentFee</th>
                                                 <td></td>
@@ -476,7 +476,7 @@
                                                 <th colspan="1">@AtesShop.Resources.Resources.OrderTotal</th>
                                                 <td></td>
                                                 <td>
-                                                    <strong><span class="amount">@Model.CartTotalPriceWithTax</span></strong>
+                                                    <strong><span class="amount">@Model.CartTotalPriceWithShipment</span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -505,7 +505,7 @@
                                             </div>
                                         </div>
                                         <div class="order-button-payment">
-                                            <input id="placeOrder" type="submit" onclick="preloading()" value= "@AtesShop.Resources.Resources.PlaceOrder" />
+                                            <input id="placeOrder" type="submit" value= "@AtesShop.Resources.Resources.PlaceOrder" />
                                         </div>
                                     </div>
                                 </div>
@@ -550,6 +550,14 @@ else
 <script>
     $(document).ready(function () {
         $.validator.unobtrusive.parse("#checkoutForm");
+
+        $('#placeOrder').click(function (event) {
+            event.preventDefault();
+            if ($('#checkoutForm').valid()) {
+                preloading();
+                $('#checkoutForm').submit();
+            }
+        })
     });
 
     var preloading = function () {

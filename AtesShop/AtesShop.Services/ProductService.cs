@@ -161,8 +161,6 @@ namespace AtesShop.Services
                     products = products.Where(x => x.Name.ToLower().Contains(searchKey.ToLower()) || x.Description.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
 
-                products = products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
-
                 if (sortId.HasValue && sortType.HasValue)
                 {
                     switch (sortId.Value)
@@ -184,6 +182,8 @@ namespace AtesShop.Services
                             break;
                     }
                 }
+
+                products = products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
 
                 return products;
 

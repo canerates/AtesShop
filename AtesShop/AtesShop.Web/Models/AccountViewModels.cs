@@ -71,6 +71,7 @@ namespace AtesShop.Web.Models
         public string Email { get; set; }
 
         [Required]
+        [OnlyAlphanumeric]
         [Display(Name = "Username", ResourceType = typeof(Resources.Resources))]
         public string UserName { get; set; }
 

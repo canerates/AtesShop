@@ -85,6 +85,9 @@ namespace AtesShop.Web.Controllers
             var userId = User.Identity.GetUserId();
             var user = UserManager.FindById(userId);
             
+
+
+            
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -92,7 +95,7 @@ namespace AtesShop.Web.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                FullName = user.FirstName + " " + user.LastName,
+                FullName = string.Format(Resources.Resources.PersonFullNameFormat, user.FirstName, user.LastName),
                 
             };
             return View(model);
